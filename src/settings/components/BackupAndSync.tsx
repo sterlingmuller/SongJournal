@@ -8,7 +8,8 @@ const BackupAndSync = ({}) => {
    return (
     <View>
       <Text style={settingsStyle.sectionTitle}>Backup and Sync</Text>
-      <Text>Backing up to sterlingmuller93@gmail.com</Text>
+      <Text>Backing up to </Text>
+      <Text>sterlingmuller93@gmail.com</Text>
     </View>
    );
 };
