@@ -1,0 +1,40 @@
+import React, {useState} from 'react';
+import { View, Text, Modal, TouchableOpacity, TextInput, Button } from 'react-native';
+
+import newSongModalStyle from '@styles/newSongModal';
+
+const NewSongModal = ({setIsNewSongOpen, isNewSongOpen}) => {
+  const [songTitle, setSongTitle] = useState('');
+
+  const onExitPress = () => setIsNewSongOpen(false);
+
+
+   return (
+  <Modal transparent={true} visible={isNewSongOpen}>
+    <TouchableOpacity
+          style={newSongModalStyle.modalContainer}
+          activeOpacity={1}
+          onPress={onExitPress}
+        >
+    <View style={newSongModalStyle.container}>
+      <Text style={newSongModalStyle.title}>Song title</Text>
+      <View style={newSongModalStyle.textbox}>
+        <TextInput style={newSongModalStyle.input} placeholder='Cobra Strike Alpha Deluxe' value={songTitle} onChangeText={(title) => setSongTitle(title)} />
+      </View>
+      <View style={newSongModalStyle.buttons}>
+        <View  style={newSongModalStyle.button}>
+        <Button title='Save' color='#81C2F1'/>
+        </View>
+        <View  style={newSongModalStyle.button}>
+        <Button title='Cancel' color='#D6D6D6' onPress={onExitPress}/>
+        </View>
+      </View>
+    </View>
+    </TouchableOpacity>
+  </Modal>
+   );
+};
+
+// make a separate common button component
+
+export default NewSongModal;

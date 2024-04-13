@@ -11,6 +11,7 @@ const searchBarStyle = StyleSheet.create({
     borderColor: '#ccc',
     marginLeft: 35
   },
+
   input: {
     flex: 1,
     fontSize: 16,
