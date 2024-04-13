@@ -5,31 +5,35 @@ const settingsStyle = StyleSheet.create({
 height: '100%'
   },
 
-  header: {
-
-  },
-
   content: {
-    gap: 15
-  },
-
-  text: {
+    gap: 20,
+    paddingTop: 15,
+    paddingHorizontal: 25,
   },
 
   sectionTitle: {
-    fontSize: 16,
-    paddingLeft: 15
+    fontSize: 18,
+    paddingBottom: 5
   },
 
   title: {
-    fontSize: 24,
-    paddingLeft: 30
+    fontSize: 30,
+    paddingLeft: 40
   },
 
   version: {
     position: 'absolute',
     bottom: 25,
     alignSelf: 'center'
+  },
+
+  about: {
+    textAlign: 'center',
+  },
+
+  aboutSignature: {
+    textAlign: 'center',
+    paddingTop: 10
   }
 });
 
