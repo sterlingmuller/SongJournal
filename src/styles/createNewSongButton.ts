@@ -4,7 +4,7 @@ const createNewSongButtonStyles = StyleSheet.create({
   container: {
     position: 'absolute',
     flex: 5,
-    backgroundColor: '#EEC41A',
+    backgroundColor: '#fcd470',
     alignItems: 'center',
     justifyContent: 'center',
     width: 60,

@@ -1,9 +1,8 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 
-import NewSongIcon from '../icons/NewSongIcon';
-import createNewSongButtonStyles from '../styles/createNewSongButton';
+import NewSongIcon from '@src/icons/NewSongIcon';
+import createNewSongButtonStyles from '@styles/createNewSongButton';
 
 const CreateNewSongButton = () => {
   // const onPress = ;
