@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 
 import songFolderStyle from '@styles/songFolder';
+import LyricsIcon from '@src/icons/LyricsIcon';
+import ShareIcon from '@src/icons/ShareIcon';
+import PlayIcon from '@src/icons/PlayIcon';
+import PlaybackBar from '@src/home/subcomponents/PlaybackBar';
 
 const SongFolder = ({song}) => {
    const [isPlaying, setIsPlaying] = useState(false);
@@ -13,15 +16,17 @@ const SongFolder = ({song}) => {
 
    return (
     <View style={songFolderStyle.container}>
-      <View style={songFolderStyle.info}>
-      <Text>{song}</Text>
-      <Text>Date</Text>
+      <View style={songFolderStyle.contents}>
+        <Text style={songFolderStyle.title}>{song}</Text>
+        <Text>March 14, 24</Text>
+        <View style={songFolderStyle.iconRow}>
+          <LyricsIcon />
+          <ShareIcon />
+          <PlaybackBar />
+        </View>
       </View>
-      {/* play icon */}
-      <View>
-        {/* Song book icon
-        share icon
-        playbar icon */}
+      <View style={songFolderStyle.playIcon}>
+        <PlayIcon/>
       </View>
     </View>
    );

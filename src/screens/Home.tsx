@@ -17,6 +17,10 @@ const Home = () => {
       <Header isSortOpen={isSortOpen} setIsSortOpen={setIsSortOpen}/>
       <SongFolder song="Dubble Bubble"/>
       <SongFolder song="Try To"/>
+      <SongFolder song="Fresh Towel"/>
+      <SongFolder song="Belly"/>
+      <SongFolder song="Sludge"/>
+      <SongFolder song="Virus"/>
       <CreateNewSongButton />
       <SortByModal isSortOpen={isSortOpen} setIsSortOpen={setIsSortOpen} sortedCategory={sortedCategory} setSortedCategory={setSortedCategory} isSortAscending={isSortAscending} setIsSortAscending={setIsSortAscending}/>
     </View>
