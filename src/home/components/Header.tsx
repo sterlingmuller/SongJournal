@@ -3,7 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 
 import headerStyles from '@styles/header'
-import SearchBar from '@src/home/components/SearchBar';
+import SearchBar from '@src/home/subcomponents/SearchBar';
 
 const Header = ({isSortOpen, setIsSortOpen}) => {
 const toggleSort = () => setIsSortOpen(!isSortOpen);

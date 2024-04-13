@@ -4,11 +4,11 @@ import { TouchableOpacity } from 'react-native';
 import NewSongIcon from '@src/icons/NewSongIcon';
 import createNewSongButtonStyles from '@styles/createNewSongButton';
 
-const CreateNewSongButton = () => {
+const CreateNewSongButton = ({setIsNewSongOpen}) => {
   // const onPress = ;
 
   return (
-    <TouchableOpacity style={createNewSongButtonStyles.container}>
+    <TouchableOpacity style={createNewSongButtonStyles.container} onPress={() => setIsNewSongOpen(true)}>
       <NewSongIcon />
     </TouchableOpacity>
   );

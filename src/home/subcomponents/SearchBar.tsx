@@ -13,7 +13,7 @@ const SearchBar = ({}) => {
 
    return (
     <View style={searchBarStyle.container}>
-      <TextInput style={searchBarStyle.input} placeholder='Search...' value={searchText} onChangeText={setSearchText} />
+      <TextInput style={searchBarStyle.input} placeholder='Search...' value={searchText} onChangeText={(text) => setSearchText(text)} />
       <Ionicons name="search" size={24} color="black" />
     </View>
    );

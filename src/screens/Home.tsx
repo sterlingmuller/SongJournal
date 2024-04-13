@@ -6,11 +6,13 @@ import CreateNewSongButton from '@src/home/components/CreateNewSongButton';
 import SongFolder from '@src/home/components/SongFolder';
 import SortByModal from '@src/home/components/SortByModal';
 import global from '@styles/global'
+import NewSongModal from '@src/home/components/NewSongModal';
 
 const Home = () => {
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [sortedCategory, setSortedCategory] = useState("Date");
-  const [ isSortAscending, setIsSortAscending] = useState(false);
+  const [isSortAscending, setIsSortAscending] = useState(false);
+  const [isNewSongOpen, setIsNewSongOpen] = useState(false);
 
   return (
     <View style={global.container}>
@@ -21,8 +23,9 @@ const Home = () => {
       <SongFolder song="Belly"/>
       <SongFolder song="Sludge"/>
       <SongFolder song="Virus"/>
-      <CreateNewSongButton />
+      <CreateNewSongButton setIsNewSongOpen={setIsNewSongOpen}/>
       <SortByModal isSortOpen={isSortOpen} setIsSortOpen={setIsSortOpen} sortedCategory={sortedCategory} setSortedCategory={setSortedCategory} isSortAscending={isSortAscending} setIsSortAscending={setIsSortAscending}/>
+      <NewSongModal isNewSongOpen={isNewSongOpen} setIsNewSongOpen={setIsNewSongOpen}/>
     </View>
   );
 };
