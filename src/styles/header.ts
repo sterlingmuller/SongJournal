@@ -7,7 +7,7 @@ const headerStyles = StyleSheet.create({
     height: 115,
     paddingTop: 45,
     alignItems: 'center',
-    backgroundColor: 'red',
+    backgroundColor: 'coral',
     zIndex: 10,
     gap: 20,
   },
