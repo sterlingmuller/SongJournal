@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 
 import settingsStyle from '@styles/settings';
+import ColorThemeOption from '../subcomponents/ColorThemeOption';
 
 const Theme = ({}) => {
-  const themes = ['light', 'dark', 'metal', 'psych', 'twee', 'pop'];
+  const [colorTheme, setColorTheme] = useState('light');
+  const themes = ['Light', 'Dark', 'Metal', 'Psych', 'Twee', 'Pop'];
 
    return (
-    <View style={settingsStyle.sectionTitle}>
-      <Text>Theme</Text>
-      <Text>{themes}</Text>
+    <View>
+      <Text style={settingsStyle.sectionTitle}>Theme</Text>
+      {themes.map(theme => <ColorThemeOption label={theme} colorTheme={colorTheme} setColorTheme={setColorTheme}/>)}
     </View>
    );
 };

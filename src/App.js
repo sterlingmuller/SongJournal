@@ -8,8 +8,8 @@ import global from './styles/global';
 const App = () => {
   return (
     <View style={global.container}>
-      {/* <Home /> */}
-      <Settings />
+      <Home />
+      {/* <Settings /> */}
     </View>
   );
 }
