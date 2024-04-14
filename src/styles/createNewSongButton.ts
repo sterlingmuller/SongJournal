@@ -14,7 +14,7 @@ const createNewSongButtonStyles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 25,
     paddingHorizontal: 35,
-    bottom: 0,
+    bottom: 100,
     right: 0,
     marginRight: 20,
     marginBottom: 20,
