@@ -12,8 +12,9 @@ height: '100%'
   },
 
   sectionTitle: {
-    fontSize: 18,
-    paddingBottom: 5
+    fontSize: 16,
+    paddingBottom: 5,
+    fontWeight: 'bold'
   },
 
   title: {
@@ -34,7 +35,18 @@ height: '100%'
   aboutSignature: {
     textAlign: 'center',
     paddingTop: 10
-  }
+  },
+
+  selectedTheme: {
+    backgroundColor: '#C5C2B7',
+    borderRadius: 20,
+    marginRight: 40,
+  },
+
+  themeLabel: {
+    paddingVertical: 4,
+    marginLeft: 55,
+  },
 });
 
 export default settingsStyle;
