@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import { View, Text, Modal, TouchableOpacity, TextInput, Button } from 'react-native';
+import { useNavigation, NavigationProp} from '@react-navigation/native';
 
 import newSongModalStyle from '@styles/newSongModal';
 
 const NewSongModal = ({setIsNewSongOpen, isNewSongOpen}) => {
+  const { navigate } = useNavigation<NavigationProp<any>>();
   const [songTitle, setSongTitle] = useState('');
 
   const onExitPress = () => setIsNewSongOpen(false);
@@ -23,7 +25,7 @@ const NewSongModal = ({setIsNewSongOpen, isNewSongOpen}) => {
       </View>
       <View style={newSongModalStyle.buttons}>
         <View  style={newSongModalStyle.button}>
-        <Button title='Save' color='#81C2F1'/>
+        <Button title='Save' color='#81C2F1' onPress={() => navigate('Song')}/>
         </View>
         <View  style={newSongModalStyle.button}>
         <Button title='Cancel' color='#D6D6D6' onPress={onExitPress}/>
@@ -34,7 +36,5 @@ const NewSongModal = ({setIsNewSongOpen, isNewSongOpen}) => {
   </Modal>
    );
 };
-
-// make a separate common button component
 
 export default NewSongModal;

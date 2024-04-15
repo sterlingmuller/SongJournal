@@ -1,16 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
+import React from 'react';
 import { View } from 'react-native';
+import { NavigationContainer} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Home from './screens/Home';
-import Settings from '@src/screens/Settings';
-import global from './styles/global';
+import HomeScreen from './screens/HomeScreen';
+import SettingsScreen from '@src/screens/SettingsScreen';
+import SongScreen from '@src/screens/SongScreen';
+import LyricsScreen from '@src/screens/LyricsScreen';
 
 const App = () => {
+  const Stack = createNativeStackNavigator();
+
   return (
-    <View style={global.container}>
-      <Home />
-      {/* <Settings /> */}
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Song" component={SongScreen} />
+        <Stack.Screen name="Lyrics" component={LyricsScreen} />
+        <Stack.Screen name="Settings" component={SettingsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
