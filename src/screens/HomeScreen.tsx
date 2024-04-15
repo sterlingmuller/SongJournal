@@ -9,7 +9,7 @@ import global from '@styles/global'
 import NewSongModal from '@src/home/components/NewSongModal';
 import Footer from '@src/home/components/Footer';
 
-const Home = () => {
+const HomeScreen = () => {
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [sortedCategory, setSortedCategory] = useState("Date");
   const [isSortAscending, setIsSortAscending] = useState(false);
@@ -32,4 +32,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeScreen;

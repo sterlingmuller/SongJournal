@@ -7,7 +7,7 @@ import Theme from '@src/settings/components/Theme';
 import About from '@src/settings/components/About';
 import Header from '@src/settings/components/Header';
 
-const Settings = () => {
+const SettingsScreen = () => {
   const [colorTheme, setColorTheme] = useState('light');
   const themes = ['light', 'dark', 'metal', 'psych', 'twee', 'pop'];
 
@@ -24,4 +24,4 @@ const Settings = () => {
   )
 };
 
-export default Settings;
+export default SettingsScreen;
