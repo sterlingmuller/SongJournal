@@ -1,12 +1,11 @@
 import React from 'react';
-import { View } from 'react-native';
-import { NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import HomeScreen from './screens/HomeScreen';
 import SettingsScreen from '@src/screens/SettingsScreen';
 import SongScreen from '@src/screens/SongScreen';
 import LyricsScreen from '@src/screens/LyricsScreen';
+import HomeScreen from '@src/screens/HomeScreen';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -21,6 +20,6 @@ const App = () => {
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 export default App;

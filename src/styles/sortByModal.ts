@@ -20,18 +20,18 @@ const sortByModalStyle = StyleSheet.create({
 
   title: {
     paddingVertical: 15,
-    paddingLeft: 30
-    },
+    paddingLeft: 30,
+  },
 
   line: {
-  width: '100%',
-   borderTopWidth: 1,
-   borderColor: 'black'
+    width: '100%',
+    borderTopWidth: 1,
+    borderColor: 'black',
   },
 
   categories: {
     paddingTop: 4,
-    paddingLeft: 10
+    paddingLeft: 10,
   },
 
   selectedCategory: {
@@ -47,8 +47,8 @@ const sortByModalStyle = StyleSheet.create({
 
   arrow: {
     paddingLeft: 15,
-    position: 'absolute'
-  }
+    position: 'absolute',
+  },
 });
 
 export default sortByModalStyle;

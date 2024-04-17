@@ -4,19 +4,20 @@ import { Ionicons } from '@expo/vector-icons';
 
 import searchBarStyle from '@styles/search';
 
-const SearchBar = ({}) => {
-   const [searchText, setSearchText] = useState('');
+const SearchBar = () => {
+  const [searchText, setSearchText] = useState('');
 
-   // const handleSearch = () => {
-   //    onSearch(searchText);
-   // }
-
-   return (
+  return (
     <View style={searchBarStyle.container}>
-      <TextInput style={searchBarStyle.input} placeholder='Search...' value={searchText} onChangeText={(text) => setSearchText(text)} />
+      <TextInput
+        style={searchBarStyle.input}
+        placeholder="Search..."
+        value={searchText}
+        onChangeText={(text) => setSearchText(text)}
+      />
       <Ionicons name="search" size={24} color="black" />
     </View>
-   );
+  );
 };
 
 export default SearchBar;
