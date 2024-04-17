@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React from 'react';
 import { View, Text } from 'react-native';
 
 import settingsStyle from '@styles/settings';
@@ -8,9 +8,6 @@ import About from '@src/settings/components/About';
 import Header from '@src/settings/components/Header';
 
 const SettingsScreen = () => {
-  const [colorTheme, setColorTheme] = useState('light');
-  const themes = ['light', 'dark', 'metal', 'psych', 'twee', 'pop'];
-
   return (
     <View style={settingsStyle.container}>
       <Header />
@@ -21,7 +18,7 @@ const SettingsScreen = () => {
       </View>
       <Text style={settingsStyle.version}>Version 0.0.0</Text>
     </View>
-  )
+  );
 };
 
 export default SettingsScreen;

@@ -8,32 +8,32 @@ import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
 import PlaybackBar from '@src/home/subcomponents/PlaybackBar';
 
-const SongFolder = ({song}) => {
-  const {navigate} = useNavigation<NavigationProp<any>>();
-   const [isPlaying, setIsPlaying] = useState(false);
+interface Props {
+  song: string;
+}
 
-   // const handleOnPress = () => {
-   //    onSearch(searchText);
-   // }
+const SongFolder = ({ song }: Props) => {
+  const { navigate } = useNavigation<NavigationProp<any>>();
+  const [isPlaying, setIsPlaying] = useState(false);
 
-   return (
+  return (
     <View style={songFolderStyle.container}>
       <View style={songFolderStyle.contents}>
         <Text style={songFolderStyle.title}>{song}</Text>
         <Text>March 14, 24</Text>
         <View style={songFolderStyle.iconRow}>
-        <TouchableOpacity onPress={() => navigate('Lyrics')}>
-          <LyricsIcon />
+          <TouchableOpacity onPress={() => navigate('Lyrics')}>
+            <LyricsIcon />
           </TouchableOpacity>
           <ShareIcon />
           <PlaybackBar />
         </View>
       </View>
       <View style={songFolderStyle.playIcon}>
-        <PlayIcon/>
+        <PlayIcon />
       </View>
     </View>
-   );
+  );
 };
 
 export default SongFolder;

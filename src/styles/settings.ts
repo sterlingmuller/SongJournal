@@ -1,8 +1,8 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const settingsStyle = StyleSheet.create({
   container: {
-height: '100%'
+    height: '100%',
   },
 
   content: {
@@ -14,18 +14,18 @@ height: '100%'
   sectionTitle: {
     fontSize: 16,
     paddingBottom: 5,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
 
   title: {
     fontSize: 30,
-    paddingLeft: 40
+    paddingLeft: 40,
   },
 
   version: {
     position: 'absolute',
     bottom: 25,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
 
   about: {
@@ -34,7 +34,7 @@ height: '100%'
 
   aboutSignature: {
     textAlign: 'center',
-    paddingTop: 10
+    paddingTop: 10,
   },
 
   selectedTheme: {

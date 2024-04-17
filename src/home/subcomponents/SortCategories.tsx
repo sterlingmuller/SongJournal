@@ -1,17 +1,40 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 
 import sortByModalStyle from '@styles/sortByModal';
-import SortByCategory from './SortByCategory';
+import { sortByCategoryNames } from '@src/common/constants';
+import SortByCategory from '@src/home/subcomponents/SortByCategory';
+import { sortByCategoryName } from '@src/common/types';
 
-const SortByCategories = ({sortedCategory, setSortedCategory, isSortAscending, setIsSortAscending}) => {
-   const categories = ['Date', 'Name', 'Length', 'Lyrics'];
+interface Props {
+  sortedCategory: sortByCategoryName;
+  setSortedCategory: (categoryName: sortByCategoryName) => void;
+  isSortAscending: boolean;
+  setIsSortAscending: (value: boolean) => void;
+}
 
-   return (
-      <View style={sortByModalStyle.categories}>
-         {categories.map(category => <SortByCategory key={category} label={category} setSortedCategory={setSortedCategory} sortedCategory={sortedCategory} isSortAscending={isSortAscending} setIsSortAscending={setIsSortAscending}/>)}
-      </View>
-   );
+const SortByCategories = (props: Props) => {
+  const {
+    sortedCategory,
+    setSortedCategory,
+    isSortAscending,
+    setIsSortAscending,
+  } = props;
+
+  return (
+    <View style={sortByModalStyle.categories}>
+      {sortByCategoryNames.map((categoryName) => (
+        <SortByCategory
+          key={categoryName}
+          label={categoryName}
+          setSortedCategory={setSortedCategory}
+          sortedCategory={sortedCategory}
+          isSortAscending={isSortAscending}
+          setIsSortAscending={setIsSortAscending}
+        />
+      ))}
+    </View>
+  );
 };
 
 export default SortByCategories;

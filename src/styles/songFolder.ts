@@ -12,36 +12,36 @@ const songFolderStyle = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#000',
     justifyContent: 'space-between',
-    alignContent: 'center'
+    alignContent: 'center',
   },
 
   contents: {
     flexDirection: 'column',
-    gap: 10
+    gap: 10,
   },
 
   title: {
-    fontSize: 24
+    fontSize: 24,
   },
 
   iconRow: {
     flexDirection: 'row',
-    gap: 24
+    gap: 24,
   },
 
   playIcon: {
     position: 'absolute',
     alignSelf: 'center',
     paddingBottom: 40,
-    right: 40
+    right: 40,
   },
 
   playbackBar: {
     height: 15,
     width: '66%',
     backgroundColor: 'coral',
-    alignSelf: 'center'
-  }
+    alignSelf: 'center',
+  },
 });
 
 export default songFolderStyle;

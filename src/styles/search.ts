@@ -9,7 +9,7 @@ const searchBarStyle = StyleSheet.create({
     width: '75%',
     borderWidth: 1,
     borderColor: '#ccc',
-    marginLeft: 35
+    marginLeft: 35,
   },
 
   input: {

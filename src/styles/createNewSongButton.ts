@@ -19,7 +19,7 @@ const createNewSongButtonStyles = StyleSheet.create({
     marginRight: 20,
     marginBottom: 20,
     elevation: 5,
-  }
+  },
 });
 
 export default createNewSongButtonStyles;
