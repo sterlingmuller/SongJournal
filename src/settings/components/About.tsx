@@ -3,8 +3,7 @@ import { Text, View } from 'react-native';
 
 import settingsStyle from '@styles/settings';
 
-const About = () => {
-  return (
+const About = () => (
     <View>
       <Text style={settingsStyle.sectionTitle}>About</Text>
       <View>
@@ -20,7 +19,6 @@ const About = () => {
         </Text>
       </View>
     </View>
-  );
-};
+);
 
 export default About;

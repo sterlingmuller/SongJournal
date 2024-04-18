@@ -12,8 +12,7 @@ import { sortByCategoryName } from '@src/common/types';
 
 const HomeScreen = () => {
   const [isSortOpen, setIsSortOpen] = useState(false);
-  const [sortedCategory, setSortedCategory] =
-    useState<sortByCategoryName>('Date');
+  const [sortedCategory, setSortedCategory] = useState<sortByCategoryName>('Date');
   const [isSortAscending, setIsSortAscending] = useState(false);
   const [isNewSongOpen, setIsNewSongOpen] = useState(false);
 
@@ -35,10 +34,7 @@ const HomeScreen = () => {
         isSortAscending={isSortAscending}
         setIsSortAscending={setIsSortAscending}
       />
-      <NewSongModal
-        isNewSongOpen={isNewSongOpen}
-        setIsNewSongOpen={setIsNewSongOpen}
-      />
+      <NewSongModal isNewSongOpen={isNewSongOpen} setIsNewSongOpen={setIsNewSongOpen} />
       <Footer />
     </View>
   );

@@ -7,13 +7,14 @@ import LyricsIcon from '@src/icons/LyricsIcon';
 import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
 import PlaybackBar from '@src/home/subcomponents/PlaybackBar';
+import { RootStackParamList } from '@src/common/types';
 
 interface Props {
   song: string;
 }
 
 const SongFolder = ({ song }: Props) => {
-  const { navigate } = useNavigation<NavigationProp<any>>();
+  const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (

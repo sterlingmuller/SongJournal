@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, Modal, TouchableOpacity } from 'react-native';
+import {
+  View, Text, Modal, TouchableOpacity,
+} from 'react-native';
 
 import sortByModalStyle from '@styles/sortByModal';
 import SortByCategories from '@src/home/subcomponents/SortCategories';

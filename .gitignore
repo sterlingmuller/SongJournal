@@ -33,3 +33,8 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# local config files
+.eslintrc.js
+.prettierrc.js
+.vscode/
