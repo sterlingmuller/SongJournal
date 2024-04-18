@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  Modal,
-  TouchableOpacity,
-  TextInput,
-  Button,
+  View, Text, Modal, TouchableOpacity, TextInput, Button,
 } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 import newSongModalStyle from '@styles/newSongModal';
+import { RootStackParamList } from '@src/common/types';
 
 interface Props {
   isNewSongOpen: boolean;
@@ -17,7 +13,7 @@ interface Props {
 }
 
 const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
-  const { navigate } = useNavigation<NavigationProp<any>>();
+  const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   const [songTitle, setSongTitle] = useState('');
 
   const onExitPress = () => setIsNewSongOpen(false);
@@ -41,11 +37,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
           </View>
           <View style={newSongModalStyle.buttons}>
             <View style={newSongModalStyle.button}>
-              <Button
-                title="Save"
-                color="#81C2F1"
-                onPress={() => navigate('Song')}
-              />
+              <Button title="Save" color="#81C2F1" onPress={() => navigate('Song')} />
             </View>
             <View style={newSongModalStyle.button}>
               <Button title="Cancel" color="#D6D6D6" onPress={onExitPress} />

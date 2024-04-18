@@ -6,9 +6,10 @@ import homeFooterStyles from '@styles/homeFooter';
 import PlaylistIcon from '@src/icons/PlaylistIcon';
 import MusicPlayerIcon from '@src/icons/MusicPlayerIcon';
 import SettingIcon from '@src/icons/SettingIcon';
+import { RootStackParamList } from '@src/common/types';
 
 const Footer = () => {
-  const { navigate } = useNavigation<NavigationProp<any>>();
+  const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
 
   return (
     <View style={homeFooterStyles.container}>
