@@ -1,5 +1,3 @@
-# SongJournal
-
 # Overview
 SongJournal is a tool for organizing song recordings and writing lyrics as well as a music player for continuous playback of recordings.
 
