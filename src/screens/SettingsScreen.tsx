@@ -7,8 +7,7 @@ import Theme from '@src/settings/components/Theme';
 import About from '@src/settings/components/About';
 import Header from '@src/settings/components/Header';
 
-const SettingsScreen = () => {
-  return (
+const SettingsScreen = () => (
     <View style={settingsStyle.container}>
       <Header />
       <View style={settingsStyle.content}>
@@ -18,7 +17,6 @@ const SettingsScreen = () => {
       </View>
       <Text style={settingsStyle.version}>Version 0.0.0</Text>
     </View>
-  );
-};
+);
 
 export default SettingsScreen;

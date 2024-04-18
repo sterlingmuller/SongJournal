@@ -3,8 +3,7 @@ import { Text, View } from 'react-native';
 
 import settingsStyle from '@styles/settings';
 
-const BackupAndSync = () => {
-  return (
+const BackupAndSync = () => (
     <View>
       <Text style={settingsStyle.sectionTitle}>Back up & Sync</Text>
       <Text>
@@ -12,7 +11,6 @@ const BackupAndSync = () => {
         <Text>sterlingmuller93@gmail.com</Text>
       </Text>
     </View>
-  );
-};
+);
 
 export default BackupAndSync;

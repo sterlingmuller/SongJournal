@@ -5,6 +5,5 @@
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
   "files.autoSave": "onFocusChange",
-  "vs-code-prettier-eslint.prettierLast": false,
-  "prettier.singleQuote": true
+  "vs-code-prettier-eslint.prettierLast": false
 }

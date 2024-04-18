@@ -8,15 +8,13 @@ interface Props {
   setIsNewSongOpen: (value: boolean) => void;
 }
 
-const CreateNewSongButton = ({ setIsNewSongOpen }: Props) => {
-  return (
+const CreateNewSongButton = ({ setIsNewSongOpen }: Props) => (
     <TouchableOpacity
       style={createNewSongButtonStyles.container}
       onPress={() => setIsNewSongOpen(true)}
     >
       <NewSongIcon />
     </TouchableOpacity>
-  );
-};
+);
 
 export default CreateNewSongButton;
