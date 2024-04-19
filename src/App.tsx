@@ -7,6 +7,7 @@ import SongScreen from '@src/screens/SongScreen';
 import LyricsScreen from '@src/screens/LyricsScreen';
 import HomeScreen from '@src/screens/HomeScreen';
 import { RootStackParamList } from '@src/common/types';
+import headerStyles from '@src/styles/header';
 
 const App = () => {
   const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -15,9 +16,13 @@ const App = () => {
     <NavigationContainer>
       <RootStack.Navigator initialRouteName="Home">
         <RootStack.Screen name="Home" component={HomeScreen} />
-        <RootStack.Screen name="Song" component={SongScreen} />
-        <RootStack.Screen name="Lyrics" component={LyricsScreen} />
-        <RootStack.Screen name="Settings" component={SettingsScreen} />
+        <RootStack.Screen name="Song" component={SongScreen} options={{ ...headerStyles }} />
+        <RootStack.Screen name="Lyrics" component={LyricsScreen} options={{ ...headerStyles }} />
+        <RootStack.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={{ ...headerStyles }}
+        />
       </RootStack.Navigator>
     </NavigationContainer>
   );

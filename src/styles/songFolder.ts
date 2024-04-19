@@ -4,11 +4,10 @@ const songFolderStyle = StyleSheet.create({
   container: {
     flexDirection: 'row',
     backgroundColor: '#f0f0f0',
-    paddingTop: 15,
+    paddingVertical: 12,
     paddingLeft: 25,
     paddingRight: 30,
     width: '100%',
-    height: '16%',
     borderBottomWidth: 1,
     borderBottomColor: '#000',
     justifyContent: 'space-between',
