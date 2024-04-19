@@ -4,7 +4,7 @@ export type colorThemeName = 'Light' | 'Dark' | 'Metal' | 'Psych' | 'Pop' | 'Twe
 
 export type RootStackParamList = {
   Home: undefined;
-  Song: undefined;
-  Lyrics: undefined;
+  CurrentSongFolder: { currentSong: string };
+  Lyrics: { currentSong: string };
   Settings: undefined;
 };

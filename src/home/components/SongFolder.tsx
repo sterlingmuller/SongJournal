@@ -18,12 +18,15 @@ const SongFolder = ({ song }: Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <View style={songFolderStyle.container}>
+    <TouchableOpacity
+      style={songFolderStyle.container}
+      onPress={() => navigate('CurrentSongFolder', { currentSong: song })}
+    >
       <View style={songFolderStyle.contents}>
         <Text style={songFolderStyle.title}>{song}</Text>
         <Text>March 14, 24</Text>
         <View style={songFolderStyle.iconRow}>
-          <TouchableOpacity onPress={() => navigate('Lyrics')}>
+          <TouchableOpacity onPress={() => navigate('Lyrics', { currentSong: song })}>
             <LyricsIcon />
           </TouchableOpacity>
           <ShareIcon />
@@ -33,7 +36,7 @@ const SongFolder = ({ song }: Props) => {
       <View style={songFolderStyle.playIcon}>
         <PlayIcon />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
