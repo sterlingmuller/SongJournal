@@ -16,8 +16,16 @@ const App = () => {
     <NavigationContainer>
       <RootStack.Navigator initialRouteName="Home">
         <RootStack.Screen name="Home" component={HomeScreen} />
-        <RootStack.Screen name="Song" component={SongScreen} options={{ ...headerStyles }} />
-        <RootStack.Screen name="Lyrics" component={LyricsScreen} options={{ ...headerStyles }} />
+        <RootStack.Screen
+          name="CurrentSongFolder"
+          component={SongScreen}
+          options={({ route }) => ({ ...headerStyles, title: route.params.currentSong })}
+        />
+        <RootStack.Screen
+          name="Lyrics"
+          component={LyricsScreen}
+          options={({ route }) => ({ ...headerStyles, title: route.params.currentSong })}
+        />
         <RootStack.Screen
           name="Settings"
           component={SettingsScreen}
