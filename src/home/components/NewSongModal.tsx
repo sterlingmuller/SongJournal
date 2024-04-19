@@ -37,7 +37,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
           </View>
           <View style={newSongModalStyle.buttons}>
             <View style={newSongModalStyle.button}>
-              <Button title="Save" color="#81C2F1" onPress={() => navigate('Song')} />
+              <Button title="Save" color="#81C2F1" onPress={() => navigate('CurrentSongFolder')} />
             </View>
             <View style={newSongModalStyle.button}>
               <Button title="Cancel" color="#D6D6D6" onPress={onExitPress} />

@@ -14,6 +14,7 @@ const Theme = () => {
       <Text style={settingsStyle.sectionTitle}>Theme</Text>
       {colorThemeNames.map((theme) => (
         <ColorThemeOption
+          key={theme}
           label={theme}
           colorTheme={colorTheme}
           setColorTheme={setColorTheme}
