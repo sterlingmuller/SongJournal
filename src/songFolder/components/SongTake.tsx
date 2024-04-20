@@ -6,14 +6,16 @@ import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
 import NotesIcon from '@src/icons/NotesIcon';
 import TrashIcon from '@src/icons/TrashIcon';
+import NotesModal from '@src/songFolder/components/NotesModal';
 
 interface Props {
   song: string;
-  setIsNotesModalOpen: (value: boolean) => void;
+  // setIsNotesModalOpen: (value: boolean) => void;
 }
 
-const SongTake = ({ song, setIsNotesModalOpen }: Props) => {
+const SongTake = ({ song }: Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isNotesModalOpen, setIsNotesModalOpen] = useState<string>('');
 
   return (
     <View style={songTakeStyle.container}>
@@ -21,7 +23,7 @@ const SongTake = ({ song, setIsNotesModalOpen }: Props) => {
         <Text style={songTakeStyle.title}>{song}</Text>
         <Text>March 14, 24</Text>
         <View style={songTakeStyle.iconRow}>
-          <TouchableOpacity onPress={() => null}>
+          <TouchableOpacity onPress={() => setIsNotesModalOpen(song)}>
             <NotesIcon />
           </TouchableOpacity>
           <ShareIcon />
@@ -32,6 +34,7 @@ const SongTake = ({ song, setIsNotesModalOpen }: Props) => {
       <View style={songTakeStyle.playIcon}>
         <PlayIcon />
       </View>
+      <NotesModal isNotesModalOpen={isNotesModalOpen} setIsNotesModalOpen={setIsNotesModalOpen} />
     </View>
   );
 };

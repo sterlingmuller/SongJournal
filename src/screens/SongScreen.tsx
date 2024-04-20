@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { View, text } from 'react-native';
+import { View } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import SongTake from '@src/songFolder/components/SongTake';
@@ -11,7 +11,6 @@ const SongScreen = () => {
   const navigation = useNavigation();
 
   const [isRecording, setIsRecording] = useState(false);
-  const [isNotesModalOpen, setIsNotesModalOpen] = useState(false);
 
   // useLayoutEffect(() => {
   //   navigation.setOptions({
@@ -22,11 +21,11 @@ const SongScreen = () => {
   return (
     <View style={global.container}>
       <View style={songScreenStyle.takes}>
-        <SongTake song="Take 5" setIsNotesModalOpen={setIsNotesModalOpen} />
-        <SongTake song="Take 4" setIsNotesModalOpen={setIsNotesModalOpen} />
-        <SongTake song="Take 3" setIsNotesModalOpen={setIsNotesModalOpen} />
-        <SongTake song="Take 2" setIsNotesModalOpen={setIsNotesModalOpen} />
-        <SongTake song="Take 1" setIsNotesModalOpen={setIsNotesModalOpen} />
+        <SongTake song="Take 5" />
+        <SongTake song="Take 4" />
+        <SongTake song="Take 3" />
+        <SongTake song="Take 2" />
+        <SongTake song="Take 1" />
       </View>
       <RecordButton isRecording={isRecording} setIsRecording={setIsRecording} />
     </View>
