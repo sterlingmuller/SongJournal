@@ -10,8 +10,8 @@ const takeNotesModalStyle = StyleSheet.create({
   container: {
     alignSelf: 'center',
     backgroundColor: '#fff',
-    width: '70%',
-    height: '50%',
+    width: '80%',
+    height: '60%',
     borderRadius: 15,
     gap: 20,
   },
@@ -26,11 +26,12 @@ const takeNotesModalStyle = StyleSheet.create({
     backgroundColor: '#f0f0f0',
     borderRadius: 10,
     padding: 8,
-    width: '75%',
-    height: '60%',
+    width: '85%',
+    height: '64%',
     borderWidth: 1,
     borderColor: '#ccc',
-    marginLeft: 35,
+    marginLeft: 25,
+    marginBottom: 10,
   },
 
   input: {
