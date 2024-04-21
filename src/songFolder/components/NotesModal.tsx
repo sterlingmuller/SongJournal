@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import {
-  View, Text, Modal, TouchableOpacity, TextInput, Button,
+  View, Text, Modal, TouchableOpacity, TextInput,
 } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 import takeNotesModalStyle from '@styles/takeNotesModal';
 import { RootStackParamList } from '@src/common/types';
+import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 
 interface Props {
   isNotesModalOpen: string;
@@ -37,14 +38,15 @@ const NotesModal = ({ isNotesModalOpen, setIsNotesModalOpen }: Props) => {
               textAlignVertical="top"
             />
           </View>
-          <View style={takeNotesModalStyle.buttons}>
+          {/* <View style={takeNotesModalStyle.buttons}>
             <View style={takeNotesModalStyle.button}>
               <Button title="Save" color="#81C2F1" onPress={() => navigate('CurrentSongFolder')} />
             </View>
             <View style={takeNotesModalStyle.button}>
               <Button title="Cancel" color="#D6D6D6" onPress={onExitPress} />
             </View>
-          </View>
+          </View> */}
+          <SaveAndCancelButtons />
         </View>
       </TouchableOpacity>
     </Modal>

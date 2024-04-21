@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import {
-  View, Text, Modal, TouchableOpacity, TextInput, Button,
+  View, Text, Modal, TouchableOpacity, TextInput,
 } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 import newSongModalStyle from '@styles/newSongModal';
 import { RootStackParamList } from '@src/common/types';
+import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 
 interface Props {
   isNewSongOpen: boolean;
@@ -35,14 +36,15 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
               onChangeText={(title) => setSongTitle(title)}
             />
           </View>
-          <View style={newSongModalStyle.buttons}>
+          <SaveAndCancelButtons />
+          {/* <View style={newSongModalStyle.buttons}>
             <View style={newSongModalStyle.button}>
               <Button title="Save" color="#81C2F1" onPress={() => navigate('CurrentSongFolder')} />
             </View>
             <View style={newSongModalStyle.button}>
               <Button title="Cancel" color="#D6D6D6" onPress={onExitPress} />
             </View>
-          </View>
+          </View> */}
         </View>
       </TouchableOpacity>
     </Modal>

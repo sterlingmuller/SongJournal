@@ -14,6 +14,27 @@ const songDetailStyle = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
   },
+
+  completedContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+  },
+
+  checkbox: {
+    borderWidth: 1,
+    borderColor: 'ccc',
+    borderRadius: 5,
+    width: 20,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingLeft: 6,
+    paddingBottom: 6,
+  },
+
+  text: { fontSize: 16 },
 });
 
 export default songDetailStyle;

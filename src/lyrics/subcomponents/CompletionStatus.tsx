@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
 import songDetailStyle from '@src/styles/songDetail';
+import CheckIcon from '@src/icons/CheckIcon';
 
 interface Props {
   isCompleted: boolean;
@@ -9,11 +10,11 @@ interface Props {
 }
 
 const CompletionStatus = ({ isCompleted, setIsCompleted }: Props) => (
-  <View style={songDetailStyle.container}>
-    <TouchableOpacity style={songDetailStyle.textbox} onPress={() => setIsCompleted(!isCompleted)}>
-      <Text>{'\u2714'}</Text>
+  <View style={songDetailStyle.completedContainer}>
+    <TouchableOpacity style={songDetailStyle.checkbox} onPress={() => setIsCompleted(!isCompleted)}>
+      {isCompleted && <CheckIcon />}
     </TouchableOpacity>
-    <Text>Completed</Text>
+    <Text style={songDetailStyle.text}>Completed</Text>
   </View>
 );
 
