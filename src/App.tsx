@@ -8,6 +8,7 @@ import LyricsScreen from '@src/screens/LyricsScreen';
 import HomeScreen from '@src/screens/HomeScreen';
 import { RootStackParamList } from '@src/common/types';
 import headerStyles from '@src/styles/header';
+import HeaderPageButton from '@src/songFolder/subcomponents/HeaderPageButton';
 
 const App = () => {
   const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -19,7 +20,11 @@ const App = () => {
         <RootStack.Screen
           name="CurrentSongFolder"
           component={SongScreen}
-          options={({ route }) => ({ ...headerStyles, title: route.params.currentSong })}
+          options={({ route }) => ({
+            ...headerStyles,
+            title: route.params.currentSong,
+            headerRight: () => <HeaderPageButton currentSong={route.params.currentSong} />,
+          })}
         />
         <RootStack.Screen
           name="Lyrics"
