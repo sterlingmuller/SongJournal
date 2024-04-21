@@ -1,22 +1,13 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 
-import { useNavigation } from '@react-navigation/native';
 import SongTake from '@src/songFolder/components/SongTake';
 import RecordButton from '@src/songFolder/subcomponents/RecordButton';
 import global from '@src/styles/global';
 import songScreenStyle from '@src/styles/songScreen';
 
 const SongScreen = () => {
-  const navigation = useNavigation();
-
   const [isRecording, setIsRecording] = useState(false);
-
-  // useLayoutEffect(() => {
-  //   navigation.setOptions({
-  //     header: () => <HomeHeader isSortOpen={isSortOpen} setIsSortOpen={setIsSortOpen} />,
-  //   });
-  // }, [isSortOpen, setIsSortOpen]);
 
   return (
     <View style={global.container}>
