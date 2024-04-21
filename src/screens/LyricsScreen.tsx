@@ -5,6 +5,7 @@ import { RouteProp, useNavigation } from '@react-navigation/native';
 import LyricsHeader from '@src/lyrics/components/LyricsHeader';
 import InfoModal from '@src/lyrics/components/InfoModal';
 import { RootStackParamList } from '@src/common/types';
+import LyricsSheet from '@src/lyrics/components/LyricsSheet';
 
 interface Props {
   route: RouteProp<RootStackParamList, 'Lyrics'>;
@@ -30,7 +31,7 @@ const LyricsScreen = ({ route }: Props) => {
 
   return (
     <View>
-      <Text>Lyrics screen</Text>
+      <LyricsSheet />
       <InfoModal isInfoModalOpen={isInfoModalOpen} setIsInfoModalOpen={setIsInfoModalOpen} />
     </View>
   );

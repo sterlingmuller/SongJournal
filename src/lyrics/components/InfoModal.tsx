@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  View, Text, Modal, TouchableOpacity, TextInput, Button,
+  View, Text, Modal, TouchableOpacity, TextInput,
 } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
@@ -8,6 +8,7 @@ import infoModalStyle from '@styles/infoModal';
 import { RootStackParamList } from '@src/common/types';
 import SongDetail from '@src/lyrics/subcomponents/SongDetail';
 import CompletionStatus from '@src/lyrics/subcomponents/CompletionStatus';
+import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 
 interface Props {
   isInfoModalOpen: boolean;
@@ -46,14 +47,15 @@ const InfoModal = ({ isInfoModalOpen, setIsInfoModalOpen }: Props) => {
             <SongDetail label={'Bpm'} />
           </View>
           <CompletionStatus isCompleted={isCompleted} setIsCompleted={setIsCompleted} />
-          <View style={infoModalStyle.buttons}>
+          <SaveAndCancelButtons />
+          {/* <View style={infoModalStyle.buttons}>
             <View style={infoModalStyle.button}>
               <Button title="Save" color="#81C2F1" onPress={() => navigate('CurrentSongFolder')} />
             </View>
             <View style={infoModalStyle.button}>
               <Button title="Cancel" color="#D6D6D6" onPress={onExitPress} />
             </View>
-          </View>
+          </View> */}
         </View>
       </TouchableOpacity>
     </Modal>
