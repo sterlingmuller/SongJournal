@@ -3,14 +3,19 @@ import { StyleSheet, ViewStyle } from 'react-native';
 interface Styles {
   options: ViewStyle;
   textContainer: ViewStyle;
+  container: ViewStyle;
 }
 
 const lyricSheetStyles: Styles = StyleSheet.create({
+  container: {
+    gap: 22,
+  },
+
   options: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 25,
+    paddingTop: 25,
     gap: 20,
   },
 
