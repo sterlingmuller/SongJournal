@@ -6,6 +6,7 @@ import SettingsScreen from '@src/screens/SettingsScreen';
 import SongScreen from '@src/screens/SongScreen';
 import LyricsScreen from '@src/screens/LyricsScreen';
 import HomeScreen from '@src/screens/HomeScreen';
+import MusicPlayerScreen from '@src/screens/MusicPlayerScreen';
 import { RootStackParamList } from '@src/common/types';
 import headerStyles from '@src/styles/header';
 import HeaderPageButton from '@src/songFolder/subcomponents/HeaderPageButton';
@@ -30,6 +31,11 @@ const App = () => {
           name="Lyrics"
           component={LyricsScreen}
           options={({ route }) => ({ ...headerStyles, title: route.params.currentSong })}
+        />
+        <RootStack.Screen
+          name="MusicPlayer"
+          component={MusicPlayerScreen}
+          options={{ ...headerStyles }}
         />
         <RootStack.Screen
           name="Settings"

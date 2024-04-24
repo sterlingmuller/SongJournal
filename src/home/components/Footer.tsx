@@ -16,7 +16,7 @@ const Footer = () => {
       <TouchableOpacity>
         <PlaylistIcon />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigate('MusicPlayer')}>
         <MusicPlayerIcon />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigate('Settings')}>

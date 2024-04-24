@@ -15,7 +15,7 @@ interface Props {
 
 const SongFolder = ({ song }: Props) => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
   return (
     <TouchableOpacity
