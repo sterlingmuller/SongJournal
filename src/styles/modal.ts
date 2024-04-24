@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const newSongModalStyle = StyleSheet.create({
+const modalStyle = StyleSheet.create({
   modalContainer: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, .5)',
@@ -50,4 +50,4 @@ const newSongModalStyle = StyleSheet.create({
   },
 });
 
-export default newSongModalStyle;
+export default modalStyle;

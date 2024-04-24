@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-import newSongModalStyle from '@styles/newSongModal';
+import newSongModalStyle from '@src/styles/modal';
 import { RootStackParamList } from '@src/common/types';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 
