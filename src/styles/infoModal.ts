@@ -1,6 +1,17 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
-const infoModalStyle = StyleSheet.create({
+interface Styles {
+  modalContainer: ViewStyle;
+  container: ViewStyle;
+  title: TextStyle;
+  textbox: ViewStyle;
+  details: ViewStyle;
+  buttons: ViewStyle;
+  button: ViewStyle;
+  input: TextStyle;
+}
+
+const infoModalStyle: Styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, .5)',

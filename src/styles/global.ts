@@ -1,6 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 
-const globalStyles = StyleSheet.create({
+interface GlobalStyles {
+  container: ViewStyle;
+}
+
+const globalStyles: GlobalStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',

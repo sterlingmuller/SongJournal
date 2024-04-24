@@ -1,6 +1,17 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
-const sortByModalStyle = StyleSheet.create({
+interface Styles {
+  modalContainer: ViewStyle;
+  container: ViewStyle;
+  line: ViewStyle;
+  categories: ViewStyle;
+  selectedCategory: ViewStyle;
+  label: ViewStyle;
+  arrow: ViewStyle;
+  title: TextStyle;
+}
+
+const sortByModalStyle: Styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, .5)',

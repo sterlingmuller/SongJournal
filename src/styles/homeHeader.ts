@@ -1,6 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 
-const homeHeaderStyles = StyleSheet.create({
+interface Styles {
+  container: ViewStyle;
+}
+
+const homeHeaderStyles: Styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',

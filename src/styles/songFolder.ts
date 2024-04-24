@@ -1,6 +1,15 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
-const songFolderStyle = StyleSheet.create({
+interface Styles {
+  container: ViewStyle;
+  contents: ViewStyle;
+  iconRow: ViewStyle;
+  playIcon: ViewStyle;
+  playbackBar: ViewStyle;
+  title: TextStyle;
+}
+
+const songFolderStyle: Styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     backgroundColor: '#f0f0f0',

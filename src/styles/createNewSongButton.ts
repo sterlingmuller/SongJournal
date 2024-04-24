@@ -1,6 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 
-const createNewSongButtonStyles = StyleSheet.create({
+interface CreateNewSongButtonStyles {
+  container: ViewStyle;
+}
+
+const createNewSongButtonStyles: CreateNewSongButtonStyles = StyleSheet.create({
   container: {
     position: 'absolute',
     flex: 5,
