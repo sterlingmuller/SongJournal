@@ -5,9 +5,11 @@ import SongTake from '@src/songFolder/components/SongTake';
 import RecordButton from '@src/songFolder/subcomponents/RecordButton';
 import global from '@src/styles/global';
 import songScreenStyle from '@src/styles/songScreen';
+import DeleteModal from '@src/common/components/DeleteModal';
 
 const SongScreen = () => {
   const [isRecording, setIsRecording] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<string>('');
 
   return (
     <View style={global.container}>
@@ -19,6 +21,10 @@ const SongScreen = () => {
         <SongTake song="Take 1" />
       </View>
       <RecordButton isRecording={isRecording} setIsRecording={setIsRecording} />
+      <DeleteModal
+        isDeleteModalOpen={isDeleteModalOpen}
+        setIsDeleteModalOpen={setIsDeleteModalOpen}
+      />
     </View>
   );
 };

@@ -7,4 +7,5 @@ export type RootStackParamList = {
   CurrentSongFolder: { currentSong: string };
   Lyrics: { currentSong: string };
   Settings: undefined;
+  MusicPlayer: undefined;
 };
