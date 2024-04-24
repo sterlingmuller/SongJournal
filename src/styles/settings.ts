@@ -1,6 +1,18 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
-const settingsStyle = StyleSheet.create({
+interface Styles {
+  container: ViewStyle;
+  content: ViewStyle;
+  version: ViewStyle;
+  selectedTheme: ViewStyle;
+  themeLabel: ViewStyle;
+  sectionTitle: TextStyle;
+  title: TextStyle;
+  about: TextStyle;
+  aboutSignature: TextStyle;
+}
+
+const settingsStyle: Styles = StyleSheet.create({
   container: {
     height: '100%',
   },

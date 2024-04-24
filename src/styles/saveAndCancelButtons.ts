@@ -1,6 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 
-const saveAndCancelButtonsStyle = StyleSheet.create({
+interface Styles {
+  buttons: ViewStyle;
+  button: ViewStyle;
+}
+
+const saveAndCancelButtonsStyle: Styles = StyleSheet.create({
   buttons: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',

@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import {
-  View, Text, Modal, TouchableOpacity, TextInput,
-} from 'react-native';
+import { View, Text, Modal, TouchableOpacity, TextInput } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-import newSongModalStyle from '@src/styles/modal';
+import newSongModalStyle from '@src/styles/newSongModal';
 import { RootStackParamList } from '@src/common/types';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 

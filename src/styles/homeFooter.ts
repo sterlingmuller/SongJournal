@@ -1,6 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 
-const homeFooterStyles = StyleSheet.create({
+interface Styles {
+  container: ViewStyle;
+}
+
+const homeFooterStyles: Styles = StyleSheet.create({
   container: {
     position: 'absolute',
     flexDirection: 'row',

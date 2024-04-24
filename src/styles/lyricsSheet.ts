@@ -1,8 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 
-const lyricSheetStyles = StyleSheet.create({
-  container: {},
+interface Styles {
+  options: ViewStyle;
+  textContainer: ViewStyle;
+}
 
+const lyricSheetStyles: Styles = StyleSheet.create({
   options: {
     flexDirection: 'row',
     alignItems: 'center',

@@ -1,6 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
-const searchBarStyle = StyleSheet.create({
+interface Styles {
+  container: ViewStyle;
+  input: TextStyle;
+}
+
+const searchBarStyle: Styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     backgroundColor: '#f0f0f0',

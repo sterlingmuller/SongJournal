@@ -3,14 +3,13 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 interface Styles {
   modalContainer: ViewStyle;
   container: ViewStyle;
-  textbox: ViewStyle;
   buttons: ViewStyle;
   button: ViewStyle;
   title: TextStyle;
-  input: TextStyle;
+  text: TextStyle;
 }
 
-const takeNotesModalStyle: Styles = StyleSheet.create({
+const deleteModalStyle: Styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, .5)',
@@ -20,38 +19,28 @@ const takeNotesModalStyle: Styles = StyleSheet.create({
   container: {
     alignSelf: 'center',
     backgroundColor: '#fff',
-    width: '80%',
-    height: '60%',
+    width: '70%',
     borderRadius: 15,
-    gap: 20,
+    padding: 20,
   },
 
   title: {
-    paddingTop: 35,
-    paddingLeft: 40,
-    fontSize: 24,
+    fontSize: 20,
+    textAlign: 'center',
+    paddingBottom: 20,
+    fontWeight: '500',
   },
 
-  textbox: {
-    backgroundColor: '#f0f0f0',
-    borderRadius: 10,
-    padding: 8,
-    width: '85%',
-    height: '64%',
-    borderWidth: 1,
-    borderColor: '#ccc',
-    marginLeft: 25,
-    marginBottom: 10,
-  },
-
-  input: {
-    flex: 1,
-    fontSize: 14,
+  text: {
+    fontSize: 16,
+    textAlign: 'center',
+    paddingBottom: 30,
   },
 
   buttons: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
+    paddingBottom: 5,
   },
 
   button: {
@@ -60,4 +49,4 @@ const takeNotesModalStyle: Styles = StyleSheet.create({
   },
 });
 
-export default takeNotesModalStyle;
+export default deleteModalStyle;
