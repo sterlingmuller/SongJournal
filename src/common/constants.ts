@@ -15,3 +15,9 @@ export const colorThemeNames: colorThemeName[] = [
   'Pop',
   'Twee',
 ];
+
+export const deleteTake: string =
+  ' will be permanently deleted. This action cannot be undone.';
+
+export const deleteSong: string =
+  ', its journal entry, and all takes of this song will be permanently deleted. This action cannot be undone.';

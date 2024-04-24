@@ -9,7 +9,7 @@ import ShareIcon from '@src/icons/ShareIcon';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 
 const LyricsSheet = () => (
-  <View>
+  <View style={lyricSheetStyles.container}>
     <View style={lyricSheetStyles.options}>
       <EditIcon />
       <ChordsIcon />

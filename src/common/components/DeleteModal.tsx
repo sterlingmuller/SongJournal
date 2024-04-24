@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Modal, TouchableOpacity, Button } from 'react-native';
 
 import deleteModalStyle from '@src/styles/deleteModal';
+import { deleteTake } from '@src/common/constants';
 
 interface Props {
   isDeleteModalOpen: string;
@@ -23,8 +24,8 @@ const DeleteModal = ({ isDeleteModalOpen, setIsDeleteModalOpen }: Props) => {
             Delete from Google account and all devices
           </Text>
           <Text style={deleteModalStyle.text}>
-            {isDeleteModalOpen} will be permanently deleted. This action cannot
-            be undone.
+            {isDeleteModalOpen}
+            {deleteTake}
           </Text>
           <View style={deleteModalStyle.buttons}>
             <View style={deleteModalStyle.button}>
