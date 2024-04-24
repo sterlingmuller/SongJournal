@@ -1,6 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 
-const songScreenStyle = StyleSheet.create({
+interface Styles {
+  takes: ViewStyle;
+}
+
+const songScreenStyle: Styles = StyleSheet.create({
   takes: {
     marginTop: 25,
     gap: 20,

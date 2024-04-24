@@ -1,6 +1,14 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
-const songDetailStyle = StyleSheet.create({
+interface Styles {
+  container: ViewStyle;
+  textbox: ViewStyle;
+  completedContainer: ViewStyle;
+  checkbox: ViewStyle;
+  text: TextStyle;
+}
+
+const songDetailStyle: Styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     gap: 10,

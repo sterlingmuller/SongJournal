@@ -1,6 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 
-const recordButtonStyles = StyleSheet.create({
+interface Styles {
+  container: ViewStyle;
+}
+
+const recordButtonStyles: Styles = StyleSheet.create({
   container: {
     position: 'absolute',
     flex: 5,

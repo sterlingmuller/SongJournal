@@ -1,6 +1,13 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
-const lyricsHeaderStyles = StyleSheet.create({
+interface Styles {
+  container: ViewStyle;
+  title: TextStyle;
+  titlePlusArrow: ViewStyle;
+  info: ViewStyle;
+}
+
+const lyricsHeaderStyles: Styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',

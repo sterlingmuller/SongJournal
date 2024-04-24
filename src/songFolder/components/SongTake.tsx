@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 
 import songTakeStyle from '@styles/songTake';
@@ -6,16 +6,15 @@ import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
 import NotesIcon from '@src/icons/NotesIcon';
 import TrashIcon from '@src/icons/TrashIcon';
-import NotesModal from '@src/songFolder/components/NotesModal';
 
 interface Props {
   song: string;
-  // setIsNotesModalOpen: (value: boolean) => void;
+  setIsDeleteModalOpen: (value: string) => void;
+  setIsNotesModalOpen: (value: string) => void;
 }
 
-const SongTake = ({ song }: Props) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isNotesModalOpen, setIsNotesModalOpen] = useState<string>('');
+const SongTake = (props: Props) => {
+  const { song, setIsDeleteModalOpen, setIsNotesModalOpen } = props;
 
   return (
     <View style={songTakeStyle.container}>
@@ -27,14 +26,15 @@ const SongTake = ({ song }: Props) => {
             <NotesIcon />
           </TouchableOpacity>
           <ShareIcon />
-          <TrashIcon />
+          <TouchableOpacity onPress={() => setIsDeleteModalOpen(song)}>
+            <TrashIcon />
+          </TouchableOpacity>
           <View style={songTakeStyle.playbackBar} />
         </View>
       </View>
       <View style={songTakeStyle.playIcon}>
         <PlayIcon />
       </View>
-      <NotesModal isNotesModalOpen={isNotesModalOpen} setIsNotesModalOpen={setIsNotesModalOpen} />
     </View>
   );
 };

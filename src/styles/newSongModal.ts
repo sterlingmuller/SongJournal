@@ -1,6 +1,16 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
-const modalStyle = StyleSheet.create({
+interface Styles {
+  modalContainer: ViewStyle;
+  container: ViewStyle;
+  textbox: ViewStyle;
+  buttons: ViewStyle;
+  button: ViewStyle;
+  title: TextStyle;
+  input: TextStyle;
+}
+
+const newSongModalStyle: Styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, .5)',
@@ -50,4 +60,4 @@ const modalStyle = StyleSheet.create({
   },
 });
 
-export default modalStyle;
+export default newSongModalStyle;
