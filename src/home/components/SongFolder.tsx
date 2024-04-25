@@ -1,42 +1,32 @@
-import React, { useState } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
+import React from 'react';
+import { SwipeListView } from 'react-native-swipe-list-view';
 
-import songFolderStyle from '@styles/songFolder';
-import LyricsIcon from '@src/icons/LyricsIcon';
-import ShareIcon from '@src/icons/ShareIcon';
-import PlayIcon from '@src/icons/PlayIcon';
-import PlaybackBar from '@src/home/subcomponents/PlaybackBar';
-import { RootStackParamList } from '@src/common/types';
+import SongFolderContent from '../subcomponents/SongFolderContent';
+import DeleteRow from '../subcomponents/DeleteRow';
+import { DUMMY_SONGS } from '@src/common/constants';
 
 interface Props {
-  song: string;
+  setIsDeleteModalOpen: (value: string) => void;
 }
 
-const SongFolder = ({ song }: Props) => {
-  const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-
+const SongFolder = ({ setIsDeleteModalOpen }: Props) => {
   return (
-    <TouchableOpacity
-      style={songFolderStyle.container}
-      onPress={() => navigate('CurrentSongFolder', { currentSong: song })}
-    >
-      <View style={songFolderStyle.contents}>
-        <Text style={songFolderStyle.title}>{song}</Text>
-        <Text>March 14, 24</Text>
-        <View style={songFolderStyle.iconRow}>
-          <TouchableOpacity onPress={() => navigate('Lyrics', { currentSong: song })}>
-            <LyricsIcon />
-          </TouchableOpacity>
-          <ShareIcon />
-          <PlaybackBar />
-        </View>
-      </View>
-      <View style={songFolderStyle.playIcon}>
-        <PlayIcon />
-      </View>
-    </TouchableOpacity>
+    <SwipeListView
+      contentContainerStyle={{ paddingBottom: 90 }}
+      data={DUMMY_SONGS}
+      disableRightSwipe
+      previewRowKey={'0'}
+      previewOpenValue={-40}
+      previewOpenDelay={3000}
+      renderItem={(data) => <SongFolderContent song={data.item.text} />}
+      renderHiddenItem={(data) => (
+        <DeleteRow
+          song={data.item.text}
+          setIsDeleteModalOpen={setIsDeleteModalOpen}
+        />
+      )}
+      rightOpenValue={-100}
+    />
   );
 };
 

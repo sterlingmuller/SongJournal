@@ -2,14 +2,15 @@ import React from 'react';
 import { View, Text, Modal, TouchableOpacity, Button } from 'react-native';
 
 import deleteModalStyle from '@src/styles/deleteModal';
-import { deleteTake } from '@src/common/constants';
 
 interface Props {
   isDeleteModalOpen: string;
   setIsDeleteModalOpen: (currentSong: string) => void;
+  deleteText: string;
 }
 
-const DeleteModal = ({ isDeleteModalOpen, setIsDeleteModalOpen }: Props) => {
+const DeleteModal = (props: Props) => {
+  const { isDeleteModalOpen, setIsDeleteModalOpen, deleteText } = props;
   const onExitPress = (): void => setIsDeleteModalOpen('');
 
   return (
@@ -21,11 +22,11 @@ const DeleteModal = ({ isDeleteModalOpen, setIsDeleteModalOpen }: Props) => {
       >
         <View style={deleteModalStyle.container}>
           <Text style={deleteModalStyle.title}>
-            Delete from Google account and all devices
+            Delete from Google account and current device
           </Text>
           <Text style={deleteModalStyle.text}>
             {isDeleteModalOpen}
-            {deleteTake}
+            {deleteText}
           </Text>
           <View style={deleteModalStyle.buttons}>
             <View style={deleteModalStyle.button}>

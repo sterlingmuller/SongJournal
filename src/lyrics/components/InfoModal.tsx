@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View, Text, Modal, TouchableOpacity, TextInput,
-} from 'react-native';
+import { View, Text, Modal, TouchableOpacity, TextInput } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 import infoModalStyle from '@styles/infoModal';
@@ -36,7 +34,7 @@ const InfoModal = ({ isInfoModalOpen, setIsInfoModalOpen }: Props) => {
               style={infoModalStyle.input}
               placeholder="Add details for the song..."
               value={about}
-              onChangeText={(newAbout) => setAbout(newAbout)}
+              onChangeText={(newAbout: string) => setAbout(newAbout)}
               multiline={true}
               textAlignVertical="top"
             />
@@ -46,7 +44,10 @@ const InfoModal = ({ isInfoModalOpen, setIsInfoModalOpen }: Props) => {
             <SongDetail label={'Time'} />
             <SongDetail label={'Bpm'} />
           </View>
-          <CompletionStatus isCompleted={isCompleted} setIsCompleted={setIsCompleted} />
+          <CompletionStatus
+            isCompleted={isCompleted}
+            setIsCompleted={setIsCompleted}
+          />
           <SaveAndCancelButtons />
           {/* <View style={infoModalStyle.buttons}>
             <View style={infoModalStyle.button}>
