@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import sortByModalStyle from '@styles/sortByModal';
-import { sortByCategoryNames } from '@src/common/constants';
+import { SORTBY_CATEGORY_NAMES } from '@src/common/constants';
 import SortByCategory from '@src/home/subcomponents/SortByCategory';
 import { sortByCategoryName } from '@src/common/types';
 
@@ -23,7 +23,7 @@ const SortByCategories = (props: Props) => {
 
   return (
     <View style={sortByModalStyle.categories}>
-      {sortByCategoryNames.map((categoryName) => (
+      {SORTBY_CATEGORY_NAMES.map((categoryName: sortByCategoryName) => (
         <SortByCategory
           key={categoryName}
           label={categoryName}

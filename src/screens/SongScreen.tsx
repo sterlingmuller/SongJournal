@@ -7,6 +7,7 @@ import global from '@src/styles/global';
 import songScreenStyle from '@src/styles/songScreen';
 import DeleteModal from '@src/common/components/DeleteModal';
 import NotesModal from '@src/songFolder/components/NotesModal';
+import { DELETE_TAKE_TEXT } from '@src/common/constants';
 
 const SongScreen = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -46,6 +47,7 @@ const SongScreen = () => {
       <DeleteModal
         isDeleteModalOpen={isDeleteModalOpen}
         setIsDeleteModalOpen={setIsDeleteModalOpen}
+        deleteText={DELETE_TAKE_TEXT}
       />
       <NotesModal
         isNotesModalOpen={isNotesModalOpen}

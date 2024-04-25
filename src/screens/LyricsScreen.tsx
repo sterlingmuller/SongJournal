@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 
 import LyricsHeader from '@src/lyrics/components/LyricsHeader';
@@ -14,11 +14,11 @@ interface Props {
 const LyricsScreen = ({ route }: Props) => {
   const { currentSong } = route.params;
 
-  const navigation = useNavigation();
+  const { setOptions } = useNavigation();
   const [isInfoModalOpen, setIsInfoModalOpen] = useState<boolean>(false);
 
   useLayoutEffect(() => {
-    navigation.setOptions({
+    setOptions({
       header: () => (
         <LyricsHeader
           isInfoModalOpen={isInfoModalOpen}
@@ -32,7 +32,10 @@ const LyricsScreen = ({ route }: Props) => {
   return (
     <View>
       <LyricsSheet />
-      <InfoModal isInfoModalOpen={isInfoModalOpen} setIsInfoModalOpen={setIsInfoModalOpen} />
+      <InfoModal
+        isInfoModalOpen={isInfoModalOpen}
+        setIsInfoModalOpen={setIsInfoModalOpen}
+      />
     </View>
   );
 };
