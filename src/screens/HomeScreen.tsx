@@ -11,7 +11,6 @@ import Footer from '@src/home/components/Footer';
 import { sortByCategoryName } from '@src/common/types';
 import { useNavigation } from '@react-navigation/native';
 import DeleteModal from '@src/common/components/DeleteModal';
-import { ScrollView } from 'react-native-gesture-handler';
 import { DELETE_SONG_TEXT } from '@src/common/constants';
 
 const HomeScreen = () => {
@@ -34,9 +33,7 @@ const HomeScreen = () => {
 
   return (
     <View style={global.container}>
-      <ScrollView style={{ flex: 1 }}>
-        <SongFolder setIsDeleteModalOpen={setIsDeleteModalOpen} />
-      </ScrollView>
+      <SongFolder setIsDeleteModalOpen={setIsDeleteModalOpen} />
       <CreateNewSongButton setIsNewSongOpen={setIsNewSongOpen} />
       <SortByModal
         isSortOpen={isSortOpen}
