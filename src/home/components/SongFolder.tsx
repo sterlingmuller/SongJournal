@@ -12,7 +12,7 @@ interface Props {
 const SongFolder = ({ setIsDeleteModalOpen }: Props) => {
   return (
     <SwipeListView
-      contentContainerStyle={{ paddingBottom: 90 }}
+      contentContainerStyle={{ paddingBottom: 200 }}
       data={DUMMY_SONGS}
       disableRightSwipe
       previewRowKey={'0'}

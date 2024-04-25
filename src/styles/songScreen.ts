@@ -8,6 +8,7 @@ const songScreenStyle: Styles = StyleSheet.create({
   takes: {
     marginTop: 25,
     gap: 20,
+    marginBottom: 175,
   },
 });
 
