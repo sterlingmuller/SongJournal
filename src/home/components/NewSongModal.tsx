@@ -31,7 +31,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
               style={newSongModalStyle.input}
               placeholder="Cobra Strike Alpha Deluxe"
               value={songTitle}
-              onChangeText={(title) => setSongTitle(title)}
+              onChangeText={(title: string) => setSongTitle(title)}
             />
           </View>
           <SaveAndCancelButtons />

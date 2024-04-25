@@ -15,22 +15,41 @@ interface Props {
 
 const SortByCategory = (props: Props) => {
   const {
-    sortedCategory, setSortedCategory, isSortAscending, setIsSortAscending, label,
+    sortedCategory,
+    setSortedCategory,
+    isSortAscending,
+    setIsSortAscending,
+    label,
   } = props;
-  const isSelected = sortedCategory === label;
+  const isSelected: boolean = sortedCategory === label;
 
   const onPress = () => {
-    isSelected ? setIsSortAscending(!isSortAscending) : setSortedCategory(label);
+    isSelected
+      ? setIsSortAscending(!isSortAscending)
+      : setSortedCategory(label);
   };
 
   return (
-    <TouchableOpacity onPress={onPress} style={isSelected && sortByModalStyle.selectedCategory}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={isSelected && sortByModalStyle.selectedCategory}
+    >
       {isSelected && (
         <View>
           {isSortAscending ? (
-            <AntDesign style={sortByModalStyle.arrow} name="arrowup" size={24} color="black" />
+            <AntDesign
+              style={sortByModalStyle.arrow}
+              name="arrowup"
+              size={24}
+              color="black"
+            />
           ) : (
-            <AntDesign style={sortByModalStyle.arrow} name="arrowdown" size={24} color="black" />
+            <AntDesign
+              style={sortByModalStyle.arrow}
+              name="arrowdown"
+              size={24}
+              color="black"
+            />
           )}
         </View>
       )}

@@ -10,29 +10,33 @@ import NewSongModal from '@src/home/components/NewSongModal';
 import Footer from '@src/home/components/Footer';
 import { sortByCategoryName } from '@src/common/types';
 import { useNavigation } from '@react-navigation/native';
+import DeleteModal from '@src/common/components/DeleteModal';
+import { ScrollView } from 'react-native-gesture-handler';
+import { DELETE_SONG_TEXT } from '@src/common/constants';
 
 const HomeScreen = () => {
-  const navigation = useNavigation();
+  const { setOptions } = useNavigation();
 
   const [isSortOpen, setIsSortOpen] = useState(false);
-  const [sortedCategory, setSortedCategory] = useState<sortByCategoryName>('Date');
+  const [sortedCategory, setSortedCategory] =
+    useState<sortByCategoryName>('Date');
   const [isSortAscending, setIsSortAscending] = useState(false);
   const [isNewSongOpen, setIsNewSongOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState('');
 
   useLayoutEffect(() => {
-    navigation.setOptions({
-      header: () => <HomeHeader isSortOpen={isSortOpen} setIsSortOpen={setIsSortOpen} />,
+    setOptions({
+      header: () => (
+        <HomeHeader isSortOpen={isSortOpen} setIsSortOpen={setIsSortOpen} />
+      ),
     });
   }, [isSortOpen, setIsSortOpen]);
 
   return (
     <View style={global.container}>
-      <SongFolder song="Dubble Bubble" />
-      <SongFolder song="Try To" />
-      <SongFolder song="Fresh Towel" />
-      <SongFolder song="Belly" />
-      <SongFolder song="Sludge" />
-      <SongFolder song="Virus" />
+      <ScrollView style={{ flex: 1 }}>
+        <SongFolder setIsDeleteModalOpen={setIsDeleteModalOpen} />
+      </ScrollView>
       <CreateNewSongButton setIsNewSongOpen={setIsNewSongOpen} />
       <SortByModal
         isSortOpen={isSortOpen}
@@ -42,7 +46,15 @@ const HomeScreen = () => {
         isSortAscending={isSortAscending}
         setIsSortAscending={setIsSortAscending}
       />
-      <NewSongModal isNewSongOpen={isNewSongOpen} setIsNewSongOpen={setIsNewSongOpen} />
+      <NewSongModal
+        isNewSongOpen={isNewSongOpen}
+        setIsNewSongOpen={setIsNewSongOpen}
+      />
+      <DeleteModal
+        isDeleteModalOpen={isDeleteModalOpen}
+        setIsDeleteModalOpen={setIsDeleteModalOpen}
+        deleteText={DELETE_SONG_TEXT}
+      />
       <Footer />
     </View>
   );
