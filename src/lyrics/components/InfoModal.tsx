@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, TouchableOpacity, TextInput } from 'react-native';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 import infoModalStyle from '@styles/infoModal';
-import { RootStackParamList } from '@src/common/types';
 import SongDetail from '@src/lyrics/subcomponents/SongDetail';
 import CompletionStatus from '@src/lyrics/subcomponents/CompletionStatus';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
@@ -14,11 +12,11 @@ interface Props {
 }
 
 const InfoModal = ({ isInfoModalOpen, setIsInfoModalOpen }: Props) => {
-  const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   const [about, setAbout] = useState<string>('');
   const [isCompleted, setIsCompleted] = useState(false);
 
   const onExitPress = () => setIsInfoModalOpen(false);
+  const disabled: boolean = !about;
 
   return (
     <Modal transparent visible={isInfoModalOpen}>
@@ -48,15 +46,11 @@ const InfoModal = ({ isInfoModalOpen, setIsInfoModalOpen }: Props) => {
             isCompleted={isCompleted}
             setIsCompleted={setIsCompleted}
           />
-          <SaveAndCancelButtons />
-          {/* <View style={infoModalStyle.buttons}>
-            <View style={infoModalStyle.button}>
-              <Button title="Save" color="#81C2F1" onPress={() => navigate('CurrentSongFolder')} />
-            </View>
-            <View style={infoModalStyle.button}>
-              <Button title="Cancel" color="#D6D6D6" onPress={onExitPress} />
-            </View>
-          </View> */}
+          <SaveAndCancelButtons
+            onPress={() => null}
+            onExitPress={() => setIsInfoModalOpen(false)}
+            disabled={disabled}
+          />
         </View>
       </TouchableOpacity>
     </Modal>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Modal, TouchableOpacity, TextInput } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
@@ -12,10 +12,20 @@ interface Props {
 }
 
 const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
-  const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
+  const { navigate, addListener } =
+    useNavigation<NavigationProp<RootStackParamList>>();
   const [songTitle, setSongTitle] = useState('');
-
   const onExitPress = () => setIsNewSongOpen(false);
+  const disabled: boolean = !songTitle;
+
+  useEffect(
+    () =>
+      addListener('blur', () => {
+        setIsNewSongOpen(false);
+        setSongTitle('');
+      }),
+    [navigate],
+  );
 
   return (
     <Modal transparent visible={isNewSongOpen}>
@@ -34,15 +44,13 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
               onChangeText={(title: string) => setSongTitle(title)}
             />
           </View>
-          <SaveAndCancelButtons />
-          {/* <View style={newSongModalStyle.buttons}>
-            <View style={newSongModalStyle.button}>
-              <Button title="Save" color="#81C2F1" onPress={() => navigate('CurrentSongFolder')} />
-            </View>
-            <View style={newSongModalStyle.button}>
-              <Button title="Cancel" color="#D6D6D6" onPress={onExitPress} />
-            </View>
-          </View> */}
+          <SaveAndCancelButtons
+            onPress={() =>
+              navigate('CurrentSongFolder', { currentSong: songTitle })
+            }
+            onExitPress={() => setIsNewSongOpen(false)}
+            disabled={disabled}
+          />
         </View>
       </TouchableOpacity>
     </Modal>
