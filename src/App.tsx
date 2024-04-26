@@ -25,10 +25,8 @@ const App = () => {
             component={SongScreen}
             options={({ route }) => ({
               ...headerStyles,
-              title: route.params.currentSong,
-              headerRight: () => (
-                <HeaderPageButton currentSong={route.params.currentSong} />
-              ),
+              song: route.params.song,
+              headerRight: () => <HeaderPageButton song={route.params.song} />,
             })}
           />
           <RootStack.Screen
@@ -36,7 +34,7 @@ const App = () => {
             component={LyricsScreen}
             options={({ route }) => ({
               ...headerStyles,
-              title: route.params.currentSong,
+              song: route.params.song,
             })}
           />
           <RootStack.Screen

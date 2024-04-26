@@ -9,6 +9,7 @@ import DeleteModal from '@src/common/components/DeleteModal';
 import NotesModal from '@src/songFolder/components/NotesModal';
 import { DELETE_TAKE_TEXT } from '@src/common/constants';
 import { ScrollView } from 'react-native-gesture-handler';
+
 const SongScreen = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<string>('');

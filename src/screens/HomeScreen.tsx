@@ -3,7 +3,7 @@ import { View } from 'react-native';
 
 import HomeHeader from '@src/home/components/HomeHeader';
 import CreateNewSongButton from '@src/home/components/CreateNewSongButton';
-import SongFolder from '@src/home/components/SongFolder';
+import SongFolders from '@src/home/components/SongFolders';
 import SortByModal from '@src/home/components/SortByModal';
 import global from '@styles/global';
 import NewSongModal from '@src/home/components/NewSongModal';
@@ -33,7 +33,7 @@ const HomeScreen = () => {
 
   return (
     <View style={global.container}>
-      <SongFolder setIsDeleteModalOpen={setIsDeleteModalOpen} />
+      <SongFolders setIsDeleteModalOpen={setIsDeleteModalOpen} />
       <CreateNewSongButton setIsNewSongOpen={setIsNewSongOpen} />
       <SortByModal
         isSortOpen={isSortOpen}
