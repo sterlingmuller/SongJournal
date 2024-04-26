@@ -25,7 +25,7 @@ const App = () => {
             component={SongScreen}
             options={({ route }) => ({
               ...headerStyles,
-              song: route.params.song,
+              title: route.params.song.title,
               headerRight: () => <HeaderPageButton song={route.params.song} />,
             })}
           />

@@ -5,15 +5,18 @@ import infoModalStyle from '@styles/infoModal';
 import SongDetail from '@src/lyrics/subcomponents/SongDetail';
 import CompletionStatus from '@src/lyrics/subcomponents/CompletionStatus';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
+import { info } from '@src/common/types';
 
 interface Props {
   isInfoModalOpen: boolean;
   setIsInfoModalOpen: (value: boolean) => void;
+  info: info;
 }
 
-const InfoModal = ({ isInfoModalOpen, setIsInfoModalOpen }: Props) => {
+const InfoModal = (props: Props) => {
+  const { isInfoModalOpen, setIsInfoModalOpen, info } = props;
   const [about, setAbout] = useState<string>('');
-  const [isCompleted, setIsCompleted] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(info.completed);
 
   const onExitPress = () => setIsInfoModalOpen(false);
   const disabled: boolean = !about;

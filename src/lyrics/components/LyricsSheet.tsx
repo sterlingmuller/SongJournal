@@ -7,9 +7,17 @@ import ChordsIcon from '@src/icons/ChordsIcon';
 import MetronomeIcon from '@src/icons/MetronomeIcon';
 import ShareIcon from '@src/icons/ShareIcon';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
+import { page } from '@src/common/types';
 
-const LyricsSheet = () => {
-  const [lyrics, setLyrics] = useState<string>('');
+interface Props {
+  page: page;
+}
+
+const LyricsSheet = ({ page }: Props) => {
+  const { lyrics, info } = page;
+  const { bpm, keySignature, time } = info;
+
+  const [newLyrics, setNewLyrics] = useState<string>(lyrics);
   const disabled: boolean = !lyrics;
 
   return (
@@ -22,8 +30,8 @@ const LyricsSheet = () => {
       </View>
       <TextInput
         style={lyricSheetStyles.textContainer}
-        value={lyrics}
-        onChangeText={(text: string) => setLyrics(text)}
+        value={newLyrics}
+        onChangeText={(text: string) => setNewLyrics(text)}
         placeholder="Add lyrics..."
         textAlignVertical="top"
       />

@@ -3,17 +3,17 @@ import { TouchableOpacity } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 import PageIcon from '@src/icons/PageIcon';
-import { RootStackParamList } from '@src/common/types';
+import { RootStackParamList, song } from '@src/common/types';
 
 interface Props {
-  currentSong: string;
+  song: song;
 }
 
-const HeaderPageButton = ({ currentSong }: Props) => {
+const HeaderPageButton = ({ song }: Props) => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
 
   return (
-    <TouchableOpacity onPress={() => navigate('Lyrics', { currentSong })}>
+    <TouchableOpacity onPress={() => navigate('Lyrics', { song })}>
       <PageIcon />
     </TouchableOpacity>
   );
