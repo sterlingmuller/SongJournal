@@ -1,15 +1,17 @@
 import React from 'react';
 import { SwipeListView } from 'react-native-swipe-list-view';
 
-import SongFolderContent from '../subcomponents/SongFolderContent';
-import DeleteRow from '../subcomponents/DeleteRow';
+import SongFolder from '@src/home/subcomponents/SongFolder';
+import DeleteRow from '@src/home/subcomponents/DeleteRow';
 import { DUMMY_SONGS } from '@src/common/constants';
+import { ListRenderItemInfo } from 'react-native';
+import { song } from '@src/common/types';
 
 interface Props {
   setIsDeleteModalOpen: (value: string) => void;
 }
 
-const SongFolder = ({ setIsDeleteModalOpen }: Props) => {
+const SongFolders = ({ setIsDeleteModalOpen }: Props) => {
   return (
     <SwipeListView
       contentContainerStyle={{ paddingBottom: 200 }}
@@ -18,10 +20,12 @@ const SongFolder = ({ setIsDeleteModalOpen }: Props) => {
       previewRowKey={'0'}
       previewOpenValue={-40}
       previewOpenDelay={3000}
-      renderItem={(data) => <SongFolderContent song={data.item.text} />}
-      renderHiddenItem={(data) => (
+      renderItem={(data: ListRenderItemInfo<song>) => {
+        return <SongFolder song={data.item} />;
+      }}
+      renderHiddenItem={(data: ListRenderItemInfo<song>) => (
         <DeleteRow
-          song={data.item.text}
+          song={data.item.title}
           setIsDeleteModalOpen={setIsDeleteModalOpen}
         />
       )}
@@ -30,4 +34,4 @@ const SongFolder = ({ setIsDeleteModalOpen }: Props) => {
   );
 };
 
-export default SongFolder;
+export default SongFolders;

@@ -7,13 +7,13 @@ import LyricsIcon from '@src/icons/LyricsIcon';
 import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
 import PlaybackBar from '@src/home/subcomponents/PlaybackBar';
-import { RootStackParamList } from '@src/common/types';
+import { RootStackParamList, song } from '@src/common/types';
 
 interface Props {
-  song: string;
+  song: song;
 }
 
-const SongFolderContent = ({ song }: Props) => {
+const SongFolder = ({ song }: Props) => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isPressed, setIsPressed] = useState(false);
@@ -35,15 +35,13 @@ const SongFolderContent = ({ song }: Props) => {
       activeOpacity={1}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
-      onPress={() => navigate('CurrentSongFolder', { currentSong: song })}
+      onPress={() => navigate('CurrentSongFolder', { song })}
     >
       <View style={songFolderStyle.contents}>
-        <Text style={songFolderStyle.title}>{song}</Text>
+        <Text style={songFolderStyle.title}>{song.title}</Text>
         <Text>March 14, 24</Text>
         <View style={songFolderStyle.iconRow}>
-          <TouchableOpacity
-            onPress={() => navigate('Lyrics', { currentSong: song })}
-          >
+          <TouchableOpacity onPress={() => navigate('Lyrics', { song })}>
             <LyricsIcon />
           </TouchableOpacity>
           <ShareIcon />
@@ -57,4 +55,4 @@ const SongFolderContent = ({ song }: Props) => {
   );
 };
 
-export default SongFolderContent;
+export default SongFolder;
