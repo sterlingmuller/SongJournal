@@ -62,18 +62,20 @@ export const DUMMY_SONGS: songs = [
     ],
     page: {
       lyrics: 'La la la la laaaaa!',
-      details: 'I wrote this song when I was listening to The Cure a lot',
-      bpm: 120,
-      key: 'G',
-      time: '4/4',
-      completed: true,
+      info: {
+        details: 'I wrote this song when I was listening to The Cure a lot',
+        bpm: 120,
+        keySignature: 'G',
+        time: '4/4',
+        completed: true,
+      },
     },
   },
   {
     key: 1,
     title: 'Try To',
     selectedTake: 0,
-    songTakes: [
+    takes: [
       {
         key: 0,
         title: 'Take 1',
@@ -82,13 +84,15 @@ export const DUMMY_SONGS: songs = [
         starred: true,
       },
     ],
-    songPage: {
+    page: {
       lyrics: 'La la la la laaaaa!',
-      details: 'I wrote this song when I was listening to The Cure a lot',
-      bpm: 90,
-      key: 'G',
-      time: '4/4',
-      completed: true,
+      info: {
+        details: 'I wrote this song when I was listening to The Cure a lot',
+        bpm: 90,
+        keySignature: 'G',
+        time: '4/4',
+        completed: true,
+      },
     },
   },
   {
@@ -127,11 +131,13 @@ export const DUMMY_SONGS: songs = [
     ],
     page: {
       lyrics: '',
-      details: '',
-      bpm: null,
-      key: '',
-      time: '',
-      completed: false,
+      info: {
+        details: '',
+        bpm: null,
+        keySignature: '',
+        time: '',
+        completed: false,
+      },
     },
   },
   {
@@ -170,11 +176,13 @@ export const DUMMY_SONGS: songs = [
     ],
     page: {
       lyrics: 'La la la la laaaaa!',
-      details: 'I wrote this song when I was listening to The Cure a lot',
-      bpm: 120,
-      key: 'G',
-      time: '4/4',
-      completed: true,
+      info: {
+        details: '',
+        bpm: null,
+        keySignature: '',
+        time: '',
+        completed: false,
+      },
     },
   },
   {
@@ -213,11 +221,13 @@ export const DUMMY_SONGS: songs = [
     ],
     page: {
       lyrics: 'La la la la laaaaa!',
-      details: 'I wrote this song when I was listening to The Cure a lot',
-      bpm: 120,
-      key: 'G',
-      time: '4/4',
-      completed: true,
+      info: {
+        details: '',
+        bpm: null,
+        keySignature: '',
+        time: '',
+        completed: false,
+      },
     },
   },
   {
@@ -256,11 +266,13 @@ export const DUMMY_SONGS: songs = [
     ],
     page: {
       lyrics: 'La la la la laaaaa!',
-      details: 'I wrote this song when I was listening to The Cure a lot',
-      bpm: 120,
-      key: 'G',
-      time: '4/4',
-      completed: true,
+      info: {
+        details: '',
+        bpm: null,
+        keySignature: '',
+        time: '',
+        completed: false,
+      },
     },
   },
 ];

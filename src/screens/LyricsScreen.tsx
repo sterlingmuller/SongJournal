@@ -13,6 +13,7 @@ interface Props {
 
 const LyricsScreen = ({ route }: Props) => {
   const { song } = route.params;
+  const { page } = song;
 
   const { setOptions } = useNavigation();
   const [isInfoModalOpen, setIsInfoModalOpen] = useState<boolean>(false);
@@ -31,10 +32,11 @@ const LyricsScreen = ({ route }: Props) => {
 
   return (
     <View>
-      <LyricsSheet />
+      <LyricsSheet page={page} />
       <InfoModal
         isInfoModalOpen={isInfoModalOpen}
         setIsInfoModalOpen={setIsInfoModalOpen}
+        info={page.info}
       />
     </View>
   );

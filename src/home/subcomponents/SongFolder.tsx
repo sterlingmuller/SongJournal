@@ -15,7 +15,7 @@ interface Props {
 
 const SongFolder = ({ song }: Props) => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const { title, takes, selectedTake } = song;
   const [isPressed, setIsPressed] = useState(false);
 
   const handlePressIn = () => {
@@ -38,8 +38,8 @@ const SongFolder = ({ song }: Props) => {
       onPress={() => navigate('CurrentSongFolder', { song })}
     >
       <View style={songFolderStyle.contents}>
-        <Text style={songFolderStyle.title}>{song.title}</Text>
-        <Text>March 14, 24</Text>
+        <Text style={songFolderStyle.title}>{title}</Text>
+        <Text>{takes[selectedTake].date}</Text>
         <View style={songFolderStyle.iconRow}>
           <TouchableOpacity onPress={() => navigate('Lyrics', { song })}>
             <LyricsIcon />

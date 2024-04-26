@@ -24,13 +24,17 @@ export type take = {
   starred: boolean;
 };
 
+export type info = {
+  bpm?: number;
+  keySignature?: string;
+  time?: string;
+  details?: string;
+  completed: boolean;
+};
+
 export type page = {
   lyrics?: string;
-  details?: string;
-  bpm?: number;
-  key?: string;
-  time?: string;
-  completed: boolean;
+  info: info;
 };
 
 export type song = {
