@@ -5,17 +5,21 @@ import infoModalStyle from '@styles/infoModal';
 import SongDetail from '@src/lyrics/subcomponents/SongDetail';
 import CompletionStatus from '@src/lyrics/subcomponents/CompletionStatus';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
-import { info } from '@src/common/types';
+import { info, songDetail, test } from '@src/common/types';
+import { SONG_DETAILS } from '@src/common/constants';
+import { RouteProp, useRoute } from '@react-navigation/native';
 
 interface Props {
   isInfoModalOpen: boolean;
   setIsInfoModalOpen: (value: boolean) => void;
-  info: info;
 }
 
 const InfoModal = (props: Props) => {
-  const { isInfoModalOpen, setIsInfoModalOpen, info } = props;
-  const [about, setAbout] = useState<string>('');
+  const route: RouteProp<test> = useRoute<RouteProp<test>>();
+  const info: info = route.params.song.page.info;
+
+  const { isInfoModalOpen, setIsInfoModalOpen } = props;
+  const [about, setAbout] = useState<string>(info.about);
   const [isCompleted, setIsCompleted] = useState(info.completed);
 
   const onExitPress = () => setIsInfoModalOpen(false);
@@ -41,9 +45,9 @@ const InfoModal = (props: Props) => {
             />
           </View>
           <View style={infoModalStyle.details}>
-            <SongDetail label={'Key'} />
-            <SongDetail label={'Time'} />
-            <SongDetail label={'Bpm'} />
+            {SONG_DETAILS.map(({ label, key }: songDetail) => (
+              <SongDetail key={label} label={label} value={info[key]} />
+            ))}
           </View>
           <CompletionStatus
             isCompleted={isCompleted}

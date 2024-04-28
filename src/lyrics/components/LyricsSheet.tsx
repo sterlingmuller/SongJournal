@@ -7,7 +7,9 @@ import ChordsIcon from '@src/icons/ChordsIcon';
 import MetronomeIcon from '@src/icons/MetronomeIcon';
 import ShareIcon from '@src/icons/ShareIcon';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
-import { page } from '@src/common/types';
+import { page, songDetail } from '@src/common/types';
+import { SONG_DETAILS } from '@src/common/constants';
+import SongDetail from '@src/lyrics/subcomponents/SongDetail';
 
 interface Props {
   page: page;
@@ -22,11 +24,26 @@ const LyricsSheet = ({ page }: Props) => {
 
   return (
     <View style={lyricSheetStyles.container}>
-      <View style={lyricSheetStyles.options}>
-        <EditIcon />
-        <ChordsIcon />
-        <MetronomeIcon />
-        <ShareIcon />
+      <View style={lyricSheetStyles.infoContainer}>
+        <View style={lyricSheetStyles.details}>
+          {SONG_DETAILS.map(
+            ({ label, key }: songDetail) =>
+              !!info[key] && (
+                <SongDetail
+                  key={label}
+                  label={label}
+                  value={info[key]}
+                  onPageScreen
+                />
+              ),
+          )}
+        </View>
+        <View style={lyricSheetStyles.options}>
+          <EditIcon />
+          <ChordsIcon />
+          <MetronomeIcon />
+          <ShareIcon />
+        </View>
       </View>
       <TextInput
         style={lyricSheetStyles.textContainer}

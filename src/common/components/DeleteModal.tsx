@@ -5,7 +5,7 @@ import deleteModalStyle from '@src/styles/deleteModal';
 
 interface Props {
   isDeleteModalOpen: string;
-  setIsDeleteModalOpen: (currentSong: string) => void;
+  setIsDeleteModalOpen: (song: string) => void;
   deleteText: string;
 }
 

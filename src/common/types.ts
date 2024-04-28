@@ -1,3 +1,5 @@
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+
 export type sortByCategoryName = 'Date' | 'Name' | 'Length' | 'Lyrics';
 
 export type colorThemeName =
@@ -10,11 +12,26 @@ export type colorThemeName =
 
 export type RootStackParamList = {
   Home: undefined;
-  CurrentSongFolder: { song: song };
+  Song: { song: song };
   Lyrics: { song: song };
   Settings: undefined;
   MusicPlayer: undefined;
 };
+
+export type songNavigation = NativeStackScreenProps<RootStackParamList, 'Song'>;
+
+export type lyricNavigation = NativeStackScreenProps<
+  RootStackParamList,
+  'Lyrics'
+>;
+
+export type lyricsScreenRouteParams = {
+  song: song;
+};
+
+export type test = { params: lyricsScreenRouteParams };
+
+export type songDetail = { label: string; key: string };
 
 export type take = {
   key: number;
@@ -25,10 +42,10 @@ export type take = {
 };
 
 export type info = {
-  bpm?: number;
+  bpm?: string;
   keySignature?: string;
   time?: string;
-  details?: string;
+  about?: string;
   completed: boolean;
 };
 
