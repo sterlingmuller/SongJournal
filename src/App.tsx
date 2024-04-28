@@ -8,22 +8,26 @@ import SongScreen from '@src/screens/SongScreen';
 import LyricsScreen from '@src/screens/LyricsScreen';
 import HomeScreen from '@src/screens/HomeScreen';
 import MusicPlayerScreen from '@src/screens/MusicPlayerScreen';
-import { RootStackParamList } from '@src/common/types';
+import {
+  RootStackParamList,
+  lyricNavigation,
+  songNavigation,
+} from '@src/common/types';
 import headerStyles from '@src/styles/header';
 import HeaderPageButton from '@src/songFolder/subcomponents/HeaderPageButton';
 
 const App = () => {
-  const RootStack = createNativeStackNavigator<RootStackParamList>();
+  const RootStack: any = createNativeStackNavigator<RootStackParamList>();
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
         <RootStack.Navigator initialRouteName="Home">
           <RootStack.Screen name="Home" component={HomeScreen} />
           <RootStack.Screen
-            name="CurrentSongFolder"
+            name="Song"
             component={SongScreen}
-            options={({ route }) => ({
+            options={({ route }: songNavigation) => ({
               ...headerStyles,
               title: route.params.song.title,
               headerRight: () => <HeaderPageButton song={route.params.song} />,
@@ -32,7 +36,7 @@ const App = () => {
           <RootStack.Screen
             name="Lyrics"
             component={LyricsScreen}
-            options={({ route }) => ({
+            options={({ route }: lyricNavigation) => ({
               ...headerStyles,
               song: route.params.song,
             })}
