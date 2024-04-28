@@ -45,9 +45,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
             />
           </View>
           <SaveAndCancelButtons
-            onPress={() =>
-              navigate('CurrentSongFolder', { currentSong: songTitle })
-            }
+            onPress={() => navigate('Song', { song: songTitle })}
             onExitPress={() => setIsNewSongOpen(false)}
             disabled={disabled}
           />

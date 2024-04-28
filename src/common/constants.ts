@@ -1,4 +1,9 @@
-import { sortByCategoryName, colorThemeName, songs } from '@src/common/types';
+import {
+  sortByCategoryName,
+  colorThemeName,
+  songs,
+  songDetail,
+} from '@src/common/types';
 import { Dimensions } from 'react-native';
 
 export const SORTBY_CATEGORY_NAMES: sortByCategoryName[] = [
@@ -15,6 +20,12 @@ export const COLOR_THEME_NAMES: colorThemeName[] = [
   'Psych',
   'Pop',
   'Twee',
+];
+
+export const SONG_DETAILS: songDetail[] = [
+  { label: 'Key', key: 'keySignature' },
+  { label: 'Time', key: 'time' },
+  { label: 'Bpm', key: 'bpm' },
 ];
 
 export const DELETE_TAKE_TEXT: string =
@@ -63,8 +74,8 @@ export const DUMMY_SONGS: songs = [
     page: {
       lyrics: 'La la la la laaaaa!',
       info: {
-        details: 'I wrote this song when I was listening to The Cure a lot',
-        bpm: 120,
+        about: 'I wrote this song when I was listening to The Cure a lot',
+        bpm: '120',
         keySignature: 'G',
         time: '4/4',
         completed: true,
@@ -87,8 +98,8 @@ export const DUMMY_SONGS: songs = [
     page: {
       lyrics: 'La la la la laaaaa!',
       info: {
-        details: 'I wrote this song when I was listening to The Cure a lot',
-        bpm: 90,
+        about: 'I wrote this song when I was listening to The Cure a lot',
+        bpm: '90',
         keySignature: 'G',
         time: '4/4',
         completed: true,
@@ -132,8 +143,8 @@ export const DUMMY_SONGS: songs = [
     page: {
       lyrics: '',
       info: {
-        details: '',
-        bpm: null,
+        about: '',
+        bpm: '110',
         keySignature: '',
         time: '',
         completed: false,
@@ -177,10 +188,10 @@ export const DUMMY_SONGS: songs = [
     page: {
       lyrics: 'La la la la laaaaa!',
       info: {
-        details: '',
+        about: '',
         bpm: null,
-        keySignature: '',
-        time: '',
+        keySignature: 'F',
+        time: '4/4',
         completed: false,
       },
     },
@@ -222,7 +233,7 @@ export const DUMMY_SONGS: songs = [
     page: {
       lyrics: 'La la la la laaaaa!',
       info: {
-        details: '',
+        about: '',
         bpm: null,
         keySignature: '',
         time: '',
@@ -267,7 +278,7 @@ export const DUMMY_SONGS: songs = [
     page: {
       lyrics: 'La la la la laaaaa!',
       info: {
-        details: '',
+        about: '',
         bpm: null,
         keySignature: '',
         time: '',

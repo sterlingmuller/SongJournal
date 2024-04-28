@@ -1,17 +1,29 @@
 import songDetailStyle from '@src/styles/songDetail';
-import React, { useState } from 'react';
+import React from 'react';
 import { TextInput, View, Text } from 'react-native';
 
 interface Props {
   label: string;
+  value: string;
+  onPageScreen?: boolean;
 }
 
-const SongDetail = ({ label }: Props) => {
-  const [detail, setDetail] = useState('');
+const SongDetail = (props: Props) => {
+  const { label, value, onPageScreen } = props;
 
   return (
-    <View style={songDetailStyle.container}>
-      <TextInput style={songDetailStyle.textbox} placeholder={'G'} textAlign="center" />
+    <View
+      style={
+        onPageScreen ? songDetailStyle.pageContainer : songDetailStyle.container
+      }
+    >
+      <TextInput
+        style={
+          onPageScreen ? songDetailStyle.pageTextbox : songDetailStyle.textbox
+        }
+        value={value}
+        textAlign="center"
+      />
       <Text>{label}</Text>
     </View>
   );

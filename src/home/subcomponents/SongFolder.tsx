@@ -35,7 +35,7 @@ const SongFolder = ({ song }: Props) => {
       activeOpacity={1}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
-      onPress={() => navigate('CurrentSongFolder', { song })}
+      onPress={() => navigate('Song', { song })}
     >
       <View style={songFolderStyle.contents}>
         <Text style={songFolderStyle.title}>{title}</Text>
