@@ -9,46 +9,35 @@ import DeleteModal from '@src/common/components/DeleteModal';
 import NotesModal from '@src/songFolder/components/NotesModal';
 import { DELETE_TAKE_TEXT } from '@src/common/constants';
 import { ScrollView } from 'react-native-gesture-handler';
+import { RootStackParamList, take } from '@src/common/types';
+import { RouteProp } from '@react-navigation/native';
 
-const SongScreen = () => {
-  const [isRecording, setIsRecording] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<string>('');
-  const [isNotesModalOpen, setIsNotesModalOpen] = useState<string>('');
+interface Props {
+  route: RouteProp<RootStackParamList, 'Song'>;
+}
+
+const SongScreen = ({ route }: Props) => {
+  const { song } = route.params;
+
+  const [currentTake, setCurrentTake] = useState<take | undefined>();
+  const [isRecording, setIsRecording] = useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [isNotesModalOpen, setIsNotesModalOpen] = useState<boolean>(false);
+
+  const takes: take[] = [...song.takes].reverse();
 
   return (
     <View style={global.container}>
       <ScrollView>
         <View style={songScreenStyle.takes}>
-          <SongTake
-            song="Take 6"
-            setIsDeleteModalOpen={setIsDeleteModalOpen}
-            setIsNotesModalOpen={setIsNotesModalOpen}
-          />
-          <SongTake
-            song="Take 5"
-            setIsDeleteModalOpen={setIsDeleteModalOpen}
-            setIsNotesModalOpen={setIsNotesModalOpen}
-          />
-          <SongTake
-            song="Take 4"
-            setIsDeleteModalOpen={setIsDeleteModalOpen}
-            setIsNotesModalOpen={setIsNotesModalOpen}
-          />
-          <SongTake
-            song="Take 3"
-            setIsDeleteModalOpen={setIsDeleteModalOpen}
-            setIsNotesModalOpen={setIsNotesModalOpen}
-          />
-          <SongTake
-            song="Take 2"
-            setIsDeleteModalOpen={setIsDeleteModalOpen}
-            setIsNotesModalOpen={setIsNotesModalOpen}
-          />
-          <SongTake
-            song="Take 1"
-            setIsDeleteModalOpen={setIsDeleteModalOpen}
-            setIsNotesModalOpen={setIsNotesModalOpen}
-          />
+          {takes.map((take: take) => (
+            <SongTake
+              take={take}
+              setIsDeleteModalOpen={setIsDeleteModalOpen}
+              setIsNotesModalOpen={setIsNotesModalOpen}
+              setCurrentTake={setCurrentTake}
+            />
+          ))}
         </View>
       </ScrollView>
       <RecordButton isRecording={isRecording} setIsRecording={setIsRecording} />
@@ -56,6 +45,8 @@ const SongScreen = () => {
         isDeleteModalOpen={isDeleteModalOpen}
         setIsDeleteModalOpen={setIsDeleteModalOpen}
         deleteText={DELETE_TAKE_TEXT}
+        setCurrentTake={setCurrentTake}
+        currentTake={currentTake}
       />
       <NotesModal
         isNotesModalOpen={isNotesModalOpen}

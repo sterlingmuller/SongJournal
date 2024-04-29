@@ -36,7 +36,6 @@ const LyricsScreen = ({ route }: Props) => {
       <InfoModal
         isInfoModalOpen={isInfoModalOpen}
         setIsInfoModalOpen={setIsInfoModalOpen}
-        info={page.info}
       />
     </View>
   );
