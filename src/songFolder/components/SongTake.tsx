@@ -6,27 +6,40 @@ import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
 import NotesIcon from '@src/icons/NotesIcon';
 import TrashIcon from '@src/icons/TrashIcon';
+import { take } from '@src/common/types';
 
 interface Props {
-  song: string;
-  setIsDeleteModalOpen: (value: string) => void;
-  setIsNotesModalOpen: (value: string) => void;
+  take: take;
+  setIsDeleteModalOpen: (value: boolean) => void;
+  setIsNotesModalOpen: (value: boolean) => void;
+  setCurrentTake: (value: take) => void;
 }
 
 const SongTake = (props: Props) => {
-  const { song, setIsDeleteModalOpen, setIsNotesModalOpen } = props;
+  const { take, setIsDeleteModalOpen, setIsNotesModalOpen, setCurrentTake } =
+    props;
 
   return (
     <View style={songTakeStyle.container}>
       <View style={songTakeStyle.contents}>
-        <Text style={songTakeStyle.title}>{song}</Text>
-        <Text>March 14, 24</Text>
+        <Text style={songTakeStyle.title}>{take.title}</Text>
+        <Text>{take.date}</Text>
         <View style={songTakeStyle.iconRow}>
-          <TouchableOpacity onPress={() => setIsNotesModalOpen(song)}>
+          <TouchableOpacity
+            onPress={() => {
+              setCurrentTake(take);
+              setIsNotesModalOpen(true);
+            }}
+          >
             <NotesIcon />
           </TouchableOpacity>
-          <ShareIcon />
-          <TouchableOpacity onPress={() => setIsDeleteModalOpen(song)}>
+          <ShareIcon />å
+          <TouchableOpacity
+            onPress={() => {
+              setCurrentTake(take);
+              setIsDeleteModalOpen(true);
+            }}
+          >
             <TrashIcon />
           </TouchableOpacity>
           <View style={songTakeStyle.playbackBar} />

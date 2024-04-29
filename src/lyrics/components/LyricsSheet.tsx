@@ -17,7 +17,6 @@ interface Props {
 
 const LyricsSheet = ({ page }: Props) => {
   const { lyrics, info } = page;
-  const { bpm, keySignature, time } = info;
 
   const [newLyrics, setNewLyrics] = useState<string>(lyrics);
   const disabled: boolean = !lyrics;
