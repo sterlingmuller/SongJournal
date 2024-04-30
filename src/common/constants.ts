@@ -3,6 +3,7 @@ import {
   colorThemeName,
   songs,
   songDetail,
+  take,
 } from '@src/common/types';
 import { Dimensions } from 'react-native';
 
@@ -27,6 +28,14 @@ export const SONG_DETAILS: songDetail[] = [
   { label: 'Time', key: 'time' },
   { label: 'Bpm', key: 'bpm' },
 ];
+
+export const emptyTake: take = {
+  key: -1,
+  title: '',
+  date: '',
+  notes: '',
+  starred: false,
+};
 
 export const DELETE_TAKE_TEXT: string =
   ' will be permanently deleted. This action cannot be undone.';
