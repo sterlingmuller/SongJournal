@@ -33,7 +33,7 @@ const SongTake = (props: Props) => {
           >
             <NotesIcon />
           </TouchableOpacity>
-          <ShareIcon />å
+          <ShareIcon />
           <TouchableOpacity
             onPress={() => {
               setCurrentTake(take);
