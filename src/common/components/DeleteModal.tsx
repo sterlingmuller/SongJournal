@@ -9,7 +9,7 @@ interface Props {
   setIsDeleteModalOpen: (value: boolean) => void;
   setCurrentTake: (value: take) => void;
   deleteText: string;
-  currentTake: take;
+  currentTake: take | undefined;
 }
 
 const DeleteModal = (props: Props) => {
@@ -37,7 +37,7 @@ const DeleteModal = (props: Props) => {
             Delete from Google account and current device
           </Text>
           <Text style={deleteModalStyle.text}>
-            {currentTake.title}
+            {currentTake && currentTake.title}
             {deleteText}
           </Text>
           <View style={deleteModalStyle.buttons}>

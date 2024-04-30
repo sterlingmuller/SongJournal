@@ -7,7 +7,7 @@ import global from '@src/styles/global';
 import songScreenStyle from '@src/styles/songScreen';
 import DeleteModal from '@src/common/components/DeleteModal';
 import NotesModal from '@src/songFolder/components/NotesModal';
-import { DELETE_TAKE_TEXT } from '@src/common/constants';
+import { DELETE_TAKE_TEXT, emptyTake } from '@src/common/constants';
 import { ScrollView } from 'react-native-gesture-handler';
 import { RootStackParamList, take } from '@src/common/types';
 import { RouteProp } from '@react-navigation/native';
@@ -19,7 +19,7 @@ interface Props {
 const SongScreen = ({ route }: Props) => {
   const { song } = route.params;
 
-  const [currentTake, setCurrentTake] = useState<take | undefined>();
+  const [currentTake, setCurrentTake] = useState<take>(emptyTake);
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState<boolean>(false);
@@ -32,6 +32,7 @@ const SongScreen = ({ route }: Props) => {
         <View style={songScreenStyle.takes}>
           {takes.map((take: take) => (
             <SongTake
+              key={take.title}
               take={take}
               setIsDeleteModalOpen={setIsDeleteModalOpen}
               setIsNotesModalOpen={setIsNotesModalOpen}
@@ -51,6 +52,8 @@ const SongScreen = ({ route }: Props) => {
       <NotesModal
         isNotesModalOpen={isNotesModalOpen}
         setIsNotesModalOpen={setIsNotesModalOpen}
+        setCurrentTake={setCurrentTake}
+        currentTake={currentTake}
       />
     </View>
   );

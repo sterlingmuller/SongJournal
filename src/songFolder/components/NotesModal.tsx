@@ -1,44 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Modal, TouchableOpacity, TextInput } from 'react-native';
 
 import takeNotesModalStyle from '@styles/takeNotesModal';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
+import { take } from '@src/common/types';
+import { emptyTake } from '@src/common/constants';
 
 interface Props {
-  isNotesModalOpen: string;
-  setIsNotesModalOpen: (title: string) => void;
+  isNotesModalOpen: boolean;
+  setIsNotesModalOpen: (value: boolean) => void;
+  setCurrentTake: (value: take) => void;
+  currentTake: take;
 }
 
-const NotesModal = ({ isNotesModalOpen, setIsNotesModalOpen }: Props) => {
-  const [notes, setNotes] = useState<string>('');
+const NotesModal = (props: Props) => {
+  const { isNotesModalOpen, setIsNotesModalOpen, setCurrentTake, currentTake } =
+    props;
 
-  const onExitPress = () => setIsNotesModalOpen('');
-  const disabled: boolean = !notes;
+  const { notes, title } = currentTake;
+
+  const [newNote, setNewNote] = useState<string>('');
+
+  useEffect(() => {
+    setNewNote(notes);
+  }, [isNotesModalOpen, setNewNote]);
+
+  const onExitPress = () => {
+    setCurrentTake(emptyTake);
+    setIsNotesModalOpen(false);
+  };
+  const disabled: boolean = newNote === notes;
 
   return (
-    <Modal transparent visible={!!isNotesModalOpen}>
+    <Modal transparent visible={isNotesModalOpen}>
       <TouchableOpacity
         style={takeNotesModalStyle.modalContainer}
         activeOpacity={1}
         onPress={onExitPress}
       >
         <View style={takeNotesModalStyle.container}>
-          <Text style={takeNotesModalStyle.title}>
-            {isNotesModalOpen} Notes
-          </Text>
+          <Text style={takeNotesModalStyle.title}>{title} Notes</Text>
           <View style={takeNotesModalStyle.textbox}>
             <TextInput
               style={takeNotesModalStyle.input}
               placeholder="Add notes for the current take..."
-              value={notes}
-              onChangeText={(text: string) => setNotes(text)}
+              value={newNote}
+              onChangeText={(text: string) => setNewNote(text)}
               multiline={true}
               textAlignVertical="top"
             />
           </View>
           <SaveAndCancelButtons
             onPress={() => null}
-            onExitPress={() => setIsNotesModalOpen('')}
+            onExitPress={onExitPress}
             disabled={disabled}
           />
         </View>
