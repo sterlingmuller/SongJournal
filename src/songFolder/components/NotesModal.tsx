@@ -4,7 +4,7 @@ import { View, Text, Modal, TouchableOpacity, TextInput } from 'react-native';
 import takeNotesModalStyle from '@styles/takeNotesModal';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 import { take } from '@src/common/types';
-import { emptyTake } from '@src/common/constants';
+import { EMPTY_TAKE } from '@src/common/constants';
 
 interface Props {
   isNotesModalOpen: boolean;
@@ -26,7 +26,7 @@ const NotesModal = (props: Props) => {
   }, [isNotesModalOpen, setNewNote]);
 
   const onExitPress = () => {
-    setCurrentTake(emptyTake);
+    setCurrentTake(EMPTY_TAKE);
     setIsNotesModalOpen(false);
   };
   const disabled: boolean = newNote === notes;

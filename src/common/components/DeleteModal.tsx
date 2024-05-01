@@ -3,6 +3,7 @@ import { View, Text, Modal, TouchableOpacity, Button } from 'react-native';
 
 import deleteModalStyle from '@src/styles/deleteModal';
 import { take } from '../types';
+import { EMPTY_TAKE } from '../constants';
 
 interface Props {
   isDeleteModalOpen: boolean;
@@ -21,7 +22,7 @@ const DeleteModal = (props: Props) => {
     currentTake,
   } = props;
   const onExitPress = (): void => {
-    setCurrentTake(undefined);
+    setCurrentTake(EMPTY_TAKE);
     setIsDeleteModalOpen(false);
   };
 
