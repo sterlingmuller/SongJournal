@@ -6,6 +6,7 @@ interface Styles {
   iconRow: ViewStyle;
   playIcon: ViewStyle;
   playbackBar: ViewStyle;
+  titleRow: ViewStyle;
   title: TextStyle;
 }
 
@@ -33,6 +34,8 @@ const songTakeStyle: Styles = StyleSheet.create({
   title: {
     fontSize: 24,
   },
+
+  titleRow: { flexDirection: 'row', gap: 10 },
 
   iconRow: {
     flexDirection: 'row',

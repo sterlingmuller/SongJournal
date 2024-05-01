@@ -7,6 +7,8 @@ import PlayIcon from '@src/icons/PlayIcon';
 import NotesIcon from '@src/icons/NotesIcon';
 import TrashIcon from '@src/icons/TrashIcon';
 import { take } from '@src/common/types';
+import StarIcon from '@src/icons/StarIcon';
+import useDoubleTap from '@src/hooks/useDoubleTap';
 
 interface Props {
   take: take;
@@ -19,10 +21,15 @@ const SongTake = (props: Props) => {
   const { take, setIsDeleteModalOpen, setIsNotesModalOpen, setCurrentTake } =
     props;
 
+  const onDoubleTap: () => void = useDoubleTap(() => console.log('it works!'));
+
   return (
-    <View style={songTakeStyle.container}>
+    <TouchableOpacity style={songTakeStyle.container} onPress={onDoubleTap}>
       <View style={songTakeStyle.contents}>
-        <Text style={songTakeStyle.title}>{take.title}</Text>
+        <View style={songTakeStyle.titleRow}>
+          <Text style={songTakeStyle.title}>{take.title}</Text>
+          {take.starred && <StarIcon />}
+        </View>
         <Text>{take.date}</Text>
         <View style={songTakeStyle.iconRow}>
           <TouchableOpacity
@@ -48,7 +55,7 @@ const SongTake = (props: Props) => {
       <View style={songTakeStyle.playIcon}>
         <PlayIcon />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
