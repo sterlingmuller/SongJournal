@@ -29,7 +29,7 @@ export const SONG_DETAILS: songDetail[] = [
   { label: 'Bpm', key: 'bpm' },
 ];
 
-export const emptyTake: take = {
+export const EMPTY_TAKE: take = {
   key: -1,
   title: '',
   date: '',
