@@ -6,6 +6,8 @@ interface Styles {
   textContainer: ViewStyle;
   container: ViewStyle;
   details: ViewStyle;
+  iconButton: ViewStyle;
+  selected: ViewStyle;
 }
 
 const lyricSheetStyles: Styles = StyleSheet.create({
@@ -16,7 +18,7 @@ const lyricSheetStyles: Styles = StyleSheet.create({
   options: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 20,
+    gap: 10,
   },
 
   infoContainer: {
@@ -42,6 +44,16 @@ const lyricSheetStyles: Styles = StyleSheet.create({
   details: {
     flexDirection: 'row',
     gap: 10,
+  },
+
+  iconButton: {
+    borderRadius: 30,
+    padding: 8,
+    backgroundColor: 'transparent',
+  },
+
+  selected: {
+    backgroundColor: '#fcd470',
   },
 });
 

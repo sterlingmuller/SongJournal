@@ -2,14 +2,11 @@ import React, { useState } from 'react';
 import { View, TextInput } from 'react-native';
 
 import lyricSheetStyles from '@src/styles/lyricsSheet';
-import EditIcon from '@src/icons/EditIcon';
-import ChordsIcon from '@src/icons/ChordsIcon';
-import MetronomeIcon from '@src/icons/MetronomeIcon';
-import ShareIcon from '@src/icons/ShareIcon';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
-import { page, songDetail } from '@src/common/types';
+import { page, pageOption, songDetail } from '@src/common/types';
 import { SONG_DETAILS } from '@src/common/constants';
 import SongDetail from '@src/lyrics/subcomponents/SongDetail';
+import PageOptions from '../subcomponents/PageOptions';
 
 interface Props {
   page: page;
@@ -19,6 +16,7 @@ const LyricsSheet = ({ page }: Props) => {
   const { lyrics, info } = page;
 
   const [newLyrics, setNewLyrics] = useState<string>(lyrics);
+  const [selectedOption, setSelectedOption] = useState<pageOption>('edit');
   const disabled: boolean = !lyrics;
 
   return (
@@ -37,12 +35,10 @@ const LyricsSheet = ({ page }: Props) => {
               ),
           )}
         </View>
-        <View style={lyricSheetStyles.options}>
-          <EditIcon />
-          <ChordsIcon />
-          <MetronomeIcon />
-          <ShareIcon />
-        </View>
+        <PageOptions
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption}
+        />
       </View>
       <TextInput
         style={lyricSheetStyles.textContainer}
