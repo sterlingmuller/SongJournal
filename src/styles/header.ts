@@ -1,5 +1,4 @@
-import { ThemeProvider, useTheme } from '@src/theme/ThemeContext';
-import { useContext } from 'react';
+import { useColorTheme } from '@src/theme/ThemeContext';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 interface Styles {
@@ -8,14 +7,8 @@ interface Styles {
   rightIcon: ViewStyle;
 }
 
-// const headerStyles: Styles = StyleSheet.create({
-//   headerStyle: { backgroundColor: 'coral' },
-//   headerTitleStyle: { fontSize: 28 },
-//   rightIcon: { padding: 8 },
-// });
-
 const useHeaderStyles = () => {
-  const { theme } = useTheme();
+  const { theme } = useColorTheme();
 
   const headerStyles: Styles = StyleSheet.create({
     headerStyle: { backgroundColor: theme.header },

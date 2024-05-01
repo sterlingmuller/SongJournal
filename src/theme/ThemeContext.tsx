@@ -1,22 +1,39 @@
-import React, { createContext, useContext, useState } from 'react';
-import themes from '@src/theme/themes';
+import React, {
+  Context,
+  ReactNode,
+  createContext,
+  useContext,
+  useState,
+} from 'react';
+import themes, { Theme } from '@src/theme/themes';
 import { colorThemeName } from '../common/types';
 
-const ThemeContext = createContext();
+interface ColorThemeContextType {
+  theme: Theme;
+  switchTheme: (newTheme: colorThemeName) => void;
+  themeName: colorThemeName;
+}
 
-export const ThemeProvider = ({ children }) => {
+const ColorThemeContext: Context<ColorThemeContextType> = createContext(null);
+
+type Props = {
+  children?: ReactNode;
+};
+
+export const ColorThemeProvider = ({ children }: Props) => {
   const [themeName, setThemeName] = useState<colorThemeName>('Light');
-  const theme = themes[themeName];
+  const theme: Theme = themes[themeName];
 
   const switchTheme = (newTheme: colorThemeName) => {
     setThemeName(newTheme);
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, switchTheme }}>
+    <ColorThemeContext.Provider value={{ theme, switchTheme, themeName }}>
       {children}
-    </ThemeContext.Provider>
+    </ColorThemeContext.Provider>
   );
 };
 
-export const useTheme = () => useContext(ThemeContext);
+export const useColorTheme: () => ColorThemeContextType = () =>
+  useContext(ColorThemeContext);
