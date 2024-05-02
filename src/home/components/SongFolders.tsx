@@ -11,27 +11,25 @@ interface Props {
   setIsDeleteModalOpen: (value: string) => void;
 }
 
-const SongFolders = ({ setIsDeleteModalOpen }: Props) => {
-  return (
-    <SwipeListView
-      contentContainerStyle={{ paddingBottom: 200 }}
-      data={DUMMY_SONGS}
-      disableRightSwipe
-      previewRowKey={'0'}
-      previewOpenValue={-40}
-      previewOpenDelay={3000}
-      renderItem={(data: ListRenderItemInfo<song>) => {
-        return <SongFolder song={data.item} />;
-      }}
-      renderHiddenItem={(data: ListRenderItemInfo<song>) => (
-        <DeleteRow
-          song={data.item.title}
-          setIsDeleteModalOpen={setIsDeleteModalOpen}
-        />
-      )}
-      rightOpenValue={-100}
-    />
-  );
-};
+const SongFolders = ({ setIsDeleteModalOpen }: Props) => (
+  <SwipeListView
+    contentContainerStyle={{ paddingBottom: 200 }}
+    data={DUMMY_SONGS}
+    disableRightSwipe
+    previewRowKey={'0'}
+    previewOpenValue={-40}
+    previewOpenDelay={3000}
+    renderItem={(data: ListRenderItemInfo<song>) => {
+      return <SongFolder song={data.item} />;
+    }}
+    renderHiddenItem={(data: ListRenderItemInfo<song>) => (
+      <DeleteRow
+        song={data.item.title}
+        setIsDeleteModalOpen={setIsDeleteModalOpen}
+      />
+    )}
+    rightOpenValue={-100}
+  />
+);
 
 export default SongFolders;

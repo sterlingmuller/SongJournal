@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 
-import songFolderStyle from '@styles/songFolder';
 import TrashIcon from '@src/icons/TrashIcon';
+import useSongFolderStyles from '@styles/songFolder';
 
 interface Props {
   song: string;
@@ -10,13 +10,13 @@ interface Props {
 }
 
 const DeleteRow = ({ song, setIsDeleteModalOpen }: Props) => {
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const styles = useSongFolderStyles();
 
   return (
-    <View style={songFolderStyle.deleteRow}>
+    <View style={styles.deleteRow}>
       <TouchableOpacity
         onPress={() => setIsDeleteModalOpen(song)}
-        style={songFolderStyle.deleteButton}
+        style={styles.deleteButton}
       >
         <TrashIcon />
       </TouchableOpacity>

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-import songFolderStyle from '@styles/songFolder';
 import LyricsIcon from '@src/icons/LyricsIcon';
 import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
 import PlaybackBar from '@src/home/subcomponents/PlaybackBar';
 import { RootStackParamList, song } from '@src/common/types';
+import useSongFolderStyles from '@styles/songFolder';
 
 interface Props {
   song: song;
@@ -15,6 +15,8 @@ interface Props {
 
 const SongFolder = ({ song }: Props) => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
+  const styles = useSongFolderStyles();
+
   const { title, takes, selectedTake } = song;
   const [isPressed, setIsPressed] = useState(false);
 
@@ -28,19 +30,16 @@ const SongFolder = ({ song }: Props) => {
 
   return (
     <TouchableOpacity
-      style={[
-        songFolderStyle.rowContainer,
-        isPressed && songFolderStyle.rowPressed,
-      ]}
+      style={[styles.rowContainer, isPressed && styles.rowPressed]}
       activeOpacity={1}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       onPress={() => navigate('Song', { song })}
     >
-      <View style={songFolderStyle.contents}>
-        <Text style={songFolderStyle.title}>{title}</Text>
+      <View style={styles.contents}>
+        <Text style={styles.title}>{title}</Text>
         <Text>{takes[selectedTake].date}</Text>
-        <View style={songFolderStyle.iconRow}>
+        <View style={styles.iconRow}>
           <TouchableOpacity onPress={() => navigate('Lyrics', { song })}>
             <LyricsIcon />
           </TouchableOpacity>
@@ -48,7 +47,7 @@ const SongFolder = ({ song }: Props) => {
           <PlaybackBar />
         </View>
       </View>
-      <View style={songFolderStyle.playIcon}>
+      <View style={styles.playIcon}>
         <PlayIcon />
       </View>
     </TouchableOpacity>
