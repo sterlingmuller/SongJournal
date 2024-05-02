@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Modal, TouchableOpacity, TextInput } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-import newSongModalStyle from '@src/styles/newSongModal';
 import { RootStackParamList } from '@src/common/types';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
+import useNewSongModalStyle from '@src/styles/newSongModal';
 
 interface Props {
   isNewSongOpen: boolean;
@@ -14,6 +14,8 @@ interface Props {
 const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
   const { navigate, addListener } =
     useNavigation<NavigationProp<RootStackParamList>>();
+  const styles = useNewSongModalStyle();
+
   const [songTitle, setSongTitle] = useState('');
   const onExitPress = () => setIsNewSongOpen(false);
   const disabled: boolean = !songTitle;
@@ -30,15 +32,15 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
   return (
     <Modal transparent visible={isNewSongOpen}>
       <TouchableOpacity
-        style={newSongModalStyle.modalContainer}
+        style={styles.modalContainer}
         activeOpacity={1}
         onPress={onExitPress}
       >
-        <View style={newSongModalStyle.container}>
-          <Text style={newSongModalStyle.title}>Song title</Text>
-          <View style={newSongModalStyle.textbox}>
+        <View style={styles.container}>
+          <Text style={styles.title}>Song title</Text>
+          <View style={styles.textbox}>
             <TextInput
-              style={newSongModalStyle.input}
+              style={styles.input}
               placeholder="Cobra Strike Alpha Deluxe"
               value={songTitle}
               onChangeText={(title: string) => setSongTitle(title)}

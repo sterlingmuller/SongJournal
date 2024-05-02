@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
-import sortByModalStyle from '@styles/sortByModal';
 import { sortByCategoryName } from '@src/common/types';
+import useSortByModalStyles from '@styles/sortByModal';
 
 interface Props {
   sortedCategory: sortByCategoryName;
@@ -14,6 +14,7 @@ interface Props {
 }
 
 const SortByCategory = (props: Props) => {
+  const styles = useSortByModalStyles();
   const {
     sortedCategory,
     setSortedCategory,
@@ -21,6 +22,7 @@ const SortByCategory = (props: Props) => {
     setIsSortAscending,
     label,
   } = props;
+
   const isSelected: boolean = sortedCategory === label;
 
   const onPress = () => {
@@ -32,20 +34,20 @@ const SortByCategory = (props: Props) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={isSelected && sortByModalStyle.selectedCategory}
+      style={isSelected && styles.selectedCategory}
     >
       {isSelected && (
         <View>
           {isSortAscending ? (
             <AntDesign
-              style={sortByModalStyle.arrow}
+              style={styles.arrow}
               name="arrowup"
               size={24}
               color="black"
             />
           ) : (
             <AntDesign
-              style={sortByModalStyle.arrow}
+              style={styles.arrow}
               name="arrowdown"
               size={24}
               color="black"
@@ -53,7 +55,7 @@ const SortByCategory = (props: Props) => {
           )}
         </View>
       )}
-      <Text style={sortByModalStyle.label}>{label}</Text>
+      <Text style={styles.label}>{label}</Text>
     </TouchableOpacity>
   );
 };

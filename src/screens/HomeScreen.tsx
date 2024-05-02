@@ -5,16 +5,17 @@ import HomeHeader from '@src/home/components/HomeHeader';
 import CreateNewSongButton from '@src/home/components/CreateNewSongButton';
 import SongFolders from '@src/home/components/SongFolders';
 import SortByModal from '@src/home/components/SortByModal';
-import global from '@styles/global';
 import NewSongModal from '@src/home/components/NewSongModal';
 import Footer from '@src/home/components/Footer';
 import { sortByCategoryName } from '@src/common/types';
 import { useNavigation } from '@react-navigation/native';
 import DeleteModal from '@src/common/components/DeleteModal';
 import { DELETE_SONG_TEXT } from '@src/common/constants';
+import useGlobalStyles from '@styles/global';
 
 const HomeScreen = () => {
   const { setOptions } = useNavigation();
+  const styles = useGlobalStyles();
 
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [sortedCategory, setSortedCategory] =
@@ -32,7 +33,7 @@ const HomeScreen = () => {
   }, [isSortOpen, setIsSortOpen]);
 
   return (
-    <View style={global.container}>
+    <View style={styles.container}>
       <SongFolders setIsDeleteModalOpen={setIsDeleteModalOpen} />
       <CreateNewSongButton setIsNewSongOpen={setIsNewSongOpen} />
       <SortByModal

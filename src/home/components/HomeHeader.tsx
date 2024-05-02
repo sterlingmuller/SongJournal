@@ -2,8 +2,8 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 
-import homeHeaderStyles from '@src/styles/homeHeader';
 import SearchBar from '@src/home/subcomponents/SearchBar';
+import useHomeHeaderStyles from '@src/styles/homeHeader';
 
 interface Props {
   isSortOpen: boolean;
@@ -12,9 +12,10 @@ interface Props {
 
 const HomeHeader = ({ isSortOpen, setIsSortOpen }: Props) => {
   const toggleSort = () => setIsSortOpen(!isSortOpen);
+  const styles = useHomeHeaderStyles();
 
   return (
-    <View style={homeHeaderStyles.container}>
+    <View style={styles.container}>
       <SearchBar />
       <TouchableOpacity onPress={toggleSort}>
         {isSortOpen ? (
