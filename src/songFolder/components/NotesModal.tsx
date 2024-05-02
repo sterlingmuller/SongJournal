@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Modal, TouchableOpacity, TextInput } from 'react-native';
 
-import takeNotesModalStyle from '@styles/takeNotesModal';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 import { take } from '@src/common/types';
 import { EMPTY_TAKE } from '@src/common/constants';
+import useTakeNotesModalStyles from '@styles/takeNotesModal';
 
 interface Props {
   isNotesModalOpen: boolean;
@@ -16,9 +16,9 @@ interface Props {
 const NotesModal = (props: Props) => {
   const { isNotesModalOpen, setIsNotesModalOpen, setCurrentTake, currentTake } =
     props;
+  const styles = useTakeNotesModalStyles();
 
   const { notes, title } = currentTake;
-
   const [newNote, setNewNote] = useState<string>('');
 
   useEffect(() => {
@@ -34,15 +34,15 @@ const NotesModal = (props: Props) => {
   return (
     <Modal transparent visible={isNotesModalOpen}>
       <TouchableOpacity
-        style={takeNotesModalStyle.modalContainer}
+        style={styles.modalContainer}
         activeOpacity={1}
         onPress={onExitPress}
       >
-        <View style={takeNotesModalStyle.container}>
-          <Text style={takeNotesModalStyle.title}>{title} Notes</Text>
-          <View style={takeNotesModalStyle.textbox}>
+        <View style={styles.container}>
+          <Text style={styles.title}>{title} Notes</Text>
+          <View style={styles.textbox}>
             <TextInput
-              style={takeNotesModalStyle.input}
+              style={styles.input}
               placeholder="Add notes for the current take..."
               value={newNote}
               onChangeText={(text: string) => setNewNote(text)}

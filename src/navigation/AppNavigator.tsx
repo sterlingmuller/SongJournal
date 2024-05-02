@@ -18,7 +18,6 @@ import useHeaderStyles from '@src/styles/header';
 
 const AppNavigator = () => {
   const RootStack: any = createNativeStackNavigator<RootStackParamList>();
-
   const styles = useHeaderStyles();
 
   return (

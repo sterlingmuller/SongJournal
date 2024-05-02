@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 
-import songTakeStyle from '@styles/songTake';
 import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
 import NotesIcon from '@src/icons/NotesIcon';
@@ -9,6 +8,7 @@ import TrashIcon from '@src/icons/TrashIcon';
 import { take } from '@src/common/types';
 import StarIcon from '@src/icons/StarIcon';
 import useDoubleTap from '@src/hooks/useDoubleTap';
+import useSongTakeStyles from '@styles/songTake';
 
 interface Props {
   take: take;
@@ -20,18 +20,19 @@ interface Props {
 const SongTake = (props: Props) => {
   const { take, setIsDeleteModalOpen, setIsNotesModalOpen, setCurrentTake } =
     props;
+  const styles = useSongTakeStyles();
 
   const onDoubleTap: () => void = useDoubleTap(() => console.log('it works!'));
 
   return (
-    <TouchableOpacity style={songTakeStyle.container} onPress={onDoubleTap}>
-      <View style={songTakeStyle.contents}>
-        <View style={songTakeStyle.titleRow}>
-          <Text style={songTakeStyle.title}>{take.title}</Text>
+    <TouchableOpacity style={styles.container} onPress={onDoubleTap}>
+      <View style={styles.contents}>
+        <View style={styles.titleRow}>
+          <Text style={styles.title}>{take.title}</Text>
           {take.starred && <StarIcon />}
         </View>
         <Text>{take.date}</Text>
-        <View style={songTakeStyle.iconRow}>
+        <View style={styles.iconRow}>
           <TouchableOpacity
             onPress={() => {
               setCurrentTake(take);
@@ -49,10 +50,10 @@ const SongTake = (props: Props) => {
           >
             <TrashIcon />
           </TouchableOpacity>
-          <View style={songTakeStyle.playbackBar} />
+          <View style={styles.playbackBar} />
         </View>
       </View>
-      <View style={songTakeStyle.playIcon}>
+      <View style={styles.playIcon}>
         <PlayIcon />
       </View>
     </TouchableOpacity>

@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 
-import lyricSheetStyles from '@src/styles/lyricsSheet';
 import EditIcon from '@src/icons/EditIcon';
 import ChordsIcon from '@src/icons/ChordsIcon';
 import MetronomeIcon from '@src/icons/MetronomeIcon';
 import ShareIcon from '@src/icons/ShareIcon';
 import { pageOption } from '@src/common/types';
+import useLyricSheetStyles from '@src/styles/lyricsSheet';
 
 interface Props {
   selectedOption: pageOption;
@@ -14,12 +14,14 @@ interface Props {
 }
 
 const PageOptions = ({ selectedOption, setSelectedOption }: Props) => {
+  const styles = useLyricSheetStyles();
+
   return (
-    <View style={lyricSheetStyles.options}>
+    <View style={styles.options}>
       <TouchableOpacity
         style={[
-          lyricSheetStyles.iconButton,
-          selectedOption === 'edit' && lyricSheetStyles.selected,
+          styles.iconButton,
+          selectedOption === 'edit' && styles.selected,
         ]}
         onPress={() => setSelectedOption('edit')}
       >
@@ -27,8 +29,8 @@ const PageOptions = ({ selectedOption, setSelectedOption }: Props) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={[
-          lyricSheetStyles.iconButton,
-          selectedOption === 'chords' && lyricSheetStyles.selected,
+          styles.iconButton,
+          selectedOption === 'chords' && styles.selected,
         ]}
         onPress={() => setSelectedOption('chords')}
       >
@@ -36,8 +38,8 @@ const PageOptions = ({ selectedOption, setSelectedOption }: Props) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={[
-          lyricSheetStyles.iconButton,
-          selectedOption === 'metronome' && lyricSheetStyles.selected,
+          styles.iconButton,
+          selectedOption === 'metronome' && styles.selected,
         ]}
         onPress={() => setSelectedOption('metronome')}
       >
@@ -45,8 +47,8 @@ const PageOptions = ({ selectedOption, setSelectedOption }: Props) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={[
-          lyricSheetStyles.iconButton,
-          selectedOption === 'share' && lyricSheetStyles.selected,
+          styles.iconButton,
+          selectedOption === 'share' && styles.selected,
         ]}
         onPress={() => setSelectedOption('share')}
       >

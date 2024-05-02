@@ -1,10 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import sortByModalStyle from '@styles/sortByModal';
 import { SORTBY_CATEGORY_NAMES } from '@src/common/constants';
 import SortByCategory from '@src/home/subcomponents/SortByCategory';
 import { sortByCategoryName } from '@src/common/types';
+import useSortByModalStyles from '@styles/sortByModal';
 
 interface Props {
   sortedCategory: sortByCategoryName;
@@ -20,9 +20,10 @@ const SortByCategories = (props: Props) => {
     isSortAscending,
     setIsSortAscending,
   } = props;
+  const styles = useSortByModalStyles();
 
   return (
-    <View style={sortByModalStyle.categories}>
+    <View style={styles.categories}>
       {SORTBY_CATEGORY_NAMES.map((categoryName: sortByCategoryName) => (
         <SortByCategory
           key={categoryName}

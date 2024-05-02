@@ -1,6 +1,7 @@
-import songDetailStyle from '@src/styles/songDetail';
 import React from 'react';
 import { TextInput, View, Text } from 'react-native';
+
+import useSongDetailStyles from '@src/styles/songDetail';
 
 interface Props {
   label: string;
@@ -10,17 +11,12 @@ interface Props {
 
 const SongDetail = (props: Props) => {
   const { label, value, onPageScreen } = props;
+  const styles = useSongDetailStyles();
 
   return (
-    <View
-      style={
-        onPageScreen ? songDetailStyle.pageContainer : songDetailStyle.container
-      }
-    >
+    <View style={onPageScreen ? styles.pageContainer : styles.container}>
       <TextInput
-        style={
-          onPageScreen ? songDetailStyle.pageTextbox : songDetailStyle.textbox
-        }
+        style={onPageScreen ? styles.pageTextbox : styles.textbox}
         value={value}
         textAlign="center"
       />

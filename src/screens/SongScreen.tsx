@@ -3,14 +3,13 @@ import { View } from 'react-native';
 
 import SongTake from '@src/songFolder/components/SongTake';
 import RecordButton from '@src/songFolder/subcomponents/RecordButton';
-import global from '@src/styles/global';
-import songScreenStyle from '@src/styles/songScreen';
 import DeleteModal from '@src/common/components/DeleteModal';
 import NotesModal from '@src/songFolder/components/NotesModal';
 import { DELETE_TAKE_TEXT, EMPTY_TAKE } from '@src/common/constants';
 import { ScrollView } from 'react-native-gesture-handler';
 import { RootStackParamList, take } from '@src/common/types';
 import { RouteProp } from '@react-navigation/native';
+import useSongScreenStyles from '@src/styles/songScreen';
 
 interface Props {
   route: RouteProp<RootStackParamList, 'Song'>;
@@ -18,6 +17,7 @@ interface Props {
 
 const SongScreen = ({ route }: Props) => {
   const { song } = route.params;
+  const styles = useSongScreenStyles();
 
   const [currentTake, setCurrentTake] = useState<take>(EMPTY_TAKE);
   const [isRecording, setIsRecording] = useState<boolean>(false);
@@ -27,9 +27,9 @@ const SongScreen = ({ route }: Props) => {
   const takes: take[] = [...song.takes].reverse();
 
   return (
-    <View style={global.container}>
+    <View>
       <ScrollView>
-        <View style={songScreenStyle.takes}>
+        <View style={styles.takes}>
           {takes.map((take: take) => (
             <SongTake
               key={take.title}

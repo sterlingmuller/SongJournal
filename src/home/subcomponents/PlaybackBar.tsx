@@ -1,8 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import songFolderStyle from '@styles/songFolder';
+import useSongFolderStyles from '@styles/songFolder';
 
-const PlaybackBar = () => <View style={songFolderStyle.playbackBar} />;
+const PlaybackBar = () => {
+  const styles = useSongFolderStyles();
+
+  return <View style={styles.playbackBar} />;
+};
 
 export default PlaybackBar;

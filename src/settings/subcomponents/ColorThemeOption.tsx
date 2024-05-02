@@ -1,15 +1,17 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
-import settingsStyle from '@styles/settings';
 import { colorThemeName } from '@src/common/types';
 import { useColorTheme } from '@src/theme/ThemeContext';
+import useSettingsStyle from '@styles/settings';
 
 interface Props {
   label: colorThemeName;
 }
 
 const ColorThemeOption = ({ label }: Props) => {
+  const styles = useSettingsStyle();
+
   const { switchTheme, themeName } = useColorTheme();
   const isSelected: boolean = themeName === label;
 
@@ -20,9 +22,9 @@ const ColorThemeOption = ({ label }: Props) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={isSelected && settingsStyle.selectedTheme}
+      style={isSelected && styles.selectedTheme}
     >
-      <Text style={settingsStyle.themeLabel}>{label}</Text>
+      <Text style={styles.themeLabel}>{label}</Text>
     </TouchableOpacity>
   );
 };

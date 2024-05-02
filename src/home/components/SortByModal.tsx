@@ -1,11 +1,9 @@
 import React from 'react';
-import {
-  View, Text, Modal, TouchableOpacity,
-} from 'react-native';
+import { View, Text, Modal, TouchableOpacity } from 'react-native';
 
-import sortByModalStyle from '@styles/sortByModal';
 import SortByCategories from '@src/home/subcomponents/SortCategories';
 import { sortByCategoryName } from '@src/common/types';
+import useSortByModalStyles from '@styles/sortByModal';
 
 interface Props {
   sortedCategory: sortByCategoryName;
@@ -25,17 +23,18 @@ const SortByModal = (props: Props) => {
     isSortAscending,
     setIsSortAscending,
   } = props;
+  const styles = useSortByModalStyles();
 
   return (
     <Modal transparent visible={isSortOpen}>
       <TouchableOpacity
-        style={sortByModalStyle.modalContainer}
+        style={styles.modalContainer}
         activeOpacity={1}
         onPress={() => setIsSortOpen(false)}
       >
-        <View style={sortByModalStyle.container}>
-          <Text style={sortByModalStyle.title}>Sort by</Text>
-          <View style={sortByModalStyle.line} />
+        <View style={styles.container}>
+          <Text style={styles.title}>Sort by</Text>
+          <View style={styles.line} />
           <SortByCategories
             sortedCategory={sortedCategory}
             setSortedCategory={setSortedCategory}
