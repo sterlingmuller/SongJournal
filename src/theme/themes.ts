@@ -3,7 +3,8 @@ import { colorThemeName } from '@src/common/types';
 export interface Theme {
   primary: string;
   secondary: string;
-  buttonColor: string;
+  accent: string;
+  button: string;
   buttonText: string;
   header: string;
 }
@@ -11,43 +12,49 @@ export interface Theme {
 const themes: Record<colorThemeName, Theme> = {
   Light: {
     primary: '#ffffff',
-    secondary: '#fcd470',
-    buttonColor: '#eeeeee',
+    secondary: '#fff',
+    accent: '#fcd470',
+    button: '#eeeeee',
     buttonText: '#333333',
-    header: 'yellow',
+    header: 'coral',
   },
   Dark: {
     primary: '#333333',
-    secondary: '#fcd470',
-    buttonColor: '#222222',
+    secondary: '#fff',
+    accent: '#fcd470',
+    button: '#222222',
     buttonText: '#ffffff',
     header: 'gray',
   },
   Metal: {
     primary: '#ff4081',
-    secondary: '#fcd470',
-    buttonColor: '#cddc39',
+    secondary: '#fff',
+    accent: '#fcd470',
+    button: '#cddc39',
     buttonText: '#212121',
     header: 'pink',
   },
   Psych: {
     primary: '#ff4081',
-    secondary: '#fcd470',
-    buttonColor: '#cddc39',
+    secondary: '#fff',
+    accent: '#fcd470',
+    button: '#cddc39',
     buttonText: '#212121',
-    header: 'pink',
+    header: 'green',
   },
   Pop: {
     primary: '#ff4081',
-    secondary: '#fcd470',
-    buttonColor: '#cddc39',
+    secondary: '#fff',
+    accent: '#fcd470',
+    button: '#cddc39',
     buttonText: '#212121',
     header: 'pink',
   },
   Twee: {
     primary: '#ff4081',
-    secondary: '#fcd470',
-    buttonColor: '#cddc39',
+    secondary: '#fff',
+    accent: '#fcd470',
+    button: '#cddc39',
     buttonText: '#212121',
     header: 'pink',
   },

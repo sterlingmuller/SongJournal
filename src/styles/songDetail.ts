@@ -1,4 +1,5 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { useColorTheme } from '@src/theme/ThemeContext';
 
 interface Styles {
   container: ViewStyle;
@@ -10,54 +11,60 @@ interface Styles {
   text: TextStyle;
 }
 
-const songDetailStyle: Styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    gap: 10,
-  },
+const useSongDetailStyles = () => {
+  const { theme } = useColorTheme();
 
-  pageContainer: {
-    alignItems: 'center',
-    gap: 4,
-  },
+  const songDetailStyles: Styles = StyleSheet.create({
+    container: {
+      alignItems: 'center',
+      gap: 10,
+    },
 
-  textbox: {
-    backgroundColor: '#f0f0f0',
-    borderRadius: 5,
-    width: 45,
-    height: 30,
-    borderWidth: 1,
-    borderColor: '#ccc',
-  },
+    pageContainer: {
+      alignItems: 'center',
+      gap: 4,
+    },
 
-  pageTextbox: {
-    backgroundColor: '#D9D9D9',
-    width: 40,
-    height: 25,
-    borderWidth: 1,
-    borderColor: '#ccc',
-  },
+    textbox: {
+      backgroundColor: '#f0f0f0',
+      borderRadius: 5,
+      width: 45,
+      height: 30,
+      borderWidth: 1,
+      borderColor: '#ccc',
+    },
 
-  completedContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 10,
-  },
+    pageTextbox: {
+      backgroundColor: '#D9D9D9',
+      width: 40,
+      height: 25,
+      borderWidth: 1,
+      borderColor: '#ccc',
+    },
 
-  checkbox: {
-    borderWidth: 1,
-    borderColor: 'ccc',
-    borderRadius: 5,
-    width: 20,
-    height: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingLeft: 6,
-    paddingBottom: 6,
-  },
+    completedContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 10,
+    },
 
-  text: { fontSize: 16 },
-});
+    checkbox: {
+      borderWidth: 1,
+      borderColor: 'ccc',
+      borderRadius: 5,
+      width: 20,
+      height: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingLeft: 6,
+      paddingBottom: 6,
+    },
 
-export default songDetailStyle;
+    text: { fontSize: 16 },
+  });
+
+  return songDetailStyles;
+};
+
+export default useSongDetailStyles;

@@ -1,4 +1,5 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { useColorTheme } from '@src/theme/ThemeContext';
 
 interface Styles {
   modalContainer: ViewStyle;
@@ -10,54 +11,60 @@ interface Styles {
   input: TextStyle;
 }
 
-const newSongModalStyle: Styles = StyleSheet.create({
-  modalContainer: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, .5)',
-    justifyContent: 'center',
-  },
+const useNewSongModalStyle = () => {
+  const { theme } = useColorTheme();
 
-  container: {
-    alignSelf: 'center',
-    backgroundColor: '#fff',
-    width: '70%',
-    height: '30%',
-    borderRadius: 15,
-    gap: 30,
-  },
+  const newSongModalStyle: Styles = StyleSheet.create({
+    modalContainer: {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, .5)',
+      justifyContent: 'center',
+    },
 
-  title: {
-    paddingTop: 35,
-    paddingLeft: 40,
-    fontSize: 24,
-  },
+    container: {
+      alignSelf: 'center',
+      backgroundColor: '#fff',
+      width: '70%',
+      height: '30%',
+      borderRadius: 15,
+      gap: 30,
+    },
 
-  textbox: {
-    flexDirection: 'row',
-    backgroundColor: '#f0f0f0',
-    borderRadius: 10,
-    padding: 6,
-    width: '75%',
-    borderWidth: 1,
-    borderColor: '#ccc',
-    marginLeft: 35,
-  },
+    title: {
+      paddingTop: 35,
+      paddingLeft: 40,
+      fontSize: 24,
+    },
 
-  input: {
-    flex: 1,
-    fontSize: 14,
-    marginLeft: 8,
-  },
+    textbox: {
+      flexDirection: 'row',
+      backgroundColor: '#f0f0f0',
+      borderRadius: 10,
+      padding: 6,
+      width: '75%',
+      borderWidth: 1,
+      borderColor: '#ccc',
+      marginLeft: 35,
+    },
 
-  buttons: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-  },
+    input: {
+      flex: 1,
+      fontSize: 14,
+      marginLeft: 8,
+    },
 
-  button: {
-    width: 100,
-    borderRadius: 10,
-  },
-});
+    buttons: {
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+    },
 
-export default newSongModalStyle;
+    button: {
+      width: 100,
+      borderRadius: 10,
+    },
+  });
+
+  return newSongModalStyle;
+};
+
+export default useNewSongModalStyle;

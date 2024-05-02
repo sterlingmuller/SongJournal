@@ -1,4 +1,5 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { useColorTheme } from '@src/theme/ThemeContext';
 
 interface Styles {
   container: ViewStyle;
@@ -7,32 +8,38 @@ interface Styles {
   info: ViewStyle;
 }
 
-const lyricsHeaderStyles: Styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    height: 115,
-    paddingTop: 30,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: 'coral',
-    zIndex: 10,
-    paddingHorizontal: 20,
-  },
+const useLyricsHeaderStyles = () => {
+  const { theme } = useColorTheme();
 
-  titlePlusArrow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 15,
-  },
+  const lyricsHeaderStyles: Styles = StyleSheet.create({
+    container: {
+      display: 'flex',
+      flexDirection: 'row',
+      height: 115,
+      paddingTop: 30,
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      backgroundColor: theme.primary,
+      zIndex: 10,
+      paddingHorizontal: 20,
+    },
 
-  title: {
-    fontSize: 32,
-  },
+    titlePlusArrow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 15,
+    },
 
-  info: {
-    left: 0,
-  },
-});
+    title: {
+      fontSize: 32,
+    },
 
-export default lyricsHeaderStyles;
+    info: {
+      left: 0,
+    },
+  });
+
+  return lyricsHeaderStyles;
+};
+
+export default useLyricsHeaderStyles;
