@@ -4,12 +4,16 @@ interface Styles {
   takes: ViewStyle;
 }
 
-const songScreenStyle: Styles = StyleSheet.create({
-  takes: {
-    marginTop: 25,
-    gap: 20,
-    marginBottom: 175,
-  },
-});
+const useSongScreenStyles = () => {
+  const songScreenStyles: Styles = StyleSheet.create({
+    takes: {
+      marginTop: 25,
+      gap: 20,
+      marginBottom: 175,
+    },
+  });
 
-export default songScreenStyle;
+  return songScreenStyles;
+};
+
+export default useSongScreenStyles;

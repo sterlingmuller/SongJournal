@@ -1,5 +1,7 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
+import { useColorTheme } from '@src/theme/ThemeContext';
+
 interface Styles {
   modalContainer: ViewStyle;
   container: ViewStyle;
@@ -9,44 +11,50 @@ interface Styles {
   text: TextStyle;
 }
 
-const deleteModalStyle: Styles = StyleSheet.create({
-  modalContainer: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, .5)',
-    justifyContent: 'center',
-  },
+const useDeleteModalStyles = () => {
+  const { theme } = useColorTheme();
 
-  container: {
-    alignSelf: 'center',
-    backgroundColor: '#fff',
-    width: '70%',
-    borderRadius: 15,
-    padding: 20,
-  },
+  const deleteModalStyle: Styles = StyleSheet.create({
+    modalContainer: {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, .5)',
+      justifyContent: 'center',
+    },
 
-  title: {
-    fontSize: 20,
-    textAlign: 'center',
-    paddingBottom: 20,
-    fontWeight: '500',
-  },
+    container: {
+      alignSelf: 'center',
+      backgroundColor: theme.secondary,
+      width: '70%',
+      borderRadius: 15,
+      padding: 20,
+    },
 
-  text: {
-    fontSize: 16,
-    textAlign: 'center',
-    paddingBottom: 30,
-  },
+    title: {
+      fontSize: 20,
+      textAlign: 'center',
+      paddingBottom: 20,
+      fontWeight: '500',
+    },
 
-  buttons: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingBottom: 5,
-  },
+    text: {
+      fontSize: 16,
+      textAlign: 'center',
+      paddingBottom: 30,
+    },
 
-  button: {
-    width: 100,
-    borderRadius: 10,
-  },
-});
+    buttons: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      paddingBottom: 5,
+    },
 
-export default deleteModalStyle;
+    button: {
+      width: 100,
+      borderRadius: 10,
+    },
+  });
+
+  return deleteModalStyle;
+};
+
+export default useDeleteModalStyles;

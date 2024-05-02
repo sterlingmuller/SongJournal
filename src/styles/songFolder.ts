@@ -1,4 +1,5 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { useColorTheme } from '@src/theme/ThemeContext';
 
 interface Styles {
   rowContainer: ViewStyle;
@@ -12,62 +13,68 @@ interface Styles {
   title: TextStyle;
 }
 
-const songFolderStyle: Styles = StyleSheet.create({
-  rowContainer: {
-    flexDirection: 'row',
-    backgroundColor: '#f0f0f0',
-    paddingVertical: 12,
-    paddingLeft: 25,
-    paddingRight: 30,
-    width: '100%',
-    borderBottomWidth: 1,
-    borderBottomColor: '#000',
-    justifyContent: 'space-between',
-    alignContent: 'center',
-  },
+const useSongFolderStyles = () => {
+  const { theme } = useColorTheme();
 
-  rowPressed: { backgroundColor: '#DDD' },
+  const songFolderStyles: Styles = StyleSheet.create({
+    rowContainer: {
+      flexDirection: 'row',
+      backgroundColor: '#f0f0f0',
+      paddingVertical: 12,
+      paddingLeft: 25,
+      paddingRight: 30,
+      width: '100%',
+      borderBottomWidth: 1,
+      borderBottomColor: '#000',
+      justifyContent: 'space-between',
+      alignContent: 'center',
+    },
 
-  contents: {
-    flexDirection: 'column',
-    gap: 10,
-  },
+    rowPressed: { backgroundColor: '#DDD' },
 
-  title: {
-    fontSize: 24,
-  },
+    contents: {
+      flexDirection: 'column',
+      gap: 10,
+    },
 
-  iconRow: {
-    flexDirection: 'row',
-    gap: 24,
-  },
+    title: {
+      fontSize: 24,
+    },
 
-  playIcon: {
-    position: 'absolute',
-    alignSelf: 'center',
-    paddingBottom: 40,
-    right: 40,
-  },
+    iconRow: {
+      flexDirection: 'row',
+      gap: 24,
+    },
 
-  playbackBar: {
-    height: 15,
-    width: '66%',
-    backgroundColor: 'coral',
-    alignSelf: 'center',
-  },
+    playIcon: {
+      position: 'absolute',
+      alignSelf: 'center',
+      paddingBottom: 40,
+      right: 40,
+    },
 
-  deleteRow: {
-    alignItems: 'center',
-    backgroundColor: 'red',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    paddingLeft: 15,
-  },
+    playbackBar: {
+      height: 15,
+      width: '66%',
+      backgroundColor: 'coral',
+      alignSelf: 'center',
+    },
 
-  deleteButton: {
-    right: 30,
-  },
-});
+    deleteRow: {
+      alignItems: 'center',
+      backgroundColor: 'red',
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+      paddingLeft: 15,
+    },
 
-export default songFolderStyle;
+    deleteButton: {
+      right: 30,
+    },
+  });
+
+  return songFolderStyles;
+};
+
+export default useSongFolderStyles;

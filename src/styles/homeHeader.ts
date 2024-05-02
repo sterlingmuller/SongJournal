@@ -1,20 +1,27 @@
 import { StyleSheet, ViewStyle } from 'react-native';
+import { useColorTheme } from '@src/theme/ThemeContext';
 
 interface Styles {
   container: ViewStyle;
 }
 
-const homeHeaderStyles: Styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    height: 115,
-    paddingTop: 45,
-    alignItems: 'center',
-    backgroundColor: 'coral',
-    zIndex: 10,
-    gap: 20,
-  },
-});
+const useHomeHeaderStyles = () => {
+  const { theme } = useColorTheme();
 
-export default homeHeaderStyles;
+  const homeHeaderStyles: Styles = StyleSheet.create({
+    container: {
+      display: 'flex',
+      flexDirection: 'row',
+      height: 115,
+      paddingTop: 45,
+      alignItems: 'center',
+      backgroundColor: theme.primary,
+      zIndex: 10,
+      gap: 20,
+    },
+  });
+
+  return homeHeaderStyles;
+};
+
+export default useHomeHeaderStyles;
