@@ -5,16 +5,20 @@ interface Styles {
   button: ViewStyle;
 }
 
-const saveAndCancelButtonsStyle: Styles = StyleSheet.create({
-  buttons: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-  },
+const useSaveAndCancelButtonsStyle = () => {
+  const saveAndCancelButtonsStyle: Styles = StyleSheet.create({
+    buttons: {
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+    },
 
-  button: {
-    width: 100,
-    borderRadius: 10,
-  },
-});
+    button: {
+      width: 100,
+      borderRadius: 10,
+    },
+  });
 
-export default saveAndCancelButtonsStyle;
+  return saveAndCancelButtonsStyle;
+};
+
+export default useSaveAndCancelButtonsStyle;

@@ -1,4 +1,5 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { useColorTheme } from '@src/theme/ThemeContext';
 
 interface Styles {
   container: ViewStyle;
@@ -12,53 +13,59 @@ interface Styles {
   aboutSignature: TextStyle;
 }
 
-const settingsStyle: Styles = StyleSheet.create({
-  container: {
-    height: '100%',
-  },
+const useSettingsStyle = () => {
+  const { theme } = useColorTheme();
 
-  content: {
-    gap: 20,
-    paddingTop: 15,
-    paddingHorizontal: 25,
-  },
+  const settingsStyle: Styles = StyleSheet.create({
+    container: {
+      height: '100%',
+    },
 
-  sectionTitle: {
-    fontSize: 16,
-    paddingBottom: 5,
-    fontWeight: 'bold',
-  },
+    content: {
+      gap: 20,
+      paddingTop: 15,
+      paddingHorizontal: 25,
+    },
 
-  title: {
-    fontSize: 30,
-    paddingLeft: 40,
-  },
+    sectionTitle: {
+      fontSize: 16,
+      paddingBottom: 5,
+      fontWeight: 'bold',
+    },
 
-  version: {
-    position: 'absolute',
-    bottom: 25,
-    alignSelf: 'center',
-  },
+    title: {
+      fontSize: 30,
+      paddingLeft: 40,
+    },
 
-  about: {
-    textAlign: 'center',
-  },
+    version: {
+      position: 'absolute',
+      bottom: 25,
+      alignSelf: 'center',
+    },
 
-  aboutSignature: {
-    textAlign: 'center',
-    paddingTop: 10,
-  },
+    about: {
+      textAlign: 'center',
+    },
 
-  selectedTheme: {
-    backgroundColor: '#C5C2B7',
-    borderRadius: 20,
-    marginRight: 40,
-  },
+    aboutSignature: {
+      textAlign: 'center',
+      paddingTop: 10,
+    },
 
-  themeLabel: {
-    paddingVertical: 4,
-    marginLeft: 55,
-  },
-});
+    selectedTheme: {
+      backgroundColor: '#C5C2B7',
+      borderRadius: 20,
+      marginRight: 40,
+    },
 
-export default settingsStyle;
+    themeLabel: {
+      paddingVertical: 4,
+      marginLeft: 55,
+    },
+  });
+
+  return settingsStyle;
+};
+
+export default useSettingsStyle;

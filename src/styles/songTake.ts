@@ -1,4 +1,5 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { useColorTheme } from '@src/theme/ThemeContext';
 
 interface Styles {
   contents: ViewStyle;
@@ -10,52 +11,58 @@ interface Styles {
   title: TextStyle;
 }
 
-const songTakeStyle: Styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    backgroundColor: '#f0f0f0',
-    paddingVertical: 12,
-    paddingLeft: 25,
-    paddingRight: 30,
-    width: '90%',
-    borderWidth: 2,
-    borderColor: '#000',
-    borderRadius: 10,
-    justifyContent: 'space-between',
-    alignContent: 'center',
-    alignSelf: 'center',
-  },
+const useSongTakeStyles = () => {
+  const { theme } = useColorTheme();
 
-  contents: {
-    flexDirection: 'column',
-    gap: 10,
-  },
+  const songTakeStyles: Styles = StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      backgroundColor: '#f0f0f0',
+      paddingVertical: 12,
+      paddingLeft: 25,
+      paddingRight: 30,
+      width: '90%',
+      borderWidth: 2,
+      borderColor: '#000',
+      borderRadius: 10,
+      justifyContent: 'space-between',
+      alignContent: 'center',
+      alignSelf: 'center',
+    },
 
-  title: {
-    fontSize: 24,
-  },
+    contents: {
+      flexDirection: 'column',
+      gap: 10,
+    },
 
-  titleRow: { flexDirection: 'row', gap: 10 },
+    title: {
+      fontSize: 24,
+    },
 
-  iconRow: {
-    flexDirection: 'row',
-    gap: 18,
-  },
+    titleRow: { flexDirection: 'row', gap: 10 },
 
-  playIcon: {
-    position: 'absolute',
-    alignSelf: 'center',
-    paddingBottom: 40,
-    right: 20,
-  },
+    iconRow: {
+      flexDirection: 'row',
+      gap: 18,
+    },
 
-  playbackBar: {
-    height: 15,
-    width: '52%',
-    backgroundColor: 'coral',
-    alignSelf: 'center',
-    marginLeft: 10,
-  },
-});
+    playIcon: {
+      position: 'absolute',
+      alignSelf: 'center',
+      paddingBottom: 40,
+      right: 20,
+    },
 
-export default songTakeStyle;
+    playbackBar: {
+      height: 15,
+      width: '52%',
+      backgroundColor: 'coral',
+      alignSelf: 'center',
+      marginLeft: 10,
+    },
+  });
+
+  return songTakeStyles;
+};
+
+export default useSongTakeStyles;
