@@ -1,6 +1,7 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
+import StyledText from '@src/common/components/StyledText';
 import { colorThemeName } from '@src/common/types';
 import { useColorTheme } from '@src/theme/ThemeContext';
 import useSettingsStyle from '@styles/settings';
@@ -24,7 +25,7 @@ const ColorThemeOption = ({ label }: Props) => {
       onPress={onPress}
       style={isSelected && styles.selectedTheme}
     >
-      <Text style={styles.themeLabel}>{label}</Text>
+      <StyledText style={styles.themeLabel}>{label}</StyledText>
     </TouchableOpacity>
   );
 };

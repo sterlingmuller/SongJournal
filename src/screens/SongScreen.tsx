@@ -10,6 +10,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { RootStackParamList, take } from '@src/common/types';
 import { RouteProp } from '@react-navigation/native';
 import useSongScreenStyles from '@src/styles/songScreen';
+import useGlobalStyles from '@src/styles/global';
 
 interface Props {
   route: RouteProp<RootStackParamList, 'Song'>;
@@ -18,6 +19,7 @@ interface Props {
 const SongScreen = ({ route }: Props) => {
   const { song } = route.params;
   const styles = useSongScreenStyles();
+  const globalStyles = useGlobalStyles();
 
   const [currentTake, setCurrentTake] = useState<take>(EMPTY_TAKE);
   const [isRecording, setIsRecording] = useState<boolean>(false);
@@ -27,7 +29,7 @@ const SongScreen = ({ route }: Props) => {
   const takes: take[] = [...song.takes].reverse();
 
   return (
-    <View>
+    <View style={globalStyles.container}>
       <ScrollView>
         <View style={styles.takes}>
           {takes.map((take: take) => (

@@ -8,7 +8,7 @@ export type colorThemeName =
   | 'Metal'
   | 'Psych'
   | 'Pop'
-  | 'Twee';
+  | 'Surf';
 
 export type RootStackParamList = {
   Home: undefined;

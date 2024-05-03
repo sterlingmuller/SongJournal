@@ -1,6 +1,7 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
+import StyledText from '@src/common/components/StyledText';
 import { COLOR_THEME_NAMES } from '@src/common/constants';
 import { colorThemeName } from '@src/common/types';
 import ColorThemeOption from '@src/settings/subcomponents/ColorThemeOption';
@@ -11,7 +12,7 @@ const Theme = () => {
 
   return (
     <View>
-      <Text style={styles.sectionTitle}>Theme</Text>
+      <StyledText style={styles.sectionTitle}>Theme</StyledText>
       {COLOR_THEME_NAMES.map((theme: colorThemeName) => (
         <ColorThemeOption key={theme} label={theme} />
       ))}

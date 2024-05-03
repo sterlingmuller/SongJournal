@@ -12,7 +12,6 @@ import {
   lyricNavigation,
   songNavigation,
 } from '@src/common/types';
-import headerStyles from '@src/styles/header';
 import HeaderPageButton from '@src/songFolder/subcomponents/HeaderPageButton';
 import useHeaderStyles from '@src/styles/header';
 
@@ -37,19 +36,19 @@ const AppNavigator = () => {
           name="Lyrics"
           component={LyricsScreen}
           options={({ route }: lyricNavigation) => ({
-            ...headerStyles,
+            ...styles,
             song: route.params.song,
           })}
         />
         <RootStack.Screen
           name="MusicPlayer"
           component={MusicPlayerScreen}
-          options={{ ...headerStyles }}
+          options={{ ...styles }}
         />
         <RootStack.Screen
           name="Settings"
           component={SettingsScreen}
-          options={{ ...headerStyles }}
+          options={{ ...styles }}
         />
       </RootStack.Navigator>
     </NavigationContainer>

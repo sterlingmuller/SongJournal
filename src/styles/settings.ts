@@ -2,7 +2,6 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { useColorTheme } from '@src/theme/ThemeContext';
 
 interface Styles {
-  container: ViewStyle;
   content: ViewStyle;
   version: ViewStyle;
   selectedTheme: ViewStyle;
@@ -17,10 +16,6 @@ const useSettingsStyle = () => {
   const { theme } = useColorTheme();
 
   const settingsStyle: Styles = StyleSheet.create({
-    container: {
-      height: '100%',
-    },
-
     content: {
       gap: 20,
       paddingTop: 15,
@@ -42,6 +37,7 @@ const useSettingsStyle = () => {
       position: 'absolute',
       bottom: 25,
       alignSelf: 'center',
+      color: theme.headerText,
     },
 
     about: {
@@ -54,7 +50,7 @@ const useSettingsStyle = () => {
     },
 
     selectedTheme: {
-      backgroundColor: '#C5C2B7',
+      backgroundColor: theme.highlight,
       borderRadius: 20,
       marginRight: 40,
     },

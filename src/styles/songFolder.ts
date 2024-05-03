@@ -19,7 +19,7 @@ const useSongFolderStyles = () => {
   const songFolderStyles: Styles = StyleSheet.create({
     rowContainer: {
       flexDirection: 'row',
-      backgroundColor: '#f0f0f0',
+      backgroundColor: theme.primaryBackground,
       paddingVertical: 12,
       paddingLeft: 25,
       paddingRight: 30,
@@ -39,6 +39,7 @@ const useSongFolderStyles = () => {
 
     title: {
       fontSize: 24,
+      color: theme.primaryText,
     },
 
     iconRow: {
@@ -56,7 +57,7 @@ const useSongFolderStyles = () => {
     playbackBar: {
       height: 15,
       width: '66%',
-      backgroundColor: 'coral',
+      backgroundColor: theme.primary,
       alignSelf: 'center',
     },
 

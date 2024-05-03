@@ -17,13 +17,12 @@ const useSongTakeStyles = () => {
   const songTakeStyles: Styles = StyleSheet.create({
     container: {
       flexDirection: 'row',
-      backgroundColor: '#f0f0f0',
+      backgroundColor: theme.secondaryBackground,
       paddingVertical: 12,
       paddingLeft: 25,
       paddingRight: 30,
       width: '90%',
       borderWidth: 2,
-      borderColor: '#000',
       borderRadius: 10,
       justifyContent: 'space-between',
       alignContent: 'center',
@@ -56,7 +55,7 @@ const useSongTakeStyles = () => {
     playbackBar: {
       height: 15,
       width: '52%',
-      backgroundColor: 'coral',
+      backgroundColor: theme.primary,
       alignSelf: 'center',
       marginLeft: 10,
     },

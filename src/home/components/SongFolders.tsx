@@ -8,7 +8,7 @@ import { ListRenderItemInfo } from 'react-native';
 import { song } from '@src/common/types';
 
 interface Props {
-  setIsDeleteModalOpen: (value: string) => void;
+  setIsDeleteModalOpen: (value: boolean) => void;
 }
 
 const SongFolders = ({ setIsDeleteModalOpen }: Props) => (

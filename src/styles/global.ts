@@ -1,8 +1,9 @@
-import { StyleSheet, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { useColorTheme } from '@src/theme/ThemeContext';
 
 interface GlobalStyles {
   container: ViewStyle;
+  text: TextStyle;
 }
 
 const useGlobalStyles = () => {
@@ -11,12 +12,15 @@ const useGlobalStyles = () => {
   const globalStyles: GlobalStyles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: theme.primaryBackground,
       fontSize: 16,
       fontFamily: 'Roboto',
-      color: '#333333',
       height: '100%',
       width: '100%',
+    },
+
+    text: {
+      color: theme.primaryText,
     },
   });
 

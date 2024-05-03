@@ -4,6 +4,8 @@ import {
   songs,
   songDetail,
   take,
+  song,
+  page,
 } from '@src/common/types';
 import { Dimensions } from 'react-native';
 
@@ -20,7 +22,7 @@ export const COLOR_THEME_NAMES: colorThemeName[] = [
   'Metal',
   'Psych',
   'Pop',
-  'Twee',
+  'Surf',
 ];
 
 export const SONG_DETAILS: songDetail[] = [
@@ -35,6 +37,19 @@ export const EMPTY_TAKE: take = {
   date: '',
   notes: '',
   starred: false,
+};
+
+export const EMPTY_PAGE: page = {
+  lyrics: '',
+  info: { completed: false },
+};
+
+export const EMPTY_SONG: song = {
+  key: -1,
+  title: '',
+  selectedTake: -1,
+  takes: [EMPTY_TAKE],
+  page: EMPTY_PAGE,
 };
 
 export const DELETE_TAKE_TEXT: string =
