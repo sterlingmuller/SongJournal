@@ -17,8 +17,6 @@ const useCreateNewSongButtonStyles = () => {
       justifyContent: 'center',
       width: 60,
       height: 60,
-      borderWidth: 1,
-      borderColor: '#ccc',
       borderRadius: 10,
       paddingVertical: 25,
       paddingHorizontal: 35,

@@ -1,18 +1,19 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
 import useSettingsStyle from '@styles/settings';
+import StyledText from '@src/common/components/StyledText';
 
 const BackupAndSync = () => {
   const styles = useSettingsStyle();
 
   return (
     <View>
-      <Text style={styles.sectionTitle}>Back up & Sync</Text>
-      <Text>
+      <StyledText style={styles.sectionTitle}>Back up & Sync</StyledText>
+      <StyledText>
         Backing up to
-        <Text> sterlingmuller93@gmail.com</Text>
-      </Text>
+        <StyledText> sterlingmuller93@gmail.com</StyledText>
+      </StyledText>
     </View>
   );
 };

@@ -6,6 +6,7 @@ import LyricsHeader from '@src/lyrics/components/LyricsHeader';
 import InfoModal from '@src/lyrics/components/InfoModal';
 import { RootStackParamList } from '@src/common/types';
 import LyricsSheet from '@src/lyrics/components/LyricsSheet';
+import useGlobalStyles from '@src/styles/global';
 
 interface Props {
   route: RouteProp<RootStackParamList, 'Lyrics'>;
@@ -14,6 +15,7 @@ interface Props {
 const LyricsScreen = ({ route }: Props) => {
   const { song } = route.params;
   const { page } = song;
+  const globalStyles = useGlobalStyles();
 
   const { setOptions } = useNavigation();
   const [isInfoModalOpen, setIsInfoModalOpen] = useState<boolean>(false);
@@ -31,7 +33,7 @@ const LyricsScreen = ({ route }: Props) => {
   }, [isInfoModalOpen, setIsInfoModalOpen]);
 
   return (
-    <View>
+    <View style={globalStyles.container}>
       <LyricsSheet page={page} />
       <InfoModal
         isInfoModalOpen={isInfoModalOpen}

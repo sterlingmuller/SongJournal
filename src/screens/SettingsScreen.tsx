@@ -5,18 +5,21 @@ import BackupAndSync from '@src/settings/components/BackupAndSync';
 import Theme from '@src/settings/components/Theme';
 import About from '@src/settings/components/About';
 import useSettingsStyle from '@styles/settings';
+import useGlobalStyles from '@src/styles/global';
+import StyledText from '@src/common/components/StyledText';
 
 const SettingsScreen = () => {
   const styles = useSettingsStyle();
+  const globalStyles = useGlobalStyles();
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <View style={styles.content}>
         <BackupAndSync />
         <Theme />
         <About />
       </View>
-      <Text style={styles.version}>Version 0.0.0</Text>
+      <StyledText style={styles.version}>Version 0.0.0</StyledText>
     </View>
   );
 };

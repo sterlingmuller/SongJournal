@@ -6,7 +6,7 @@ import useSongFolderStyles from '@styles/songFolder';
 
 interface Props {
   song: string;
-  setIsDeleteModalOpen: (value: string) => void;
+  setIsDeleteModalOpen: (value: boolean) => void;
 }
 
 const DeleteRow = ({ song, setIsDeleteModalOpen }: Props) => {

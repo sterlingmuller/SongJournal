@@ -1,16 +1,17 @@
 import React from 'react';
-import { View, Text, Modal, TouchableOpacity, Button } from 'react-native';
+import { View, Modal, TouchableOpacity, Button } from 'react-native';
 
-import deleteModalStyle from '@src/styles/deleteModal';
-import { take } from '../types';
-import { EMPTY_TAKE } from '../constants';
+import { song, take } from '@src/common/types';
+import { EMPTY_TAKE } from '@src/common/constants';
+import StyledText from '@src/common/components/StyledText';
+import useDeleteModalStyles from '@src/styles/deleteModal';
 
 interface Props {
   isDeleteModalOpen: boolean;
   setIsDeleteModalOpen: (value: boolean) => void;
-  setCurrentTake: (value: take) => void;
+  setToDelete: (value: take | song) => void;
   deleteText: string;
-  currentTake: take | undefined;
+  toDelete: take | song;
 }
 
 const DeleteModal = (props: Props) => {
@@ -18,34 +19,36 @@ const DeleteModal = (props: Props) => {
     isDeleteModalOpen,
     setIsDeleteModalOpen,
     deleteText,
-    setCurrentTake,
-    currentTake,
+    setToDelete,
+    toDelete,
   } = props;
+  const styles = useDeleteModalStyles();
+
   const onExitPress = (): void => {
-    setCurrentTake(EMPTY_TAKE);
+    setToDelete(EMPTY_TAKE);
     setIsDeleteModalOpen(false);
   };
 
   return (
     <Modal transparent visible={isDeleteModalOpen}>
       <TouchableOpacity
-        style={deleteModalStyle.modalContainer}
+        style={styles.modalContainer}
         activeOpacity={1}
         onPress={onExitPress}
       >
-        <View style={deleteModalStyle.container}>
-          <Text style={deleteModalStyle.title}>
+        <View style={styles.container}>
+          <StyledText style={styles.title}>
             Delete from Google account and current device
-          </Text>
-          <Text style={deleteModalStyle.text}>
-            {currentTake && currentTake.title}
+          </StyledText>
+          <StyledText style={styles.text}>
+            {toDelete && toDelete.title}
             {deleteText}
-          </Text>
-          <View style={deleteModalStyle.buttons}>
-            <View style={deleteModalStyle.button}>
+          </StyledText>
+          <View style={styles.buttons}>
+            <View style={styles.button}>
               <Button title="Delete" onPress={() => null} color="red" />
             </View>
-            <View style={deleteModalStyle.button}>
+            <View style={styles.button}>
               <Button title="Cancel" color="#D6D6D6" onPress={onExitPress} />
             </View>
           </View>

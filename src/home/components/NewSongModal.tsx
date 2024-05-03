@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Modal, TouchableOpacity, TextInput } from 'react-native';
+import { View, Modal, TouchableOpacity, TextInput } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 import { RootStackParamList } from '@src/common/types';
+import StyledText from '@src/common/components/StyledText';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 import useNewSongModalStyle from '@src/styles/newSongModal';
 
@@ -37,7 +38,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
         onPress={onExitPress}
       >
         <View style={styles.container}>
-          <Text style={styles.title}>Song title</Text>
+          <StyledText style={styles.title}>Song title</StyledText>
           <View style={styles.textbox}>
             <TextInput
               style={styles.input}

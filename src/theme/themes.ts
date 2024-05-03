@@ -1,62 +1,70 @@
 import { colorThemeName } from '@src/common/types';
+import { colors as c } from '@src/theme/colors';
 
 export interface Theme {
   primary: string;
   secondary: string;
-  accent: string;
-  button: string;
-  buttonText: string;
-  header: string;
+  primaryBackground: string;
+  secondaryBackground: string;
+  primaryText: string;
+  headerText: string;
+  highlight: string;
 }
 
 const themes: Record<colorThemeName, Theme> = {
   Light: {
-    primary: '#ffffff',
-    secondary: '#fff',
-    accent: '#fcd470',
-    button: '#eeeeee',
-    buttonText: '#333333',
-    header: 'coral',
+    primary: c.coral,
+    secondary: c.gold,
+    primaryBackground: c.cream,
+    secondaryBackground: c.lightGray,
+    primaryText: c.black,
+    headerText: c.black,
+    highlight: c.gray,
   },
   Dark: {
-    primary: '#333333',
-    secondary: '#fff',
-    accent: '#fcd470',
-    button: '#222222',
-    buttonText: '#ffffff',
-    header: 'gray',
+    primary: c.deepCharcoal,
+    secondary: c.dimGold,
+    primaryBackground: c.lightBlack,
+    secondaryBackground: c.charcoal,
+    primaryText: c.dimWhite,
+    headerText: c.dimWhite,
+    highlight: c.charcoal,
   },
   Metal: {
-    primary: '#ff4081',
-    secondary: '#fff',
-    accent: '#fcd470',
-    button: '#cddc39',
-    buttonText: '#212121',
-    header: 'pink',
+    primary: c.bloodRed,
+    secondary: c.dimGold,
+    primaryBackground: c.lightBlack,
+    secondaryBackground: c.charcoal,
+    primaryText: c.bloodRed,
+    headerText: c.dimGold,
+    highlight: c.charcoal,
   },
   Psych: {
-    primary: '#ff4081',
-    secondary: '#fff',
-    accent: '#fcd470',
-    button: '#cddc39',
-    buttonText: '#212121',
-    header: 'green',
+    primary: c.purple,
+    secondary: c.mustard,
+    primaryBackground: c.greenBean,
+    secondaryBackground: c.lightGray,
+    primaryText: c.black,
+    headerText: c.black,
+    highlight: c.mustard,
   },
   Pop: {
-    primary: '#ff4081',
-    secondary: '#fff',
-    accent: '#fcd470',
-    button: '#cddc39',
-    buttonText: '#212121',
-    header: 'pink',
+    primary: c.neonBlue,
+    secondary: c.violet,
+    primaryBackground: c.pink,
+    secondaryBackground: c.lightGray,
+    primaryText: c.black,
+    headerText: c.black,
+    highlight: c.sunscreen,
   },
-  Twee: {
-    primary: '#ff4081',
-    secondary: '#fff',
-    accent: '#fcd470',
-    button: '#cddc39',
-    buttonText: '#212121',
-    header: 'pink',
+  Surf: {
+    primary: c.oceanBlue,
+    secondary: c.sunset,
+    primaryBackground: c.sunscreen,
+    secondaryBackground: c.sand,
+    primaryText: c.black,
+    headerText: c.black,
+    highlight: c.sand,
   },
 };
 
