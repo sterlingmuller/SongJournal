@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { View } from 'react-native';
 
 import HomeHeader from '@src/home/components/HomeHeader';
@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import DeleteModal from '@src/common/components/DeleteModal';
 import { DELETE_SONG_TEXT, EMPTY_SONG } from '@src/common/constants';
 import useGlobalStyles from '@styles/global';
+import { requestMicrophonePermissions } from '@src/utils/permissions';
 
 const HomeScreen = () => {
   const { setOptions } = useNavigation();
@@ -24,6 +25,10 @@ const HomeScreen = () => {
   const [isNewSongOpen, setIsNewSongOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [toDelete, setToDelete] = useState<song>(EMPTY_SONG);
+
+  useEffect(() => {
+    requestMicrophonePermissions();
+  }, []);
 
   useLayoutEffect(() => {
     setOptions({
