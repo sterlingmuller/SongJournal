@@ -1,20 +1,21 @@
-import saveAndCancelButtonsStyle from '@src/styles/saveAndCancelButtons';
 import React from 'react';
 import { View, Button } from 'react-native';
+
+import useSaveAndCancelButtonsStyle from '@src/styles/saveAndCancelButtons';
 
 interface Props {
   onPress: () => void;
   onExitPress: () => void;
   disabled: boolean;
-  buttonsStyle?;
 }
 
 const SaveAndCancelButtons = (props: Props) => {
-  const { buttonsStyle, onPress, onExitPress, disabled } = props;
+  const { onPress, onExitPress, disabled } = props;
+  const styles = useSaveAndCancelButtonsStyle();
 
   return (
-    <View style={saveAndCancelButtonsStyle.buttons}>
-      <View style={saveAndCancelButtonsStyle.button}>
+    <View style={styles.buttons}>
+      <View style={styles.button}>
         <Button
           title="Save"
           onPress={onPress}
@@ -22,7 +23,7 @@ const SaveAndCancelButtons = (props: Props) => {
           disabled={disabled}
         />
       </View>
-      <View style={saveAndCancelButtonsStyle.button}>
+      <View style={styles.button}>
         <Button title="Cancel" color="#D6D6D6" onPress={onExitPress} />
       </View>
     </View>

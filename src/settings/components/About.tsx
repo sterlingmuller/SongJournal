@@ -1,6 +1,7 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
+import StyledText from '@src/common/components/StyledText';
 import useSettingsStyle from '@styles/settings';
 
 const About = () => {
@@ -8,18 +9,18 @@ const About = () => {
 
   return (
     <View>
-      <Text style={styles.sectionTitle}>About</Text>
+      <StyledText style={styles.sectionTitle}>About</StyledText>
       <View>
-        <Text style={styles.about}>
+        <StyledText style={styles.about}>
           This app was made by Sterling Muller. I don’t know what a Terms of
           Service is so we’re probably fine. I hope you get a lot of good use
           out of my app, make killer songs, and spread the word to friends.
-        </Text>
-        <Text style={styles.aboutSignature}>Cheers,</Text>
-        <Text style={styles.about}>Sterling</Text>
-        <Text style={styles.aboutSignature}>
+        </StyledText>
+        <StyledText style={styles.aboutSignature}>Cheers,</StyledText>
+        <StyledText style={styles.about}>Sterling</StyledText>
+        <StyledText style={styles.aboutSignature}>
           sterlingmuller93@gmail.com if you want to fight
-        </Text>
+        </StyledText>
       </View>
     </View>
   );

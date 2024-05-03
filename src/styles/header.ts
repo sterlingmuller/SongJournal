@@ -1,20 +1,22 @@
 import { useColorTheme } from '@src/theme/ThemeContext';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 interface Styles {
   headerStyle: ViewStyle;
   headerTitleStyle: TextStyle;
   rightIcon: ViewStyle;
+  headerTintColor: string;
 }
 
 const useHeaderStyles = () => {
   const { theme } = useColorTheme();
 
-  const headerStyles: Styles = StyleSheet.create({
-    headerStyle: { backgroundColor: theme.header },
-    headerTitleStyle: { fontSize: 28 },
+  const headerStyles: Styles = {
+    headerStyle: { backgroundColor: theme.primary },
+    headerTitleStyle: { fontSize: 28, color: theme.headerText },
     rightIcon: { padding: 8 },
-  });
+    headerTintColor: theme.headerText,
+  };
 
   return headerStyles;
 };

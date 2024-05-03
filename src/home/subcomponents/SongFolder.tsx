@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
+import StyledText from '@src/common/components/StyledText';
 import LyricsIcon from '@src/icons/LyricsIcon';
 import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
@@ -37,8 +38,8 @@ const SongFolder = ({ song }: Props) => {
       onPress={() => navigate('Song', { song })}
     >
       <View style={styles.contents}>
-        <Text style={styles.title}>{title}</Text>
-        <Text>{takes[selectedTake].date}</Text>
+        <StyledText style={styles.title}>{title}</StyledText>
+        <StyledText>{takes[selectedTake].date}</StyledText>
         <View style={styles.iconRow}>
           <TouchableOpacity onPress={() => navigate('Lyrics', { song })}>
             <LyricsIcon />

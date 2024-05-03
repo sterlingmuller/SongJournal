@@ -1,5 +1,7 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+
 import { useColorTheme } from '@src/theme/ThemeContext';
+import { colors as c } from '@src/theme/colors';
 
 interface Styles {
   modalContainer: ViewStyle;
@@ -23,11 +25,11 @@ const useSortByModalStyles = () => {
 
     container: {
       position: 'absolute',
-      backgroundColor: '#fcd470',
+      backgroundColor: theme.secondary,
       width: '100%',
       height: '22%',
       borderBottomWidth: 1,
-      borderBottomColor: '#000',
+      borderBottomColor: c.black,
       bottom: 0,
       borderTopLeftRadius: 10,
       borderTopRightRadius: 10,
@@ -41,7 +43,7 @@ const useSortByModalStyles = () => {
     line: {
       width: '100%',
       borderTopWidth: 1,
-      borderColor: 'black',
+      borderColor: c.black,
     },
 
     categories: {
@@ -50,7 +52,7 @@ const useSortByModalStyles = () => {
     },
 
     selectedCategory: {
-      backgroundColor: '#C5C2B7',
+      backgroundColor: theme.highlight,
       borderRadius: 20,
       marginRight: 40,
     },
