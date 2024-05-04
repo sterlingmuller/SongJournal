@@ -1,5 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
+export type appState = 'active' | 'background';
+
 export type sortByCategoryName = 'Date' | 'Name' | 'Length' | 'Lyrics';
 
 export type colorThemeName =

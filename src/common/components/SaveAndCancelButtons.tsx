@@ -6,25 +6,34 @@ import useSaveAndCancelButtonsStyle from '@src/styles/saveAndCancelButtons';
 interface Props {
   onPress: () => void;
   onExitPress: () => void;
-  disabled: boolean;
+  disabled?: boolean;
+  primaryLabel?: string;
+  secondaryLabel?: string;
+  buttonsStyle?;
 }
 
 const SaveAndCancelButtons = (props: Props) => {
-  const { onPress, onExitPress, disabled } = props;
+  const {
+    onPress,
+    onExitPress,
+    disabled = false,
+    primaryLabel = 'Save',
+    secondaryLabel = 'Cancel',
+  } = props;
   const styles = useSaveAndCancelButtonsStyle();
 
   return (
     <View style={styles.buttons}>
       <View style={styles.button}>
         <Button
-          title="Save"
+          title={primaryLabel}
           onPress={onPress}
           color="#81C2F1"
           disabled={disabled}
         />
       </View>
       <View style={styles.button}>
-        <Button title="Cancel" color="#D6D6D6" onPress={onExitPress} />
+        <Button title={secondaryLabel} color="#D6D6D6" onPress={onExitPress} />
       </View>
     </View>
   );
