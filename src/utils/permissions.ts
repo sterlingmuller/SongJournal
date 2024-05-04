@@ -6,5 +6,6 @@ export const requestMicrophonePermissions = async () => {
     return status;
   } catch (err) {
     console.warn(err);
+    return null;
   }
 };
