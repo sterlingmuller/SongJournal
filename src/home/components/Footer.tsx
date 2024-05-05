@@ -17,10 +17,16 @@ const Footer = () => {
       <TouchableOpacity>
         <PlaylistIcon />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigate('MusicPlayer')}>
+      <TouchableOpacity
+        onPress={() => navigate('MusicPlayer')}
+        testID="music-player-TO"
+      >
         <MusicPlayerIcon />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigate('Settings')}>
+      <TouchableOpacity
+        onPress={() => navigate('Settings')}
+        testID="settings-TO"
+      >
         <SettingIcon />
       </TouchableOpacity>
     </View>

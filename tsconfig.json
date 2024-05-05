@@ -2,9 +2,10 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "baseUrl": ".",
+    "types": ["jest"],
     "paths": {
       "@src/*": ["src/*"],
-      "@styles/*": ["src/styles/*"],
+      "@styles/*": ["src/styles/*"]
     }
-  },
+  }
 }
