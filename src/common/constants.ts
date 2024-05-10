@@ -8,6 +8,7 @@ import {
   page,
 } from '@src/common/types';
 import { Dimensions } from 'react-native';
+import { documentDirectory } from 'expo-file-system';
 
 export const SORTBY_CATEGORY_NAMES: sortByCategoryName[] = [
   'Date',
@@ -59,6 +60,8 @@ export const DELETE_SONG_TEXT: string =
   ', its journal entry, and all takes of this song will be permanently deleted. This action cannot be undone.';
 
 export const SCREEN_WIDTH: number = Dimensions.get('window').width;
+
+export const documentsDirectory = documentDirectory + 'SongJournal/';
 
 export const DUMMY_SONGS: songs = [
   {
