@@ -7,19 +7,16 @@ import DeleteModal from '@src/common/components/DeleteModal';
 import NotesModal from '@src/songFolder/components/NotesModal';
 import { DELETE_TAKE_TEXT, EMPTY_TAKE } from '@src/common/constants';
 import { ScrollView } from 'react-native-gesture-handler';
-import { RootStackParamList, take } from '@src/common/types';
-import { RouteProp } from '@react-navigation/native';
+import { take } from '@src/common/types';
 import useSongScreenStyles from '@src/styles/songScreen';
 import useGlobalStyles from '@src/styles/global';
 import PermissionsNeededModal from '@src/songFolder/components/PermissionsNeededModal';
 import useMicrophonePermissions from '@src/hooks/useMicrophonePermissions';
+import { useSelector } from 'react-redux';
+import { RootState } from '@src/store';
 
-interface Props {
-  route: RouteProp<RootStackParamList, 'Song'>;
-}
-
-const SongScreen = ({ route }: Props) => {
-  const { song } = route.params;
+const SongScreen = () => {
+  const song = useSelector((state: RootState) => state.song.currentSong);
   const styles = useSongScreenStyles();
   const globalStyles = useGlobalStyles();
 

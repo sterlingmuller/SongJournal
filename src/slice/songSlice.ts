@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { song } from '@src/common/types';
 
-type SliceState = { currentSong: string | null };
+type SliceState = { currentSong: song | null };
 
 const initialState: SliceState = {
   currentSong: null,
@@ -11,7 +11,7 @@ const songSlice = createSlice({
   name: 'song',
   initialState,
   reducers: {
-    setCurrentSong: (state: SliceState, action: PayloadAction<string>) => {
+    setCurrentSong: (state: SliceState, action: PayloadAction<song>) => {
       state.currentSong = action.payload;
     },
   },
