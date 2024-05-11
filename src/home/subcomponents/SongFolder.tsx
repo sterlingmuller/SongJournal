@@ -9,6 +9,8 @@ import PlayIcon from '@src/icons/PlayIcon';
 import PlaybackBar from '@src/home/subcomponents/PlaybackBar';
 import { RootStackParamList, song } from '@src/common/types';
 import useSongFolderStyles from '@styles/songFolder';
+import { useAppDispatch } from '@src/common/hooks';
+import { setCurrentSong } from '@src/slice/songSlice';
 
 interface Props {
   song: song;
@@ -17,6 +19,7 @@ interface Props {
 const SongFolder = ({ song }: Props) => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   const styles = useSongFolderStyles();
+  const dispatch = useAppDispatch();
 
   const { title, takes, selectedTake } = song;
   const [isPressed, setIsPressed] = useState(false);
@@ -29,13 +32,18 @@ const SongFolder = ({ song }: Props) => {
     setIsPressed(false);
   };
 
+  const handleOnPress = () => {
+    dispatch(setCurrentSong(song));
+    navigate('Song', { song });
+  };
+
   return (
     <TouchableOpacity
       style={[styles.rowContainer, isPressed && styles.rowPressed]}
       activeOpacity={1}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
-      onPress={() => navigate('Song', { song })}
+      onPress={handleOnPress}
     >
       <View style={styles.contents}>
         <StyledText style={styles.title}>{title}</StyledText>
