@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, TouchableOpacity, TextInput } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import SongDetail from '@src/lyrics/subcomponents/SongDetail';
 import CompletionStatus from '@src/lyrics/subcomponents/CompletionStatus';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
-import { info, songDetail, test } from '@src/common/types';
+import { info, songDetail } from '@src/common/types';
 import { SONG_DETAILS } from '@src/common/constants';
-import { RouteProp, useRoute } from '@react-navigation/native';
 import useInfoModalStyle from '@styles/infoModal';
+import { selectCurrentSongInfo } from '@src/selectors/currentSongSelector';
 
 interface Props {
   isInfoModalOpen: boolean;
@@ -15,8 +16,7 @@ interface Props {
 }
 
 const InfoModal = (props: Props) => {
-  const route: RouteProp<test> = useRoute<RouteProp<test>>();
-  const info: info = route.params.song.page.info;
+  const info: info = useSelector(selectCurrentSongInfo);
   const styles = useInfoModalStyle();
 
   const { isInfoModalOpen, setIsInfoModalOpen } = props;
