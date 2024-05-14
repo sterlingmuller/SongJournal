@@ -15,7 +15,7 @@
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "@reduxjs/toolkit": "^2.2.4",
-    "expo": "~50.0.14",
+    "expo": "^51.0.2",
     "expo-av": "^13.10.6",
     "expo-file-system": "^16.0.9",
     "expo-linking": "^6.2.2",

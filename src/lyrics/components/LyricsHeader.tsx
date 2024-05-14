@@ -1,19 +1,21 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import InfoIcon from '@src/icons/InfoIcon';
 import BackIcon from '@src/icons/BackIcon';
 import useLyricsHeaderStyles from '@src/styles/lyricsHeader';
+import { selectCurrentSongTitle } from '@src/selectors/currentSongSelector';
 
 interface Props {
   isInfoModalOpen: boolean;
   setIsInfoModalOpen: (value: boolean) => void;
-  title: string;
 }
 
 const LyricsHeader = (props: Props) => {
-  const { isInfoModalOpen, setIsInfoModalOpen, title } = props;
+  const { isInfoModalOpen, setIsInfoModalOpen } = props;
   const styles = useLyricsHeaderStyles();
+  const title = useSelector(selectCurrentSongTitle);
 
   return (
     <View style={styles.container}>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import SongTake from '@src/songFolder/components/SongTake';
 import RecordButton from '@src/songFolder/subcomponents/RecordButton';
@@ -12,11 +13,10 @@ import useSongScreenStyles from '@src/styles/songScreen';
 import useGlobalStyles from '@src/styles/global';
 import PermissionsNeededModal from '@src/songFolder/components/PermissionsNeededModal';
 import useMicrophonePermissions from '@src/hooks/useMicrophonePermissions';
-import { useSelector } from 'react-redux';
-import { RootState } from '@src/store';
+import { selectCurrentSongTakes } from '@src/selectors/currentSongSelector';
 
 const SongScreen = () => {
-  const song = useSelector((state: RootState) => state.song.currentSong);
+  const { takes, selectedTake } = useSelector(selectCurrentSongTakes);
   const styles = useSongScreenStyles();
   const globalStyles = useGlobalStyles();
 
@@ -27,7 +27,7 @@ const SongScreen = () => {
   const [isPermissionsNeededModalOpen, setIsPermissionsNeededModalOpen] =
     useState<boolean>(false);
 
-  const takes: take[] = [...song.takes].reverse();
+  const orderedTakes: take[] = [...takes].reverse();
   const isPermissionGranted = useMicrophonePermissions();
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const SongScreen = () => {
     <View style={globalStyles.container}>
       <ScrollView>
         <View style={styles.takes}>
-          {takes.map((take: take) => (
+          {orderedTakes.map((take: take) => (
             <SongTake
               key={take.title}
               take={take}

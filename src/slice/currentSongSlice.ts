@@ -1,14 +1,17 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { EMPTY_SONG } from '@src/common/constants';
 import { song } from '@src/common/types';
 
-type SliceState = { currentSong: song | null };
+type SliceState = {
+  currentSong: song;
+};
 
 const initialState: SliceState = {
-  currentSong: null,
+  currentSong: EMPTY_SONG,
 };
 
 const songSlice = createSlice({
-  name: 'song',
+  name: 'currentSong',
   initialState,
   reducers: {
     setCurrentSong: (state: SliceState, action: PayloadAction<song>) => {
