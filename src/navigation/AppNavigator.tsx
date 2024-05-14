@@ -1,23 +1,23 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useSelector } from 'react-redux';
 
 import SettingsScreen from '@src/screens/SettingsScreen';
 import SongScreen from '@src/screens/SongScreen';
 import LyricsScreen from '@src/screens/LyricsScreen';
 import HomeScreen from '@src/screens/HomeScreen';
 import MusicPlayerScreen from '@src/screens/MusicPlayerScreen';
-import {
-  RootStackParamList,
-  lyricNavigation,
-  songNavigation,
-} from '@src/common/types';
+import { RootStackParamList } from '@src/common/types';
 import HeaderPageButton from '@src/songFolder/subcomponents/HeaderPageButton';
 import useHeaderStyles from '@src/styles/header';
+import { selectCurrentSongTitle } from '@src/selectors/currentSongSelector';
 
 const AppNavigator = () => {
   const RootStack: any = createNativeStackNavigator<RootStackParamList>();
   const styles = useHeaderStyles();
+
+  const title = useSelector(selectCurrentSongTitle);
 
   return (
     <NavigationContainer>
@@ -26,19 +26,16 @@ const AppNavigator = () => {
         <RootStack.Screen
           name="Song"
           component={SongScreen}
-          options={({ route }: songNavigation) => ({
+          options={{
             ...styles,
-            title: route.params.song.title,
-            headerRight: () => <HeaderPageButton song={route.params.song} />,
-          })}
+            title,
+            headerRight: () => <HeaderPageButton />,
+          }}
         />
         <RootStack.Screen
           name="Lyrics"
           component={LyricsScreen}
-          options={({ route }: lyricNavigation) => ({
-            ...styles,
-            song: route.params.song,
-          })}
+          options={{ ...styles }}
         />
         <RootStack.Screen
           name="MusicPlayer"

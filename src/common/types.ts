@@ -14,8 +14,8 @@ export type colorThemeName =
 
 export type RootStackParamList = {
   Home: undefined;
-  Song: { song: song };
-  Lyrics: { song: song };
+  Song: undefined;
+  Lyrics: undefined;
   Settings: undefined;
   MusicPlayer: undefined;
 };

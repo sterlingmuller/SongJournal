@@ -21,6 +21,7 @@ const HomeScreen = () => {
   const [sortedCategory, setSortedCategory] =
     useState<sortByCategoryName>('Date');
   const [isSortAscending, setIsSortAscending] = useState<boolean>(false);
+
   const [isNewSongOpen, setIsNewSongOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [toDelete, setToDelete] = useState<song>(EMPTY_SONG);
