@@ -37,6 +37,11 @@ export type songDetail = { label: string; key: string };
 
 export type pageOption = 'edit' | 'chords' | 'metronome' | 'share';
 
+export type currentSongInfo = {
+  SongId: number;
+  Title: string;
+};
+
 export type take = {
   key: number;
   title: string;
