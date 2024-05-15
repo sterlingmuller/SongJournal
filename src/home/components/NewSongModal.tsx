@@ -6,6 +6,10 @@ import { RootStackParamList } from '@src/common/types';
 import StyledText from '@src/common/components/StyledText';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 import useNewSongModalStyle from '@src/styles/newSongModal';
+import { useSQLiteContext } from 'expo-sqlite';
+import { addSong } from '@src/repositories/SongsRepository';
+import { setCurrentSong } from '@src/slice/currentSongSlice';
+import { useAppDispatch } from '@src/common/hooks';
 
 interface Props {
   isNewSongOpen: boolean;
@@ -13,6 +17,8 @@ interface Props {
 }
 
 const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
+  const db = useSQLiteContext();
+  const dispatch = useAppDispatch();
   const { navigate, addListener } =
     useNavigation<NavigationProp<RootStackParamList>>();
   const styles = useNewSongModalStyle();
@@ -20,6 +26,17 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
   const [songTitle, setSongTitle] = useState('');
   const onExitPress = () => setIsNewSongOpen(false);
   const disabled: boolean = !songTitle;
+
+  const onSavePress = async () => {
+    console.log('test');
+    // setIsNewSongOpen(false);
+    // const db = useSQLiteContext();
+    const result = await addSong(db, songTitle);
+    console.log('result: ', result);
+    dispatch(setCurrentSong(result.SongId, result.Title));
+
+    navigate('Song');
+  };
 
   useEffect(
     () =>
@@ -48,7 +65,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
             />
           </View>
           <SaveAndCancelButtons
-            onPress={() => navigate('Song', { song: songTitle })}
+            onPress={onSavePress}
             onExitPress={() => setIsNewSongOpen(false)}
             disabled={disabled}
           />

@@ -3,19 +3,23 @@ import { EMPTY_SONG } from '@src/common/constants';
 import { song } from '@src/common/types';
 
 type SliceState = {
-  currentSong: song;
+  songId: number;
+  title: string;
+  // date: string;
 };
 
 const initialState: SliceState = {
-  currentSong: EMPTY_SONG,
+  songId: -1,
+  title: '',
+  // date: '',
 };
 
 const songSlice = createSlice({
   name: 'currentSong',
   initialState,
   reducers: {
-    setCurrentSong: (state: SliceState, action: PayloadAction<song>) => {
-      state.currentSong = action.payload;
+    setCurrentSong: (state: SliceState, action: PayloadAction<SliceState>) => {
+      state = action.payload;
     },
   },
 });
