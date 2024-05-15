@@ -13,10 +13,12 @@ const createInfoTable =
   'CREATE TABLE IF NOT EXISTS Info (SongID INTEGER PRIMARY KEY AUTOINCREMENT, BPM TEXT, KeySignature TEXT, Time TEXT, About TEXT, Completed BOOLEAN NOT NULL, FOREIGN KEY (SongID) REFERENCES Pages(SongID));';
 
 export const migrateDbIfNeeded = async (db: SQLiteDatabase) => {
+  console.log('hi');
   const DATABASE_VERSION = 1;
   let { user_version: currentDbVersion } = await db.getFirstAsync<{
     user_version: number;
   }>('PRAGMA user_version');
+
   if (currentDbVersion >= DATABASE_VERSION) {
     return;
   }
@@ -29,9 +31,11 @@ export const migrateDbIfNeeded = async (db: SQLiteDatabase) => {
         createInfoTable,
     );
 
-    await db.runAsync('INSERT INTO Songs (Title) VALUES (?, ?)', 'test');
+    // await db.runAsync('INSERT INTO Songs (Title) VALUES (?, ?)', 'test');
 
     currentDbVersion = 1;
+
+    console.log('currentDbVersion', currentDbVersion);
   }
   // if (currentDbVersion === 1) {
   //   Add more migrations
