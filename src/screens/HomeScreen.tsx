@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { View } from 'react-native';
 
 import HomeHeader from '@src/home/components/HomeHeader';
@@ -12,8 +12,6 @@ import { useNavigation } from '@react-navigation/native';
 import DeleteModal from '@src/common/components/DeleteModal';
 import { DELETE_SONG_TEXT, EMPTY_SONG } from '@src/common/constants';
 import useGlobalStyles from '@styles/global';
-import SongRepository from '@src/repositories/SongRepository';
-import { useSQLiteContext } from 'expo-sqlite';
 
 const HomeScreen = () => {
   const { setOptions } = useNavigation();
@@ -35,21 +33,6 @@ const HomeScreen = () => {
       ),
     });
   }, [isSortOpen, setIsSortOpen]);
-
-  const db = useSQLiteContext();
-
-  useEffect(() => {
-    // SongRepository.getAllSongs();
-    // SongRepository.addSong('Test');
-    console.log('lets see');
-    // SongRepository.getAllSongs();
-    const setup = async () => {
-      const result = await db.getAllAsync('SELECT * FROM Songs');
-
-      console.log('hrm: ', result);
-    };
-    setup();
-  }, []);
 
   return (
     <View style={styles.container}>
