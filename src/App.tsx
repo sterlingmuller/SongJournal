@@ -11,15 +11,17 @@ import { migrateDbIfNeeded } from '@src/database/db';
 const App = () => (
   <GestureHandlerRootView style={{ flex: 1 }}>
     <ColorThemeProvider>
-      <SQLiteProvider
-        databaseName="songjournal4.db"
-        onInit={migrateDbIfNeeded}
-        // useSuspense
-      >
-        <Provider store={store}>
-          <AppNavigator />
-        </Provider>
-      </SQLiteProvider>
+      <Suspense fallback={null}>
+        <SQLiteProvider
+          databaseName="songjournal4.db"
+          onInit={migrateDbIfNeeded}
+          useSuspense
+        >
+          <Provider store={store}>
+            <AppNavigator />
+          </Provider>
+        </SQLiteProvider>
+      </Suspense>
     </ColorThemeProvider>
   </GestureHandlerRootView>
 );
