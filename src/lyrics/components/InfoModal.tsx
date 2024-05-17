@@ -5,10 +5,10 @@ import { useSelector } from 'react-redux';
 import SongDetail from '@src/lyrics/subcomponents/SongDetail';
 import CompletionStatus from '@src/lyrics/subcomponents/CompletionStatus';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
-import { info, songDetail } from '@src/common/types';
+import { page, songDetail } from '@src/common/types';
 import { SONG_DETAILS } from '@src/common/constants';
 import useInfoModalStyle from '@styles/infoModal';
-import { selectCurrentSongInfo } from '@src/selectors/currentSongSelector';
+import { selectCurrentSongPage } from '@src/selectors/currentSongSelector';
 
 interface Props {
   isInfoModalOpen: boolean;
@@ -16,12 +16,13 @@ interface Props {
 }
 
 const InfoModal = (props: Props) => {
-  const info: info = useSelector(selectCurrentSongInfo);
+  const page: page = useSelector(selectCurrentSongPage);
+  console.log('page: ', page);
   const styles = useInfoModalStyle();
 
   const { isInfoModalOpen, setIsInfoModalOpen } = props;
-  const [about, setAbout] = useState<string>(info.about);
-  const [isCompleted, setIsCompleted] = useState(info.completed);
+  const [about, setAbout] = useState<string>(page.about);
+  const [isCompleted, setIsCompleted] = useState(!!page.completed);
 
   const onExitPress = () => setIsInfoModalOpen(false);
   const disabled: boolean = !about;
@@ -47,7 +48,7 @@ const InfoModal = (props: Props) => {
           </View>
           <View style={styles.details}>
             {SONG_DETAILS.map(({ label, key }: songDetail) => (
-              <SongDetail key={label} label={label} value={info[key]} />
+              <SongDetail key={label} label={label} value={page[key]} />
             ))}
           </View>
           <CompletionStatus

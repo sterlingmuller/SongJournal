@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Modal, TouchableOpacity, TextInput } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-import { RootStackParamList, songInfo } from '@src/common/types';
+import { RootStackParamList, addSongResult, songInfo } from '@src/common/types';
 import StyledText from '@src/common/components/StyledText';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 import useNewSongModalStyle from '@src/styles/newSongModal';
@@ -25,10 +25,11 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
 
   const [songTitle, setSongTitle] = useState('');
   const onExitPress = () => setIsNewSongOpen(false);
+
   const disabled: boolean = !songTitle;
 
   const onSavePress = async () => {
-    const result: songInfo = await addSong(db, songTitle);
+    const result: addSongResult = await addSong(db, songTitle);
 
     dispatch(setCurrentSong({ ...result, takes: [] }));
 
