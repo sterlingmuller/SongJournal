@@ -51,7 +51,8 @@ export type take = {
   notes?: string;
 };
 
-export type info = {
+export type page = {
+  lyrics?: string;
   bpm?: string;
   keySignature?: string;
   time?: string;
@@ -59,17 +60,24 @@ export type info = {
   completed: boolean;
 };
 
-export type page = {
-  lyrics?: string;
-  info: info;
-};
-
 export type song = {
   songId: number;
   title: string;
   selectedTakeId: number;
   takes: take[];
-  // page: page;
+  page: page;
 };
 
 export type songs = song[];
+
+export type addSongResult = {
+  songId: number;
+  title: string;
+  selectedTakeId: number;
+  page: page;
+};
+
+export type getTakesAndPageResult = {
+  takes: take[];
+  page: page;
+};

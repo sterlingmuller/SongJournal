@@ -34,13 +34,11 @@ export const SONG_DETAILS: songDetail[] = [
 
 export const EMPTY_PAGE: page = {
   lyrics: '',
-  info: {
-    about: '',
-    bpm: '',
-    keySignature: '',
-    time: '',
-    completed: false,
-  },
+  about: '',
+  bpm: '',
+  keySignature: '',
+  time: '',
+  completed: false,
 };
 
 export const EMPTY_SONG: song = {
@@ -48,7 +46,7 @@ export const EMPTY_SONG: song = {
   title: '',
   selectedTakeId: 0,
   takes: [],
-  // page: EMPTY_PAGE,
+  page: EMPTY_PAGE,
 };
 
 export const DELETE_TAKE_TEXT: string =

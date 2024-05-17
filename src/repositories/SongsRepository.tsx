@@ -1,10 +1,22 @@
+import { page, songInfo, take } from '@src/common/types';
 import { SQLiteDatabase } from 'expo-sqlite';
 
 export const getAllSongs = (db: SQLiteDatabase) =>
   db.getAllSync('SELECT selectedTakeID, songId, title FROM Songs');
 
-export const getSongTakesBySongId = (db: SQLiteDatabase, songId: number) =>
-  db.getFirstSync('SELECT * FROM Takes WHERE songId = ?', songId);
+export const getTakesAndPageBySongId = (db: SQLiteDatabase, songId: number) => {
+  const takes: take[] = db.getAllSync(
+    'SELECT * FROM Takes WHERE songId = ?',
+    songId,
+  );
+
+  const page: page = db.getFirstSync(
+    'SELECT * FROM Page WHERE songId = ?',
+    songId,
+  );
+
+  return { takes, page };
+};
 
 export const addSong = async (db: SQLiteDatabase, title: string) => {
   try {
@@ -19,19 +31,17 @@ export const addSong = async (db: SQLiteDatabase, title: string) => {
       songId,
     );
 
-    const song = db.getFirstSync(
+    const song: songInfo = db.getFirstSync(
       'SELECT * FROM Songs WHERE songId = ?',
       songId,
     );
-    // const takes = db.getFirstSync(
-    //   'SELECT * FROM Takes WHERE songId = ?',
-    //   songId,
-    // );
-    // const page = db.getFirstSync('SELECT * FROM Page WHERE songId = ?', songId);
 
-    // console.log('song eep: ', { song, takes, page });
+    const page: page = db.getFirstSync(
+      'SELECT * FROM Page WHERE songId = ?',
+      songId,
+    );
 
-    return song;
+    return { ...song, page };
   } catch (err) {
     console.error('Error inserting song', err);
   }
