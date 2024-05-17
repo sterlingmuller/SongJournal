@@ -4,8 +4,8 @@ import {
   songs,
   songDetail,
   take,
-  song,
   page,
+  song,
 } from '@src/common/types';
 import { Dimensions } from 'react-native';
 import { documentDirectory } from 'expo-file-system';
@@ -32,25 +32,23 @@ export const SONG_DETAILS: songDetail[] = [
   { label: 'Bpm', key: 'bpm' },
 ];
 
-export const EMPTY_TAKE: take = {
-  key: -1,
-  title: '',
-  date: '',
-  notes: '',
-  starred: false,
-};
-
 export const EMPTY_PAGE: page = {
   lyrics: '',
-  info: { completed: false },
+  info: {
+    about: '',
+    bpm: '',
+    keySignature: '',
+    time: '',
+    completed: false,
+  },
 };
 
 export const EMPTY_SONG: song = {
-  key: -1,
+  songId: -1,
   title: '',
-  selectedTake: -1,
-  takes: [EMPTY_TAKE],
-  page: EMPTY_PAGE,
+  selectedTakeId: 0,
+  takes: [],
+  // page: EMPTY_PAGE,
 };
 
 export const DELETE_TAKE_TEXT: string =

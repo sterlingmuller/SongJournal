@@ -37,17 +37,18 @@ export type songDetail = { label: string; key: string };
 
 export type pageOption = 'edit' | 'chords' | 'metronome' | 'share';
 
-export type currentSongInfo = {
-  SongId: number;
-  Title: string;
+export type songInfo = {
+  songId: number;
+  title: string;
+  selectedTakeId: number;
 };
 
 export type take = {
-  key: number;
+  takeId: number;
+  songId: number;
   title: string;
   date: string;
   notes?: string;
-  starred: boolean;
 };
 
 export type info = {
@@ -64,11 +65,11 @@ export type page = {
 };
 
 export type song = {
-  key: number;
+  songId: number;
   title: string;
-  selectedTake: number;
+  selectedTakeId: number;
   takes: take[];
-  page: page;
+  // page: page;
 };
 
 export type songs = song[];
