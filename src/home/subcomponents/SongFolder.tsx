@@ -7,12 +7,17 @@ import LyricsIcon from '@src/icons/LyricsIcon';
 import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
 import PlaybackBar from '@src/home/subcomponents/PlaybackBar';
-import { RootStackParamList, songInfo, take } from '@src/common/types';
+import {
+  RootStackParamList,
+  getTakesAndPageResult,
+  song,
+  songInfo,
+} from '@src/common/types';
 import useSongFolderStyles from '@styles/songFolder';
 import { useAppDispatch } from '@src/common/hooks';
 import { setCurrentSong } from '@src/slice/currentSongSlice';
 import { useSQLiteContext } from 'expo-sqlite';
-import { getSongTakesBySongId } from '@src/repositories/SongsRepository';
+import { getTakesAndPageBySongId } from '@src/repositories/SongsRepository';
 
 interface Props {
   songInfo: songInfo;
@@ -35,21 +40,19 @@ const SongFolder = ({ songInfo }: Props) => {
     setIsPressed(false);
   };
 
-  const handleSongOnPress = async () => {
-    const test = [];
+  const handleOnPressNavigation = async (screen: 'Song' | 'Lyrics') => {
+    const takesAndPage: getTakesAndPageResult = await getTakesAndPageBySongId(
+      db,
+      songId,
+    );
 
-    const result: take[] = await getSongTakesBySongId(db, songId);
-    if (result) {
-      test.push(result);
-    }
-    dispatch(setCurrentSong({ ...songInfo, takes: test }));
+    const newCurrentSong: song = {
+      ...songInfo,
+      ...takesAndPage,
+    };
 
-    navigate('Song');
-  };
-
-  const handleLyricsOnPress = () => {
-    // dispatch(setCurrentSongPage(songInfo));
-    navigate('Lyrics');
+    dispatch(setCurrentSong(newCurrentSong));
+    navigate(screen);
   };
 
   return (
@@ -58,14 +61,14 @@ const SongFolder = ({ songInfo }: Props) => {
       activeOpacity={1}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
-      onPress={handleSongOnPress}
+      onPress={() => handleOnPressNavigation('Song')}
     >
       <View style={styles.contents}>
         <StyledText style={styles.title}>{title}</StyledText>
         {/* <StyledText>{takes[selectedTake].date}</StyledText> */}
         <StyledText>Workin on it</StyledText>
         <View style={styles.iconRow}>
-          <TouchableOpacity onPress={handleLyricsOnPress}>
+          <TouchableOpacity onPress={() => handleOnPressNavigation('Lyrics')}>
             <LyricsIcon />
           </TouchableOpacity>
           <ShareIcon />

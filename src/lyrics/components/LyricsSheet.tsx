@@ -11,12 +11,12 @@ import { useSelector } from 'react-redux';
 import { selectCurrentSongPage } from '@src/selectors/currentSongSelector';
 
 const LyricsSheet = () => {
-  const { lyrics, info } = useSelector(selectCurrentSongPage);
+  const page = useSelector(selectCurrentSongPage);
   const styles = useLyricSheetStyles();
 
-  const [newLyrics, setNewLyrics] = useState<string>(lyrics);
+  const [newLyrics, setNewLyrics] = useState<string>(page.lyrics);
   const [selectedOption, setSelectedOption] = useState<pageOption>('edit');
-  const disabled: boolean = !lyrics;
+  const disabled: boolean = !page.lyrics;
 
   return (
     <View style={styles.container}>
@@ -24,11 +24,11 @@ const LyricsSheet = () => {
         <View style={styles.details}>
           {SONG_DETAILS.map(
             ({ label, key }: songDetail) =>
-              !!info[key] && (
+              !!page[key] && (
                 <SongDetail
                   key={label}
                   label={label}
-                  value={info[key]}
+                  value={page[key]}
                   onPageScreen
                 />
               ),

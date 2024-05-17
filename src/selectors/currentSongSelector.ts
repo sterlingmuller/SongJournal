@@ -8,8 +8,5 @@ export const selectCurrentSongTitle = (state: RootState) =>
 export const selectCurrentSongTakes = (state: RootState) =>
   state.currentSong.takes;
 
-// export const selectCurrentSongPage = (state: RootState) =>
-//   state.currentSong.currentSong.page;
-
-// export const selectCurrentSongInfo = (state: RootState) =>
-//   state.currentSong.currentSong.page.info;
+export const selectCurrentSongPage = (state: RootState) =>
+  state.currentSong.page;
