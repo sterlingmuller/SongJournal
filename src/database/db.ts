@@ -1,19 +1,15 @@
 import { type SQLiteDatabase } from 'expo-sqlite';
 
 const createSongsTable =
-  'CREATE TABLE IF NOT EXISTS Songs (SongID INTEGER PRIMARY KEY AUTOINCREMENT, Title TEXT, SelectedTakeID INTEGER, FOREIGN KEY (SelectedTakeID) REFERENCES Takes(TakeID));';
+  'CREATE TABLE IF NOT EXISTS Songs (songId INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT UNIQUE, selectedTakeId INTEGER, FOREIGN KEY (selectedTakeId) REFERENCES Takes(takeId));';
 
 const createTakesTable =
-  'CREATE TABLE IF NOT EXISTS Takes (TakeID INTEGER PRIMARY KEY AUTOINCREMENT, SongID INTEGER NOT NULL, Title TEXT NOT NULL, Date TEXT NOT NULL, Notes TEXT, FOREIGN KEY (SongID) REFERENCES Songs(SongID));';
+  'CREATE TABLE IF NOT EXISTS Takes (takeId INTEGER PRIMARY KEY AUTOINCREMENT, songId INTEGER NOT NULL, title TEXT NOT NULL, date TEXT NOT NULL, notes TEXT, FOREIGN KEY (songId) REFERENCES Songs(songId));';
 
 const createPageTable =
-  'CREATE TABLE IF NOT EXISTS Page (SongID INTEGER PRIMARY KEY AUTOINCREMENT, Lyircs TEXT, FOREIGN KEY (SongID) REFERENCES Songs(SongID));';
-
-const createInfoTable =
-  'CREATE TABLE IF NOT EXISTS Info (SongID INTEGER PRIMARY KEY AUTOINCREMENT, BPM TEXT, KeySignature TEXT, Time TEXT, About TEXT, Completed BOOLEAN NOT NULL, FOREIGN KEY (SongID) REFERENCES Pages(SongID));';
+  'CREATE TABLE IF NOT EXISTS Page (pageId INTEGER PRIMARY KEY AUTOINCREMENT, songId INTEGER NOT NULL, lyrics TEXT, bpm TEXT, keySignature TEXT, time TEXT, about TEXT, completed BOOLEAN NOT NULL, FOREIGN KEY (songId) REFERENCES Songs(songId));';
 
 export const migrateDbIfNeeded = async (db: SQLiteDatabase) => {
-  console.log('hi');
   const DATABASE_VERSION = 1;
   let { user_version: currentDbVersion } = await db.getFirstAsync<{
     user_version: number;
@@ -27,11 +23,8 @@ export const migrateDbIfNeeded = async (db: SQLiteDatabase) => {
       `PRAGMA journal_mode = 'wal';` +
         createSongsTable +
         createTakesTable +
-        createPageTable +
-        createInfoTable,
+        createPageTable,
     );
-
-    // await db.runAsync('INSERT INTO Songs (Title) VALUES (?, ?)', 'test');
 
     currentDbVersion = 1;
 

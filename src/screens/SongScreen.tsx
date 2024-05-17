@@ -6,7 +6,7 @@ import SongTake from '@src/songFolder/components/SongTake';
 import RecordButton from '@src/songFolder/subcomponents/RecordButton';
 import DeleteModal from '@src/common/components/DeleteModal';
 import NotesModal from '@src/songFolder/components/NotesModal';
-import { DELETE_TAKE_TEXT, EMPTY_TAKE } from '@src/common/constants';
+import { DELETE_TAKE_TEXT } from '@src/common/constants';
 import { ScrollView } from 'react-native-gesture-handler';
 import { take } from '@src/common/types';
 import useSongScreenStyles from '@src/styles/songScreen';
@@ -16,11 +16,12 @@ import useMicrophonePermissions from '@src/hooks/useMicrophonePermissions';
 import { selectCurrentSongTakes } from '@src/selectors/currentSongSelector';
 
 const SongScreen = () => {
-  const { takes, selectedTake } = useSelector(selectCurrentSongTakes);
+  const takes = useSelector(selectCurrentSongTakes);
+  console.log('takes:', takes);
   const styles = useSongScreenStyles();
   const globalStyles = useGlobalStyles();
 
-  const [currentTake, setCurrentTake] = useState<take>(EMPTY_TAKE);
+  const [currentTake, setCurrentTake] = useState<take | null>();
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState<boolean>(false);
@@ -68,12 +69,14 @@ const SongScreen = () => {
         setCurrentTake={setCurrentTake}
         currentTake={currentTake}
       />
-      <NotesModal
-        isNotesModalOpen={isNotesModalOpen}
-        setIsNotesModalOpen={setIsNotesModalOpen}
-        setCurrentTake={setCurrentTake}
-        currentTake={currentTake}
-      />
+      {currentTake && (
+        <NotesModal
+          isNotesModalOpen={isNotesModalOpen}
+          setIsNotesModalOpen={setIsNotesModalOpen}
+          setCurrentTake={setCurrentTake}
+          currentTake={currentTake}
+        />
+      )}
       <PermissionsNeededModal
         isPermissionsNeededModalOpen={isPermissionsNeededModalOpen}
         setIsPermissionsNeededModalOpen={setIsPermissionsNeededModalOpen}

@@ -18,6 +18,7 @@ const AppNavigator = () => {
   const styles = useHeaderStyles();
 
   const title = useSelector(selectCurrentSongTitle);
+  console.log('title:', title);
 
   return (
     <NavigationContainer>
