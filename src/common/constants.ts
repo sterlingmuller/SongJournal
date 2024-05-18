@@ -6,6 +6,7 @@ import {
   take,
   page,
   song,
+  deleteObject,
 } from '@src/common/types';
 import { Dimensions } from 'react-native';
 import { documentDirectory } from 'expo-file-system';
@@ -54,6 +55,12 @@ export const DELETE_TAKE_TEXT: string =
 
 export const DELETE_SONG_TEXT: string =
   ', its journal entry, and all takes of this song will be permanently deleted. This action cannot be undone.';
+
+export const EMPTY_DELETE_OBJECT: deleteObject = {
+  type: null,
+  id: -1,
+  title: '',
+};
 
 export const SCREEN_WIDTH: number = Dimensions.get('window').width;
 

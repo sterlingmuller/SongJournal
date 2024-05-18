@@ -81,3 +81,9 @@ export type getTakesAndPageResult = {
   takes: take[];
   page: page;
 };
+
+export type deleteObject = {
+  type: 'song' | 'take';
+  id: number;
+  title: string;
+};
