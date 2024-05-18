@@ -70,7 +70,7 @@ export type song = {
 
 export type songs = song[];
 
-export type addSongResult = {
+export type createSongResult = {
   songId: number;
   title: string;
   selectedTakeId: number;

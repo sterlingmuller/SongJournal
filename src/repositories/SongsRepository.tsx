@@ -18,7 +18,7 @@ export const getTakesAndPageBySongId = (db: SQLiteDatabase, songId: number) => {
   return { takes, page };
 };
 
-export const addSong = async (db: SQLiteDatabase, title: string) => {
+export const createSong = async (db: SQLiteDatabase, title: string) => {
   try {
     const result = await db.runAsync(
       'INSERT INTO Songs (title, selectedTakeId) VALUES (?, 0)',
