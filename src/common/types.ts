@@ -17,6 +17,7 @@ export type RootStackParamList = {
   Song: undefined;
   Lyrics: undefined;
   Settings: undefined;
+  Recording: undefined;
   MusicPlayer: undefined;
 };
 

@@ -1,10 +1,13 @@
 import { combineReducers } from 'redux';
-import currentSongReducer from '@src/slice/currentSongSlice';
+
 import songsReducer from '@src/slice/songsSlice';
+import currentSongReducer from '@src/slice/currentSongSlice';
+import currentTakeReducer from '@src/slice/currentTakeSlice';
 
 const rootReducer = combineReducers({
-  currentSong: currentSongReducer,
   songs: songsReducer,
+  currentSong: currentSongReducer,
+  currentTake: currentTakeReducer,
 });
 
 export default rootReducer;

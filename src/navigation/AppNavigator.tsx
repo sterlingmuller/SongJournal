@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 import SettingsScreen from '@src/screens/SettingsScreen';
 import SongScreen from '@src/screens/SongScreen';
+import RecordingScreen from '@src/screens/RecordingScreen';
 import LyricsScreen from '@src/screens/LyricsScreen';
 import HomeScreen from '@src/screens/HomeScreen';
 import MusicPlayerScreen from '@src/screens/MusicPlayerScreen';
@@ -12,13 +13,14 @@ import { RootStackParamList } from '@src/common/types';
 import HeaderPageButton from '@src/songFolder/subcomponents/HeaderPageButton';
 import useHeaderStyles from '@src/styles/header';
 import { selectCurrentSongTitle } from '@src/selectors/currentSongSelector';
+import { selectCurrentTakeTitle } from '@src/selectors/currentTakeSelector';
 
 const AppNavigator = () => {
   const RootStack: any = createNativeStackNavigator<RootStackParamList>();
   const styles = useHeaderStyles();
 
   const title = useSelector(selectCurrentSongTitle);
-  console.log('title:', title);
+  const takeTitle = useSelector(selectCurrentTakeTitle);
 
   return (
     <NavigationContainer>
@@ -31,6 +33,15 @@ const AppNavigator = () => {
             ...styles,
             title,
             headerRight: () => <HeaderPageButton />,
+          }}
+        />
+        <RootStack.Screen
+          name="Recording"
+          component={RecordingScreen}
+          options={{
+            ...styles,
+            animation: 'fade',
+            title: takeTitle,
           }}
         />
         <RootStack.Screen
