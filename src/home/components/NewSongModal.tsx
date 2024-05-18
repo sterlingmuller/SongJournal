@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { View, Modal, TouchableOpacity, TextInput } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-import { RootStackParamList, addSongResult, songInfo } from '@src/common/types';
+import { RootStackParamList, createSongResult } from '@src/common/types';
 import StyledText from '@src/common/components/StyledText';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 import useNewSongModalStyle from '@src/styles/newSongModal';
 import { useSQLiteContext } from 'expo-sqlite';
-import { addSong } from '@src/repositories/SongsRepository';
+import { createSong } from '@src/repositories/SongsRepository';
 import { setCurrentSong } from '@src/slice/currentSongSlice';
 import { useAppDispatch } from '@src/common/hooks';
+import { addSong } from '@src/slice/songsSlice';
 
 interface Props {
   isNewSongOpen: boolean;
@@ -29,9 +30,11 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
   const disabled: boolean = !songTitle;
 
   const onSavePress = async () => {
-    const result: addSongResult = await addSong(db, songTitle);
+    const result: createSongResult = await createSong(db, songTitle);
+    const { songId, title, selectedTakeId } = result;
 
     dispatch(setCurrentSong({ ...result, takes: [] }));
+    dispatch(addSong({ songId, title, selectedTakeId }));
 
     navigate('Song');
   };

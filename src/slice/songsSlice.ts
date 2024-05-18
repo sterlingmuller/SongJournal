@@ -13,8 +13,11 @@ const songsSlice = createSlice({
       action.payload,
     removeSong: (state: SliceState, action: PayloadAction<number>) =>
       state.filter(({ songId }: songInfo) => songId !== action.payload),
+    addSong: (state: SliceState, action: PayloadAction<songInfo>) => {
+      state.push(action.payload);
+    },
   },
 });
 
 export default songsSlice.reducer;
-export const { setSongs, removeSong } = songsSlice.actions;
+export const { setSongs, removeSong, addSong } = songsSlice.actions;
