@@ -10,10 +10,8 @@ const currentSongSlice = createSlice({
   name: 'currentSong',
   initialState,
   reducers: {
-    setCurrentSong: (state: SliceState, action: PayloadAction<SliceState>) => {
-      console.log('lets see:', action.payload);
-      return action.payload;
-    },
+    setCurrentSong: (state: SliceState, action: PayloadAction<SliceState>) =>
+      action.payload,
   },
 });
 

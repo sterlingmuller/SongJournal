@@ -4,7 +4,7 @@ import { SwipeListView } from 'react-native-swipe-list-view';
 import SongFolder from '@src/home/subcomponents/SongFolder';
 import DeleteRow from '@src/home/subcomponents/DeleteRow';
 import { ListRenderItemInfo } from 'react-native';
-import { songInfo } from '@src/common/types';
+import { deleteObject, songInfo } from '@src/common/types';
 import { useSQLiteContext } from 'expo-sqlite';
 import { getAllSongs } from '@src/repositories/SongsRepository';
 import { useAppDispatch } from '@src/common/hooks';
@@ -13,10 +13,10 @@ import { useSelector } from 'react-redux';
 import { selectSongs } from '@src/selectors/songsSelector';
 
 interface Props {
-  setIsDeleteModalOpen: (value: boolean) => void;
+  setToDelete: (value: deleteObject | null) => void;
 }
 
-const SongFolders = ({ setIsDeleteModalOpen }: Props) => {
+const SongFolders = ({ setToDelete }: Props) => {
   const db = useSQLiteContext();
   const dispatch = useAppDispatch();
   const songs = useSelector(selectSongs);
@@ -40,8 +40,9 @@ const SongFolders = ({ setIsDeleteModalOpen }: Props) => {
       }}
       renderHiddenItem={(data: ListRenderItemInfo<songInfo>) => (
         <DeleteRow
-          song={data.item.title}
-          setIsDeleteModalOpen={setIsDeleteModalOpen}
+          title={data.item.title}
+          id={data.item.songId}
+          setToDelete={setToDelete}
         />
       )}
       rightOpenValue={-100}

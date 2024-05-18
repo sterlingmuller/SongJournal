@@ -17,7 +17,6 @@ import { selectCurrentSongTakes } from '@src/selectors/currentSongSelector';
 
 const SongScreen = () => {
   const takes = useSelector(selectCurrentSongTakes);
-  console.log('takes:', takes);
   const styles = useSongScreenStyles();
   const globalStyles = useGlobalStyles();
 
@@ -62,13 +61,13 @@ const SongScreen = () => {
         isPermissionGranted={isPermissionGranted}
         setIsPermissionsNeededModalOpen={setIsPermissionsNeededModalOpen}
       />
-      <DeleteModal
+      {/* <DeleteModal
         isDeleteModalOpen={isDeleteModalOpen}
         setIsDeleteModalOpen={setIsDeleteModalOpen}
         deleteText={DELETE_TAKE_TEXT}
         setCurrentTake={setCurrentTake}
         currentTake={currentTake}
-      />
+      /> */}
       {currentTake && (
         <NotesModal
           isNotesModalOpen={isNotesModalOpen}
