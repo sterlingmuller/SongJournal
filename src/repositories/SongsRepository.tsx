@@ -46,3 +46,15 @@ export const addSong = async (db: SQLiteDatabase, title: string) => {
     console.error('Error inserting song', err);
   }
 };
+
+export const deleteSong = async (db: SQLiteDatabase, songId: number) => {
+  const statement = await db.prepareAsync(
+    'DELETE FROM Songs WHERE songId = $songId; DELETE FROM Takes WHERE songId = $songId; DELETE FROM Page WHERE songId = $songId;',
+  );
+
+  try {
+    await statement.executeAsync({ $songId: songId });
+  } catch (err) {
+    console.error('Error deleting song', err);
+  }
+};
