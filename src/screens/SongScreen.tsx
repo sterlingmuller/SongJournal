@@ -88,7 +88,11 @@ const SongScreen = () => {
           ))}
         </View>
       </ScrollView>
-      <RecordButton onPress={onRecordPress} />
+      <RecordButton
+        onPress={onRecordPress}
+        isRecording={false}
+        style={styles.recordingButton}
+      />
       {/* <DeleteModal
         isDeleteModalOpen={isDeleteModalOpen}
         setIsDeleteModalOpen={setIsDeleteModalOpen}

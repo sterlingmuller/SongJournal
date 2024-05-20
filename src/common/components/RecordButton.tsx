@@ -1,20 +1,18 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, ViewStyle } from 'react-native';
 
 import RecordIcon from '@src/icons/RecordIcon';
-import useRecordButtonStyles from '@src/styles/recordButton';
 import StopRecordIcon from '@src/icons/StopRecordingIcon';
 
 interface Props {
   onPress: () => void;
   isRecording: boolean;
+  style?: ViewStyle;
 }
 
-const RecordButton = ({ onPress, isRecording }: Props) => {
-  const styles = useRecordButtonStyles();
-
+const RecordButton = ({ onPress, isRecording, style }: Props) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity style={style} onPress={onPress}>
       {isRecording ? <StopRecordIcon /> : <RecordIcon />}
     </TouchableOpacity>
   );
