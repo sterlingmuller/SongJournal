@@ -2,6 +2,7 @@ import { StyleSheet, ViewStyle } from 'react-native';
 
 interface Styles {
   takes: ViewStyle;
+  recordingButton: ViewStyle;
 }
 
 const useSongScreenStyles = () => {
@@ -10,6 +11,12 @@ const useSongScreenStyles = () => {
       marginTop: 25,
       gap: 20,
       marginBottom: 175,
+    },
+    recordingButton: {
+      position: 'absolute',
+      flex: 5,
+      alignSelf: 'center',
+      bottom: 50,
     },
   });
 
