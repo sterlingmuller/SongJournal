@@ -2,7 +2,7 @@ import { page, songInfo, take } from '@src/common/types';
 import { SQLiteDatabase } from 'expo-sqlite';
 
 export const getAllSongs = (db: SQLiteDatabase) =>
-  db.getAllSync('SELECT selectedTakeID, songId, title FROM Songs');
+  db.getAllSync('SELECT selectedTakeID, songId, title, totalTakes FROM Songs');
 
 export const getTakesAndPageBySongId = (db: SQLiteDatabase, songId: number) => {
   const takes: take[] = db.getAllSync(
@@ -21,7 +21,7 @@ export const getTakesAndPageBySongId = (db: SQLiteDatabase, songId: number) => {
 export const createSong = async (db: SQLiteDatabase, title: string) => {
   try {
     const result = await db.runAsync(
-      'INSERT INTO Songs (title, selectedTakeId) VALUES (?, 0)',
+      'INSERT INTO Songs (title, selectedTakeId, totalTakes) VALUES (?, -1, 0)',
       title,
     );
     const songId = result.lastInsertRowId;

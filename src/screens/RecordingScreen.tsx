@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { Audio } from 'expo-av';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 
 import StyledText from '@src/common/components/StyledText';
 import RecordButton from '@src/common/components/RecordButton';
@@ -17,15 +17,20 @@ import { createTake } from '@src/repositories/TakeRepository';
 import { useSQLiteContext } from 'expo-sqlite';
 import { useSelector } from 'react-redux';
 import { selectCurrentTake } from '@src/selectors/currentTakeSelector';
+import { RootStackParamList } from '@src/common/types';
+import { useAppDispatch } from '@src/common/hooks';
+import { incrementTotalTakes } from '@src/slice/currentSongSlice';
 
 const RecordingScreen = () => {
   const { goBack } = useNavigation();
   const globalStyles = useGlobalStyles();
   const styles = useRecordingStyles();
   const db = useSQLiteContext();
+  const dispatch = useAppDispatch();
 
-  const currentTake = useSelector(selectCurrentTake);
-  const { songId, title } = currentTake;
+  // const currentTake = useSelector(selectCurrentTake);
+  const route = useRoute<RouteProp<RootStackParamList, 'Recording'>>();
+  const { songId, title } = route.params;
 
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const [isRecording, setIsRecording] = useState<boolean>(true);
@@ -65,6 +70,8 @@ const RecordingScreen = () => {
         uri,
         duration,
       });
+
+      dispatch(incrementTotalTakes());
     }
 
     goBack();

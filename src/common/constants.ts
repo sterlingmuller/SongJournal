@@ -46,6 +46,7 @@ export const EMPTY_SONG: song = {
   songId: -1,
   title: '',
   selectedTakeId: 0,
+  totalTakes: 0,
   takes: [],
   page: EMPTY_PAGE,
 };

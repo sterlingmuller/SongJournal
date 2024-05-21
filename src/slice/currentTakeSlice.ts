@@ -9,6 +9,8 @@ const initialState: SliceState = {
   title: 'Take 1',
   date: '',
   notes: '',
+  duration: 0,
+  uri: '',
 };
 
 const currentTakeSlice = createSlice({

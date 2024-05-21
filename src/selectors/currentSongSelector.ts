@@ -11,5 +11,8 @@ export const selectCurrentSongTakes = (state: RootState) =>
 export const selectCurrentSongId = (state: RootState) =>
   state.currentSong.songId;
 
+export const selectCurrentSongTotalTakes = (state: RootState) =>
+  state.currentSong.totalTakes;
+
 export const selectCurrentSongPage = (state: RootState) =>
   state.currentSong.page;

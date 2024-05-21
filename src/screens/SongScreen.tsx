@@ -17,6 +17,7 @@ import useMicrophonePermissions from '@src/hooks/useMicrophonePermissions';
 import {
   selectCurrentSongId,
   selectCurrentSongTakes,
+  selectCurrentSongTotalTakes,
 } from '@src/selectors/currentSongSelector';
 import { RootStackParamList } from '@src/common/types';
 import { useAppDispatch } from '@src/common/hooks';
@@ -31,9 +32,11 @@ const SongScreen = () => {
 
   const takes = useSelector(selectCurrentSongTakes);
   const songId = useSelector(selectCurrentSongId);
+  const totalTakes = useSelector(selectCurrentSongTotalTakes);
   const currentTake = useSelector(selectCurrentTake);
 
   console.log('takes', takes);
+  console.log('totalTakes', totalTakes);
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState<boolean>(false);
@@ -45,21 +48,20 @@ const SongScreen = () => {
 
   const onRecordPress = () => {
     const recording = () => {
-      const newTakeId = orderedTakes.length ? orderedTakes[0].takeId + 1 : 0;
-      const newTakeTitle = `Take ${newTakeId + 1}`;
-      const newTake: take = {
-        takeId: newTakeId,
-        songId,
-        title: newTakeTitle,
-        date: '',
-        notes: '',
-        uri: '',
-        duration: 0,
-      };
+      const newTakeTitle = `Take ${totalTakes + 1}`;
+      // const newTake: take = {
+      //   takeId: -1,
+      //   songId,
+      //   title: newTakeTitle,
+      //   date: '',
+      //   notes: '',
+      //   uri: '',
+      //   duration: 0,
+      // };
 
-      dispatch(setCurrentTake(newTake));
+      // dispatch(setCurrentTake(newTake));
 
-      navigate('Recording');
+      navigate('Recording', { songId, title: newTakeTitle });
     };
 
     isPermissionGranted ? recording() : setIsPermissionsNeededModalOpen(true);
