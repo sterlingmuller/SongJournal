@@ -6,21 +6,32 @@ export const createTake = async (
   takePayload: takePayload,
 ) => {
   const { songId, title, date, uri, duration } = takePayload;
-  console.log("we're tryin. in the take repo");
 
   try {
     const result = await db.runAsync(
       'INSERT INTO Takes (songId, title, date, uri, duration, notes) VALUES (?, ?, ?, ?, ?, "")',
       [songId, title, date, uri, duration],
     );
+
     const takeId = result.lastInsertRowId;
+
+    await db.runAsync(
+      'UPDATE songs SET totalTakes = totalTakes + 1 WHERE songId = songId;',
+    );
+
+    const totalTakes: number = db.getFirstSync(
+      'SELECT totalTakes FROM Songs WHERE songId = ?',
+      songId,
+    );
+
+    console.log('repository total takes:', totalTakes);
 
     const take: take = db.getFirstSync(
       'SELECT * FROM Takes WHERE takeId = ?',
       takeId,
     );
 
-    console.log('NEEEEW TAKE!', take);
+    console.log('NEW TAKE:', take);
 
     return take;
   } catch (err) {
