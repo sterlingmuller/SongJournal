@@ -49,6 +49,8 @@ export type take = {
   songId: number;
   title: string;
   date: string;
+  uri: string;
+  duration: number;
   notes?: string;
 };
 
@@ -87,4 +89,12 @@ export type deleteObject = {
   type: 'song' | 'take';
   id: number;
   title: string;
+};
+
+export type takePayload = {
+  songId: number;
+  title: string;
+  date: string;
+  uri: string;
+  duration: number;
 };
