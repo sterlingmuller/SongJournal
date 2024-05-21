@@ -33,7 +33,7 @@ const SongScreen = () => {
   const songId = useSelector(selectCurrentSongId);
   const currentTake = useSelector(selectCurrentTake);
 
-  console.log('currentTake', currentTake);
+  console.log('takes', takes);
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState<boolean>(false);
@@ -53,6 +53,8 @@ const SongScreen = () => {
         title: newTakeTitle,
         date: '',
         notes: '',
+        uri: '',
+        duration: 0,
       };
 
       dispatch(setCurrentTake(newTake));
