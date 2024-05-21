@@ -17,7 +17,7 @@ export type RootStackParamList = {
   Song: undefined;
   Lyrics: undefined;
   Settings: undefined;
-  Recording: undefined;
+  Recording: { songId: number; title: string };
   MusicPlayer: undefined;
 };
 
@@ -42,6 +42,7 @@ export type songInfo = {
   songId: number;
   title: string;
   selectedTakeId: number;
+  totalTakes: number;
 };
 
 export type take = {
@@ -67,6 +68,7 @@ export type song = {
   songId: number;
   title: string;
   selectedTakeId: number;
+  totalTakes: number;
   takes: take[];
   page: page;
 };

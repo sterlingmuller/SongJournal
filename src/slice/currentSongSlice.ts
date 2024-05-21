@@ -12,8 +12,11 @@ const currentSongSlice = createSlice({
   reducers: {
     setCurrentSong: (state: SliceState, action: PayloadAction<SliceState>) =>
       action.payload,
+    incrementTotalTakes: (state: SliceState) => {
+      state.totalTakes += 1;
+    },
   },
 });
 
 export default currentSongSlice.reducer;
-export const { setCurrentSong } = currentSongSlice.actions;
+export const { setCurrentSong, incrementTotalTakes } = currentSongSlice.actions;
