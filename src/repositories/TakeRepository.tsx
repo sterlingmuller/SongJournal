@@ -1,32 +1,30 @@
-import { page, songInfo, take } from '@src/common/types';
+import { take, takePayload } from '@src/common/types';
 import { SQLiteDatabase } from 'expo-sqlite';
 
-export const createTake = async (db: SQLiteDatabase, songId: number) => {
+export const createTake = async (
+  db: SQLiteDatabase,
+  takePayload: takePayload,
+) => {
+  const { songId, title, date, uri, duration } = takePayload;
+  console.log("we're tryin. in the take repo");
+
   try {
     const result = await db.runAsync(
-      'INSERT INTO Songs (title, selectedTakeId) VALUES (?, 0)',
-      title,
+      'INSERT INTO Takes (songId, title, date, uri, duration, notes) VALUES (?, ?, ?, ?, ?, "")',
+      [songId, title, date, uri, duration],
     );
-    const songId = result.lastInsertRowId;
+    const takeId = result.lastInsertRowId;
 
-    await db.runAsync(
-      'INSERT INTO Page (songId, completed, lyrics, bpm, keySignature, time, about) VALUES (?, false, "", "", "", "", "")',
-      songId,
-    );
-
-    const song: songInfo = db.getFirstSync(
-      'SELECT * FROM Songs WHERE songId = ?',
-      songId,
+    const take: take = db.getFirstSync(
+      'SELECT * FROM Takes WHERE takeId = ?',
+      takeId,
     );
 
-    const page: page = db.getFirstSync(
-      'SELECT * FROM Page WHERE songId = ?',
-      songId,
-    );
+    console.log('NEEEEW TAKE!', take);
 
-    return { ...song, page };
+    return take;
   } catch (err) {
-    console.error('Error inserting song', err);
+    console.error('Error inserting take', err);
   }
 };
 

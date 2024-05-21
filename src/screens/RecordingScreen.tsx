@@ -13,14 +13,24 @@ import {
 } from '@src/utils/startStopPlayRecording';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import useRecordingStyles from '@src/styles/recording';
+import { createTake } from '@src/repositories/TakeRepository';
+import { useSQLiteContext } from 'expo-sqlite';
+import { useSelector } from 'react-redux';
+import { selectCurrentTake } from '@src/selectors/currentTakeSelector';
 
 const RecordingScreen = () => {
   const { goBack } = useNavigation();
   const globalStyles = useGlobalStyles();
   const styles = useRecordingStyles();
+  const db = useSQLiteContext();
+
+  const currentTake = useSelector(selectCurrentTake);
+  const { songId, title } = currentTake;
+
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const [isRecording, setIsRecording] = useState<boolean>(true);
-  const [recordingUri, setRecordingUri] = useState<string | null>(null);
+  const [uri, setUri] = useState<string | null>(null);
+  const [duration, setDuration] = useState<number>(0);
 
   useEffect(() => {
     startRecording(setRecording);
@@ -28,7 +38,7 @@ const RecordingScreen = () => {
 
   const onRecordPress = () => {
     isRecording
-      ? stopRecording(recording, setRecording, setRecordingUri)
+      ? stopRecording(recording, setRecording, setUri, setDuration)
       : startRecording(setRecording);
 
     setIsRecording(!isRecording);
@@ -36,7 +46,25 @@ const RecordingScreen = () => {
 
   const onCancelPress = () => {
     if (isRecording) {
-      stopRecording(recording, setRecording, setRecordingUri);
+      stopRecording(recording, setRecording, setUri, setDuration);
+    }
+
+    goBack();
+  };
+
+  const onSavePress = async () => {
+    if (isRecording) {
+      await stopRecording(recording, setRecording, setUri, setDuration);
+    }
+
+    if (uri) {
+      await createTake(db, {
+        songId,
+        title,
+        date: new Date().toISOString(),
+        uri,
+        duration,
+      });
     }
 
     goBack();
@@ -45,8 +73,8 @@ const RecordingScreen = () => {
   return (
     <View style={globalStyles.container}>
       <StyledText>Recording Screen hrm</StyledText>
-      {recordingUri && (
-        <TouchableOpacity onPress={() => playRecording(recordingUri)}>
+      {!!uri && (
+        <TouchableOpacity onPress={() => playRecording(uri)}>
           <Text>Press here to play sound</Text>
         </TouchableOpacity>
       )}
@@ -55,7 +83,7 @@ const RecordingScreen = () => {
           <Text>Cancel</Text>
         </TouchableOpacity>
         <RecordButton onPress={onRecordPress} isRecording={isRecording} />
-        <TouchableOpacity onPress={() => playRecording(recordingUri)}>
+        <TouchableOpacity onPress={onSavePress}>
           <Text>Save</Text>
         </TouchableOpacity>
       </View>

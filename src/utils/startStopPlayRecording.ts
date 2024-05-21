@@ -16,7 +16,7 @@ export const startRecording = async (
       Audio.RecordingOptionsPresets.HIGH_QUALITY,
     );
     setRecording(recording);
-    console.log('Recording started');
+    console.log('Recording started:');
   } catch (err) {
     console.error('Failed to start recording', err);
   }
@@ -26,6 +26,7 @@ export const stopRecording = async (
   recording: Audio.Recording,
   setRecording: (value: Audio.Recording | null) => void,
   setRecordingUri: (uri: string) => void,
+  setDuration: (duration: number) => void,
 ) => {
   console.log('Stopping recording..');
   if (!recording) return;
@@ -34,7 +35,9 @@ export const stopRecording = async (
   await recording.stopAndUnloadAsync();
   const uri = recording.getURI();
   setRecordingUri(uri);
+  setDuration(recording._finalDurationMillis / 1000);
   console.log('Recording stopped and stored at', uri);
+  console.log('recording`', recording);
 };
 
 export const playRecording = async (uri: string) => {
