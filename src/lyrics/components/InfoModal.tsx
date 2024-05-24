@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, TouchableOpacity, TextInput } from 'react-native';
-import { useSelector } from 'react-redux';
 
 import SongDetail from '@src/lyrics/subcomponents/SongDetail';
 import CompletionStatus from '@src/lyrics/subcomponents/CompletionStatus';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
-import { page, songDetail } from '@src/common/types';
+import { songDetail } from '@src/common/types';
 import { SONG_DETAILS } from '@src/common/constants';
 import useInfoModalStyle from '@styles/infoModal';
 import { selectCurrentSongPage } from '@src/selectors/currentSongSelector';
+import { useAppSelector } from '@src/common/hooks';
 
 interface Props {
   isInfoModalOpen: boolean;
@@ -16,7 +16,7 @@ interface Props {
 }
 
 const InfoModal = (props: Props) => {
-  const page: page = useSelector(selectCurrentSongPage);
+  const page = useAppSelector(selectCurrentSongPage);
   console.log('page: ', page);
   const styles = useInfoModalStyle();
 

@@ -18,16 +18,18 @@ import { useAppDispatch } from '@src/common/hooks';
 import { setCurrentSong } from '@src/slice/currentSongSlice';
 import { useSQLiteContext } from 'expo-sqlite';
 import { getTakesAndPageBySongId } from '@src/repositories/SongsRepository';
+import { setCurrentSongId } from '@src/slice/currentSongIdSlice';
 
 interface Props {
   songInfo: songInfo;
 }
 
 const SongFolder = ({ songInfo }: Props) => {
-  const db = useSQLiteContext();
+  // const db = useSQLiteContext();
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   const styles = useSongFolderStyles();
   const dispatch = useAppDispatch();
+  console.log('songInfo', songInfo);
 
   const { title, songId } = songInfo;
   const [isPressed, setIsPressed] = useState(false);
@@ -41,17 +43,18 @@ const SongFolder = ({ songInfo }: Props) => {
   };
 
   const handleOnPressNavigation = async (screen: 'Song' | 'Lyrics') => {
-    const takesAndPage: getTakesAndPageResult = await getTakesAndPageBySongId(
-      db,
-      songId,
-    );
+    // const takesAndPage: getTakesAndPageResult = await getTakesAndPageBySongId(
+    //   db,
+    //   songId,
+    // );
 
-    const newCurrentSong: song = {
-      ...songInfo,
-      ...takesAndPage,
-    };
+    // const newCurrentSong: song = {
+    //   ...songInfo,
+    //   ...takesAndPage,
+    // };
 
-    dispatch(setCurrentSong(newCurrentSong));
+    dispatch(setCurrentSongId(songId));
+    // dispatch(setCurrentSong(newCurrentSong));
     navigate(screen);
   };
 

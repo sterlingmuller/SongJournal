@@ -1,4 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootState } from '@src/store';
 
 export type appState = 'active' | 'background';
 
@@ -17,7 +18,7 @@ export type RootStackParamList = {
   Song: undefined;
   Lyrics: undefined;
   Settings: undefined;
-  Recording: { songId: number; title: string };
+  Recording: { title: string };
   MusicPlayer: undefined;
 };
 
@@ -102,3 +103,5 @@ export type takePayload = {
   duration: number;
   db: any;
 };
+
+export type Selector<S> = (state: RootState) => S;
