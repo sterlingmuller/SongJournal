@@ -18,8 +18,9 @@ import { useSQLiteContext } from 'expo-sqlite';
 import { useSelector } from 'react-redux';
 import { selectCurrentTake } from '@src/selectors/currentTakeSelector';
 import { RootStackParamList } from '@src/common/types';
-import { useAppDispatch } from '@src/common/hooks';
+import { useAppDispatch, useAppSelector } from '@src/common/hooks';
 import { incrementTotalTakes } from '@src/slice/currentSongSlice';
+import { selectCurrentSongId } from '@src/selectors/currentSongIdSelector';
 
 const RecordingScreen = () => {
   const { goBack } = useNavigation();
@@ -30,7 +31,8 @@ const RecordingScreen = () => {
 
   // const currentTake = useSelector(selectCurrentTake);
   const route = useRoute<RouteProp<RootStackParamList, 'Recording'>>();
-  const { songId, title } = route.params;
+  const { title } = route.params;
+  const songId = useAppSelector(selectCurrentSongId);
 
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const [isRecording, setIsRecording] = useState<boolean>(true);

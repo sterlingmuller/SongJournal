@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useSelector } from 'react-redux';
 
 import SettingsScreen from '@src/screens/SettingsScreen';
 import SongScreen from '@src/screens/SongScreen';
@@ -12,15 +11,14 @@ import MusicPlayerScreen from '@src/screens/MusicPlayerScreen';
 import { RootStackParamList } from '@src/common/types';
 import HeaderPageButton from '@src/songFolder/subcomponents/HeaderPageButton';
 import useHeaderStyles from '@src/styles/header';
-import { selectCurrentSongTitle } from '@src/selectors/currentSongSelector';
-import { selectCurrentTakeTitle } from '@src/selectors/currentTakeSelector';
+import { selectSongTitleBySongId } from '@src/selectors/songsSelector';
+import { useAppSelector } from '@src/common/hooks';
 
 const AppNavigator = () => {
   const RootStack: any = createNativeStackNavigator<RootStackParamList>();
   const styles = useHeaderStyles();
 
-  const title = useSelector(selectCurrentSongTitle);
-  // const takeTitle = useSelector(selectCurrentTakeTitle);
+  const title = useAppSelector(selectSongTitleBySongId);
 
   return (
     <NavigationContainer>
