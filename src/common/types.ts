@@ -80,6 +80,7 @@ export type createSongResult = {
   title: string;
   selectedTakeId: number;
   page: page;
+  totalTakes: number;
 };
 
 export type getTakesAndPageResult = {
@@ -99,4 +100,5 @@ export type takePayload = {
   date: string;
   uri: string;
   duration: number;
+  db: any;
 };
