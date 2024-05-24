@@ -11,11 +11,13 @@ const createPageTable =
 
 export const migrateDbIfNeeded = async (db: SQLiteDatabase) => {
   const DATABASE_VERSION = 1;
-  let { user_version: currentDbVersion } = await db.getFirstAsync<{
-    user_version: number;
-  }>('PRAGMA user_version');
+  const result = await db.getFirstAsync<{ user_version: number }>(
+    'PRAGMA user_version',
+  );
+  let currentDbVersion = result.user_version;
 
   if (currentDbVersion >= DATABASE_VERSION) {
+    console.log('Database is up to date. No migration needed.');
     return;
   }
   if (currentDbVersion === 0) {
@@ -27,8 +29,6 @@ export const migrateDbIfNeeded = async (db: SQLiteDatabase) => {
     );
 
     currentDbVersion = 1;
-
-    console.log('currentDbVersion', currentDbVersion);
   }
   // if (currentDbVersion === 1) {
   //   Add more migrations

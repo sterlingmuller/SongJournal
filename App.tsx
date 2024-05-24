@@ -13,7 +13,7 @@ const App = () => (
     <ColorThemeProvider>
       <Suspense fallback={null}>
         <SQLiteProvider
-          databaseName="songjournal4.db"
+          databaseName="songjournal"
           onInit={migrateDbIfNeeded}
           useSuspense
         >

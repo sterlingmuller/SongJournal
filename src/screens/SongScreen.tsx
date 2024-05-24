@@ -35,7 +35,6 @@ const SongScreen = () => {
   const totalTakes = useSelector(selectCurrentSongTotalTakes);
   const currentTake = useSelector(selectCurrentTake);
 
-  console.log('takes', takes);
   console.log('totalTakes', totalTakes);
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
@@ -49,17 +48,6 @@ const SongScreen = () => {
   const onRecordPress = () => {
     const recording = () => {
       const newTakeTitle = `Take ${totalTakes + 1}`;
-      // const newTake: take = {
-      //   takeId: -1,
-      //   songId,
-      //   title: newTakeTitle,
-      //   date: '',
-      //   notes: '',
-      //   uri: '',
-      //   duration: 0,
-      // };
-
-      // dispatch(setCurrentTake(newTake));
 
       navigate('Recording', { songId, title: newTakeTitle });
     };
