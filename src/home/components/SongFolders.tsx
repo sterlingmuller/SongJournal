@@ -7,9 +7,8 @@ import { ListRenderItemInfo } from 'react-native';
 import { deleteObject, songInfo } from '@src/common/types';
 import { useSQLiteContext } from 'expo-sqlite';
 import { getAllSongs } from '@src/repositories/SongsRepository';
-import { useAppDispatch } from '@src/common/hooks';
+import { useAppDispatch, useAppSelector } from '@src/common/hooks';
 import { setSongs } from '@src/slice/songsSlice';
-import { useSelector } from 'react-redux';
 import { selectSongs } from '@src/selectors/songsSelector';
 
 interface Props {
@@ -19,7 +18,7 @@ interface Props {
 const SongFolders = ({ setToDelete }: Props) => {
   const db = useSQLiteContext();
   const dispatch = useAppDispatch();
-  const songs = useSelector(selectSongs);
+  const songs = useAppSelector(selectSongs);
 
   useEffect(() => {
     const results: songInfo[] = getAllSongs(db);
