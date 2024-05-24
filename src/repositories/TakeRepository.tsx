@@ -1,11 +1,8 @@
 import { take, takePayload } from '@src/common/types';
 import { SQLiteDatabase } from 'expo-sqlite';
 
-export const createTake = async (
-  db: SQLiteDatabase,
-  takePayload: takePayload,
-) => {
-  const { songId, title, date, uri, duration } = takePayload;
+export const createTake = async (takePayload: takePayload) => {
+  const { songId, title, date, uri, duration, db } = takePayload;
 
   try {
     const result = await db.runAsync(

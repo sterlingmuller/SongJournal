@@ -62,16 +62,20 @@ const RecordingScreen = () => {
       await stopRecording(recording, setRecording, setUri, setDuration);
     }
 
-    if (uri) {
-      await createTake(db, {
-        songId,
-        title,
-        date: new Date().toISOString(),
-        uri,
-        duration,
-      });
+    console.log('songId', songId);
 
-      dispatch(incrementTotalTakes());
+    if (uri) {
+      dispatch({
+        type: 'CREATE_TAKE',
+        payload: {
+          songId,
+          title,
+          date: new Date().toISOString(),
+          uri,
+          duration,
+          db,
+        },
+      });
     }
 
     goBack();

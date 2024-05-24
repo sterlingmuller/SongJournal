@@ -31,10 +31,10 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
 
   const onSavePress = async () => {
     const result: createSongResult = await createSong(db, songTitle);
-    const { songId, title, selectedTakeId } = result;
+    const { songId, title, selectedTakeId, totalTakes } = result;
 
     dispatch(setCurrentSong({ ...result, takes: [] }));
-    dispatch(addSong({ songId, title, selectedTakeId }));
+    dispatch(addSong({ songId, title, selectedTakeId, totalTakes }));
 
     navigate('Song');
   };
