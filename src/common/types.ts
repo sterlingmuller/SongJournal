@@ -75,6 +75,11 @@ export type song = {
   page: page;
 };
 
+export type currentSong = {
+  songId: number;
+  songsIndex: number;
+};
+
 export type songs = song[];
 
 export type createSongResult = {
