@@ -1,7 +1,7 @@
-import { page, songInfo, take } from '@src/common/types';
+import { createSongPayload, page, songInfo, take } from '@src/common/types';
 import { SQLiteDatabase } from 'expo-sqlite';
 
-export const getAllSongs = (db: SQLiteDatabase) =>
+export const fetchSongs = (db: SQLiteDatabase) =>
   db.getAllSync('SELECT selectedTakeID, songId, title, totalTakes FROM Songs');
 
 export const getTakesAndPageBySongId = (db: SQLiteDatabase, songId: number) => {
@@ -18,7 +18,7 @@ export const getTakesAndPageBySongId = (db: SQLiteDatabase, songId: number) => {
   return { takes, page };
 };
 
-export const createSong = async (db: SQLiteDatabase, title: string) => {
+export const createSong = async ({ db, title }: createSongPayload) => {
   try {
     const result = await db.runAsync(
       'INSERT INTO Songs (title, selectedTakeId, totalTakes) VALUES (?, -1, 0)',

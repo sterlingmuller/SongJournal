@@ -4,7 +4,7 @@ import { song } from '@src/common/types';
 import { RootState } from '@src/store';
 import { selectCurrentSongId } from './currentSongIdSelector';
 
-export const selectSongs = (state: RootState) => state.songs;
+export const selectSongs = (state: RootState) => state.songs.songs;
 
 export const selectSongById = createSelector(
   [selectSongs, selectCurrentSongId],
@@ -37,9 +37,7 @@ export const selectTotalTakesBySongId = createSelector(
 export const selectSongTitleBySongId = createSelector(
   [selectSongs, selectCurrentSongId],
   (songs: song[], currentSongId: number) => {
-    const song = songs.find(
-      ({ songId }: song) => songId === currentSongId || EMPTY_SONG,
-    );
+    const song = songs.find(({ songId }: song) => songId === currentSongId);
     return song ? song.title : '';
   },
 );

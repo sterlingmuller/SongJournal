@@ -36,7 +36,8 @@ const SongScreen = () => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   // const dispatch = useAppDispatch();
 
-  const takes = useAppSelector(selectTakesBySongId);
+  // const takes = useAppSelector(selectTakesBySongId);
+  const takes = [];
   // const songId = useAppSelector(selectCurrentSongId);
   // const currentSong = useSelector((state: RootState) => selectSongById(state));
   const totalTakes = useAppSelector(selectTotalTakesBySongId);
@@ -44,7 +45,7 @@ const SongScreen = () => {
   // const totalTakes = useSelector(selectCurrentSongTotalTakes);
   // const currentTake = useSelector(selectCurrentTake);
 
-  console.log('totalTakes', totalTakes);
+  // console.log('totalTakes', totalTakes);
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState<boolean>(false);
@@ -54,7 +55,7 @@ const SongScreen = () => {
   // const orderedTakes: take[] = [...takes].reverse();
   const isPermissionGranted = useMicrophonePermissions();
 
-  console.log('takes', takes);
+  // console.log('takes', takes);
 
   const onRecordPress = () => {
     const recording = () => {
