@@ -15,10 +15,9 @@ import {
 } from '@src/common/types';
 import useSongFolderStyles from '@styles/songFolder';
 import { useAppDispatch } from '@src/common/hooks';
-import { setCurrentSong } from '@src/slice/currentSongSlice';
 import { useSQLiteContext } from 'expo-sqlite';
 import { getTakesAndPageBySongId } from '@src/repositories/SongsRepository';
-import { setCurrentSongId } from '@src/slice/currentSongIdSlice';
+import { setCurrentSongId } from '@src/slice/currentSongSlice';
 
 interface Props {
   song: song;

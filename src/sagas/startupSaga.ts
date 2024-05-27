@@ -7,7 +7,7 @@ import {
 } from '@src/sagas/actionCreators';
 import { fetchSongs } from '@src/repositories/SongsRepository';
 import { SQLiteDatabase } from 'expo-sqlite';
-import { FETCH_SONGS_WITH_TAKES_REQUEST } from './actionTypes';
+import { FETCH_SONGS_WITH_TAKES_REQUEST } from '@src/sagas/actionTypes';
 
 type Params = { payload: SQLiteDatabase; type: string };
 

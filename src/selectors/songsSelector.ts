@@ -1,23 +1,20 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { EMPTY_SONG } from '@src/common/constants';
 import { song } from '@src/common/types';
 import { RootState } from '@src/store';
-import { selectCurrentSongId } from './currentSongIdSelector';
+import { selectCurrentSongIndex } from '@src/selectors/currentSongSelector';
 
 export const selectSongs = (state: RootState) => state.songs.songs;
 
-export const selectSongById = createSelector(
-  [selectSongs, selectCurrentSongId],
-  (songs: song[], currentSongId: number) =>
-    songs.find(({ songId }: song) => songId === currentSongId || EMPTY_SONG),
+export const selectSongByIndex = createSelector(
+  [selectSongs, selectCurrentSongIndex],
+  (songs: song[], currentSongIndex: number) => songs[currentSongIndex],
 );
 
-export const selectTotalTakesBySongId = createSelector(
-  [selectSongs, selectCurrentSongId],
-  (songs: song[], currentSongId: number) => {
-    const song = songs.find(
-      ({ songId }: song) => songId === currentSongId || EMPTY_SONG,
-    );
+export const selectTotalTakesBySongIndex = createSelector(
+  [selectSongs, selectCurrentSongIndex],
+  (songs: song[], currentSongIndex: number) => {
+    const song = songs[currentSongIndex];
+
     return song ? song.totalTakes : 0;
   },
 );
@@ -34,10 +31,10 @@ export const selectTotalTakesBySongId = createSelector(
 //   },
 // );
 
-export const selectSongTitleBySongId = createSelector(
-  [selectSongs, selectCurrentSongId],
-  (songs: song[], currentSongId: number) => {
-    const song = songs.find(({ songId }: song) => songId === currentSongId);
+export const selectSongTitleBySongIndex = createSelector(
+  [selectSongs, selectCurrentSongIndex],
+  (songs: song[], currentSongIndex: number) => {
+    const song = songs[currentSongIndex];
     return song ? song.title : '';
   },
 );

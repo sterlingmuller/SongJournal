@@ -13,7 +13,8 @@ export const createTake = async (takePayload: takePayload) => {
     const takeId = result.lastInsertRowId;
 
     await db.runAsync(
-      'UPDATE songs SET totalTakes = totalTakes + 1 WHERE songId = songId;',
+      'UPDATE songs SET totalTakes = totalTakes + 1 WHERE songId = ?;',
+      songId,
     );
 
     const totalTakes: number = db.getFirstSync(
@@ -28,7 +29,11 @@ export const createTake = async (takePayload: takePayload) => {
       takeId,
     );
 
-    console.log('NEW TAKE:', take);
+    const test = db.getAllSync(
+      'SELECT selectedTakeID, songId, title, totalTakes FROM Songs',
+    );
+
+    console.log('repository test:', test);
 
     return take;
   } catch (err) {
@@ -48,19 +53,7 @@ export const deleteTake = async (db: SQLiteDatabase, songId: number) => {
   }
 };
 
-export const fetchTakes = (db: SQLiteDatabase): take[] => {
-  const results = db.getAllSync(
+export const fetchTakes = (db: SQLiteDatabase): take[] =>
+  db.getAllSync(
     'SELECT takeId, songId, title, date, notes, uri, duration FROM Takes',
   );
-
-  const takes: take[] = [];
-  if (results.length > 0) {
-    for (let i = 0; i < results[0].rows.length; i++) {
-      const row = results[0].rows.item(i);
-
-      takes.push(row as take);
-    }
-  }
-
-  return takes;
-};

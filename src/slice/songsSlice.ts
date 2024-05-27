@@ -4,7 +4,7 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 
-import { song } from '@src/common/types';
+import { song, take } from '@src/common/types';
 import {
   createSongFailure,
   createSongSuccess,
@@ -32,6 +32,19 @@ const songsSlice = createSlice({
     },
     addSong: (state: SliceState, action: PayloadAction<song>) => {
       state.songs.push(action.payload);
+    },
+    addTake: (state: SliceState, action: PayloadAction<take>) => {
+      const newTake = action.payload;
+      const songIndex = state.songs.findIndex(
+        (song: song) => song.songId === newTake.songId,
+      );
+
+      if (songIndex !== -1) {
+        state.songs[songIndex].takes.push(newTake);
+        state.songs[songIndex].totalTakes++;
+      } else {
+        console.warn('Song with ID ${newTake.songId} not found');
+      }
     },
   },
   extraReducers: (builder: ActionReducerMapBuilder<SliceState>) => {
@@ -76,4 +89,4 @@ const songsSlice = createSlice({
 });
 
 export default songsSlice.reducer;
-export const { removeSong, addSong } = songsSlice.actions;
+export const { removeSong, addSong, addTake } = songsSlice.actions;

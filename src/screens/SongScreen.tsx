@@ -14,20 +14,13 @@ import useSongScreenStyles from '@src/styles/songScreen';
 import useGlobalStyles from '@src/styles/global';
 import PermissionsNeededModal from '@src/songFolder/components/PermissionsNeededModal';
 import useMicrophonePermissions from '@src/hooks/useMicrophonePermissions';
-import {
-  selectCurrentSongTakes,
-  selectCurrentSongTotalTakes,
-  selectSongById,
-} from '@src/selectors/currentSongSelector';
 import { RootStackParamList } from '@src/common/types';
 import { useAppDispatch, useAppSelector } from '@src/common/hooks';
-import { setCurrentTake } from '@src/slice/currentTakeSlice';
-import { selectCurrentTake } from '@src/selectors/currentTakeSelector';
-import { selectCurrentSongId } from '@src/selectors/currentSongIdSelector';
+import { selectCurrentSong } from '@src/selectors/currentSongSelector';
 import { RootState } from '@src/store';
 import {
   selectTakesBySongId,
-  selectTotalTakesBySongId,
+  selectTotalTakesBySongIndex,
 } from '@src/selectors/songsSelector';
 
 const SongScreen = () => {
@@ -40,12 +33,10 @@ const SongScreen = () => {
   const takes = [];
   // const songId = useAppSelector(selectCurrentSongId);
   // const currentSong = useSelector((state: RootState) => selectSongById(state));
-  const totalTakes = useAppSelector(selectTotalTakesBySongId);
+  const totalTakes = useAppSelector(selectTotalTakesBySongIndex);
 
   // const totalTakes = useSelector(selectCurrentSongTotalTakes);
   // const currentTake = useSelector(selectCurrentTake);
-
-  // console.log('totalTakes', totalTakes);
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState<boolean>(false);

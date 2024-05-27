@@ -20,7 +20,8 @@ import { selectCurrentTake } from '@src/selectors/currentTakeSelector';
 import { RootStackParamList } from '@src/common/types';
 import { useAppDispatch, useAppSelector } from '@src/common/hooks';
 import { incrementTotalTakes } from '@src/slice/currentSongSlice';
-import { selectCurrentSongId } from '@src/selectors/currentSongIdSelector';
+import { selectCurrentSongId } from '@src/selectors/currentSongSelector';
+import { createTakeRequest } from '@src/sagas/actionCreators';
 
 const RecordingScreen = () => {
   const { goBack } = useNavigation();
@@ -67,17 +68,27 @@ const RecordingScreen = () => {
     console.log('songId', songId);
 
     if (uri) {
-      dispatch({
-        type: 'CREATE_TAKE',
-        payload: {
+      dispatch(
+        createTakeRequest({
           songId,
           title,
           date: new Date().toISOString(),
           uri,
           duration,
           db,
-        },
-      });
+        }),
+      );
+      // dispatch({
+      //   type: 'CREATE_TAKE',
+      //   payload: {
+      //     songId,
+      //     title,
+      //     date: new Date().toISOString(),
+      //     uri,
+      //     duration,
+      //     db,
+      //   },
+      // });
     }
 
     goBack();

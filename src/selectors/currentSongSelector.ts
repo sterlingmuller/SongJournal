@@ -1,18 +1,12 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '@src/store';
+import { selectSongs } from '@src/selectors/songsSelector';
+import { song, songs } from '@src/common/types';
 
-export const selectSongById = (state: RootState) => state.currentSong;
+export const selectCurrentSongId = (state: RootState) => state.currentSong;
 
-export const selectCurrentSongTitle = (state: RootState) =>
-  state.currentSong.title;
-
-export const selectCurrentSongTakes = (state: RootState) =>
-  state.currentSong.takes;
-
-// export const selectCurrentSongId = (state: RootState) =>
-//   state.currentSong.songId;
-
-export const selectCurrentSongTotalTakes = (state: RootState) =>
-  state.currentSong.totalTakes;
-
-export const selectCurrentSongPage = (state: RootState) =>
-  state.currentSong.page;
+export const selectCurrentSongIndex = createSelector(
+  [selectSongs, selectCurrentSongId],
+  (songs: songs, currentSongId: number) =>
+    songs.findIndex((song: song) => song.songId === currentSongId),
+);
