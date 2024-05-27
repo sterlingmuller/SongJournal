@@ -9,12 +9,14 @@ import { fetchSongs } from '@src/repositories/SongsRepository';
 import { SQLiteDatabase } from 'expo-sqlite';
 import { FETCH_SONGS_WITH_TAKES_REQUEST } from './actionTypes';
 
-type Params = { meta: SQLiteDatabase; type: string };
+type Params = { payload: SQLiteDatabase; type: string };
 
-function* fetchSongsWithTakes({ meta: db }: Params) {
+function* fetchSongsWithTakes({ payload: db }: Params) {
   try {
     const songs: song[] = yield call(fetchSongs, db);
+    console.log('songs', songs);
     const takes: take[] = yield call(fetchTakes, db);
+    console.log('takes', takes);
     const songsWithTakes = songs.map((song: song) => ({
       ...song,
       takes: takes.filter((take: take) => take.songId === song.songId),
