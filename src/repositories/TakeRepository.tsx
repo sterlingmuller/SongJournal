@@ -47,3 +47,18 @@ export const deleteTake = async (db: SQLiteDatabase, songId: number) => {
     console.error('Error deleting song', err);
   }
 };
+
+export const fetchTakes = (db: SQLiteDatabase): take[] => {
+  const results = db.getAllSync(
+    'SELECT takeId, songId, title, date, notes, uri, duration FROM Takes',
+  );
+
+  const takes: take[] = [];
+  for (let i = 0; i < results[0].rows.length; i++) {
+    const row = results[0].rows.item(i);
+
+    takes.push(row as take);
+  }
+
+  return takes;
+};

@@ -21,17 +21,16 @@ import { getTakesAndPageBySongId } from '@src/repositories/SongsRepository';
 import { setCurrentSongId } from '@src/slice/currentSongIdSlice';
 
 interface Props {
-  songInfo: songInfo;
+  song: song;
 }
 
-const SongFolder = ({ songInfo }: Props) => {
+const SongFolder = ({ song }: Props) => {
   // const db = useSQLiteContext();
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   const styles = useSongFolderStyles();
   const dispatch = useAppDispatch();
-  console.log('songInfo', songInfo);
 
-  const { title, songId } = songInfo;
+  const { title, songId } = song;
   const [isPressed, setIsPressed] = useState(false);
 
   const handlePressIn = () => {
