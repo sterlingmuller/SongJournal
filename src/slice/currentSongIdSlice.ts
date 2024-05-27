@@ -11,7 +11,7 @@ const currentSongIdSlice = createSlice({
     setCurrentSongId: (
       state: CurrentSongIdSliceState,
       action: PayloadAction<CurrentSongIdSliceState>,
-    ) => action.payload,
+    ) => (state = action.payload),
   },
 });
 

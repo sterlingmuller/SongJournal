@@ -1,5 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootState } from '@src/store';
+import { SQLiteDatabase } from 'expo-sqlite';
 
 export type appState = 'active' | 'background';
 
@@ -101,7 +102,12 @@ export type takePayload = {
   date: string;
   uri: string;
   duration: number;
-  db: any;
+  db: SQLiteDatabase;
+};
+
+export type createSongPayload = {
+  title: string;
+  db: SQLiteDatabase;
 };
 
 export type Selector<S> = (state: RootState) => S;

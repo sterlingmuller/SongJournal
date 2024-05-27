@@ -3,6 +3,7 @@ import { createTake } from '@src/repositories/TakeRepository';
 import { addTake } from '@src/slice/currentSongSlice';
 import { createTakeRequest, createTakeSuccess } from '@src/slice/takeSlice';
 import { takePayload } from '@src/common/types';
+import { CREATE_TAKE_REQUEST } from '@src/sagas/actionTypes';
 
 function* createTakeSaga(action: { payload: takePayload }) {
   try {
@@ -16,9 +17,9 @@ function* createTakeSaga(action: { payload: takePayload }) {
 }
 
 function* watchCreateTake() {
-  yield takeEvery('CREATE_TAKE', createTakeSaga);
+  yield takeEvery(CREATE_TAKE_REQUEST, createTakeSaga);
 }
 
-export default function* takeSagas() {
+export default function* takeSaga() {
   yield all([fork(watchCreateTake)]);
 }
