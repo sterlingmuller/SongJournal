@@ -1,26 +1,19 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { EMPTY_SONG } from '@src/common/constants';
-import { song, take } from '@src/common/types';
 
-type SongSliceState = song;
+type CurrentSongIdSliceState = number;
 
-const initialState: SongSliceState = EMPTY_SONG;
+const initialState: CurrentSongIdSliceState = -1;
 
 const currentSongSlice = createSlice({
   name: 'currentSong',
   initialState,
   reducers: {
-    setCurrentSong: (
-      state: SongSliceState,
-      action: PayloadAction<SongSliceState>,
-    ) => action.payload,
-    addTake: (state: SongSliceState, action: PayloadAction<take>) => {
-      console.log('addTake', action.payload);
-      state.takes.push(action.payload);
-      state.totalTakes++;
-    },
+    setCurrentSongId: (
+      state: CurrentSongIdSliceState,
+      action: PayloadAction<CurrentSongIdSliceState>,
+    ) => (state = action.payload),
   },
 });
 
 export default currentSongSlice.reducer;
-export const { setCurrentSong, addTake } = currentSongSlice.actions;
+export const { setCurrentSongId } = currentSongSlice.actions;

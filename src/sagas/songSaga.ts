@@ -7,7 +7,7 @@ import {
   createSongSuccess,
 } from '@src/sagas/actionCreators';
 import { createSong } from '@src/repositories/SongsRepository';
-import { setCurrentSongId } from '@src/slice/currentSongIdSlice';
+import { setCurrentSongId } from '@src/slice/currentSongSlice';
 
 type Params = { payload: createSongPayload; type: string };
 
@@ -15,8 +15,8 @@ function* createSongSaga({ payload }: Params) {
   try {
     const newSong = yield call(createSong, payload);
 
-    yield put(createSongSuccess(newSong));
     yield put(setCurrentSongId(newSong.songId));
+    yield put(createSongSuccess(newSong));
   } catch (error) {
     yield put(createSongFailure(error.message));
   }

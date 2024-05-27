@@ -1,18 +1,23 @@
 import { call, put, takeEvery, all, fork } from 'redux-saga/effects';
 import { createTake } from '@src/repositories/TakeRepository';
-import { addTake } from '@src/slice/currentSongSlice';
-import { createTakeRequest, createTakeSuccess } from '@src/slice/takeSlice';
 import { takePayload } from '@src/common/types';
 import { CREATE_TAKE_REQUEST } from '@src/sagas/actionTypes';
+import {
+  createTakeFailure,
+  createTakeSuccess,
+} from '@src/sagas/actionCreators';
+import { addTake } from '@src/slice/songsSlice';
 
-function* createTakeSaga(action: { payload: takePayload }) {
+type Params = { payload: takePayload; type: string };
+
+function* createTakeSaga({ payload }: Params) {
   try {
-    yield put(createTakeRequest());
-    const newTake = yield call(createTake, action.payload);
+    const newTake = yield call(createTake, payload);
+
     yield put(addTake(newTake));
-    yield put(createTakeSuccess());
+    yield put(createTakeSuccess(newTake));
   } catch (error) {
-    console.error('Error creating take', error);
+    yield put(createTakeFailure(error.message));
   }
 }
 

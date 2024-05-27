@@ -41,7 +41,7 @@ export const createSong = async ({ db, title }: createSongPayload) => {
       songId,
     );
 
-    return { ...song, page };
+    return { ...song, page, takes: [] };
   } catch (err) {
     console.error('Error inserting song', err);
   }
