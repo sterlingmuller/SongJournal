@@ -54,10 +54,12 @@ export const fetchTakes = (db: SQLiteDatabase): take[] => {
   );
 
   const takes: take[] = [];
-  for (let i = 0; i < results[0].rows.length; i++) {
-    const row = results[0].rows.item(i);
+  if (results.length > 0) {
+    for (let i = 0; i < results[0].rows.length; i++) {
+      const row = results[0].rows.item(i);
 
-    takes.push(row as take);
+      takes.push(row as take);
+    }
   }
 
   return takes;

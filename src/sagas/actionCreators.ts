@@ -8,7 +8,7 @@ import { createAction } from '@reduxjs/toolkit';
 
 export const fetchSongsWithTakesRequest = (db: SQLiteDatabase) => ({
   type: at.FETCH_SONGS_WITH_TAKES_REQUEST,
-  meta: { db },
+  payload: db,
 });
 
 export const fetchSongsWithTakesSuccess = createAction(
