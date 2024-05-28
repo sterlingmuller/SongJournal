@@ -14,12 +14,10 @@ interface Props {
   take: take;
   setIsDeleteModalOpen: (value: boolean) => void;
   setIsNotesModalOpen: (value: boolean) => void;
-  setCurrentTake: (value: take) => void;
 }
 
 const SongTake = (props: Props) => {
-  const { take, setIsDeleteModalOpen, setIsNotesModalOpen, setCurrentTake } =
-    props;
+  const { take, setIsDeleteModalOpen, setIsNotesModalOpen } = props;
   const styles = useSongTakeStyles();
 
   const onDoubleTap: () => void = useDoubleTap(() => console.log('it works!'));
@@ -29,13 +27,12 @@ const SongTake = (props: Props) => {
       <View style={styles.contents}>
         <View style={styles.titleRow}>
           <Text style={styles.title}>{take.title}</Text>
-          {take.starred && <StarIcon />}
+          {/* {take.starred && <StarIcon />} */}
         </View>
         <Text>{take.date}</Text>
         <View style={styles.iconRow}>
           <TouchableOpacity
             onPress={() => {
-              setCurrentTake(take);
               setIsNotesModalOpen(true);
             }}
           >

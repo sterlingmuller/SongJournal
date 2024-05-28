@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { useSelector } from 'react-redux';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 import SongTake from '@src/songFolder/components/SongTake';
@@ -9,18 +8,15 @@ import DeleteModal from '@src/common/components/DeleteModal';
 import NotesModal from '@src/songFolder/components/NotesModal';
 import { DELETE_TAKE_TEXT } from '@src/common/constants';
 import { ScrollView } from 'react-native-gesture-handler';
-import { song, take } from '@src/common/types';
 import useSongScreenStyles from '@src/styles/songScreen';
 import useGlobalStyles from '@src/styles/global';
 import PermissionsNeededModal from '@src/songFolder/components/PermissionsNeededModal';
 import useMicrophonePermissions from '@src/hooks/useMicrophonePermissions';
-import { RootStackParamList } from '@src/common/types';
-import { useAppDispatch, useAppSelector } from '@src/common/hooks';
-import { selectCurrentSong } from '@src/selectors/currentSongSelector';
-import { RootState } from '@src/store';
+import { RootStackParamList, take } from '@src/common/types';
+import { useAppSelector } from '@src/common/hooks';
 import {
-  selectTakesBySongId,
-  selectTotalTakesBySongIndex,
+  selectCurrentSongTakes,
+  selectCurrentSongTotalTakes,
 } from '@src/selectors/songsSelector';
 
 const SongScreen = () => {
@@ -29,21 +25,17 @@ const SongScreen = () => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   // const dispatch = useAppDispatch();
 
-  // const takes = useAppSelector(selectTakesBySongId);
-  const takes = [];
+  const takes = useAppSelector(selectCurrentSongTakes);
   // const songId = useAppSelector(selectCurrentSongId);
   // const currentSong = useSelector((state: RootState) => selectSongById(state));
-  const totalTakes = useAppSelector(selectTotalTakesBySongIndex);
-
-  // const totalTakes = useSelector(selectCurrentSongTotalTakes);
-  // const currentTake = useSelector(selectCurrentTake);
+  const totalTakes = useAppSelector(selectCurrentSongTotalTakes);
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState<boolean>(false);
   const [isPermissionsNeededModalOpen, setIsPermissionsNeededModalOpen] =
     useState<boolean>(false);
 
-  // const orderedTakes: take[] = [...takes].reverse();
+  const orderedTakes: take[] = [...takes].reverse();
   const isPermissionGranted = useMicrophonePermissions();
 
   // console.log('takes', takes);
@@ -71,17 +63,16 @@ const SongScreen = () => {
   return (
     <View style={globalStyles.container}>
       <ScrollView>
-        {/* <View style={styles.takes}>
+        <View style={styles.takes}>
           {orderedTakes.map((take: take) => (
             <SongTake
               key={take.title}
               take={take}
               setIsDeleteModalOpen={setIsDeleteModalOpen}
               setIsNotesModalOpen={setIsNotesModalOpen}
-              setCurrentTake={setCurrentTake}
             />
           ))}
-        </View> */}
+        </View>
       </ScrollView>
       <RecordButton
         onPress={onRecordPress}

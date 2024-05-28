@@ -8,7 +8,7 @@ import SongDetail from '@src/lyrics/subcomponents/SongDetail';
 import PageOptions from '../subcomponents/PageOptions';
 import useLyricSheetStyles from '@src/styles/lyricsSheet';
 import { useSelector } from 'react-redux';
-import { selectCurrentSongPage } from '@src/selectors/currentSongSelector';
+import { selectCurrentSongPage } from '@src/selectors/songsSelector';
 
 const LyricsSheet = () => {
   const page = useSelector(selectCurrentSongPage);
