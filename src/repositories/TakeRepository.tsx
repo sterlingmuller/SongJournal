@@ -17,6 +17,11 @@ export const createTake = async (takePayload: takePayload) => {
       songId,
     );
 
+    await db.runAsync(
+      'UPDATE songs Set selectedTakeId = ? WHERE selectedTakeId = -1;',
+      takeId,
+    );
+
     const totalTakes: number = db.getFirstSync(
       'SELECT totalTakes FROM Songs WHERE songId = ?',
       songId,
