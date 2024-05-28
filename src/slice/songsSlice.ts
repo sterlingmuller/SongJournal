@@ -13,15 +13,23 @@ import {
 } from '@src/sagas/actionCreators';
 import * as at from '@src/sagas/actionTypes';
 
-type SliceState = { songs: song[]; isLoading: boolean; error: Error | null };
+type SongsSliceState = {
+  songs: song[];
+  isLoading: boolean;
+  error: Error | null;
+};
 
-const initialState: SliceState = { songs: [], isLoading: false, error: null };
+const initialState: SongsSliceState = {
+  songs: [],
+  isLoading: false,
+  error: null,
+};
 
 const songsSlice = createSlice({
   name: 'songs',
   initialState,
   reducers: {
-    removeSong: (state: SliceState, action: PayloadAction<number>) => {
+    removeSong: (state: SongsSliceState, action: PayloadAction<number>) => {
       const indexToRemove = state.songs.findIndex(
         (song: song) => song.songId === action.payload,
       );
@@ -30,10 +38,10 @@ const songsSlice = createSlice({
         state.songs.splice(indexToRemove, 1);
       }
     },
-    addSong: (state: SliceState, action: PayloadAction<song>) => {
+    addSong: (state: SongsSliceState, action: PayloadAction<song>) => {
       state.songs.push(action.payload);
     },
-    addTake: (state: SliceState, action: PayloadAction<take>) => {
+    addTake: (state: SongsSliceState, action: PayloadAction<take>) => {
       const newTake = action.payload;
       const songIndex = state.songs.findIndex(
         (song: song) => song.songId === newTake.songId,
@@ -47,40 +55,40 @@ const songsSlice = createSlice({
       }
     },
   },
-  extraReducers: (builder: ActionReducerMapBuilder<SliceState>) => {
+  extraReducers: (builder: ActionReducerMapBuilder<SongsSliceState>) => {
     builder
-      .addCase(at.FETCH_SONGS_WITH_TAKES_REQUEST, (state: SliceState) => {
+      .addCase(at.FETCH_SONGS_WITH_TAKES_REQUEST, (state: SongsSliceState) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(
         fetchSongsWithTakesSuccess,
-        (state: SliceState, action: PayloadAction<song[]>) => {
+        (state: SongsSliceState, action: PayloadAction<song[]>) => {
           state.isLoading = false;
           state.songs = action.payload;
         },
       )
       .addCase(
         fetchSongsWithTakesFailure,
-        (state: SliceState, action: PayloadAction<Error>) => {
+        (state: SongsSliceState, action: PayloadAction<Error>) => {
           state.isLoading = false;
           state.error = action.payload;
         },
       )
-      .addCase(at.CREATE_SONG_REQUEST, (state: SliceState) => {
+      .addCase(at.CREATE_SONG_REQUEST, (state: SongsSliceState) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(
         createSongSuccess,
-        (state: SliceState, action: PayloadAction<song>) => {
+        (state: SongsSliceState, action: PayloadAction<song>) => {
           state.isLoading = false;
           state.songs.push(action.payload);
         },
       )
       .addCase(
         createSongFailure,
-        (state: SliceState, action: PayloadAction<Error>) => {
+        (state: SongsSliceState, action: PayloadAction<Error>) => {
           state.isLoading = false;
           state.error = action.payload;
         },

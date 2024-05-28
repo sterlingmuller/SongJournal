@@ -7,7 +7,7 @@ import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 import { songDetail } from '@src/common/types';
 import { SONG_DETAILS } from '@src/common/constants';
 import useInfoModalStyle from '@styles/infoModal';
-import { selectCurrentSongPage } from '@src/selectors/currentSongSelector';
+import { selectCurrentSongPage } from '@src/selectors/songsSelector';
 import { useAppSelector } from '@src/common/hooks';
 
 interface Props {

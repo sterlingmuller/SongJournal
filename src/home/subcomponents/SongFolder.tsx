@@ -7,16 +7,9 @@ import LyricsIcon from '@src/icons/LyricsIcon';
 import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
 import PlaybackBar from '@src/home/subcomponents/PlaybackBar';
-import {
-  RootStackParamList,
-  getTakesAndPageResult,
-  song,
-  songInfo,
-} from '@src/common/types';
+import { RootStackParamList, song } from '@src/common/types';
 import useSongFolderStyles from '@styles/songFolder';
 import { useAppDispatch } from '@src/common/hooks';
-import { useSQLiteContext } from 'expo-sqlite';
-import { getTakesAndPageBySongId } from '@src/repositories/SongsRepository';
 import { setCurrentSongId } from '@src/slice/currentSongSlice';
 
 interface Props {

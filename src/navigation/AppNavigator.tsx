@@ -11,14 +11,14 @@ import MusicPlayerScreen from '@src/screens/MusicPlayerScreen';
 import { RootStackParamList } from '@src/common/types';
 import HeaderPageButton from '@src/songFolder/subcomponents/HeaderPageButton';
 import useHeaderStyles from '@src/styles/header';
-import { selectSongTitleBySongId } from '@src/selectors/songsSelector';
+import { selectCurrentSongTitle } from '@src/selectors/songsSelector';
 import { useAppSelector } from '@src/common/hooks';
 
 const AppNavigator = () => {
   const RootStack: any = createNativeStackNavigator<RootStackParamList>();
   const styles = useHeaderStyles();
 
-  const title = useAppSelector(selectSongTitleBySongId);
+  const title = useAppSelector(selectCurrentSongTitle);
 
   return (
     <NavigationContainer>

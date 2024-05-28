@@ -5,7 +5,7 @@ import { selectCurrentSongId } from './currentSongSelector';
 import { song } from '@src/common/types';
 import { EMPTY_SONG } from '@src/common/constants';
 
-const selectTakes = (state: RootState) => state.takes;
+// const selectTakes = (state: RootState) => state.take;
 
 // get takes from db, add to songs on redux, memoize
 

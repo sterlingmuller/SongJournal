@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import InfoIcon from '@src/icons/InfoIcon';
 import BackIcon from '@src/icons/BackIcon';
 import useLyricsHeaderStyles from '@src/styles/lyricsHeader';
-import { selectSongTitleBySongId } from '@src/selectors/songsSelector';
+import { selectCurrentSongTitle } from '@src/selectors/songsSelector';
 
 interface Props {
   isInfoModalOpen: boolean;
@@ -15,7 +15,7 @@ interface Props {
 const LyricsHeader = (props: Props) => {
   const { isInfoModalOpen, setIsInfoModalOpen } = props;
   const styles = useLyricsHeaderStyles();
-  const title = useSelector(selectSongTitleBySongId);
+  const title = useSelector(selectCurrentSongTitle);
 
   return (
     <View style={styles.container}>
