@@ -37,3 +37,8 @@ export const selectCurrentSongTakes = createSelector(
   [selectCurrentSong],
   (song: song) => song.takes,
 );
+
+export const selectCurrentSongSelectedTakeId = createSelector(
+  [selectCurrentSong],
+  (song: song) => song.selectedTakeId,
+);

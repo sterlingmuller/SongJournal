@@ -17,18 +17,17 @@ import { useAppSelector } from '@src/common/hooks';
 import {
   selectCurrentSongTakes,
   selectCurrentSongTotalTakes,
+  selectCurrentSongSelectedTakeId,
 } from '@src/selectors/songsSelector';
 
 const SongScreen = () => {
   const styles = useSongScreenStyles();
   const globalStyles = useGlobalStyles();
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
-  // const dispatch = useAppDispatch();
 
   const takes = useAppSelector(selectCurrentSongTakes);
-  // const songId = useAppSelector(selectCurrentSongId);
-  // const currentSong = useSelector((state: RootState) => selectSongById(state));
   const totalTakes = useAppSelector(selectCurrentSongTotalTakes);
+  const selectedTakeId = useAppSelector(selectCurrentSongSelectedTakeId);
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState<boolean>(false);
@@ -60,18 +59,35 @@ const SongScreen = () => {
     setIsPermissionsNeededModalOpen,
   ]);
 
+  const renderTakes = () =>
+    orderedTakes.map((take: take) => {
+      const isStarred = take.takeId === selectedTakeId;
+
+      return (
+        <SongTake
+          key={take.title}
+          take={take}
+          setIsDeleteModalOpen={setIsDeleteModalOpen}
+          setIsNotesModalOpen={setIsNotesModalOpen}
+          starred={isStarred}
+        />
+      );
+    });
+
   return (
     <View style={globalStyles.container}>
       <ScrollView>
         <View style={styles.takes}>
-          {orderedTakes.map((take: take) => (
+          {/* {orderedTakes.map((take: take) => (
             <SongTake
               key={take.title}
               take={take}
               setIsDeleteModalOpen={setIsDeleteModalOpen}
               setIsNotesModalOpen={setIsNotesModalOpen}
+              starred
             />
-          ))}
+          ))} */}
+          {renderTakes()}
         </View>
       </ScrollView>
       <RecordButton

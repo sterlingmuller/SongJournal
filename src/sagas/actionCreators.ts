@@ -1,6 +1,13 @@
 import { SQLiteDatabase } from 'expo-sqlite';
 
-import { createSongPayload, song, take, takePayload } from '@src/common/types';
+import {
+  createSongPayload,
+  setSelectedTakeIdPayload,
+  song,
+  take,
+  takePayload,
+  updateSelectedTakeIdPayloadDb,
+} from '@src/common/types';
 import * as at from '@src/sagas/actionTypes';
 import { createAction } from '@reduxjs/toolkit';
 
@@ -52,5 +59,24 @@ export const createTakeSuccess = createAction(
 
 export const createTakeFailure = createAction(
   at.CREATE_TAKE_FAILURE,
+  (error: Error) => ({ payload: error }),
+);
+
+// Updating selectedTakeId
+
+export const updateSelectedTakeIdRequest = (
+  payload: updateSelectedTakeIdPayloadDb,
+) => ({
+  type: at.UPDATE_SELECTED_TAKE_ID_REQUEST,
+  payload,
+});
+
+export const updateSelectedTakeIdSuccess = createAction(
+  at.UPDATE_SELECTED_TAKE_ID_SUCCESS,
+  (idInfo: setSelectedTakeIdPayload) => ({ payload: idInfo }),
+);
+
+export const updateSelectedTakeIdFailure = createAction(
+  at.UPDATE_SELECTED_TAKE_ID_FAILURE,
   (error: Error) => ({ payload: error }),
 );

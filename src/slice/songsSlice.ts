@@ -4,13 +4,8 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 
-import { song, take } from '@src/common/types';
-import {
-  createSongFailure,
-  createSongSuccess,
-  fetchSongsWithTakesFailure,
-  fetchSongsWithTakesSuccess,
-} from '@src/sagas/actionCreators';
+import { setSelectedTakeIdPayload, song, take } from '@src/common/types';
+import * as ac from '@src/sagas/actionCreators';
 import * as at from '@src/sagas/actionTypes';
 
 type SongsSliceState = {
@@ -50,10 +45,25 @@ const songsSlice = createSlice({
       if (songIndex !== -1) {
         state.songs[songIndex].takes.push(newTake);
         state.songs[songIndex].totalTakes++;
+
+        if (state.songs[songIndex].selectedTakeId === -1) {
+          state.songs[songIndex].selectedTakeId = newTake.takeId;
+        }
       } else {
         console.warn('Song with ID ${newTake.songId} not found');
       }
     },
+    // setSelectedTakeId: (
+    //   state: SongsSliceState,
+    //   action: PayloadAction<setSelectedTakeIdPayload>,
+    // ) => {
+    //   const { songId, takeId } = action.payload;
+
+    //   const songIndex = state.songs.findIndex(
+    //     (song: song) => song.songId === songId,
+    //   );
+    //   state.songs[songIndex].selectedTakeId = takeId;
+    // },
   },
   extraReducers: (builder: ActionReducerMapBuilder<SongsSliceState>) => {
     builder
@@ -62,14 +72,14 @@ const songsSlice = createSlice({
         state.error = null;
       })
       .addCase(
-        fetchSongsWithTakesSuccess,
+        ac.fetchSongsWithTakesSuccess,
         (state: SongsSliceState, action: PayloadAction<song[]>) => {
           state.isLoading = false;
           state.songs = action.payload;
         },
       )
       .addCase(
-        fetchSongsWithTakesFailure,
+        ac.fetchSongsWithTakesFailure,
         (state: SongsSliceState, action: PayloadAction<Error>) => {
           state.isLoading = false;
           state.error = action.payload;
@@ -80,14 +90,41 @@ const songsSlice = createSlice({
         state.error = null;
       })
       .addCase(
-        createSongSuccess,
+        ac.createSongSuccess,
         (state: SongsSliceState, action: PayloadAction<song>) => {
           state.isLoading = false;
           state.songs.push(action.payload);
         },
       )
       .addCase(
-        createSongFailure,
+        ac.createSongFailure,
+        (state: SongsSliceState, action: PayloadAction<Error>) => {
+          state.isLoading = false;
+          state.error = action.payload;
+        },
+      )
+      .addCase(at.UPDATE_SELECTED_TAKE_ID_REQUEST, (state: SongsSliceState) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(
+        ac.updateSelectedTakeIdSuccess,
+        (
+          state: SongsSliceState,
+          action: PayloadAction<setSelectedTakeIdPayload>,
+        ) => {
+          const { songId, takeId } = action.payload;
+
+          const songIndex = state.songs.findIndex(
+            (song: song) => song.songId === songId,
+          );
+
+          state.isLoading = false;
+          state.songs[songIndex].selectedTakeId = takeId;
+        },
+      )
+      .addCase(
+        ac.updateSelectedTakeIdFailure,
         (state: SongsSliceState, action: PayloadAction<Error>) => {
           state.isLoading = false;
           state.error = action.payload;
