@@ -13,14 +13,10 @@ import {
 } from '@src/utils/startStopPlayRecording';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import useRecordingStyles from '@src/styles/recording';
-import { createTake } from '@src/repositories/TakeRepository';
 import { useSQLiteContext } from 'expo-sqlite';
-import { useSelector } from 'react-redux';
-import { selectCurrentTake } from '@src/selectors/currentTakeSelector';
 import { RootStackParamList } from '@src/common/types';
 import { useAppDispatch, useAppSelector } from '@src/common/hooks';
-import { incrementTotalTakes } from '@src/slice/currentSongSlice';
-import { selectCurrentSongId } from '@src/selectors/currentSongSelector';
+import { selectCurrentSongId } from '@src/selectors/songsSelector';
 import { createTakeRequest } from '@src/sagas/actionCreators';
 
 const RecordingScreen = () => {
@@ -30,7 +26,6 @@ const RecordingScreen = () => {
   const db = useSQLiteContext();
   const dispatch = useAppDispatch();
 
-  // const currentTake = useSelector(selectCurrentTake);
   const route = useRoute<RouteProp<RootStackParamList, 'Recording'>>();
   const { title } = route.params;
   const songId = useAppSelector(selectCurrentSongId);
