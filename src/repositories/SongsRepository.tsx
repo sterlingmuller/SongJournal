@@ -1,4 +1,10 @@
-import { createSongPayload, page, songInfo, take } from '@src/common/types';
+import {
+  createSongPayload,
+  page,
+  songInfo,
+  take,
+  updateSelectedTakeIdPayloadDb,
+} from '@src/common/types';
 import { SQLiteDatabase } from 'expo-sqlite';
 
 export const fetchSongs = (db: SQLiteDatabase) =>
@@ -56,5 +62,21 @@ export const deleteSong = async (db: SQLiteDatabase, songId: number) => {
     await statement.executeAsync({ $songId: songId });
   } catch (err) {
     console.error('Error deleting song', err);
+  }
+};
+
+export const updateSelectedTakeId = async ({
+  db,
+  songId,
+  takeId,
+}: updateSelectedTakeIdPayloadDb) => {
+  try {
+    await db.runAsync(
+      'UPDATE Songs SET selectedTakeId = ? WHERE songId = ?',
+      takeId,
+      songId,
+    );
+  } catch (err) {
+    console.error('Error updating selectedTakeId', err);
   }
 };

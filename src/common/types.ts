@@ -115,4 +115,15 @@ export type createSongPayload = {
   db: SQLiteDatabase;
 };
 
+export type updateSelectedTakeIdPayloadDb = {
+  songId: number;
+  takeId: number;
+  db: SQLiteDatabase;
+};
+
+export type setSelectedTakeIdPayload = {
+  songId: number;
+  takeId: number;
+};
+
 export type Selector<S> = (state: RootState) => S;

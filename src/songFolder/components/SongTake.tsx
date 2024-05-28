@@ -9,25 +9,34 @@ import { take } from '@src/common/types';
 import StarIcon from '@src/icons/StarIcon';
 import useDoubleTap from '@src/hooks/useDoubleTap';
 import useSongTakeStyles from '@styles/songTake';
+import { useAppDispatch } from '@src/common/hooks';
+import { updateSelectedTakeIdRequest } from '@src/sagas/actionCreators';
+import { useSQLiteContext } from 'expo-sqlite';
 
 interface Props {
   take: take;
+  starred: boolean;
   setIsDeleteModalOpen: (value: boolean) => void;
   setIsNotesModalOpen: (value: boolean) => void;
 }
 
 const SongTake = (props: Props) => {
-  const { take, setIsDeleteModalOpen, setIsNotesModalOpen } = props;
+  const { take, starred, setIsDeleteModalOpen, setIsNotesModalOpen } = props;
+  const { takeId, songId } = take;
   const styles = useSongTakeStyles();
+  const dispatch = useAppDispatch();
+  const db = useSQLiteContext();
 
-  const onDoubleTap: () => void = useDoubleTap(() => console.log('it works!'));
+  const onDoubleTap: () => void = useDoubleTap(() =>
+    dispatch(updateSelectedTakeIdRequest({ takeId, songId, db })),
+  );
 
   return (
     <TouchableOpacity style={styles.container} onPress={onDoubleTap}>
       <View style={styles.contents}>
         <View style={styles.titleRow}>
           <Text style={styles.title}>{take.title}</Text>
-          {/* {take.starred && <StarIcon />} */}
+          {starred && <StarIcon />}
         </View>
         <Text>{take.date}</Text>
         <View style={styles.iconRow}>
@@ -41,7 +50,6 @@ const SongTake = (props: Props) => {
           <ShareIcon />
           <TouchableOpacity
             onPress={() => {
-              setCurrentTake(take);
               setIsDeleteModalOpen(true);
             }}
           >
