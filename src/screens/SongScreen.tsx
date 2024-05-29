@@ -19,6 +19,7 @@ import {
   selectCurrentSongTotalTakes,
   selectCurrentSongSelectedTakeId,
 } from '@src/selectors/songsSelector';
+import { createHandleTogglePlayPause } from '@src/utils/createHandleTogglePlayPause';
 
 const SongScreen = () => {
   const styles = useSongScreenStyles();
@@ -31,13 +32,17 @@ const SongScreen = () => {
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState<boolean>(false);
+  const [playingId, setPlayingId] = useState<number>(-1);
   const [isPermissionsNeededModalOpen, setIsPermissionsNeededModalOpen] =
     useState<boolean>(false);
 
   const orderedTakes: take[] = [...takes].reverse();
   const isPermissionGranted = useMicrophonePermissions();
 
-  // console.log('takes', takes);
+  const onTogglePlayPause = createHandleTogglePlayPause(
+    playingId,
+    setPlayingId,
+  );
 
   const onRecordPress = () => {
     const recording = () => {
@@ -70,6 +75,7 @@ const SongScreen = () => {
           setIsDeleteModalOpen={setIsDeleteModalOpen}
           setIsNotesModalOpen={setIsNotesModalOpen}
           starred={isStarred}
+          onTogglePlayPause={onTogglePlayPause}
         />
       );
     });
@@ -77,18 +83,7 @@ const SongScreen = () => {
   return (
     <View style={globalStyles.container}>
       <ScrollView>
-        <View style={styles.takes}>
-          {/* {orderedTakes.map((take: take) => (
-            <SongTake
-              key={take.title}
-              take={take}
-              setIsDeleteModalOpen={setIsDeleteModalOpen}
-              setIsNotesModalOpen={setIsNotesModalOpen}
-              starred
-            />
-          ))} */}
-          {renderTakes()}
-        </View>
+        <View style={styles.takes}>{renderTakes()}</View>
       </ScrollView>
       <RecordButton
         onPress={onRecordPress}

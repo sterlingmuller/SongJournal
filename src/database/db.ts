@@ -30,8 +30,6 @@ export const migrateDbIfNeeded = async (db: SQLiteDatabase) => {
 
     currentDbVersion = 1;
   }
-  // if (currentDbVersion === 1) {
-  //   Add more migrations
-  // }
+
   await db.execAsync(`PRAGMA user_version = ${DATABASE_VERSION}`);
 };
