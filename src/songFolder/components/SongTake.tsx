@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
+import { useSQLiteContext } from 'expo-sqlite';
 
 import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
@@ -11,17 +12,28 @@ import useDoubleTap from '@src/hooks/useDoubleTap';
 import useSongTakeStyles from '@styles/songTake';
 import { useAppDispatch } from '@src/common/hooks';
 import { updateSelectedTakeIdRequest } from '@src/sagas/actionCreators';
-import { useSQLiteContext } from 'expo-sqlite';
+import { playRecording } from '@src/utils/startStopPlayRecording';
+import PauseIcon from '@src/icons/PauseIcon';
+import { togglePausePlayAndReturnIsPlaying } from '@src/utils/togglePausePlay';
 
 interface Props {
   take: take;
   starred: boolean;
+  isPlaying: boolean;
   setIsDeleteModalOpen: (value: boolean) => void;
   setIsNotesModalOpen: (value: boolean) => void;
+  onTogglePlayPause: (value: number) => void;
 }
 
 const SongTake = (props: Props) => {
-  const { take, starred, setIsDeleteModalOpen, setIsNotesModalOpen } = props;
+  const {
+    take,
+    starred,
+    isPlaying,
+    setIsDeleteModalOpen,
+    setIsNotesModalOpen,
+    onTogglePlayPause,
+  } = props;
   const { takeId, songId } = take;
   const styles = useSongTakeStyles();
   const dispatch = useAppDispatch();
@@ -58,9 +70,12 @@ const SongTake = (props: Props) => {
           <View style={styles.playbackBar} />
         </View>
       </View>
-      <View style={styles.playIcon}>
-        <PlayIcon />
-      </View>
+      <TouchableOpacity
+        style={styles.playIcon}
+        onPress={onTogglePlayPause(take.uri)}
+      >
+        {isPlaying ? <PauseIcon /> : <PlayIcon />}
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 };
