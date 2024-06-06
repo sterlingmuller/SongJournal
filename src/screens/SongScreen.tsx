@@ -17,32 +17,29 @@ import { useAppSelector } from '@src/common/hooks';
 import {
   selectCurrentSongTakes,
   selectCurrentSongTotalTakes,
-  selectCurrentSongSelectedTakeId,
 } from '@src/selectors/songsSelector';
-import { createHandleTogglePlayPause } from '@src/utils/createHandleTogglePlayPause';
+import useAudioPlayer from '@src/utils/useAudioPlayer';
 
 const SongScreen = () => {
   const styles = useSongScreenStyles();
   const globalStyles = useGlobalStyles();
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
+  const { togglePlayback } = useAudioPlayer();
 
   const takes = useAppSelector(selectCurrentSongTakes);
   const totalTakes = useAppSelector(selectCurrentSongTotalTakes);
-  const selectedTakeId = useAppSelector(selectCurrentSongSelectedTakeId);
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState<boolean>(false);
-  const [playingId, setPlayingId] = useState<number>(-1);
   const [isPermissionsNeededModalOpen, setIsPermissionsNeededModalOpen] =
     useState<boolean>(false);
 
   const orderedTakes: take[] = [...takes].reverse();
   const isPermissionGranted = useMicrophonePermissions();
 
-  const onTogglePlayPause = createHandleTogglePlayPause(
-    playingId,
-    setPlayingId,
-  );
+  const onTogglePlayback = (uri: string, takeId: number) => {
+    togglePlayback(uri, takeId);
+  };
 
   const onRecordPress = () => {
     const recording = () => {
@@ -65,20 +62,15 @@ const SongScreen = () => {
   ]);
 
   const renderTakes = () =>
-    orderedTakes.map((take: take) => {
-      const isStarred = take.takeId === selectedTakeId;
-
-      return (
-        <SongTake
-          key={take.title}
-          take={take}
-          setIsDeleteModalOpen={setIsDeleteModalOpen}
-          setIsNotesModalOpen={setIsNotesModalOpen}
-          starred={isStarred}
-          onTogglePlayPause={onTogglePlayPause}
-        />
-      );
-    });
+    orderedTakes.map((take: take) => (
+      <SongTake
+        key={take.title}
+        take={take}
+        setIsDeleteModalOpen={setIsDeleteModalOpen}
+        setIsNotesModalOpen={setIsNotesModalOpen}
+        onTogglePlayback={onTogglePlayback}
+      />
+    ));
 
   return (
     <View style={globalStyles.container}>

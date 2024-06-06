@@ -7,23 +7,32 @@ import LyricsIcon from '@src/icons/LyricsIcon';
 import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
 import PlaybackBar from '@src/home/subcomponents/PlaybackBar';
-import { RootStackParamList, song } from '@src/common/types';
+import { RootStackParamList, song, take } from '@src/common/types';
 import useSongFolderStyles from '@styles/songFolder';
-import { useAppDispatch } from '@src/common/hooks';
+import { useAppDispatch, useAppSelector } from '@src/common/hooks';
 import { setCurrentSongId } from '@src/slice/currentSongSlice';
+import PauseIcon from '@src/icons/PauseIcon';
+import {
+  selectIsPlaying,
+  selectPlayingId,
+} from '@src/selectors/playbackSelector';
 
 interface Props {
   song: song;
+  togglePlayback: (uri: string, id: number) => void;
 }
 
-const SongFolder = ({ song }: Props) => {
-  // const db = useSQLiteContext();
+const SongFolder = ({ song, togglePlayback }: Props) => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   const styles = useSongFolderStyles();
   const dispatch = useAppDispatch();
-
   const { title, songId } = song;
   const [isPressed, setIsPressed] = useState(false);
+
+  const selectedPlayingSongId = useAppSelector(selectPlayingId);
+  const isPlaying = useAppSelector(selectIsPlaying);
+
+  const isCurrentSongPlaying = songId === selectedPlayingSongId && isPlaying;
 
   const handlePressIn = () => {
     setIsPressed(true);
@@ -34,19 +43,18 @@ const SongFolder = ({ song }: Props) => {
   };
 
   const handleOnPressNavigation = async (screen: 'Song' | 'Lyrics') => {
-    // const takesAndPage: getTakesAndPageResult = await getTakesAndPageBySongId(
-    //   db,
-    //   songId,
-    // );
-
-    // const newCurrentSong: song = {
-    //   ...songInfo,
-    //   ...takesAndPage,
-    // };
-
     dispatch(setCurrentSongId(songId));
-    // dispatch(setCurrentSong(newCurrentSong));
     navigate(screen);
+  };
+
+  const onTogglePlayback = () => {
+    const selectedTake = song.takes.find(
+      (take: take) => take.takeId === song.selectedTakeId,
+    );
+
+    if (selectedTake) {
+      togglePlayback(selectedTake.uri, song.songId);
+    }
   };
 
   return (
@@ -69,9 +77,9 @@ const SongFolder = ({ song }: Props) => {
           <PlaybackBar />
         </View>
       </View>
-      <View style={styles.playIcon}>
-        <PlayIcon />
-      </View>
+      <TouchableOpacity style={styles.playIcon} onPress={onTogglePlayback}>
+        {isCurrentSongPlaying ? <PauseIcon /> : <PlayIcon />}
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 };

@@ -1,37 +1,41 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Audio } from 'expo-av';
+import { playbackPayload } from '@src/common/types';
 
 interface PlaybackState {
-  sound: Audio.Sound | null;
   isPlaying: boolean;
-  currentUri: string | null;
+  uri: string | null;
+  id: number;
 }
 
 const initialState: PlaybackState = {
-  sound: null,
   isPlaying: false,
-  currentUri: null,
+  uri: null,
+  id: -1,
 };
 
 const playbackSlice = createSlice({
   name: 'playback',
   initialState,
   reducers: {
-    playTrack(state, action: PayloadAction<string>) {
-      state.currentUri = action.payload;
+    startPlayback(state, action: PayloadAction<playbackPayload>) {
+      state.isPlaying = true;
+      state.uri = action.payload.uri;
+      state.id = action.payload.id;
+    },
+    resumePlayback(state) {
       state.isPlaying = true;
     },
-    pauseTrack(state) {
+    pausePlayback(state) {
       state.isPlaying = false;
     },
-    stopTrack(state) {
+    stopPlayback(state) {
       state.isPlaying = false;
-      state.currentUri = null;
-      // Here, you'd also unload the sound object
-      // You can use a thunk or saga for the async unload logic
+      state.uri = null;
+      state.id = -1;
     },
   },
 });
 
-export const { playTrack, pauseTrack, stopTrack } = playbackSlice.actions;
+export const { startPlayback, resumePlayback, pausePlayback, stopPlayback } =
+  playbackSlice.actions;
 export default playbackSlice.reducer;
