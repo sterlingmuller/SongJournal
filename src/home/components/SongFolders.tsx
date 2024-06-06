@@ -7,12 +7,14 @@ import { ListRenderItemInfo } from 'react-native';
 import { deleteObject, song } from '@src/common/types';
 import { useAppSelector } from '@src/common/hooks';
 import { selectSongs } from '@src/selectors/songsSelector';
+import useAudioPlayer from '@src/utils/useAudioPlayer';
 
 interface Props {
   setToDelete: (value: deleteObject | null) => void;
 }
 
 const SongFolders = ({ setToDelete }: Props) => {
+  const { togglePlayback } = useAudioPlayer();
   const songs = useAppSelector(selectSongs);
 
   return (
@@ -24,7 +26,7 @@ const SongFolders = ({ setToDelete }: Props) => {
       previewOpenValue={-40}
       previewOpenDelay={3000}
       renderItem={(data: ListRenderItemInfo<song>) => {
-        return <SongFolder song={data.item} />;
+        return <SongFolder song={data.item} togglePlayback={togglePlayback} />;
       }}
       renderHiddenItem={(data: ListRenderItemInfo<song>) => (
         <DeleteRow

@@ -126,4 +126,9 @@ export type setSelectedTakeIdPayload = {
   takeId: number;
 };
 
+export type playbackPayload = {
+  id: number;
+  uri: string;
+};
+
 export type Selector<S> = (state: RootState) => S;

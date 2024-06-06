@@ -46,7 +46,7 @@ export const playRecording = async (uri: string) => {
 export const pauseRecording = async (uri: string) => {
   try {
     const { sound } = await Audio.Sound.createAsync({ uri });
-    await sound.playAsync();
+    await sound.pauseAsync();
   } catch (err) {
     console.error('Failed to play recording', err);
   }
