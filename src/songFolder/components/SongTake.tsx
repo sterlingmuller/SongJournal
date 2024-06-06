@@ -10,45 +10,47 @@ import { take } from '@src/common/types';
 import StarIcon from '@src/icons/StarIcon';
 import useDoubleTap from '@src/hooks/useDoubleTap';
 import useSongTakeStyles from '@styles/songTake';
-import { useAppDispatch } from '@src/common/hooks';
+import { useAppDispatch, useAppSelector } from '@src/common/hooks';
 import { updateSelectedTakeIdRequest } from '@src/sagas/actionCreators';
-import { playRecording } from '@src/utils/startStopPlayRecording';
 import PauseIcon from '@src/icons/PauseIcon';
-import { togglePausePlayAndReturnIsPlaying } from '@src/utils/togglePausePlay';
+import {
+  selectIsPlaying,
+  selectPlayingId,
+} from '@src/selectors/playbackSelector';
+import { selectCurrentSongSelectedTakeId } from '@src/selectors/songsSelector';
 
 interface Props {
   take: take;
-  starred: boolean;
-  isPlaying: boolean;
   setIsDeleteModalOpen: (value: boolean) => void;
   setIsNotesModalOpen: (value: boolean) => void;
-  onTogglePlayPause: (value: number) => void;
+  onTogglePlayback: (uri: string, id: number) => void;
 }
 
 const SongTake = (props: Props) => {
-  const {
-    take,
-    starred,
-    isPlaying,
-    setIsDeleteModalOpen,
-    setIsNotesModalOpen,
-    onTogglePlayPause,
-  } = props;
+  const { take, setIsDeleteModalOpen, setIsNotesModalOpen, onTogglePlayback } =
+    props;
   const { takeId, songId } = take;
   const styles = useSongTakeStyles();
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
 
+  const selectedPlayingId = useAppSelector(selectPlayingId);
+  const isPlaying = useAppSelector(selectIsPlaying);
+  const selectedTakeId = useAppSelector(selectCurrentSongSelectedTakeId);
+
   const onDoubleTap: () => void = useDoubleTap(() =>
     dispatch(updateSelectedTakeIdRequest({ takeId, songId, db })),
   );
+
+  const isStarred = take.takeId === selectedTakeId;
+  const isCurrentTakePlaying = takeId === selectedPlayingId && isPlaying;
 
   return (
     <TouchableOpacity style={styles.container} onPress={onDoubleTap}>
       <View style={styles.contents}>
         <View style={styles.titleRow}>
           <Text style={styles.title}>{take.title}</Text>
-          {starred && <StarIcon />}
+          {isStarred && <StarIcon />}
         </View>
         <Text>{take.date}</Text>
         <View style={styles.iconRow}>
@@ -72,9 +74,9 @@ const SongTake = (props: Props) => {
       </View>
       <TouchableOpacity
         style={styles.playIcon}
-        onPress={onTogglePlayPause(take.uri)}
+        onPress={() => onTogglePlayback(take.uri, take.takeId)}
       >
-        {isPlaying ? <PauseIcon /> : <PlayIcon />}
+        {isCurrentTakePlaying ? <PauseIcon /> : <PlayIcon />}
       </TouchableOpacity>
     </TouchableOpacity>
   );
