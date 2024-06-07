@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Modal, TouchableOpacity, TextInput } from 'react-native';
+import { View, TextInput } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import Modal from 'react-native-modal';
 
 import { RootStackParamList } from '@src/common/types';
 import StyledText from '@src/common/components/StyledText';
@@ -43,29 +44,27 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
   );
 
   return (
-    <Modal transparent visible={isNewSongOpen}>
-      <TouchableOpacity
-        style={styles.modalContainer}
-        activeOpacity={1}
-        onPress={onExitPress}
-      >
-        <View style={styles.container}>
-          <StyledText style={styles.title}>Song title</StyledText>
-          <View style={styles.textbox}>
-            <TextInput
-              style={styles.input}
-              placeholder="Cobra Strike Alpha Deluxe"
-              value={songTitle}
-              onChangeText={(title: string) => setSongTitle(title)}
-            />
-          </View>
-          <SaveAndCancelButtons
-            onPress={onSavePress}
-            onExitPress={() => setIsNewSongOpen(false)}
-            disabled={disabled}
+    <Modal
+      isVisible={isNewSongOpen}
+      avoidKeyboard
+      onBackdropPress={onExitPress}
+    >
+      <View style={styles.container}>
+        <StyledText style={styles.title}>Song title</StyledText>
+        <View style={styles.textbox}>
+          <TextInput
+            style={styles.input}
+            placeholder="Cobra Strike Alpha Deluxe"
+            value={songTitle}
+            onChangeText={(title: string) => setSongTitle(title)}
           />
         </View>
-      </TouchableOpacity>
+        <SaveAndCancelButtons
+          onPress={onSavePress}
+          onExitPress={() => setIsNewSongOpen(false)}
+          disabled={disabled}
+        />
+      </View>
     </Modal>
   );
 };
