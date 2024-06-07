@@ -8,6 +8,7 @@ import LyricsSheet from '@src/lyrics/components/LyricsSheet';
 import useGlobalStyles from '@src/styles/global';
 import { useAppSelector } from '@src/common/hooks';
 import { selectCurrentSongPage } from '@src/selectors/songsSelector';
+import LoadingIndicator from '@src/common/components/LoadingIndicator';
 
 const LyricsScreen = () => {
   const globalStyles = useGlobalStyles();
@@ -26,6 +27,10 @@ const LyricsScreen = () => {
       ),
     });
   }, [isInfoModalOpen, setIsInfoModalOpen]);
+
+  if (!page) {
+    return <LoadingIndicator />;
+  }
 
   return (
     <View style={globalStyles.container}>

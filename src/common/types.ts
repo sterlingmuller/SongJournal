@@ -136,4 +136,9 @@ export type fetchPagePayload = {
   db: SQLiteDatabase;
 };
 
+export type fetchPageSuccessPayload = {
+  songId: number;
+  page: page;
+};
+
 export type Selector<S> = (state: RootState) => S;

@@ -1,7 +1,8 @@
-import { page } from '@src/common/types';
-import { SQLiteDatabase } from 'expo-sqlite';
+import { fetchPagePayload, page } from '@src/common/types';
 
-export const fetchPageBySongId = async (db: SQLiteDatabase, songId: number) => {
+export const fetchPageBySongId = async (payload: fetchPagePayload) => {
+  const { db, songId } = payload;
+
   try {
     const page: page = await db.getFirstAsync(
       'SELECT * FROM Page WHERE songId = ?',
