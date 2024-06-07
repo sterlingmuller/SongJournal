@@ -38,7 +38,7 @@ export type test = { params: lyricsScreenRouteParams };
 
 export type songDetail = { label: string; key: string };
 
-export type pageOption = 'edit' | 'chords' | 'metronome' | 'share';
+export type pageOption = 'edit' | 'chords' | 'metronome' | 'share' | '';
 
 export type songInfo = {
   songId: number;
