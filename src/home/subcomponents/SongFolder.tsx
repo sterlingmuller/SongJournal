@@ -16,6 +16,8 @@ import {
   selectIsPlaying,
   selectPlayingId,
 } from '@src/selectors/playbackSelector';
+import { fetchPageRequest } from '@src/sagas/actionCreators';
+import { useSQLiteContext } from 'expo-sqlite';
 
 interface Props {
   song: song;
@@ -26,6 +28,8 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   const styles = useSongFolderStyles();
   const dispatch = useAppDispatch();
+  const db = useSQLiteContext();
+
   const { title, songId } = song;
   const [isPressed, setIsPressed] = useState(false);
 
@@ -42,9 +46,10 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
     setIsPressed(false);
   };
 
-  const handleOnPressNavigation = async (screen: 'Song' | 'Lyrics') => {
-    await dispatch(setCurrentSongId(songId));
+  const handleOnPressNavigation = (screen: 'Song' | 'Lyrics') => {
+    dispatch(setCurrentSongId(songId));
     if (screen === 'Lyrics') {
+      dispatch(fetchPageRequest({ songId, db }));
     }
     navigate(screen);
   };
