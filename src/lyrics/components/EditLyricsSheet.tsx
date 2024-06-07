@@ -2,23 +2,19 @@ import React, { useState } from 'react';
 import { View, TextInput } from 'react-native';
 
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
-import { page, pageOption, songDetail } from '@src/common/types';
+import { pageOption, songDetail } from '@src/common/types';
 import { SONG_DETAILS } from '@src/common/constants';
 import SongDetail from '@src/lyrics/subcomponents/SongDetail';
 import PageOptions from '../subcomponents/PageOptions';
 import useLyricSheetStyles from '@src/styles/lyricsSheet';
 import { useSelector } from 'react-redux';
 import { selectCurrentSongPage } from '@src/selectors/songsSelector';
-import StyledText from '@src/common/components/StyledText';
 
-interface Props {
-  page: page;
-}
-
-const LyricsSheet = ({ page }: Props) => {
+const EditLyricsSheet = () => {
+  const page = useSelector(selectCurrentSongPage);
   const styles = useLyricSheetStyles();
 
-  // const [newLyrics, setNewLyrics] = useState<string>();
+  const [newLyrics, setNewLyrics] = useState<string>();
   const [selectedOption, setSelectedOption] = useState<pageOption>('edit');
   const disabled: boolean = !page.lyrics;
 
@@ -43,14 +39,13 @@ const LyricsSheet = ({ page }: Props) => {
           setSelectedOption={setSelectedOption}
         />
       </View>
-      {/* <TextInput
+      <TextInput
         style={styles.textContainer}
         value={newLyrics}
         onChangeText={(text: string) => setNewLyrics(text)}
         placeholder="Add lyrics..."
         textAlignVertical="top"
-      /> */}
-      <StyledText>{page.lyrics}</StyledText>
+      />
       <SaveAndCancelButtons
         onPress={() => null}
         onExitPress={() => null}
@@ -60,4 +55,4 @@ const LyricsSheet = ({ page }: Props) => {
   );
 };
 
-export default LyricsSheet;
+export default EditLyricsSheet;
