@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Modal, TouchableOpacity, Button } from 'react-native';
+import { View, Button } from 'react-native';
 
 import { deleteObject } from '@src/common/types';
 import { EMPTY_DELETE_OBJECT } from '@src/common/constants';
@@ -9,6 +9,7 @@ import { deleteSong } from '@src/repositories/SongsRepository';
 import { useSQLiteContext } from 'expo-sqlite';
 import { removeSong } from '@src/slice/songsSlice';
 import { useAppDispatch } from '@src/common/hooks';
+import Modal from 'react-native-modal';
 
 interface Props {
   setToDelete: (value: deleteObject | null) => void;
@@ -36,30 +37,24 @@ const DeleteModal = (props: Props) => {
   };
 
   return (
-    <Modal transparent visible={!!title}>
-      <TouchableOpacity
-        style={styles.modalContainer}
-        activeOpacity={1}
-        onPress={onExitPress}
-      >
-        <View style={styles.container}>
-          <StyledText style={styles.title}>
-            Delete {title} from Google account and current device
-          </StyledText>
-          <StyledText style={styles.text}>
-            {title}
-            {deleteText}
-          </StyledText>
-          <View style={styles.buttons}>
-            <View style={styles.button}>
-              <Button title="Delete" onPress={onDeletePress} color="red" />
-            </View>
-            <View style={styles.button}>
-              <Button title="Cancel" color="#D6D6D6" onPress={onExitPress} />
-            </View>
+    <Modal isVisible={!!title} avoidKeyboard onBackdropPress={onExitPress}>
+      <View style={styles.container}>
+        <StyledText style={styles.title}>
+          Delete {title} from Google account and current device
+        </StyledText>
+        <StyledText style={styles.text}>
+          {title}
+          {deleteText}
+        </StyledText>
+        <View style={styles.buttons}>
+          <View style={styles.button}>
+            <Button title="Delete" onPress={onDeletePress} color="red" />
+          </View>
+          <View style={styles.button}>
+            <Button title="Cancel" color="#D6D6D6" onPress={onExitPress} />
           </View>
         </View>
-      </TouchableOpacity>
+      </View>
     </Modal>
   );
 };

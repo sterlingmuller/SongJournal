@@ -3,7 +3,6 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { useColorTheme } from '@src/theme/ThemeContext';
 
 interface Styles {
-  modalContainer: ViewStyle;
   container: ViewStyle;
   buttons: ViewStyle;
   button: ViewStyle;
@@ -15,16 +14,10 @@ const useDeleteModalStyles = () => {
   const { theme } = useColorTheme();
 
   const deleteModalStyle: Styles = StyleSheet.create({
-    modalContainer: {
-      flex: 1,
-      backgroundColor: 'rgba(0, 0, 0, .5)',
-      justifyContent: 'center',
-    },
-
     container: {
       alignSelf: 'center',
       backgroundColor: theme.secondary,
-      width: '70%',
+      width: '80%',
       borderRadius: 15,
       padding: 20,
     },
@@ -39,13 +32,13 @@ const useDeleteModalStyles = () => {
     text: {
       fontSize: 16,
       textAlign: 'center',
-      paddingBottom: 30,
+      paddingBottom: 25,
     },
 
     buttons: {
       flexDirection: 'row',
-      justifyContent: 'space-around',
-      paddingBottom: 5,
+      justifyContent: 'space-between',
+      padding: 5,
     },
 
     button: {

@@ -43,7 +43,9 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
   };
 
   const handleOnPressNavigation = async (screen: 'Song' | 'Lyrics') => {
-    dispatch(setCurrentSongId(songId));
+    await dispatch(setCurrentSongId(songId));
+    if (screen === 'Lyrics') {
+    }
     navigate(screen);
   };
 
