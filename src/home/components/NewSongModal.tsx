@@ -24,7 +24,10 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
   const styles = useNewSongModalStyle();
 
   const [songTitle, setSongTitle] = useState('');
-  const onExitPress = () => setIsNewSongOpen(false);
+  const onExitPress = () => {
+    setIsNewSongOpen(false);
+    setSongTitle('');
+  };
 
   const disabled: boolean = !songTitle;
 
@@ -61,7 +64,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
         </View>
         <SaveAndCancelButtons
           onPress={onSavePress}
-          onExitPress={() => setIsNewSongOpen(false)}
+          onExitPress={onExitPress}
           disabled={disabled}
         />
       </View>
