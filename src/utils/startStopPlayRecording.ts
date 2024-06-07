@@ -37,7 +37,18 @@ export const stopRecording = async (
 export const playRecording = async (uri: string) => {
   try {
     const { sound } = await Audio.Sound.createAsync({ uri });
+
+    sound.setOnPlaybackStatusUpdate((status) => {
+      console.log('status:', status);
+      if (status.durationMillis === status.positionMillis) {
+        console.log('weee');
+      }
+    });
     await sound.playAsync();
+
+    // const cobra = await sound.getStatusAsync();
+
+    // console.log('sound test:', cobra);
   } catch (err) {
     console.error('Failed to play recording', err);
   }

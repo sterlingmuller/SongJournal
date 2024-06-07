@@ -1,5 +1,5 @@
-import { useRef } from 'react';
-import { Audio } from 'expo-av';
+import { useEffect, useRef } from 'react';
+import { AVPlaybackStatusSuccess, Audio } from 'expo-av';
 import { useAppDispatch, useAppSelector } from '@src/common/hooks';
 import { selectPlaybackInfo } from '@src/selectors/playbackSelector';
 import {
@@ -14,19 +14,38 @@ const useAudioPlayer = () => {
   const { isPlaying, uri } = useAppSelector(selectPlaybackInfo);
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    const onPlaybackStatusUpdate = (
+      playbackStatus: AVPlaybackStatusSuccess,
+    ) => {
+      console.log('status:', playbackStatus);
+      if (playbackStatus.didJustFinish) {
+        console.log('meep');
+        soundRef.current.unloadAsync();
+        dispatch(stopPlayback());
+      }
+    };
+
+    if (soundRef.current) {
+      soundRef.current.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
+    }
+
+    return () => {
+      soundRef.current?.setOnPlaybackStatusUpdate(null);
+    };
+  }, [uri, soundRef.current]);
+
   const togglePlayback = async (newUri: string, newId: number) => {
     if (soundRef.current) {
       if (uri === newUri) {
         if (isPlaying) {
-          soundRef.current.pauseAsync();
-          dispatch(pausePlayback());
+          soundRef.current.pauseAsync().then(() => dispatch(pausePlayback()));
         } else {
-          soundRef.current.playAsync();
-          dispatch(resumePlayback());
+          soundRef.current.playAsync().then(() => dispatch(resumePlayback()));
         }
       } else {
-        soundRef.current.stopAsync();
-        soundRef.current.unloadAsync();
+        // soundRef.current.stopAsync();
+        soundRef.current.unloadAsync().then(() => (soundRef.current = null));
         dispatch(stopPlayback());
 
         const { sound: newSound } = await Audio.Sound.createAsync(
@@ -37,14 +56,21 @@ const useAudioPlayer = () => {
         dispatch(startPlayback({ uri: newUri, id: newId }));
 
         soundRef.current = newSound;
+
+        // newSound.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
       }
     } else {
       const { sound } = await Audio.Sound.createAsync(
         { uri: newUri },
-        { shouldPlay: true },
+        // { shouldPlay: true, progressUpdateIntervalMillis: 100 },
       );
       soundRef.current = sound;
-      dispatch(startPlayback({ uri: newUri, id: newId }));
+
+      soundRef.current
+        .playAsync()
+        .then(() => dispatch(startPlayback({ uri: newUri, id: newId })));
+
+      // dispatch(startPlayback({ uri: newUri, id: newId }));
     }
   };
 

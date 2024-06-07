@@ -2,7 +2,6 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { useColorTheme } from '@src/theme/ThemeContext';
 
 interface Styles {
-  modalContainer: ViewStyle;
   container: ViewStyle;
   textbox: ViewStyle;
   buttons: ViewStyle;
@@ -15,23 +14,17 @@ const useNewSongModalStyle = () => {
   const { theme } = useColorTheme();
 
   const newSongModalStyle: Styles = StyleSheet.create({
-    modalContainer: {
-      flex: 1,
-      backgroundColor: 'rgba(0, 0, 0, .5)',
-      justifyContent: 'center',
-    },
-
     container: {
       alignSelf: 'center',
       backgroundColor: '#fff',
-      width: '70%',
-      height: '30%',
+      width: '80%',
+      height: 280,
       borderRadius: 15,
-      gap: 30,
+      gap: 40,
+      paddingTop: 30,
     },
 
     title: {
-      paddingTop: 35,
       paddingLeft: 40,
       fontSize: 24,
     },
@@ -45,6 +38,7 @@ const useNewSongModalStyle = () => {
       borderWidth: 1,
       borderColor: '#ccc',
       marginLeft: 35,
+      marginBottom: 10,
     },
 
     input: {
