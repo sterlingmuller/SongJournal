@@ -14,13 +14,13 @@ type Params = { payload: SQLiteDatabase; type: string };
 function* fetchSongsWithTakes({ payload: db }: Params) {
   try {
     const songs: song[] = yield call(fetchSongs, db);
-    console.log('songs', songs);
     const takes: take[] = yield call(fetchTakes, db);
-    console.log('takes', takes);
+
     const songsWithTakes = songs.map((song: song) => ({
       ...song,
       takes: takes.filter((take: take) => take.songId === song.songId),
     }));
+
     yield put(fetchSongsWithTakesSuccess(songsWithTakes));
   } catch (error) {
     yield put(fetchSongsWithTakesFailure(error.message));
