@@ -2,6 +2,7 @@ import { SQLiteDatabase } from 'expo-sqlite';
 
 import {
   createSongPayload,
+  fetchPagePayload,
   setSelectedTakeIdPayload,
   song,
   take,
@@ -45,7 +46,7 @@ export const createSongFailure = createAction(
   (error: Error) => ({ payload: error }),
 );
 
-// Createing a new take
+// Creating a new take
 
 export const createTakeRequest = (payload: takePayload) => ({
   type: at.CREATE_TAKE_REQUEST,
@@ -80,3 +81,10 @@ export const updateSelectedTakeIdFailure = createAction(
   at.UPDATE_SELECTED_TAKE_ID_FAILURE,
   (error: Error) => ({ payload: error }),
 );
+
+// Fetching page by songId
+
+export const fetchPageRequest = (payload: fetchPagePayload) => ({
+  type: at.FETCH_PAGE_REQUEST,
+  payload,
+});
