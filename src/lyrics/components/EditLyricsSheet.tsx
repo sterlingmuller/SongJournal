@@ -15,30 +15,10 @@ const EditLyricsSheet = () => {
   const styles = useLyricSheetStyles();
 
   const [newLyrics, setNewLyrics] = useState<string>();
-  const [selectedOption, setSelectedOption] = useState<pageOption>('edit');
   const disabled: boolean = !page.lyrics;
 
   return (
-    <View style={styles.container}>
-      <View style={styles.infoContainer}>
-        <View style={styles.details}>
-          {SONG_DETAILS.map(
-            ({ label, key }: songDetail) =>
-              !!page[key] && (
-                <SongDetail
-                  key={label}
-                  label={label}
-                  value={page[key]}
-                  onPageScreen
-                />
-              ),
-          )}
-        </View>
-        <PageOptions
-          selectedOption={selectedOption}
-          setSelectedOption={setSelectedOption}
-        />
-      </View>
+    <View>
       <TextInput
         style={styles.textContainer}
         value={newLyrics}
