@@ -4,7 +4,13 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 
-import { setSelectedTakeIdPayload, song, take } from '@src/common/types';
+import {
+  fetchPagePayload,
+  setSelectedTakeIdPayload,
+  song,
+  take,
+} from '@src/common/types';
+import { fetchPageBySongId } from '@src/repositories/PageRepository';
 import * as ac from '@src/sagas/actionCreators';
 import * as at from '@src/sagas/actionTypes';
 
@@ -53,17 +59,21 @@ const songsSlice = createSlice({
         console.warn('Song with ID ${newTake.songId} not found');
       }
     },
-    // setSelectedTakeId: (
-    //   state: SongsSliceState,
-    //   action: PayloadAction<setSelectedTakeIdPayload>,
-    // ) => {
-    //   const { songId, takeId } = action.payload;
+    fetchPageBySongId: (
+      state: SongsSliceState,
+      action: PayloadAction<fetchPagePayload>,
+    ) => {
+      const { db, songId } = action.payload;
+      const songIndex = state.songs.findIndex(
+        (song: song) => song.songId === songId,
+      );
 
-    //   const songIndex = state.songs.findIndex(
-    //     (song: song) => song.songId === songId,
-    //   );
-    //   state.songs[songIndex].selectedTakeId = takeId;
-    // },
+      if (songIndex !== -1) {
+        state.songs[songIndex].page = fetchPageBySongId(db, songId);
+      } else {
+        console.warn('Song with ID ${songId} not found');
+      }
+    },
   },
   extraReducers: (builder: ActionReducerMapBuilder<SongsSliceState>) => {
     builder

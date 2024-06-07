@@ -131,4 +131,9 @@ export type playbackPayload = {
   uri: string;
 };
 
+export type fetchPagePayload = {
+  songId: number;
+  db: SQLiteDatabase;
+};
+
 export type Selector<S> = (state: RootState) => S;
