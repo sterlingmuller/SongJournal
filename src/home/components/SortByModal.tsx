@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, Modal, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
+import Modal from 'react-native-modal';
 
 import SortByCategories from '@src/home/subcomponents/SortCategories';
 import { sortByCategoryName } from '@src/common/types';
@@ -24,25 +25,25 @@ const SortByModal = (props: Props) => {
     setIsSortAscending,
   } = props;
   const styles = useSortByModalStyles();
+  const onExitPress = () => setIsSortOpen(false);
 
   return (
-    <Modal transparent visible={isSortOpen}>
-      <TouchableOpacity
-        style={styles.modalContainer}
-        activeOpacity={1}
-        onPress={() => setIsSortOpen(false)}
-      >
-        <View style={styles.container}>
-          <Text style={styles.title}>Sort by</Text>
-          <View style={styles.line} />
-          <SortByCategories
-            sortedCategory={sortedCategory}
-            setSortedCategory={setSortedCategory}
-            isSortAscending={isSortAscending}
-            setIsSortAscending={setIsSortAscending}
-          />
-        </View>
-      </TouchableOpacity>
+    <Modal
+      isVisible={isSortOpen}
+      avoidKeyboard
+      onBackdropPress={onExitPress}
+      style={{ margin: 0 }}
+    >
+      <View style={styles.container}>
+        <Text style={styles.title}>Sort by</Text>
+        <View style={styles.line} />
+        <SortByCategories
+          sortedCategory={sortedCategory}
+          setSortedCategory={setSortedCategory}
+          isSortAscending={isSortAscending}
+          setIsSortAscending={setIsSortAscending}
+        />
+      </View>
     </Modal>
   );
 };

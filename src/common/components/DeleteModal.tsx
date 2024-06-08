@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Button } from 'react-native';
+import Modal from 'react-native-modal';
 
 import { deleteObject } from '@src/common/types';
 import { EMPTY_DELETE_OBJECT } from '@src/common/constants';
@@ -9,7 +10,6 @@ import { deleteSong } from '@src/repositories/SongsRepository';
 import { useSQLiteContext } from 'expo-sqlite';
 import { removeSong } from '@src/slice/songsSlice';
 import { useAppDispatch } from '@src/common/hooks';
-import Modal from 'react-native-modal';
 
 interface Props {
   setToDelete: (value: deleteObject | null) => void;
