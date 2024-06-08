@@ -4,7 +4,6 @@ import { useColorTheme } from '@src/theme/ThemeContext';
 import { colors as c } from '@src/theme/colors';
 
 interface Styles {
-  modalContainer: ViewStyle;
   container: ViewStyle;
   line: ViewStyle;
   categories: ViewStyle;
@@ -18,11 +17,6 @@ const useSortByModalStyles = () => {
   const { theme } = useColorTheme();
 
   const sortByModalStyles: Styles = StyleSheet.create({
-    modalContainer: {
-      flex: 1,
-      backgroundColor: 'rgba(0, 0, 0, .5)',
-    },
-
     container: {
       position: 'absolute',
       backgroundColor: theme.secondary,
@@ -38,6 +32,8 @@ const useSortByModalStyles = () => {
     title: {
       paddingVertical: 15,
       paddingLeft: 30,
+      fontSize: 16,
+      fontWeight: 'bold',
     },
 
     line: {
@@ -55,6 +51,7 @@ const useSortByModalStyles = () => {
       backgroundColor: theme.highlight,
       borderRadius: 20,
       marginRight: 40,
+      justifyContent: 'center',
     },
 
     label: {

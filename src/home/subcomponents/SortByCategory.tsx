@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 
 import { sortByCategoryName } from '@src/common/types';
 import useSortByModalStyles from '@styles/sortByModal';
+import ArrowUpIcon from '@src/icons/ArrowUpIcon';
+import ArrowDownIcon from '@src/icons/ArrowDownIcon';
 
 interface Props {
   sortedCategory: sortByCategoryName;
@@ -37,22 +38,8 @@ const SortByCategory = (props: Props) => {
       style={isSelected && styles.selectedCategory}
     >
       {isSelected && (
-        <View>
-          {isSortAscending ? (
-            <AntDesign
-              style={styles.arrow}
-              name="arrowup"
-              size={24}
-              color="black"
-            />
-          ) : (
-            <AntDesign
-              style={styles.arrow}
-              name="arrowdown"
-              size={24}
-              color="black"
-            />
-          )}
+        <View style={styles.arrow}>
+          {isSortAscending ? <ArrowUpIcon /> : <ArrowDownIcon />}
         </View>
       )}
       <Text style={styles.label}>{label}</Text>

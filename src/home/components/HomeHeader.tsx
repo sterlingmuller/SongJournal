@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Entypo } from '@expo/vector-icons';
 
 import SearchBar from '@src/home/subcomponents/SearchBar';
 import useHomeHeaderStyles from '@src/styles/homeHeader';
+import HorzDotsIcon from '@src/icons/HorzDotsIcon';
+import VertDotsIcon from '@src/icons/VertDotsIcon';
 
 interface Props {
   isSortOpen: boolean;
@@ -18,11 +19,7 @@ const HomeHeader = ({ isSortOpen, setIsSortOpen }: Props) => {
     <View style={styles.container}>
       <SearchBar />
       <TouchableOpacity onPress={toggleSort}>
-        {isSortOpen ? (
-          <Entypo name="dots-three-horizontal" size={24} color="black" />
-        ) : (
-          <Entypo name="dots-three-vertical" size={24} color="black" />
-        )}
+        {isSortOpen ? <HorzDotsIcon /> : <VertDotsIcon />}
       </TouchableOpacity>
     </View>
   );
