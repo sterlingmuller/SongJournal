@@ -44,7 +44,11 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <SongFolders setToDelete={setToDelete} sortedCategory={sortedCategory} />
+      <SongFolders
+        setToDelete={setToDelete}
+        sortedCategory={sortedCategory}
+        isSortAscending={isSortAscending}
+      />
       <CreateNewSongButton setIsNewSongOpen={setIsNewSongOpen} />
       <SortByModal
         isSortOpen={isSortOpen}

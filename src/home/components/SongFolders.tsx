@@ -8,20 +8,25 @@ import { deleteObject, song, sortByCategoryName } from '@src/common/types';
 import { useAppSelector } from '@src/common/hooks';
 import { selectSongs } from '@src/selectors/songsSelector';
 import useAudioPlayer from '@src/utils/useAudioPlayer';
+import { sortSongs } from '@src/utils/sortSongs';
 
 interface Props {
   setToDelete: (value: deleteObject | null) => void;
   sortedCategory: sortByCategoryName;
+  isSortAscending: boolean;
 }
 
-const SongFolders = ({ setToDelete, sortedCategory }: Props) => {
+const SongFolders = (props: Props) => {
+  const { setToDelete, sortedCategory, isSortAscending } = props;
   const { togglePlayback } = useAudioPlayer();
   const songs = useAppSelector(selectSongs);
+
+  const sortedSongs = sortSongs(songs, sortedCategory, isSortAscending);
 
   return (
     <SwipeListView
       contentContainerStyle={{ paddingBottom: 200 }}
-      data={songs}
+      data={sortedSongs}
       disableRightSwipe
       previewRowKey={'0'}
       previewOpenValue={-40}
