@@ -80,6 +80,8 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
     setTimeout(() => inputRef.current?.focus(), 100);
   });
 
+  const date = song.takes[song.selectedTakeId].date;
+
   return (
     <TouchableOpacity
       style={[styles.rowContainer, isPressed && styles.rowPressed]}
@@ -102,8 +104,7 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
             <StyledText style={styles.title}>{title}</StyledText>
           )}
         </TouchableOpacity>
-        {/* <StyledText>{takes[selectedTake].date}</StyledText> */}
-        <StyledText>Workin on it</StyledText>
+        <StyledText>{date}</StyledText>
         <View style={styles.iconRow}>
           <TouchableOpacity onPress={() => handleOnPressNavigation('Lyrics')}>
             <LyricsIcon />
