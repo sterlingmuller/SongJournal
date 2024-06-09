@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import Modal from 'react-native-modal';
 
 import SortByCategories from '@src/home/subcomponents/SortCategories';
-import { sortByCategoryName } from '@src/common/types';
+import { FilterOptions, sortByCategoryName } from '@src/common/types';
 import useSortByModalStyles from '@styles/sortByModal';
 
 interface Props {
@@ -13,6 +13,8 @@ interface Props {
   setIsSortOpen: (value: boolean) => void;
   isSortAscending: boolean;
   setIsSortAscending: (value: boolean) => void;
+  filterOptions: FilterOptions;
+  setFilterOptions: (options: FilterOptions) => void;
 }
 
 const SortByModal = (props: Props) => {
@@ -23,9 +25,13 @@ const SortByModal = (props: Props) => {
     setIsSortOpen,
     isSortAscending,
     setIsSortAscending,
+    filterOptions,
+    setFilterOptions,
   } = props;
   const styles = useSortByModalStyles();
   const onExitPress = () => setIsSortOpen(false);
+
+  // Add filter toggles here
 
   return (
     <Modal

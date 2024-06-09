@@ -4,7 +4,12 @@ import { SwipeListView } from 'react-native-swipe-list-view';
 import SongFolder from '@src/home/subcomponents/SongFolder';
 import DeleteRow from '@src/home/subcomponents/DeleteRow';
 import { ListRenderItemInfo } from 'react-native';
-import { deleteObject, song, sortByCategoryName } from '@src/common/types';
+import {
+  FilterOptions,
+  deleteObject,
+  song,
+  sortByCategoryName,
+} from '@src/common/types';
 import { useAppSelector } from '@src/common/hooks';
 import { selectSongs } from '@src/selectors/songsSelector';
 import useAudioPlayer from '@src/utils/useAudioPlayer';
@@ -14,14 +19,20 @@ interface Props {
   setToDelete: (value: deleteObject | null) => void;
   sortedCategory: sortByCategoryName;
   isSortAscending: boolean;
+  filterOptions: FilterOptions;
 }
 
 const SongFolders = (props: Props) => {
-  const { setToDelete, sortedCategory, isSortAscending } = props;
+  const { setToDelete, sortedCategory, isSortAscending, filterOptions } = props;
   const { togglePlayback } = useAudioPlayer();
   const songs = useAppSelector(selectSongs);
 
-  const sortedSongs = sortSongs(songs, sortedCategory, isSortAscending);
+  const sortedSongs = sortSongs(
+    songs,
+    sortedCategory,
+    isSortAscending,
+    filterOptions,
+  );
 
   return (
     <SwipeListView

@@ -4,7 +4,12 @@ import { SQLiteDatabase } from 'expo-sqlite';
 
 export type appState = 'active' | 'background';
 
-export type sortByCategoryName = 'Date' | 'Name' | 'Length' | 'Lyrics';
+export type sortByCategoryName = 'Date' | 'Name' | 'Length';
+
+export type FilterOptions = {
+  lyrics?: boolean;
+  completed?: boolean;
+};
 
 export type colorThemeName =
   | 'Light'

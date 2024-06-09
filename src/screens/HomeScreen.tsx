@@ -7,7 +7,11 @@ import SongFolders from '@src/home/components/SongFolders';
 import SortByModal from '@src/home/components/SortByModal';
 import NewSongModal from '@src/home/components/NewSongModal';
 import Footer from '@src/home/components/Footer';
-import { deleteObject, sortByCategoryName } from '@src/common/types';
+import {
+  FilterOptions,
+  deleteObject,
+  sortByCategoryName,
+} from '@src/common/types';
 import { useNavigation } from '@react-navigation/native';
 import DeleteModal from '@src/common/components/DeleteModal';
 import { DELETE_SONG_TEXT, EMPTY_DELETE_OBJECT } from '@src/common/constants';
@@ -26,6 +30,7 @@ const HomeScreen = () => {
   const [sortedCategory, setSortedCategory] =
     useState<sortByCategoryName>('Date');
   const [isSortAscending, setIsSortAscending] = useState<boolean>(false);
+  const [filterOptions, setFilterOptions] = useState<FilterOptions>({});
 
   const [isNewSongOpen, setIsNewSongOpen] = useState<boolean>(false);
   const [toDelete, setToDelete] = useState<deleteObject>(EMPTY_DELETE_OBJECT);
@@ -48,6 +53,7 @@ const HomeScreen = () => {
         setToDelete={setToDelete}
         sortedCategory={sortedCategory}
         isSortAscending={isSortAscending}
+        filterOptions={filterOptions}
       />
       <CreateNewSongButton setIsNewSongOpen={setIsNewSongOpen} />
       <SortByModal
@@ -57,6 +63,8 @@ const HomeScreen = () => {
         setSortedCategory={setSortedCategory}
         isSortAscending={isSortAscending}
         setIsSortAscending={setIsSortAscending}
+        filterOptions={filterOptions}
+        setFilterOptions={setFilterOptions}
       />
       <NewSongModal
         isNewSongOpen={isNewSongOpen}
