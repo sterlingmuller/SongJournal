@@ -9,6 +9,7 @@ import {
   setSelectedTakeIdPayload,
   song,
   take,
+  updatePageInfoPayload,
 } from '@src/common/types';
 import * as ac from '@src/sagas/actionCreators';
 import * as at from '@src/sagas/actionTypes';
@@ -79,6 +80,22 @@ const songsSlice = createSlice({
       action: PayloadAction<Error>,
     ) => {
       state.error = action.payload;
+    },
+    updatePageInfoSuccess: (
+      state: SongsSliceState,
+      action: PayloadAction<updatePageInfoPayload>,
+    ) => {
+      const { page, songId } = action.payload;
+
+      const songIndex = state.songs.findIndex(
+        (song: song) => song.songId === songId,
+      );
+
+      if (songIndex !== -1) {
+        state.songs[songIndex].page = page;
+      } else {
+        console.warn(`Song with ID ${songId} not found`);
+      }
     },
   },
   extraReducers: (builder: ActionReducerMapBuilder<SongsSliceState>) => {
