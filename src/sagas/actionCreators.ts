@@ -7,6 +7,7 @@ import {
   song,
   take,
   takePayload,
+  updatePageInfoPayload,
   updateSelectedTakeIdPayloadDb,
 } from '@src/common/types';
 import * as at from '@src/sagas/actionTypes';
@@ -88,3 +89,20 @@ export const fetchPageRequest = (payload: fetchPagePayload) => ({
   type: at.FETCH_PAGE_REQUEST,
   payload,
 });
+
+// Updating page
+
+export const updatePageInfoRequest = (payload: updatePageInfoPayload) => ({
+  type: at.UPDATE_SELECTED_TAKE_ID_REQUEST,
+  payload,
+});
+
+export const updatePageInfoSuccess = createAction(
+  at.UPDATE_PAGE_INFO_SUCCESS,
+  (payload: updatePageInfoPayload) => ({ payload }),
+);
+
+export const updatePageInfoFailure = createAction(
+  at.UPDATE_PAGE_INFO_FAILURE,
+  (error: Error) => ({ payload: error }),
+);
