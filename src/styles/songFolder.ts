@@ -11,6 +11,7 @@ interface Styles {
   deleteButton: ViewStyle;
   rowPressed: ViewStyle;
   title: TextStyle;
+  editTitleText: TextStyle;
 }
 
 const useSongFolderStyles = () => {
@@ -72,6 +73,16 @@ const useSongFolderStyles = () => {
 
     deleteButton: {
       right: 30,
+    },
+
+    editTitleText: {
+      borderBottomColor: theme.highlight,
+      backgroundColor: theme.secondaryBackground,
+      borderBottomWidth: 1,
+      margin: -1,
+      width: '50%',
+      fontSize: 24,
+      color: theme.primaryText,
     },
   });
 
