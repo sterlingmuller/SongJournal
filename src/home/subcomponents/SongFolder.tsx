@@ -20,6 +20,7 @@ import { fetchPageRequest } from '@src/sagas/actionCreators';
 import { useSQLiteContext } from 'expo-sqlite';
 import useDoubleTap from '@src/hooks/useDoubleTap';
 import { TextInput } from 'react-native-gesture-handler';
+import { formatDateFromISOString } from '@src/utils/formateDateFromISOString';
 
 interface Props {
   song: song;
@@ -80,7 +81,11 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
     setTimeout(() => inputRef.current?.focus(), 100);
   });
 
-  const date = song.takes[song.selectedTakeId].date;
+  const selectedTake = song.takes.find(
+    (take: take) => take.takeId === song.selectedTakeId,
+  );
+  const date = selectedTake.date;
+  const formattedDate = formatDateFromISOString(date);
 
   return (
     <TouchableOpacity
@@ -104,7 +109,7 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
             <StyledText style={styles.title}>{title}</StyledText>
           )}
         </TouchableOpacity>
-        <StyledText>{date}</StyledText>
+        <StyledText>{formattedDate}</StyledText>
         <View style={styles.iconRow}>
           <TouchableOpacity onPress={() => handleOnPressNavigation('Lyrics')}>
             <LyricsIcon />
