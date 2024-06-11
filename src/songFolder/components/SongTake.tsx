@@ -18,6 +18,7 @@ import {
   selectPlayingId,
 } from '@src/selectors/playbackSelector';
 import { selectCurrentSongSelectedTakeId } from '@src/selectors/songsSelector';
+import { formatDateFromISOString } from '@src/utils/formateDateFromISOString';
 
 interface Props {
   take: take;
@@ -45,6 +46,8 @@ const SongTake = (props: Props) => {
   const isStarred = take.takeId === selectedTakeId;
   const isCurrentTakePlaying = takeId === selectedPlayingId && isPlaying;
 
+  const formattedDate = formatDateFromISOString(take.date);
+
   return (
     <TouchableOpacity style={styles.container} onPress={onDoubleTap}>
       <View style={styles.contents}>
@@ -52,7 +55,7 @@ const SongTake = (props: Props) => {
           <Text style={styles.title}>{take.title}</Text>
           {isStarred && <StarIcon />}
         </View>
-        <Text>{take.date}</Text>
+        <Text>{formattedDate}</Text>
         <View style={styles.iconRow}>
           <TouchableOpacity
             onPress={() => {
