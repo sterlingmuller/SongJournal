@@ -7,7 +7,10 @@ import InfoModal from '@src/lyrics/components/InfoModal';
 import LyricsSheet from '@src/lyrics/components/LyricsSheet';
 import useGlobalStyles from '@src/styles/global';
 import { useAppSelector } from '@src/common/hooks';
-import { selectCurrentSongPage } from '@src/selectors/songsSelector';
+import {
+  selectCurrentSongId,
+  selectCurrentSongPage,
+} from '@src/selectors/songsSelector';
 import LoadingIndicator from '@src/common/components/LoadingIndicator';
 import useLyricSheetStyles from '@src/styles/lyricsSheet';
 import { pageOption, songDetail } from '@src/common/types';
@@ -20,6 +23,7 @@ const LyricsScreen = () => {
   const globalStyles = useGlobalStyles();
   const styles = useLyricSheetStyles();
   const page = useAppSelector(selectCurrentSongPage);
+  const songId = useAppSelector(selectCurrentSongId);
 
   const [selectedOption, setSelectedOption] = useState<pageOption>('');
 
@@ -60,6 +64,7 @@ const LyricsScreen = () => {
                     label={label}
                     value={page[key]}
                     onPageScreen
+                    handleInputChange={() => {}}
                   />
                 ),
             )}
@@ -78,6 +83,7 @@ const LyricsScreen = () => {
           isInfoModalOpen={isInfoModalOpen}
           setIsInfoModalOpen={setIsInfoModalOpen}
           page={page}
+          songId={songId}
         />
       </View>
     </View>
