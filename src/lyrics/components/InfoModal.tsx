@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import Modal from 'react-native-modal';
 
@@ -8,22 +8,62 @@ import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 import { page, songDetail } from '@src/common/types';
 import { SONG_DETAILS } from '@src/common/constants';
 import useInfoModalStyle from '@styles/infoModal';
+import { useAppDispatch } from '@src/common/hooks';
+import { updatePageInfoRequest } from '@src/sagas/actionCreators';
 
 interface Props {
   isInfoModalOpen: boolean;
   setIsInfoModalOpen: (value: boolean) => void;
   page: page;
+  songId: number;
 }
 
 const InfoModal = (props: Props) => {
   const styles = useInfoModalStyle();
-  const { isInfoModalOpen, setIsInfoModalOpen, page } = props;
+  const dispatch = useAppDispatch();
+  const {
+    isInfoModalOpen,
+    setIsInfoModalOpen,
+    page: originalPage,
+    songId,
+  } = props;
 
-  const [about, setAbout] = useState<string>(page.about);
-  const [isCompleted, setIsCompleted] = useState(!!page.completed);
+  const [newPage, setNewPage] = useState<page>(originalPage);
+  const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false);
 
   const onExitPress = () => setIsInfoModalOpen(false);
-  const disabled: boolean = !about;
+
+  console.log('newPage', newPage);
+  console.log('originalPage', originalPage);
+
+  useEffect(() => {
+    console.log(
+      'save test:',
+      JSON.stringify(newPage) !== JSON.stringify(originalPage),
+    );
+    setIsSaveButtonEnabled(
+      JSON.stringify(newPage) !== JSON.stringify(originalPage),
+    );
+  }, [newPage, originalPage]);
+
+  const handleInputChange = (key: keyof page, value: string | boolean) => {
+    setNewPage((prevPage: page) => ({ ...prevPage, [key]: value }));
+  };
+
+  const onSavePress = () => {
+    if (isSaveButtonEnabled && newPage) {
+      // giving me issues here
+      // also modal is shrinking with open keyboard
+      dispatch(
+        updatePageInfoRequest({
+          songId,
+          page: newPage,
+        }),
+      );
+    }
+
+    setIsInfoModalOpen(false);
+  };
 
   return (
     <Modal
@@ -37,25 +77,32 @@ const InfoModal = (props: Props) => {
           <TextInput
             style={styles.input}
             placeholder="Add details for the song..."
-            value={about}
-            onChangeText={(newAbout: string) => setAbout(newAbout)}
+            value={newPage.about}
+            onChangeText={(newAbout: string) =>
+              handleInputChange('about', newAbout)
+            }
             multiline={true}
             textAlignVertical="top"
           />
         </View>
         <View style={styles.details}>
           {SONG_DETAILS.map(({ label, key }: songDetail) => (
-            <SongDetail key={label} label={label} value={page[key]} />
+            <SongDetail
+              key={label}
+              label={label}
+              value={newPage[key]}
+              handleInputChange={handleInputChange}
+            />
           ))}
         </View>
         <CompletionStatus
-          isCompleted={isCompleted}
-          setIsCompleted={setIsCompleted}
+          isCompleted={newPage.completed}
+          handleInputChange={handleInputChange}
         />
         <SaveAndCancelButtons
-          onPress={() => null}
+          onPress={onSavePress}
           onExitPress={() => setIsInfoModalOpen(false)}
-          disabled={disabled}
+          disabled={!isSaveButtonEnabled}
         />
       </View>
     </Modal>
