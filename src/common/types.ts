@@ -148,7 +148,7 @@ export type fetchPageSuccessPayload = {
 
 export type updatePageInfoPayload = {
   songId: number;
-  page: page;
+  page: Partial<page>;
 };
 
 export type Selector<S> = (state: RootState) => S;

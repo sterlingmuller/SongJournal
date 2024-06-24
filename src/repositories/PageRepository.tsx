@@ -20,9 +20,17 @@ export const fetchPageBySongId = async (payload: fetchPagePayload) => {
 };
 
 export const updatePageInfo = async (payload: updatePageInfoPayload) => {
-  const { songId, page } = payload;
+  const { songId, page: updates } = payload;
 
   try {
+    const clauses = Object.keys(updates)
+      .map((key: keyof page) => `${key} = ?`)
+      .join(', ');
+
+    const params = Object.values(updates);
+
+    console.log('clauses', clauses);
+    console.log('params', params);
     const updatedPage: page = {};
 
     return updatedPage;

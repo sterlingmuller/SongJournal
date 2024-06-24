@@ -93,7 +93,7 @@ export const fetchPageRequest = (payload: fetchPagePayload) => ({
 // Updating page
 
 export const updatePageInfoRequest = (payload: updatePageInfoPayload) => ({
-  type: at.UPDATE_SELECTED_TAKE_ID_REQUEST,
+  type: at.UPDATE_PAGE_INFO_REQUEST,
   payload,
 });
 
