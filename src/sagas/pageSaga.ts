@@ -34,6 +34,8 @@ function* updatePageInfoSaga({ payload }: UpdatePageInfoParams) {
   try {
     const updatedPage = yield call(updatePageInfo, payload);
 
+    console.log('updatedPage', updatedPage);
+
     yield put(
       updatePageInfoSuccess({ page: updatedPage, songId: payload.songId }),
     );

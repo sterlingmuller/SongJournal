@@ -53,7 +53,6 @@ const InfoModal = (props: Props) => {
   const onSavePress = () => {
     if (isSaveButtonEnabled && newPage) {
       // giving me issues here
-      // also modal is shrinking with open keyboard
       dispatch(
         updatePageInfoRequest({
           songId,
