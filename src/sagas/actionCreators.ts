@@ -106,3 +106,20 @@ export const updatePageInfoFailure = createAction(
   at.UPDATE_PAGE_INFO_FAILURE,
   (error: Error) => ({ payload: error }),
 );
+
+// Updating lyrics
+
+export const updateLyricsRequest = (payload: updatePageInfoPayload) => ({
+  type: at.UPDATE_LYRICS_REQUEST,
+  payload,
+});
+
+export const updateLyricsSuccess = createAction(
+  at.UPDATE_LYRICS_SUCCESS,
+  (payload: updatePageInfoPayload) => ({ payload }),
+);
+
+export const updateLyricsFailure = createAction(
+  at.UPDATE_LYRICS_FAILURE,
+  (error: Error) => ({ payload: error }),
+);
