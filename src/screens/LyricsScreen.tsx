@@ -75,7 +75,10 @@ const LyricsScreen = () => {
           />
         </View>
         {selectedOption === 'edit' ? (
-          <EditLyricsSheet />
+          <EditLyricsSheet
+            setSelectedOption={setSelectedOption}
+            songId={songId}
+          />
         ) : (
           <LyricsSheet page={page} />
         )}

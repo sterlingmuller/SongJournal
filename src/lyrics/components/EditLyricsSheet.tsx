@@ -9,13 +9,35 @@ import PageOptions from '../subcomponents/PageOptions';
 import useLyricSheetStyles from '@src/styles/lyricsSheet';
 import { useSelector } from 'react-redux';
 import { selectCurrentSongPage } from '@src/selectors/songsSelector';
+import { useAppDispatch } from '@src/common/hooks';
 
-const EditLyricsSheet = () => {
-  const page = useSelector(selectCurrentSongPage);
+interface Props {
+  setSelectedOption: (value: pageOption) => void;
+  songId: number;
+}
+
+const EditLyricsSheet = ({ setSelectedOption, songId }: Props) => {
+  const dispatch = useAppDispatch();
+  const { lyrics } = useSelector(selectCurrentSongPage);
   const styles = useLyricSheetStyles();
 
-  const [newLyrics, setNewLyrics] = useState<string>();
-  const disabled: boolean = !page.lyrics;
+  const [newLyrics, setNewLyrics] = useState<string>(lyrics);
+  const disabled: boolean = newLyrics === lyrics;
+  const onCancelPress = () => {
+    setNewLyrics(lyrics);
+    setSelectedOption('');
+  };
+
+  const onSavePress = () => {
+    dispatch(
+      updateLyricsRequest({
+        songId,
+        newLyrics,
+      }),
+    );
+
+    setSelectedOption('');
+  };
 
   return (
     <View>
@@ -27,8 +49,8 @@ const EditLyricsSheet = () => {
         textAlignVertical="top"
       />
       <SaveAndCancelButtons
-        onPress={() => null}
-        onExitPress={() => null}
+        onPress={onSavePress}
+        onExitPress={onCancelPress}
         disabled={disabled}
       />
     </View>
