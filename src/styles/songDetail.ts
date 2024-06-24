@@ -1,5 +1,4 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
-import { useColorTheme } from '@src/theme/ThemeContext';
 
 interface Styles {
   container: ViewStyle;
@@ -12,8 +11,6 @@ interface Styles {
 }
 
 const useSongDetailStyles = () => {
-  const { theme } = useColorTheme();
-
   const songDetailStyles: Styles = StyleSheet.create({
     container: {
       alignItems: 'center',
@@ -47,6 +44,7 @@ const useSongDetailStyles = () => {
       alignItems: 'center',
       justifyContent: 'center',
       gap: 10,
+      paddingBottom: 10,
     },
 
     checkbox: {

@@ -2,13 +2,10 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { useColorTheme } from '@src/theme/ThemeContext';
 
 interface Styles {
-  modalContainer: ViewStyle;
   container: ViewStyle;
   title: TextStyle;
   textbox: ViewStyle;
   details: ViewStyle;
-  buttons: ViewStyle;
-  button: ViewStyle;
   input: TextStyle;
 }
 
@@ -16,17 +13,11 @@ const useInfoModalStyle = () => {
   const { theme } = useColorTheme();
 
   const infoModalStyle: Styles = StyleSheet.create({
-    modalContainer: {
-      flex: 1,
-      backgroundColor: 'rgba(0, 0, 0, .5)',
-      justifyContent: 'center',
-    },
-
     container: {
       alignSelf: 'center',
-      backgroundColor: '#fff',
+      backgroundColor: theme.secondary,
       width: '80%',
-      height: '60%',
+      height: 525,
       borderRadius: 15,
       gap: 20,
     },
@@ -55,16 +46,6 @@ const useInfoModalStyle = () => {
     },
 
     details: { flexDirection: 'row', justifyContent: 'space-evenly' },
-
-    buttons: {
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
-    },
-
-    button: {
-      width: 100,
-      borderRadius: 10,
-    },
   });
 
   return infoModalStyle;
