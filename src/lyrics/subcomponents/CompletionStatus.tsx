@@ -3,11 +3,11 @@ import { View, Text, TouchableOpacity } from 'react-native';
 
 import CheckIcon from '@src/icons/CheckIcon';
 import useSongDetailStyles from '@src/styles/songDetail';
-import { page } from '@src/common/types';
+import { SongInfo } from '@src/common/types';
 
 interface Props {
   isCompleted: boolean;
-  handleInputChange: (key: keyof page, value: boolean) => void;
+  handleInputChange: (key: keyof SongInfo, value: boolean) => void;
 }
 
 const CompletionStatus = ({ isCompleted, handleInputChange }: Props) => {

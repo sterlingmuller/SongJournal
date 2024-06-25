@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { View, TextInput } from 'react-native';
+import { useSQLiteContext } from 'expo-sqlite';
+import { useSelector } from 'react-redux';
 
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
-import { pageOption, songDetail } from '@src/common/types';
-import { SONG_DETAILS } from '@src/common/constants';
-import SongDetail from '@src/lyrics/subcomponents/SongDetail';
-import PageOptions from '../subcomponents/PageOptions';
-import useLyricSheetStyles from '@src/styles/lyricsSheet';
-import { useSelector } from 'react-redux';
-import { selectCurrentSongPage } from '@src/selectors/songsSelector';
+import { pageOption } from '@src/common/types';
 import { useAppDispatch } from '@src/common/hooks';
-import { useSQLiteContext } from 'expo-sqlite';
+import useLyricSheetStyles from '@src/styles/lyricsSheet';
+import { selectCurrentSongPage } from '@src/selectors/songsSelector';
 import { updateLyricsRequest } from '@src/sagas/actionCreators';
 
 interface Props {
