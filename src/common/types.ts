@@ -62,13 +62,17 @@ export type take = {
   notes?: string;
 };
 
-export type page = {
-  lyrics?: string;
+export type SongInfo = {
   bpm?: string;
   keySignature?: string;
   time?: string;
   about?: string;
   completed: boolean;
+};
+
+export type page = {
+  lyrics: string;
+  info: SongInfo;
 };
 
 export type song = {
@@ -148,7 +152,19 @@ export type fetchPageSuccessPayload = {
 
 export type updatePageInfoPayload = {
   songId: number;
-  page: Partial<page>;
+  info: SongInfo;
+  db: SQLiteDatabase;
+};
+
+export type updateLyricsPayload = {
+  songId: number;
+  lyrics: string;
+  db: SQLiteDatabase;
+};
+
+export type updateLyricsSuccess = {
+  songId: number;
+  lyrics: string;
 };
 
 export type Selector<S> = (state: RootState) => S;

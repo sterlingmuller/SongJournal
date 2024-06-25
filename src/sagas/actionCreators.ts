@@ -1,15 +1,6 @@
 import { SQLiteDatabase } from 'expo-sqlite';
 
-import {
-  createSongPayload,
-  fetchPagePayload,
-  setSelectedTakeIdPayload,
-  song,
-  take,
-  takePayload,
-  updatePageInfoPayload,
-  updateSelectedTakeIdPayloadDb,
-} from '@src/common/types';
+import * as t from '@src/common/types';
 import * as at from '@src/sagas/actionTypes';
 import { createAction } from '@reduxjs/toolkit';
 
@@ -22,7 +13,7 @@ export const fetchSongsWithTakesRequest = (db: SQLiteDatabase) => ({
 
 export const fetchSongsWithTakesSuccess = createAction(
   at.FETCH_SONGS_WITH_TAKES_SUCCESS,
-  (songsAndTakes: song[]) => ({ payload: songsAndTakes }),
+  (songsAndTakes: t.songs) => ({ payload: songsAndTakes }),
 );
 
 export const fetchSongsWithTakesFailure = createAction(
@@ -32,14 +23,14 @@ export const fetchSongsWithTakesFailure = createAction(
 
 // Creating a new song
 
-export const createSongRequest = (payload: createSongPayload) => ({
+export const createSongRequest = (payload: t.createSongPayload) => ({
   type: at.CREATE_SONG_REQUEST,
   payload,
 });
 
 export const createSongSuccess = createAction(
   at.CREATE_SONG_SUCCESS,
-  (song: song) => ({ payload: song }),
+  (song: t.song) => ({ payload: song }),
 );
 
 export const createSongFailure = createAction(
@@ -49,14 +40,14 @@ export const createSongFailure = createAction(
 
 // Creating a new take
 
-export const createTakeRequest = (payload: takePayload) => ({
+export const createTakeRequest = (payload: t.takePayload) => ({
   type: at.CREATE_TAKE_REQUEST,
   payload,
 });
 
 export const createTakeSuccess = createAction(
   at.CREATE_TAKE_SUCCESS,
-  (take: take) => ({ payload: take }),
+  (take: t.take) => ({ payload: take }),
 );
 
 export const createTakeFailure = createAction(
@@ -67,7 +58,7 @@ export const createTakeFailure = createAction(
 // Updating selectedTakeId
 
 export const updateSelectedTakeIdRequest = (
-  payload: updateSelectedTakeIdPayloadDb,
+  payload: t.updateSelectedTakeIdPayloadDb,
 ) => ({
   type: at.UPDATE_SELECTED_TAKE_ID_REQUEST,
   payload,
@@ -75,7 +66,7 @@ export const updateSelectedTakeIdRequest = (
 
 export const updateSelectedTakeIdSuccess = createAction(
   at.UPDATE_SELECTED_TAKE_ID_SUCCESS,
-  (idInfo: setSelectedTakeIdPayload) => ({ payload: idInfo }),
+  (idInfo: t.setSelectedTakeIdPayload) => ({ payload: idInfo }),
 );
 
 export const updateSelectedTakeIdFailure = createAction(
@@ -85,21 +76,21 @@ export const updateSelectedTakeIdFailure = createAction(
 
 // Fetching page by songId
 
-export const fetchPageRequest = (payload: fetchPagePayload) => ({
+export const fetchPageRequest = (payload: t.fetchPagePayload) => ({
   type: at.FETCH_PAGE_REQUEST,
   payload,
 });
 
 // Updating page
 
-export const updatePageInfoRequest = (payload: updatePageInfoPayload) => ({
+export const updatePageInfoRequest = (payload: t.updatePageInfoPayload) => ({
   type: at.UPDATE_PAGE_INFO_REQUEST,
   payload,
 });
 
 export const updatePageInfoSuccess = createAction(
   at.UPDATE_PAGE_INFO_SUCCESS,
-  (payload: updatePageInfoPayload) => ({ payload }),
+  (payload: t.updatePageInfoPayload) => ({ payload }),
 );
 
 export const updatePageInfoFailure = createAction(
@@ -109,14 +100,14 @@ export const updatePageInfoFailure = createAction(
 
 // Updating lyrics
 
-export const updateLyricsRequest = (payload: updatePageInfoPayload) => ({
+export const updateLyricsRequest = (payload: t.updateLyricsPayload) => ({
   type: at.UPDATE_LYRICS_REQUEST,
   payload,
 });
 
 export const updateLyricsSuccess = createAction(
   at.UPDATE_LYRICS_SUCCESS,
-  (payload: updatePageInfoPayload) => ({ payload }),
+  (payload: t.updateLyricsSuccess) => ({ payload }),
 );
 
 export const updateLyricsFailure = createAction(

@@ -1,16 +1,22 @@
 import { call, put, takeEvery, all, fork } from 'redux-saga/effects';
 
-import { fetchPagePayload, updatePageInfoPayload } from '@src/common/types';
 import {
-  FETCH_PAGE_REQUEST,
-  UPDATE_PAGE_INFO_REQUEST,
-} from '@src/sagas/actionTypes';
+  fetchPagePayload,
+  updateLyricsPayload,
+  updatePageInfoPayload,
+} from '@src/common/types';
+import * as at from '@src/sagas/actionTypes';
 import {
   fetchPageBySongId,
+  updateLyrics,
   updatePageInfo,
 } from '@src/repositories/PageRepository';
 import { fetchPageFailure, fetchPageSuccess } from '@src/slice/songsSlice';
-import { updatePageInfoFailure, updatePageInfoSuccess } from './actionCreators';
+import {
+  updateLyricsSuccess,
+  updatePageInfoFailure,
+  updatePageInfoSuccess,
+} from './actionCreators';
 
 type FetchPageParams = { payload: fetchPagePayload; type: string };
 
@@ -25,7 +31,7 @@ function* fetchPage({ payload }: FetchPageParams) {
 }
 
 function* watchFetchPage() {
-  yield takeEvery(FETCH_PAGE_REQUEST, fetchPage);
+  yield takeEvery(at.FETCH_PAGE_REQUEST, fetchPage);
 }
 
 type UpdatePageInfoParams = { payload: updatePageInfoPayload; type: string };
@@ -45,9 +51,31 @@ function* updatePageInfoSaga({ payload }: UpdatePageInfoParams) {
 }
 
 function* watchUpdatePageInfo() {
-  yield takeEvery(UPDATE_PAGE_INFO_REQUEST, updatePageInfoSaga);
+  yield takeEvery(at.UPDATE_PAGE_INFO_REQUEST, updatePageInfoSaga);
+}
+
+type UpdateLyricsParams = { payload: updateLyricsPayload; type: string };
+
+function* updateLyricsSaga({ payload }: UpdateLyricsParams) {
+  const { songId, lyrics } = payload;
+
+  try {
+    yield call(updateLyrics, payload);
+
+    yield put(updateLyricsSuccess({ songId, lyrics }));
+  } catch (error) {
+    yield put(updatePageInfoFailure(error));
+  }
+}
+
+function* watchUpdateLyrics() {
+  yield takeEvery(at.UPDATE_LYRICS_REQUEST, updateLyricsSaga);
 }
 
 export default function* pageSaga() {
-  yield all([fork(watchFetchPage), fork(watchUpdatePageInfo)]);
+  yield all([
+    fork(watchFetchPage),
+    fork(watchUpdatePageInfo),
+    fork(watchUpdateLyrics),
+  ]);
 }
