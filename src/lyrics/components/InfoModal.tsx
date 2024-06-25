@@ -71,7 +71,7 @@ const InfoModal = (props: Props) => {
           <TextInput
             style={styles.input}
             placeholder="Add details for the song..."
-            value={newInfo.about}
+            value={newInfo.about || ''}
             onChangeText={(newAbout: string) =>
               handleInputChange('about', newAbout)
             }
@@ -84,7 +84,7 @@ const InfoModal = (props: Props) => {
             <SongDetail
               key={label}
               label={label}
-              value={newInfo[key]}
+              value={newInfo[key] || ''}
               handleInputChange={handleInputChange}
             />
           ))}

@@ -84,8 +84,14 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
   const selectedTake = song.takes.find(
     (take: take) => take.takeId === song.selectedTakeId,
   );
-  const date = selectedTake.date;
-  const formattedDate = formatDateFromISOString(date);
+  const date = selectedTake?.date;
+  const formattedDate = date ? (
+    <StyledText>{formatDateFromISOString(date)}</StyledText>
+  ) : (
+    <StyledText style={styles.warningText}>
+      No takes have been recored
+    </StyledText>
+  );
 
   return (
     <TouchableOpacity
@@ -109,7 +115,7 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
             <StyledText style={styles.title}>{title}</StyledText>
           )}
         </TouchableOpacity>
-        <StyledText>{formattedDate}</StyledText>
+        {formattedDate}
         <View style={styles.iconRow}>
           <TouchableOpacity onPress={() => handleOnPressNavigation('Lyrics')}>
             <LyricsIcon />
@@ -118,9 +124,11 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
           <PlaybackBar />
         </View>
       </View>
-      <TouchableOpacity style={styles.playIcon} onPress={onTogglePlayback}>
-        {isCurrentSongPlaying ? <PauseIcon /> : <PlayIcon />}
-      </TouchableOpacity>
+      {selectedTake && (
+        <TouchableOpacity style={styles.playIcon} onPress={onTogglePlayback}>
+          {isCurrentSongPlaying ? <PauseIcon /> : <PlayIcon />}
+        </TouchableOpacity>
+      )}
     </TouchableOpacity>
   );
 };
