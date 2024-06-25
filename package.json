@@ -11,6 +11,7 @@
     "test --coverage": "test --coverage"
   },
   "dependencies": {
+    "@10play/tentap-editor": "^0.5.8",
     "@expo/vector-icons": "^14.0.0",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
@@ -30,9 +31,11 @@
     "react-native-debugger": "^1.1.0",
     "react-native-gesture-handler": "~2.14.0",
     "react-native-modal": "^13.0.1",
+    "react-native-render-html": "^6.3.4",
     "react-native-screens": "~3.29.0",
     "react-native-svg": "14.1.0",
     "react-native-swipe-list-view": "^3.2.9",
+    "react-native-webview": "13.8.6",
     "react-redux": "^9.1.2",
     "redux": "^5.0.1",
     "redux-devtools-expo-dev-plugin": "^0.1.0",

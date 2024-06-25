@@ -80,7 +80,7 @@ const LyricsScreen = () => {
             songId={songId}
           />
         ) : (
-          <LyricsSheet page={page} />
+          <LyricsSheet lyrics={page.lyrics} />
         )}
         <InfoModal
           isInfoModalOpen={isInfoModalOpen}
