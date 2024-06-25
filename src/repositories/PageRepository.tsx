@@ -1,6 +1,7 @@
 import {
   fetchPagePayload,
   page,
+  updateLyricsPayload,
   updatePageInfoPayload,
 } from '@src/common/types';
 
@@ -36,5 +37,19 @@ export const updatePageInfo = async (payload: updatePageInfoPayload) => {
     return updatedPage;
   } catch (err) {
     console.error('Error updating page,', err);
+  }
+};
+
+export const updateLyrics = async (payload: updateLyricsPayload) => {
+  const { songId, lyrics, db } = payload;
+
+  try {
+    await db.runAsync(
+      'UPDATE Page SET lyrics = ? WHERE songId = ?',
+      lyrics,
+      songId,
+    );
+  } catch (err) {
+    console.error('Error updating lyrics,', err);
   }
 };

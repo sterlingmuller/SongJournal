@@ -10,6 +10,8 @@ import useLyricSheetStyles from '@src/styles/lyricsSheet';
 import { useSelector } from 'react-redux';
 import { selectCurrentSongPage } from '@src/selectors/songsSelector';
 import { useAppDispatch } from '@src/common/hooks';
+import { useSQLiteContext } from 'expo-sqlite';
+import { updateLyricsRequest } from '@src/sagas/actionCreators';
 
 interface Props {
   setSelectedOption: (value: pageOption) => void;
@@ -18,6 +20,7 @@ interface Props {
 
 const EditLyricsSheet = ({ setSelectedOption, songId }: Props) => {
   const dispatch = useAppDispatch();
+  const db = useSQLiteContext();
   const { lyrics } = useSelector(selectCurrentSongPage);
   const styles = useLyricSheetStyles();
 
@@ -32,7 +35,8 @@ const EditLyricsSheet = ({ setSelectedOption, songId }: Props) => {
     dispatch(
       updateLyricsRequest({
         songId,
-        newLyrics,
+        lyrics: newLyrics,
+        db,
       }),
     );
 
