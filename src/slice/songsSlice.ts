@@ -5,13 +5,12 @@ import {
 } from '@reduxjs/toolkit';
 
 import {
+  UpdatePageInfoSuccess,
   fetchPageSuccessPayload,
   setSelectedTakeIdPayload,
   song,
   take,
-  updateLyricsPayload,
   updateLyricsSuccess,
-  updatePageInfoPayload,
 } from '@src/common/types';
 import * as ac from '@src/sagas/actionCreators';
 import * as at from '@src/sagas/actionTypes';
@@ -82,22 +81,6 @@ const songsSlice = createSlice({
       action: PayloadAction<Error>,
     ) => {
       state.error = action.payload;
-    },
-    updatePageInfoSuccess: (
-      state: SongsSliceState,
-      action: PayloadAction<updatePageInfoPayload>,
-    ) => {
-      const { info, songId } = action.payload;
-
-      const songIndex = state.songs.findIndex(
-        (song: song) => song.songId === songId,
-      );
-
-      if (songIndex !== -1) {
-        state.songs[songIndex].page.info = info;
-      } else {
-        console.warn(`Song with ID ${songId} not found`);
-      }
     },
   },
   extraReducers: (builder: ActionReducerMapBuilder<SongsSliceState>) => {
@@ -187,6 +170,33 @@ const songsSlice = createSlice({
       )
       .addCase(
         ac.updateLyricsFailure,
+        (state: SongsSliceState, action: PayloadAction<Error>) => {
+          state.isLoading = false;
+          state.error = action.payload;
+        },
+      )
+      .addCase(at.UPDATE_PAGE_INFO_REQUEST, (state: SongsSliceState) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(
+        ac.updatePageInfoSuccess,
+        (
+          state: SongsSliceState,
+          action: PayloadAction<UpdatePageInfoSuccess>,
+        ) => {
+          const { songId, info } = action.payload;
+
+          const songIndex = state.songs.findIndex(
+            (song: song) => song.songId === songId,
+          );
+
+          state.isLoading = false;
+          state.songs[songIndex].page.info = info;
+        },
+      )
+      .addCase(
+        ac.updatePageInfoFailure,
         (state: SongsSliceState, action: PayloadAction<Error>) => {
           state.isLoading = false;
           state.error = action.payload;

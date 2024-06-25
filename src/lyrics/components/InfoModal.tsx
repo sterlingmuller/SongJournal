@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import Modal from 'react-native-modal';
+import { useSQLiteContext } from 'expo-sqlite';
 
 import SongDetail from '@src/lyrics/subcomponents/SongDetail';
 import CompletionStatus from '@src/lyrics/subcomponents/CompletionStatus';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
-import { page, songDetail } from '@src/common/types';
+import { SongInfo, songDetail } from '@src/common/types';
 import { SONG_DETAILS } from '@src/common/constants';
 import useInfoModalStyle from '@styles/infoModal';
 import { useAppDispatch } from '@src/common/hooks';
@@ -14,49 +15,43 @@ import { updatePageInfoRequest } from '@src/sagas/actionCreators';
 interface Props {
   isInfoModalOpen: boolean;
   setIsInfoModalOpen: (value: boolean) => void;
-  page: page;
+  info: SongInfo;
   songId: number;
 }
 
 const InfoModal = (props: Props) => {
   const styles = useInfoModalStyle();
   const dispatch = useAppDispatch();
+  const db = useSQLiteContext();
   const {
     isInfoModalOpen,
     setIsInfoModalOpen,
-    page: originalPage,
+    info: originalInfo,
     songId,
   } = props;
 
-  const [newPage, setNewPage] = useState<page>(originalPage);
+  const [newInfo, setNewInfo] = useState<SongInfo>(originalInfo);
   const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false);
 
   const onExitPress = () => setIsInfoModalOpen(false);
 
-  console.log('newPage', newPage);
-  console.log('originalPage', originalPage);
-
   useEffect(() => {
-    console.log(
-      'save test:',
-      JSON.stringify(newPage) !== JSON.stringify(originalPage),
-    );
     setIsSaveButtonEnabled(
-      JSON.stringify(newPage) !== JSON.stringify(originalPage),
+      JSON.stringify(newInfo) !== JSON.stringify(originalInfo),
     );
-  }, [newPage, originalPage]);
+  }, [newInfo, originalInfo]);
 
-  const handleInputChange = (key: keyof page, value: string | boolean) => {
-    setNewPage((prevPage: page) => ({ ...prevPage, [key]: value }));
+  const handleInputChange = (key: keyof SongInfo, value: string | boolean) => {
+    setNewInfo((prevInfo: SongInfo) => ({ ...prevInfo, [key]: value }));
   };
 
   const onSavePress = () => {
-    if (isSaveButtonEnabled && newPage) {
-      // giving me issues here
+    if (isSaveButtonEnabled && newInfo) {
       dispatch(
         updatePageInfoRequest({
           songId,
-          page: newPage,
+          info: newInfo,
+          db,
         }),
       );
     }
@@ -76,7 +71,7 @@ const InfoModal = (props: Props) => {
           <TextInput
             style={styles.input}
             placeholder="Add details for the song..."
-            value={newPage.about}
+            value={newInfo.about}
             onChangeText={(newAbout: string) =>
               handleInputChange('about', newAbout)
             }
@@ -89,13 +84,13 @@ const InfoModal = (props: Props) => {
             <SongDetail
               key={label}
               label={label}
-              value={newPage[key]}
+              value={newInfo[key]}
               handleInputChange={handleInputChange}
             />
           ))}
         </View>
         <CompletionStatus
-          isCompleted={newPage.completed}
+          isCompleted={newInfo.completed}
           handleInputChange={handleInputChange}
         />
         <SaveAndCancelButtons

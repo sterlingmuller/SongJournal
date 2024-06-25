@@ -2,13 +2,13 @@ import React from 'react';
 import { TextInput, View, Text } from 'react-native';
 
 import useSongDetailStyles from '@src/styles/songDetail';
-import { page } from '@src/common/types';
+import { SongInfo } from '@src/common/types';
 
 interface Props {
   label: string;
   value: string;
   onPageScreen?: boolean;
-  handleInputChange: (key: keyof page, value: string) => void;
+  handleInputChange: (key: keyof SongInfo, value: string) => void;
 }
 
 const SongDetail = (props: Props) => {
@@ -21,7 +21,7 @@ const SongDetail = (props: Props) => {
         style={onPageScreen ? styles.pageTextbox : styles.textbox}
         value={value}
         onChangeText={(text: string) =>
-          handleInputChange(label as keyof page, text)
+          handleInputChange(label as keyof SongInfo, text)
         }
         textAlign="center"
       />
