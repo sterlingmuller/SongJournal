@@ -9,6 +9,8 @@ import {
   setSelectedTakeIdPayload,
   song,
   take,
+  updateLyricsPayload,
+  updateLyricsSuccess,
   updatePageInfoPayload,
 } from '@src/common/types';
 import * as ac from '@src/sagas/actionCreators';
@@ -85,14 +87,14 @@ const songsSlice = createSlice({
       state: SongsSliceState,
       action: PayloadAction<updatePageInfoPayload>,
     ) => {
-      const { page, songId } = action.payload;
+      const { info, songId } = action.payload;
 
       const songIndex = state.songs.findIndex(
         (song: song) => song.songId === songId,
       );
 
       if (songIndex !== -1) {
-        state.songs[songIndex].page = page;
+        state.songs[songIndex].page.info = info;
       } else {
         console.warn(`Song with ID ${songId} not found`);
       }
@@ -158,6 +160,33 @@ const songsSlice = createSlice({
       )
       .addCase(
         ac.updateSelectedTakeIdFailure,
+        (state: SongsSliceState, action: PayloadAction<Error>) => {
+          state.isLoading = false;
+          state.error = action.payload;
+        },
+      )
+      .addCase(at.UPDATE_LYRICS_REQUEST, (state: SongsSliceState) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(
+        ac.updateLyricsSuccess,
+        (
+          state: SongsSliceState,
+          action: PayloadAction<updateLyricsSuccess>,
+        ) => {
+          const { songId, lyrics } = action.payload;
+
+          const songIndex = state.songs.findIndex(
+            (song: song) => song.songId === songId,
+          );
+
+          state.isLoading = false;
+          state.songs[songIndex].page.lyrics = lyrics;
+        },
+      )
+      .addCase(
+        ac.updateLyricsFailure,
         (state: SongsSliceState, action: PayloadAction<Error>) => {
           state.isLoading = false;
           state.error = action.payload;

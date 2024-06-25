@@ -16,29 +16,15 @@ export const createTake = async (takePayload: takePayload) => {
       'UPDATE songs SET totalTakes = totalTakes + 1 WHERE songId = ?;',
       songId,
     );
-
     await db.runAsync(
       'UPDATE songs Set selectedTakeId = ? WHERE selectedTakeId = -1;',
       takeId,
     );
 
-    const totalTakes: number = db.getFirstSync(
-      'SELECT totalTakes FROM Songs WHERE songId = ?',
-      songId,
-    );
-
-    console.log('repository total takes:', totalTakes);
-
     const take: take = db.getFirstSync(
       'SELECT * FROM Takes WHERE takeId = ?',
       takeId,
     );
-
-    const test = db.getAllSync(
-      'SELECT selectedTakeID, songId, title, totalTakes FROM Songs',
-    );
-
-    console.log('repository test:', test);
 
     return take;
   } catch (err) {
