@@ -2,6 +2,7 @@ import { call, put, takeEvery, all, fork } from 'redux-saga/effects';
 
 import {
   fetchPagePayload,
+  page,
   updateLyricsPayload,
   updatePageInfoPayload,
 } from '@src/common/types';
@@ -24,7 +25,20 @@ function* fetchPage({ payload }: FetchPageParams) {
   try {
     const page = yield call(fetchPageBySongId, payload);
 
-    yield put(fetchPageSuccess({ page, songId: payload.songId }));
+    const formattedPage: page = {
+      lyrics: page.lyrics,
+      info: {
+        bpm: page.bpm,
+        keySignature: page.keySignature,
+        time: page.time,
+        about: page.about,
+        completed: !!page.completed,
+      },
+    };
+
+    yield put(
+      fetchPageSuccess({ page: formattedPage, songId: payload.songId }),
+    );
   } catch (error) {
     yield put(fetchPageFailure(error.message));
   }
@@ -37,14 +51,12 @@ function* watchFetchPage() {
 type UpdatePageInfoParams = { payload: updatePageInfoPayload; type: string };
 
 function* updatePageInfoSaga({ payload }: UpdatePageInfoParams) {
+  const { songId, info } = payload;
+
   try {
-    const updatedPage = yield call(updatePageInfo, payload);
+    yield call(updatePageInfo, payload);
 
-    console.log('updatedPage', updatedPage);
-
-    yield put(
-      updatePageInfoSuccess({ page: updatedPage, songId: payload.songId }),
-    );
+    yield put(updatePageInfoSuccess({ info, songId }));
   } catch (error) {
     yield put(updatePageInfoFailure(error));
   }

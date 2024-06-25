@@ -21,7 +21,7 @@ export const fetchPageBySongId = async (payload: fetchPagePayload) => {
 };
 
 export const updatePageInfo = async (payload: updatePageInfoPayload) => {
-  const { songId, page: updates } = payload;
+  const { songId, info: updates, db } = payload;
 
   try {
     const clauses = Object.keys(updates)
@@ -30,11 +30,11 @@ export const updatePageInfo = async (payload: updatePageInfoPayload) => {
 
     const params = Object.values(updates);
 
-    console.log('clauses', clauses);
-    console.log('params', params);
-    const updatedPage: page = {};
-
-    return updatedPage;
+    await db.runAsync(
+      `UPDATE Page SET ${clauses} WHERE songId = ?`,
+      ...params,
+      songId,
+    );
   } catch (err) {
     console.error('Error updating page,', err);
   }

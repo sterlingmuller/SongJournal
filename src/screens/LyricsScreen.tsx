@@ -85,7 +85,7 @@ const LyricsScreen = () => {
         <InfoModal
           isInfoModalOpen={isInfoModalOpen}
           setIsInfoModalOpen={setIsInfoModalOpen}
-          page={page}
+          info={page.info}
           songId={songId}
         />
       </View>

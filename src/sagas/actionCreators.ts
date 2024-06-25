@@ -90,7 +90,7 @@ export const updatePageInfoRequest = (payload: t.updatePageInfoPayload) => ({
 
 export const updatePageInfoSuccess = createAction(
   at.UPDATE_PAGE_INFO_SUCCESS,
-  (payload: t.updatePageInfoPayload) => ({ payload }),
+  (payload: t.UpdatePageInfoSuccess) => ({ payload }),
 );
 
 export const updatePageInfoFailure = createAction(

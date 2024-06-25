@@ -156,6 +156,11 @@ export type updatePageInfoPayload = {
   db: SQLiteDatabase;
 };
 
+export type UpdatePageInfoSuccess = {
+  songId: number;
+  info: SongInfo;
+};
+
 export type updateLyricsPayload = {
   songId: number;
   lyrics: string;
