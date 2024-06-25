@@ -12,6 +12,7 @@ interface Styles {
   rowPressed: ViewStyle;
   title: TextStyle;
   editTitleText: TextStyle;
+  warningText: TextStyle;
 }
 
 const useSongFolderStyles = () => {
@@ -83,6 +84,10 @@ const useSongFolderStyles = () => {
       width: '50%',
       fontSize: 24,
       color: theme.primaryText,
+    },
+
+    warningText: {
+      fontStyle: 'italic',
     },
   });
 

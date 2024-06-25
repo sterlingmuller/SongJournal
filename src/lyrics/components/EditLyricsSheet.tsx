@@ -1,7 +1,18 @@
-import React, { useState } from 'react';
-import { View, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+} from 'react-native';
 import { useSQLiteContext } from 'expo-sqlite';
 import { useSelector } from 'react-redux';
+import {
+  RichText,
+  Toolbar,
+  useEditorBridge,
+  useEditorContent,
+} from '@10play/tentap-editor';
 
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 import { pageOption } from '@src/common/types';
@@ -9,6 +20,8 @@ import { useAppDispatch } from '@src/common/hooks';
 import useLyricSheetStyles from '@src/styles/lyricsSheet';
 import { selectCurrentSongPage } from '@src/selectors/songsSelector';
 import { updateLyricsRequest } from '@src/sagas/actionCreators';
+import TextEditor from '@src/common/components/TextEditor';
+// import TextEditor from '@src/common/components/TextEditor';
 
 interface Props {
   setSelectedOption: (value: pageOption) => void;
@@ -22,6 +35,7 @@ const EditLyricsSheet = ({ setSelectedOption, songId }: Props) => {
   const styles = useLyricSheetStyles();
 
   const [newLyrics, setNewLyrics] = useState<string>(lyrics);
+
   const disabled: boolean = newLyrics === lyrics;
   const onCancelPress = () => {
     setNewLyrics(lyrics);
@@ -42,13 +56,9 @@ const EditLyricsSheet = ({ setSelectedOption, songId }: Props) => {
 
   return (
     <View>
-      <TextInput
-        style={styles.textContainer}
-        value={newLyrics}
-        onChangeText={(text: string) => setNewLyrics(text)}
-        placeholder="Add lyrics..."
-        textAlignVertical="top"
-      />
+      <View style={{ height: '50%' }}>
+        <TextEditor initialText={lyrics} setText={setNewLyrics} />
+      </View>
       <SaveAndCancelButtons
         onPress={onSavePress}
         onExitPress={onCancelPress}
@@ -59,3 +69,27 @@ const EditLyricsSheet = ({ setSelectedOption, songId }: Props) => {
 };
 
 export default EditLyricsSheet;
+
+{
+  /* <View>
+  <View style={{ height: '50%' }}>
+    <TextInput
+      style={styles.textContainer}
+      value={newLyrics}
+      onChangeText={(text: string) => setNewLyrics(text)}
+      placeholder="Add lyrics..."
+      textAlignVertical="top"
+    />
+
+    <TextEditor
+      initialText={newLyrics}
+      onChangeText={(text: string) => setNewLyrics(text)}
+    />
+  </View>
+  <SaveAndCancelButtons
+    onPress={onSavePress}
+    onExitPress={onCancelPress}
+    disabled={disabled}
+  />
+</View>; */
+}
