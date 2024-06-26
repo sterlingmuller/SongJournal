@@ -1,4 +1,5 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { PickerStyle } from 'react-native-picker-select';
 
 interface Styles {
   container: ViewStyle;
@@ -8,6 +9,7 @@ interface Styles {
   completedContainer: ViewStyle;
   checkbox: ViewStyle;
   text: TextStyle;
+  selectStyles: PickerStyle;
 }
 
 const useSongDetailStyles = () => {
@@ -60,6 +62,17 @@ const useSongDetailStyles = () => {
     },
 
     text: { fontSize: 16 },
+
+    selectStyles: {
+      fontSize: 16,
+      paddingHorizontal: 10,
+      paddingVertical: 8,
+      borderWidth: 0.5,
+      borderColor: 'purple',
+      borderRadius: 8,
+      color: 'black',
+      paddingRight: 30,
+    },
   });
 
   return songDetailStyles;
