@@ -1,28 +1,17 @@
 import { StyleSheet, ViewStyle } from 'react-native';
-import { useColorTheme } from '@src/theme/ThemeContext';
 
 interface Styles {
-  options: ViewStyle;
   infoContainer: ViewStyle;
-  textContainer: ViewStyle;
+  editTextContainer: ViewStyle;
+  lyricsContainer: ViewStyle;
   container: ViewStyle;
   details: ViewStyle;
-  iconButton: ViewStyle;
-  selected: ViewStyle;
 }
 
-const useLyricSheetStyles = () => {
-  const { theme } = useColorTheme();
-
-  const lyricSheetStyles: Styles = StyleSheet.create({
+const useLyricScreenStyles = () => {
+  const lyricScreenStyles: Styles = StyleSheet.create({
     container: {
       gap: 22,
-    },
-
-    options: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 10,
     },
 
     infoContainer: {
@@ -33,7 +22,7 @@ const useLyricSheetStyles = () => {
       gap: 20,
     },
 
-    textContainer: {
+    editTextContainer: {
       alignSelf: 'center',
       backgroundColor: '#fff',
       borderColor: 'black',
@@ -45,23 +34,17 @@ const useLyricSheetStyles = () => {
       paddingVertical: 15,
     },
 
+    lyricsContainer: {
+      paddingLeft: 35,
+    },
+
     details: {
       flexDirection: 'row',
       gap: 10,
     },
-
-    iconButton: {
-      borderRadius: 30,
-      padding: 8,
-      backgroundColor: 'transparent',
-    },
-
-    selected: {
-      backgroundColor: '#fcd470',
-    },
   });
 
-  return lyricSheetStyles;
+  return lyricScreenStyles;
 };
 
-export default useLyricSheetStyles;
+export default useLyricScreenStyles;

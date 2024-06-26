@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 
 import { LyricsOptionName, LyricsScreenOption } from '@src/common/types';
-import useLyricSheetStyles from '@src/styles/lyricsSheet';
+import useOptionBarStyles from '@src/styles/optionBar';
 import { LYRIC_SCREEN_OPTIONS } from '@src/common/constants';
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const OptionsBar = ({ selectedOption, setSelectedOption }: Props) => {
-  const styles = useLyricSheetStyles();
+  const styles = useOptionBarStyles();
 
   const handleOptionPress = (optionName: LyricsOptionName) => {
     setSelectedOption(optionName === selectedOption ? '' : optionName);

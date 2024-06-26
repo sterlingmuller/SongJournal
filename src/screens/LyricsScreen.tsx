@@ -12,7 +12,7 @@ import {
   selectCurrentSongPage,
 } from '@src/selectors/songsSelector';
 import LoadingIndicator from '@src/common/components/LoadingIndicator';
-import useLyricSheetStyles from '@src/styles/lyricsSheet';
+import useLyricScreenStyles from '@src/styles/lyricsScreen';
 import { LyricsOptionName, songDetail } from '@src/common/types';
 import OptionsBar from '@src/lyrics/subcomponents/OptionsBar';
 import SongDetail from '@src/lyrics/subcomponents/SongDetail';
@@ -21,7 +21,7 @@ import EditLyricsSheet from '@src/lyrics/components/EditLyricsSheet';
 
 const LyricsScreen = () => {
   const globalStyles = useGlobalStyles();
-  const styles = useLyricSheetStyles();
+  const styles = useLyricScreenStyles();
   const page = useAppSelector(selectCurrentSongPage);
   const songId = useAppSelector(selectCurrentSongId);
 
