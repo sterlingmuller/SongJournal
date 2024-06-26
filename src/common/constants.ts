@@ -1,24 +1,19 @@
-import {
-  sortByCategoryName,
-  colorThemeName,
-  songs,
-  songDetail,
-  take,
-  page,
-  song,
-  deleteObject,
-} from '@src/common/types';
 import { Dimensions } from 'react-native';
 import { documentDirectory } from 'expo-file-system';
 
-export const SORTBY_CATEGORY_NAMES: sortByCategoryName[] = [
+import EditIcon from '@src/icons/EditIcon';
+import ChordsIcon from '@src/icons/ChordsIcon';
+import MetronomeIcon from '@src/icons/MetronomeIcon';
+import ShareIcon from '@src/icons/ShareIcon';
+import * as t from '@src/common/types';
+
+export const SORTBY_CATEGORY_NAMES: t.sortByCategoryName[] = [
   'Date',
   'Name',
   'Length',
-  'Lyrics',
 ];
 
-export const COLOR_THEME_NAMES: colorThemeName[] = [
+export const COLOR_THEME_NAMES: t.colorThemeName[] = [
   'Light',
   'Dark',
   'Metal',
@@ -27,22 +22,25 @@ export const COLOR_THEME_NAMES: colorThemeName[] = [
   'Surf',
 ];
 
-export const SONG_DETAILS: songDetail[] = [
+export const SONG_DETAILS: t.songDetail[] = [
   { label: 'Key', key: 'keySignature' },
   { label: 'Time', key: 'time' },
   { label: 'Bpm', key: 'bpm' },
 ];
 
-export const EMPTY_PAGE: page = {
+export const LYRIC_SCREEN_OPTIONS: t.LyricsScreenOption[] = [
+  { name: 'Edit', icon: EditIcon },
+  { name: 'Chords', icon: ChordsIcon },
+  { name: 'Metronome', icon: MetronomeIcon },
+  { name: 'Share', icon: ShareIcon },
+];
+
+export const EMPTY_PAGE: t.page = {
   lyrics: '',
-  about: '',
-  bpm: '',
-  keySignature: '',
-  time: '',
-  completed: false,
+  info: { about: '', bpm: '', keySignature: '', time: '', completed: false },
 };
 
-export const EMPTY_SONG: song = {
+export const EMPTY_SONG: t.song = {
   songId: -1,
   title: '',
   selectedTakeId: 0,
@@ -57,7 +55,7 @@ export const DELETE_TAKE_TEXT: string =
 export const DELETE_SONG_TEXT: string =
   ', its journal entry, and all takes of this song will be permanently deleted. This action cannot be undone.';
 
-export const EMPTY_DELETE_OBJECT: deleteObject = {
+export const EMPTY_DELETE_OBJECT: t.deleteObject = {
   type: null,
   id: -1,
   title: '',
@@ -67,7 +65,7 @@ export const SCREEN_WIDTH: number = Dimensions.get('window').width;
 
 export const documentsDirectory = documentDirectory + 'SongJournal/';
 
-export const DUMMY_SONGS: songs = [
+export const DUMMY_SONGS: t.songs = [
   {
     key: 0,
     title: 'Dubble Bubble',
