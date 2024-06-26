@@ -43,7 +43,7 @@ const EditLyricsSheet = ({ setSelectedOption, songId }: Props) => {
   };
 
   return (
-    <View>
+    <>
       <View style={styles.editTextContainer}>
         <TextEditor initialText={lyrics} setText={setNewLyrics} />
       </View>
@@ -52,7 +52,7 @@ const EditLyricsSheet = ({ setSelectedOption, songId }: Props) => {
         onExitPress={onCancelPress}
         disabled={disabled}
       />
-    </View>
+    </>
   );
 };
 

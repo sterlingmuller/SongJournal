@@ -6,6 +6,7 @@ interface Styles {
   lyricsContainer: ViewStyle;
   container: ViewStyle;
   details: ViewStyle;
+  editSheet: ViewStyle;
 }
 
 const useLyricScreenStyles = () => {
@@ -28,7 +29,7 @@ const useLyricScreenStyles = () => {
       borderColor: 'black',
       borderWidth: 1,
       width: '80%',
-      height: '78%',
+      height: '75%',
       borderRadius: 15,
       paddingHorizontal: 20,
       paddingVertical: 15,
@@ -37,6 +38,8 @@ const useLyricScreenStyles = () => {
     lyricsContainer: {
       paddingLeft: 35,
     },
+
+    editSheet: { height: '100%' },
 
     details: {
       flexDirection: 'row',
