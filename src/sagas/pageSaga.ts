@@ -28,10 +28,10 @@ function* fetchPage({ payload }: FetchPageParams) {
     const formattedPage: page = {
       lyrics: page.lyrics,
       info: {
-        bpm: page.bpm,
-        keySignature: page.keySignature,
-        time: page.time,
-        about: page.about,
+        bpm: page.bpm ?? '',
+        keySignature: page.keySignature ?? '',
+        time: page.time ?? '',
+        about: page.about ?? '',
         completed: !!page.completed,
       },
     };

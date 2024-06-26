@@ -13,8 +13,8 @@ import {
 } from '@src/selectors/songsSelector';
 import LoadingIndicator from '@src/common/components/LoadingIndicator';
 import useLyricSheetStyles from '@src/styles/lyricsSheet';
-import { pageOption, songDetail } from '@src/common/types';
-import PageOptions from '@src/lyrics/subcomponents/PageOptions';
+import { LyricsOptionName, songDetail } from '@src/common/types';
+import OptionsBar from '@src/lyrics/subcomponents/OptionsBar';
 import SongDetail from '@src/lyrics/subcomponents/SongDetail';
 import { SONG_DETAILS } from '@src/common/constants';
 import EditLyricsSheet from '@src/lyrics/components/EditLyricsSheet';
@@ -25,10 +25,12 @@ const LyricsScreen = () => {
   const page = useAppSelector(selectCurrentSongPage);
   const songId = useAppSelector(selectCurrentSongId);
 
-  const [selectedOption, setSelectedOption] = useState<pageOption>('');
+  const [selectedOption, setSelectedOption] = useState<LyricsOptionName>('');
 
   const { setOptions } = useNavigation();
   const [isInfoModalOpen, setIsInfoModalOpen] = useState<boolean>(false);
+
+  console.log('page:', page);
 
   useLayoutEffect(() => {
     setOptions({
@@ -43,7 +45,7 @@ const LyricsScreen = () => {
 
   useEffect(() => {
     if (page && !page.lyrics) {
-      setSelectedOption('edit');
+      setSelectedOption('Edit');
     }
   }, [page]);
 
@@ -69,12 +71,12 @@ const LyricsScreen = () => {
                 ),
             )}
           </View>
-          <PageOptions
+          <OptionsBar
             selectedOption={selectedOption}
             setSelectedOption={setSelectedOption}
           />
         </View>
-        {selectedOption === 'edit' ? (
+        {selectedOption === 'Edit' ? (
           <EditLyricsSheet
             setSelectedOption={setSelectedOption}
             songId={songId}
@@ -82,12 +84,14 @@ const LyricsScreen = () => {
         ) : (
           <LyricsSheet lyrics={page.lyrics} />
         )}
-        <InfoModal
-          isInfoModalOpen={isInfoModalOpen}
-          setIsInfoModalOpen={setIsInfoModalOpen}
-          info={page.info}
-          songId={songId}
-        />
+        {!!page.info && (
+          <InfoModal
+            isInfoModalOpen={isInfoModalOpen}
+            setIsInfoModalOpen={setIsInfoModalOpen}
+            info={page.info}
+            songId={songId}
+          />
+        )}
       </View>
     </View>
   );

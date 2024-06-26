@@ -56,7 +56,7 @@ const EditLyricsSheet = ({ setSelectedOption, songId }: Props) => {
 
   return (
     <View>
-      <View style={{ height: '50%' }}>
+      <View style={styles.textContainer}>
         <TextEditor initialText={lyrics} setText={setNewLyrics} />
       </View>
       <SaveAndCancelButtons
