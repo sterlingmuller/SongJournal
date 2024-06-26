@@ -19,11 +19,12 @@ const SaveAndCancelButtons = (props: Props) => {
     disabled = false,
     primaryLabel = 'Save',
     secondaryLabel = 'Cancel',
+    buttonsStyle,
   } = props;
   const styles = useSaveAndCancelButtonsStyle();
 
   return (
-    <View style={styles.buttons}>
+    <View style={{ ...styles.buttons, ...buttonsStyle }}>
       <View style={styles.button}>
         <Button
           title={primaryLabel}
