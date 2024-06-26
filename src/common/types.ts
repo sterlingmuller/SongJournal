@@ -43,7 +43,12 @@ export type test = { params: lyricsScreenRouteParams };
 
 export type songDetail = { label: string; key: string };
 
-export type pageOption = 'edit' | 'chords' | 'metronome' | 'share' | '';
+export type LyricsScreenOption = {
+  name: LyricsOptionName;
+  icon: React.ComponentType;
+};
+
+export type LyricsOptionName = 'Edit' | 'Chords' | 'Metronome' | 'Share' | '';
 
 export type songInfo = {
   songId: number;
