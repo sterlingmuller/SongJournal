@@ -13,22 +13,24 @@ const Footer = () => {
   const styles = useHomeFooterStyles();
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity>
-        <PlaylistIcon />
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigate('MusicPlayer')}
-        testID="music-player-TO"
-      >
-        <MusicPlayerIcon />
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigate('Settings')}
-        testID="settings-TO"
-      >
-        <SettingIcon />
-      </TouchableOpacity>
+    <View>
+      <View style={styles.container}>
+        <TouchableOpacity>
+          <PlaylistIcon />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigate('MusicPlayer')}
+          testID="music-player-TO"
+        >
+          <MusicPlayerIcon />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigate('Settings')}
+          testID="settings-TO"
+        >
+          <SettingIcon />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

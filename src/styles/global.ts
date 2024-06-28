@@ -13,10 +13,7 @@ const useGlobalStyles = () => {
     container: {
       flex: 1,
       backgroundColor: theme.primaryBackground,
-      fontSize: 16,
-      fontFamily: 'Roboto',
-      height: '100%',
-      width: '100%',
+      minHeight: 700,
     },
 
     text: {

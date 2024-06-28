@@ -42,7 +42,9 @@ const InfoModal = (props: Props) => {
   }, [newInfo, originalInfo]);
 
   const handleInputChange = (key: keyof SongInfo, value: string | boolean) => {
-    setNewInfo((prevInfo: SongInfo) => ({ ...prevInfo, [key]: value }));
+    console.log('info:', newInfo);
+    setNewInfo({ ...newInfo, [key]: value });
+    console.log('new info:', newInfo);
   };
 
   const onSavePress = () => {
@@ -82,7 +84,8 @@ const InfoModal = (props: Props) => {
         <View style={styles.details}>
           {SONG_DETAILS.map(({ label, key }: songDetail) => (
             <SongDetail
-              key={label}
+              key={key}
+              detailKey={key}
               label={label}
               value={newInfo[key]}
               handleInputChange={handleInputChange}

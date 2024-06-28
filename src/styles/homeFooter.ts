@@ -10,15 +10,12 @@ const useHomeFooterStyles = () => {
 
   const homeFooterStyles: Styles = StyleSheet.create({
     container: {
-      position: 'absolute',
       flexDirection: 'row',
       width: '100%',
       height: 90,
       alignItems: 'center',
       justifyContent: 'space-around',
       backgroundColor: theme.primary,
-      zIndex: 5,
-      bottom: 0,
     },
   });
 
