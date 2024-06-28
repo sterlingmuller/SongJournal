@@ -1,4 +1,5 @@
 import { StyleSheet, ViewStyle } from 'react-native';
+import { useColorTheme } from '@src/theme/ThemeContext';
 
 interface Styles {
   infoContainer: ViewStyle;
@@ -10,9 +11,13 @@ interface Styles {
 }
 
 const useLyricScreenStyles = () => {
+  const { theme } = useColorTheme();
+
   const lyricScreenStyles: Styles = StyleSheet.create({
     container: {
       gap: 22,
+      flex: 1,
+      backgroundColor: theme.primaryBackground,
     },
 
     infoContainer: {

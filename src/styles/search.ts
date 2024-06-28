@@ -1,5 +1,4 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
-import { useColorTheme } from '@src/theme/ThemeContext';
 
 interface Styles {
   container: ViewStyle;
@@ -7,8 +6,6 @@ interface Styles {
 }
 
 const useSearchBarStyle = () => {
-  const { theme } = useColorTheme();
-
   const searchBarStyle: Styles = StyleSheet.create({
     container: {
       flexDirection: 'row',
