@@ -49,32 +49,34 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <SongFolders
-        setToDelete={setToDelete}
-        sortedCategory={sortedCategory}
-        isSortAscending={isSortAscending}
-        filterOptions={filterOptions}
-      />
-      <CreateNewSongButton setIsNewSongOpen={setIsNewSongOpen} />
-      <SortByModal
-        isSortOpen={isSortOpen}
-        setIsSortOpen={setIsSortOpen}
-        sortedCategory={sortedCategory}
-        setSortedCategory={setSortedCategory}
-        isSortAscending={isSortAscending}
-        setIsSortAscending={setIsSortAscending}
-        filterOptions={filterOptions}
-        setFilterOptions={setFilterOptions}
-      />
-      <NewSongModal
-        isNewSongOpen={isNewSongOpen}
-        setIsNewSongOpen={setIsNewSongOpen}
-      />
-      <DeleteModal
-        deleteText={DELETE_SONG_TEXT}
-        toDelete={toDelete}
-        setToDelete={setToDelete}
-      />
+      <View style={{ flex: 1 }}>
+        <SongFolders
+          setToDelete={setToDelete}
+          sortedCategory={sortedCategory}
+          isSortAscending={isSortAscending}
+          filterOptions={filterOptions}
+        />
+        <CreateNewSongButton setIsNewSongOpen={setIsNewSongOpen} />
+        <SortByModal
+          isSortOpen={isSortOpen}
+          setIsSortOpen={setIsSortOpen}
+          sortedCategory={sortedCategory}
+          setSortedCategory={setSortedCategory}
+          isSortAscending={isSortAscending}
+          setIsSortAscending={setIsSortAscending}
+          filterOptions={filterOptions}
+          setFilterOptions={setFilterOptions}
+        />
+        <NewSongModal
+          isNewSongOpen={isNewSongOpen}
+          setIsNewSongOpen={setIsNewSongOpen}
+        />
+        <DeleteModal
+          deleteText={DELETE_SONG_TEXT}
+          toDelete={toDelete}
+          setToDelete={setToDelete}
+        />
+      </View>
       <Footer />
     </View>
   );
