@@ -5,6 +5,9 @@ import EditIcon from '@src/icons/EditIcon';
 import ChordsIcon from '@src/icons/ChordsIcon';
 import MetronomeIcon from '@src/icons/MetronomeIcon';
 import ShareIcon from '@src/icons/ShareIcon';
+import PlaylistIcon from '@src/icons/PlaylistIcon';
+import MusicPlayerIcon from '@src/icons/MusicPlayerIcon';
+import SettingIcon from '@src/icons/SettingIcon';
 import * as t from '@src/common/types';
 
 export const SORTBY_CATEGORY_NAMES: t.sortByCategoryName[] = [
@@ -33,6 +36,12 @@ export const LYRIC_SCREEN_OPTIONS: t.LyricsScreenOption[] = [
   { name: 'Chords', icon: ChordsIcon },
   { name: 'Metronome', icon: MetronomeIcon },
   { name: 'Share', icon: ShareIcon },
+];
+
+export const TABS: t.tab[] = [
+  { name: 'Playlist', icon: PlaylistIcon },
+  { name: 'MusicPlayer', icon: MusicPlayerIcon },
+  { name: 'Settings', icon: SettingIcon },
 ];
 
 export const EMPTY_PAGE: t.page = {

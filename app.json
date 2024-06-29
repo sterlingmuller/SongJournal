@@ -16,6 +16,7 @@
       "supportsTablet": true
     },
     "android": {
+      "softwareKeyboardLayoutMode": "pan",
       "package": "com.sterling.silverado.songjournal",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",

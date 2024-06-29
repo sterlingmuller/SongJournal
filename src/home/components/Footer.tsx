@@ -2,35 +2,29 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-import PlaylistIcon from '@src/icons/PlaylistIcon';
-import MusicPlayerIcon from '@src/icons/MusicPlayerIcon';
-import SettingIcon from '@src/icons/SettingIcon';
-import { RootStackParamList } from '@src/common/types';
+import { RootStackParamList, tab, tabNames } from '@src/common/types';
 import useHomeFooterStyles from '@styles/homeFooter';
+import { TABS } from '@src/common/constants';
 
 const Footer = () => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   const styles = useHomeFooterStyles();
 
+  const handleTabPress = (screenName: tabNames) => {
+    // ts error because no playlist screen atm
+    navigate(screenName);
+  };
+
   return (
-    <View>
-      <View style={styles.container}>
-        <TouchableOpacity>
-          <PlaylistIcon />
-        </TouchableOpacity>
+    <View style={styles.container}>
+      {TABS.map((tab: tab) => (
         <TouchableOpacity
-          onPress={() => navigate('MusicPlayer')}
-          testID="music-player-TO"
+          key={tab.name}
+          onPress={() => handleTabPress(tab.name)}
         >
-          <MusicPlayerIcon />
+          <tab.icon />
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigate('Settings')}
-          testID="settings-TO"
-        >
-          <SettingIcon />
-        </TouchableOpacity>
-      </View>
+      ))}
     </View>
   );
 };
