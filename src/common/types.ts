@@ -1,6 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootState } from '@src/store';
 import { SQLiteDatabase } from 'expo-sqlite';
+import { TABS } from './enums';
 
 export type appState = 'active' | 'background';
 
@@ -38,6 +39,9 @@ export type lyricNavigation = NativeStackScreenProps<
 export type lyricsScreenRouteParams = {
   song: song;
 };
+
+export type tabNames = 'Playlist' | 'MusicPlayer' | 'Settings';
+export type tab = { name: tabNames; icon: React.ComponentType };
 
 export type test = { params: lyricsScreenRouteParams };
 

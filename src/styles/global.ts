@@ -13,7 +13,6 @@ const useGlobalStyles = () => {
     container: {
       flex: 1,
       backgroundColor: theme.primaryBackground,
-      minHeight: 700,
     },
 
     text: {
