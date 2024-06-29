@@ -1,7 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootState } from '@src/store';
 import { SQLiteDatabase } from 'expo-sqlite';
-import { TABS } from './enums';
 
 export type appState = 'active' | 'background';
 
@@ -92,6 +91,10 @@ export type song = {
   takes: take[];
   page: page;
 };
+
+export interface SongItem extends song {
+  key: string;
+}
 
 export type currentSong = {
   songId: number;

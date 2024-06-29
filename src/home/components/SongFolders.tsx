@@ -1,11 +1,12 @@
-import React from 'react';
-import { SwipeListView } from 'react-native-swipe-list-view';
+import React, { useEffect, useRef } from 'react';
+import { RowMap, SwipeListView } from 'react-native-swipe-list-view';
 
 import SongFolder from '@src/home/subcomponents/SongFolder';
 import DeleteRow from '@src/home/subcomponents/DeleteRow';
 import { ListRenderItemInfo } from 'react-native';
 import {
   FilterOptions,
+  SongItem,
   deleteObject,
   song,
   sortByCategoryName,
@@ -34,6 +35,18 @@ const SongFolders = (props: Props) => {
     filterOptions,
   );
 
+  const openRowRef = useRef(null);
+
+  useEffect(() => {
+    if (openRowRef.current) {
+      openRowRef.current.closeRow();
+    }
+  }, [songs]);
+
+  const onRowDidOpen = (rowKey: string, rowMap: RowMap<song>) => {
+    openRowRef.current = rowMap[rowKey];
+  };
+
   return (
     <SwipeListView
       contentContainerStyle={{ paddingBottom: 200 }}
@@ -42,10 +55,12 @@ const SongFolders = (props: Props) => {
       previewRowKey={'0'}
       previewOpenValue={-40}
       previewOpenDelay={3000}
+      keyExtractor={(item: song) => item.songId.toString()}
+      onRowDidOpen={onRowDidOpen}
       renderItem={(data: ListRenderItemInfo<song>) => {
         return <SongFolder song={data.item} togglePlayback={togglePlayback} />;
       }}
-      renderHiddenItem={(data: ListRenderItemInfo<song>) => (
+      renderHiddenItem={(data: ListRenderItemInfo<SongItem>) => (
         <DeleteRow
           title={data.item.title}
           id={data.item.songId}
