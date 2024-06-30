@@ -5,6 +5,7 @@ import {
 } from '@reduxjs/toolkit';
 
 import {
+  RemoveTakePayload,
   UpdatePageInfoSuccess,
   fetchPageSuccessPayload,
   setSelectedTakeIdPayload,
@@ -42,6 +43,24 @@ const songsSlice = createSlice({
     },
     addSong: (state: SongsSliceState, action: PayloadAction<song>) => {
       state.songs.push(action.payload);
+    },
+    removeTake: (
+      state: SongsSliceState,
+      action: PayloadAction<RemoveTakePayload>,
+    ) => {
+      const songIndex = state.songs.findIndex(
+        (song: song) => song.songId === action.payload.songId,
+      );
+
+      if (songIndex > -1) {
+        const takeIndex = state.songs[songIndex].takes.findIndex(
+          (take: take) => take.takeId === action.payload.takeId,
+        );
+
+        if (takeIndex > -1) {
+          state.songs[songIndex].takes.splice(takeIndex, 1);
+        }
+      }
     },
     addTake: (state: SongsSliceState, action: PayloadAction<take>) => {
       const newTake = action.payload;
@@ -209,6 +228,7 @@ export default songsSlice.reducer;
 export const {
   removeSong,
   addSong,
+  removeTake,
   addTake,
   fetchPageSuccess,
   fetchPageFailure,

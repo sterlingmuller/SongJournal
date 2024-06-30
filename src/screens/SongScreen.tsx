@@ -6,13 +6,13 @@ import SongTake from '@src/songFolder/components/SongTake';
 import RecordButton from '@src/common/components/RecordButton';
 import DeleteModal from '@src/common/components/DeleteModal';
 import NotesModal from '@src/songFolder/components/NotesModal';
-import { DELETE_TAKE_TEXT } from '@src/common/constants';
+import { DELETE_TAKE_TEXT, EMPTY_DELETE_OBJECT } from '@src/common/constants';
 import { ScrollView } from 'react-native-gesture-handler';
 import useSongScreenStyles from '@src/styles/songScreen';
 import useGlobalStyles from '@src/styles/global';
 import PermissionsNeededModal from '@src/songFolder/components/PermissionsNeededModal';
 import useMicrophonePermissions from '@src/hooks/useMicrophonePermissions';
-import { RootStackParamList, take } from '@src/common/types';
+import { RootStackParamList, deleteObject, take } from '@src/common/types';
 import { useAppSelector } from '@src/common/hooks';
 import {
   selectCurrentSongTakes,
@@ -29,7 +29,7 @@ const SongScreen = () => {
   const takes = useAppSelector(selectCurrentSongTakes);
   const totalTakes = useAppSelector(selectCurrentSongTotalTakes);
 
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [toDelete, setToDelete] = useState<deleteObject>(EMPTY_DELETE_OBJECT);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState<boolean>(false);
   const [isPermissionsNeededModalOpen, setIsPermissionsNeededModalOpen] =
     useState<boolean>(false);
@@ -66,7 +66,7 @@ const SongScreen = () => {
       <SongTake
         key={take.title}
         take={take}
-        setIsDeleteModalOpen={setIsDeleteModalOpen}
+        setToDelete={setToDelete}
         setIsNotesModalOpen={setIsNotesModalOpen}
         onTogglePlayback={onTogglePlayback}
       />
@@ -82,13 +82,11 @@ const SongScreen = () => {
         isRecording={false}
         style={styles.recordingButton}
       />
-      {/* <DeleteModal
-        isDeleteModalOpen={isDeleteModalOpen}
-        setIsDeleteModalOpen={setIsDeleteModalOpen}
+      <DeleteModal
         deleteText={DELETE_TAKE_TEXT}
-        setCurrentTake={setCurrentTake}
-        currentTake={currentTake}
-      /> */}
+        toDelete={toDelete}
+        setToDelete={setToDelete}
+      />
       {/* {currentTake && (
         <NotesModal
           isNotesModalOpen={isNotesModalOpen}

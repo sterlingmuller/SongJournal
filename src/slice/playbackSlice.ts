@@ -4,13 +4,13 @@ import { playbackPayload } from '@src/common/types';
 interface PlaybackState {
   isPlaying: boolean;
   uri: string | null;
-  id: number;
+  takeId: number;
 }
 
 const initialState: PlaybackState = {
   isPlaying: false,
   uri: null,
-  id: -1,
+  takeId: -1,
 };
 
 const playbackSlice = createSlice({
@@ -20,7 +20,7 @@ const playbackSlice = createSlice({
     startPlayback(state, action: PayloadAction<playbackPayload>) {
       state.isPlaying = true;
       state.uri = action.payload.uri;
-      state.id = action.payload.id;
+      state.takeId = action.payload.takeId;
     },
     resumePlayback(state) {
       state.isPlaying = true;
@@ -31,7 +31,7 @@ const playbackSlice = createSlice({
     stopPlayback(state) {
       state.isPlaying = false;
       state.uri = null;
-      state.id = -1;
+      state.takeId = -1;
     },
   },
 });

@@ -32,13 +32,9 @@ export const createTake = async (takePayload: takePayload) => {
   }
 };
 
-export const deleteTake = async (db: SQLiteDatabase, songId: number) => {
-  const statement = await db.prepareAsync(
-    'DELETE FROM Songs WHERE songId = $songId; DELETE FROM Takes WHERE songId = $songId; DELETE FROM Page WHERE songId = $songId;',
-  );
-
+export const deleteTake = (db: SQLiteDatabase, takeId: number) => {
   try {
-    await statement.executeAsync({ $songId: songId });
+    db.runSync('DELETE FROM Takes WHERE takeId = ?', takeId);
   } catch (err) {
     console.error('Error deleting song', err);
   }

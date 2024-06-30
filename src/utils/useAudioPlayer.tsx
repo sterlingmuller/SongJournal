@@ -35,7 +35,7 @@ const useAudioPlayer = () => {
     };
   }, [uri, soundRef.current]);
 
-  const togglePlayback = async (newUri: string, newId: number) => {
+  const togglePlayback = async (newUri: string, takeId: number) => {
     if (soundRef.current) {
       if (uri === newUri) {
         if (isPlaying) {
@@ -53,7 +53,7 @@ const useAudioPlayer = () => {
           { shouldPlay: true },
         );
 
-        dispatch(startPlayback({ uri: newUri, id: newId }));
+        dispatch(startPlayback({ uri: newUri, takeId }));
 
         soundRef.current = newSound;
 
@@ -68,7 +68,7 @@ const useAudioPlayer = () => {
 
       soundRef.current
         .playAsync()
-        .then(() => dispatch(startPlayback({ uri: newUri, id: newId })));
+        .then(() => dispatch(startPlayback({ uri: newUri, takeId })));
 
       // dispatch(startPlayback({ uri: newUri, id: newId }));
     }

@@ -14,7 +14,7 @@ import { setCurrentSongId } from '@src/slice/currentSongSlice';
 import PauseIcon from '@src/icons/PauseIcon';
 import {
   selectIsPlaying,
-  selectPlayingId,
+  selectPlayingTakeId,
 } from '@src/selectors/playbackSelector';
 import { fetchPageRequest } from '@src/sagas/actionCreators';
 import { useSQLiteContext } from 'expo-sqlite';
@@ -40,7 +40,7 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
 
   const inputRef = useRef<TextInput | null>(null);
 
-  const selectedPlayingSongId = useAppSelector(selectPlayingId);
+  const selectedPlayingSongId = useAppSelector(selectPlayingTakeId);
   const isPlaying = useAppSelector(selectIsPlaying);
 
   const isCurrentSongPlaying = songId === selectedPlayingSongId && isPlaying;
@@ -72,7 +72,7 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
     );
 
     if (selectedTake) {
-      togglePlayback(selectedTake.uri, song.songId);
+      togglePlayback(selectedTake.uri, selectedTake.takeId);
     }
   };
 
