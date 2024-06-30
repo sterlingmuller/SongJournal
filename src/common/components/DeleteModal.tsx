@@ -8,8 +8,9 @@ import StyledText from '@src/common/components/StyledText';
 import useDeleteModalStyles from '@src/styles/deleteModal';
 import { deleteSong } from '@src/repositories/SongsRepository';
 import { useSQLiteContext } from 'expo-sqlite';
-import { removeSong } from '@src/slice/songsSlice';
+import { removeSong, removeTake } from '@src/slice/songsSlice';
 import { useAppDispatch } from '@src/common/hooks';
+import { deleteTake } from '@src/repositories/TakeRepository';
 
 interface Props {
   setToDelete: (value: deleteObject | null) => void;
@@ -23,16 +24,25 @@ const DeleteModal = (props: Props) => {
   const dispatch = useAppDispatch();
 
   const { deleteText, setToDelete, toDelete } = props;
-  const { title, id } = toDelete;
+  const { title, songId, takeId, type } = toDelete;
+
+  console.log('to delete:', toDelete);
 
   const onExitPress = (): void => {
     setToDelete(EMPTY_DELETE_OBJECT);
   };
 
   const onDeletePress = async () => {
-    await deleteSong(db, id);
+    if (type === 'song') {
+      await deleteSong(db, songId);
 
-    dispatch(removeSong(id));
+      dispatch(removeSong(songId));
+    } else if (type === 'take') {
+      await deleteTake(db, takeId);
+
+      dispatch(removeTake({ songId, takeId }));
+    }
+
     setToDelete(EMPTY_DELETE_OBJECT);
   };
 

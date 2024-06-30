@@ -118,8 +118,9 @@ export type getTakesAndPageResult = {
 
 export type deleteObject = {
   type: 'song' | 'take';
-  id: number;
   title: string;
+  songId: number;
+  takeId?: number;
 };
 
 export type takePayload = {
@@ -148,7 +149,7 @@ export type setSelectedTakeIdPayload = {
 };
 
 export type playbackPayload = {
-  id: number;
+  takeId: number;
   uri: string;
 };
 
@@ -182,6 +183,11 @@ export type updateLyricsPayload = {
 export type updateLyricsSuccess = {
   songId: number;
   lyrics: string;
+};
+
+export type RemoveTakePayload = {
+  takeId: number;
+  songId: number;
 };
 
 export type Selector<S> = (state: RootState) => S;
