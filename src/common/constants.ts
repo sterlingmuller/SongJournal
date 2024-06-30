@@ -66,8 +66,18 @@ export const DELETE_SONG_TEXT: string =
 
 export const EMPTY_DELETE_OBJECT: t.deleteObject = {
   type: null,
-  id: -1,
+  songId: -1,
   title: '',
+};
+
+export const EMPTY_TAKE: t.take = {
+  takeId: -1,
+  songId: -1,
+  title: '',
+  date: '',
+  uri: '',
+  duration: -1,
+  notes: '',
 };
 
 export const SCREEN_WIDTH: number = Dimensions.get('window').width;
