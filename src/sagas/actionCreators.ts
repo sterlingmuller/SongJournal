@@ -114,3 +114,11 @@ export const updateLyricsFailure = createAction(
   at.UPDATE_LYRICS_FAILURE,
   (error: Error) => ({ payload: error }),
 );
+
+// Updating Take Notes
+export const updateTakeNotesRequest = (
+  payload: t.UpdateTakeNotesSagaPayload,
+) => ({
+  type: at.UPDATE_TAKE_NOTES_REQUEST,
+  payload,
+});

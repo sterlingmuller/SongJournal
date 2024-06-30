@@ -20,7 +20,6 @@ const SongDetail = (props: Props) => {
 
   const isKey = label === 'Key';
   const isTime = label === 'Time';
-  console.log('value:', value);
 
   const renderInput =
     isKey || isTime ? (

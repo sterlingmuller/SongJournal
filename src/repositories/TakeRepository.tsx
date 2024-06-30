@@ -1,4 +1,4 @@
-import { take, takePayload } from '@src/common/types';
+import { UpdateTakeNotesDbPayload, take, takePayload } from '@src/common/types';
 import { SQLiteDatabase } from 'expo-sqlite';
 
 export const createTake = async (takePayload: takePayload) => {
@@ -36,7 +36,7 @@ export const deleteTake = (db: SQLiteDatabase, takeId: number) => {
   try {
     db.runSync('DELETE FROM Takes WHERE takeId = ?', takeId);
   } catch (err) {
-    console.error('Error deleting song', err);
+    console.error('Error deleting take', err);
   }
 };
 
@@ -44,3 +44,13 @@ export const fetchTakes = (db: SQLiteDatabase): take[] =>
   db.getAllSync(
     'SELECT takeId, songId, title, date, notes, uri, duration FROM Takes',
   );
+
+export const updateTakeNotes = (payload: UpdateTakeNotesDbPayload) => {
+  const { db, takeId, notes } = payload;
+
+  try {
+    db.runSync('UPDATE Takes SET notes = ? WHERE takeId = ?', [notes, takeId]);
+  } catch (err) {
+    console.error('Error creating or updating notes', err);
+  }
+};

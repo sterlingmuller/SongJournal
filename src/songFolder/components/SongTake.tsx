@@ -23,12 +23,12 @@ import { formatDateFromISOString } from '@src/utils/formateDateFromISOString';
 interface Props {
   take: take;
   setToDelete: (value: deleteObject) => void;
-  setIsNotesModalOpen: (value: boolean) => void;
+  setCurrentTake: (value: take) => void;
   onTogglePlayback: (uri: string, id: number) => void;
 }
 
 const SongTake = (props: Props) => {
-  const { take, setToDelete, setIsNotesModalOpen, onTogglePlayback } = props;
+  const { take, setToDelete, setCurrentTake, onTogglePlayback } = props;
   const { takeId, songId, title } = take;
   const styles = useSongTakeStyles();
   const dispatch = useAppDispatch();
@@ -58,7 +58,7 @@ const SongTake = (props: Props) => {
         <View style={styles.iconRow}>
           <TouchableOpacity
             onPress={() => {
-              setIsNotesModalOpen(true);
+              setCurrentTake(take);
             }}
           >
             <NotesIcon />

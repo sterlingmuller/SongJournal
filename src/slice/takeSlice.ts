@@ -10,9 +10,9 @@ import {
 } from '@src/sagas/actionCreators';
 import * as at from '@src/sagas/actionTypes';
 
-type SliceState = { isLoading: boolean; error: Error | null };
+type TakeSliceState = { isLoading: boolean; error: Error | null };
 
-const initialState: SliceState = {
+const initialState: TakeSliceState = {
   isLoading: false,
   error: null,
 };
@@ -21,18 +21,18 @@ const takeSlice = createSlice({
   name: 'take',
   initialState,
   reducers: {},
-  extraReducers: (builder: ActionReducerMapBuilder<SliceState>) => {
+  extraReducers: (builder: ActionReducerMapBuilder<TakeSliceState>) => {
     builder
-      .addCase(at.CREATE_TAKE_REQUEST, (state: SliceState) => {
+      .addCase(at.CREATE_TAKE_REQUEST, (state: TakeSliceState) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(createTakeSuccess, (state: SliceState) => {
+      .addCase(createTakeSuccess, (state: TakeSliceState) => {
         state.isLoading = false;
       })
       .addCase(
         createTakeFailure,
-        (state: SliceState, action: PayloadAction<Error>) => {
+        (state: TakeSliceState, action: PayloadAction<Error>) => {
           state.isLoading = false;
           state.error = action.payload;
         },
