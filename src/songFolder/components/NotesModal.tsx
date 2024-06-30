@@ -4,34 +4,37 @@ import { View, Text, Modal, TouchableOpacity, TextInput } from 'react-native';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 import { take } from '@src/common/types';
 import useTakeNotesModalStyles from '@styles/takeNotesModal';
+import { EMPTY_TAKE } from '@src/common/constants';
+import { useAppDispatch } from '@src/common/hooks';
+import { useSQLiteContext } from 'expo-sqlite';
+import { updateTakeNotesRequest } from '@src/sagas/actionCreators';
 
 interface Props {
-  isNotesModalOpen: boolean;
-  setIsNotesModalOpen: (value: boolean) => void;
   setCurrentTake: (value: take) => void;
   currentTake: take;
 }
 
 const NotesModal = (props: Props) => {
-  const { isNotesModalOpen, setIsNotesModalOpen, setCurrentTake, currentTake } =
-    props;
+  const { setCurrentTake, currentTake } = props;
+  const dispatch = useAppDispatch();
+  const db = useSQLiteContext();
   const styles = useTakeNotesModalStyles();
 
-  const { notes, title } = currentTake;
-  const [newNote, setNewNote] = useState<string>('');
+  const { notes, title, takeId, songId } = currentTake;
+  const [newNote, setNewNote] = useState<string>(notes);
 
-  useEffect(() => {
-    setNewNote(notes);
-  }, [isNotesModalOpen, setNewNote]);
+  const onSavePress = () => {
+    dispatch(updateTakeNotesRequest({ db, takeId, songId, notes: newNote }));
+    setCurrentTake(EMPTY_TAKE);
+  };
 
   const onExitPress = () => {
-    setCurrentTake(null);
-    setIsNotesModalOpen(false);
+    setCurrentTake(EMPTY_TAKE);
   };
   const disabled: boolean = newNote === notes;
 
   return (
-    <Modal transparent visible={isNotesModalOpen}>
+    <Modal transparent visible={!!title}>
       <TouchableOpacity
         style={styles.modalContainer}
         activeOpacity={1}
@@ -50,7 +53,7 @@ const NotesModal = (props: Props) => {
             />
           </View>
           <SaveAndCancelButtons
-            onPress={() => null}
+            onPress={onSavePress}
             onExitPress={onExitPress}
             disabled={disabled}
           />

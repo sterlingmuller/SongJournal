@@ -28,8 +28,6 @@ const LyricsScreen = () => {
   const { setOptions } = useNavigation();
   const [isInfoModalOpen, setIsInfoModalOpen] = useState<boolean>(false);
 
-  console.log('page:', page);
-
   useLayoutEffect(() => {
     setOptions({
       header: () => (

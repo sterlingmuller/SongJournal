@@ -18,9 +18,7 @@ const useAudioPlayer = () => {
     const onPlaybackStatusUpdate = (
       playbackStatus: AVPlaybackStatusSuccess,
     ) => {
-      console.log('status:', playbackStatus);
       if (playbackStatus.didJustFinish) {
-        console.log('meep');
         soundRef.current.unloadAsync();
         dispatch(stopPlayback());
       }

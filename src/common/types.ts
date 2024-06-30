@@ -132,6 +132,25 @@ export type takePayload = {
   db: SQLiteDatabase;
 };
 
+export type UpdateTakeNotesSagaPayload = {
+  db: SQLiteDatabase;
+  takeId: number;
+  songId: number;
+  notes: string;
+};
+
+export type UpdateTakeNotesDbPayload = {
+  db: SQLiteDatabase;
+  takeId: number;
+  notes: string;
+};
+
+export type UpdateTakeNotesSuccessPayload = {
+  takeId: number;
+  songId: number;
+  notes: string;
+};
+
 export type createSongPayload = {
   title: string;
   db: SQLiteDatabase;

@@ -26,8 +26,6 @@ const DeleteModal = (props: Props) => {
   const { deleteText, setToDelete, toDelete } = props;
   const { title, songId, takeId, type } = toDelete;
 
-  console.log('to delete:', toDelete);
-
   const onExitPress = (): void => {
     setToDelete(EMPTY_DELETE_OBJECT);
   };

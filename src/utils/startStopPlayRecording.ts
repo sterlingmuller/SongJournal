@@ -45,10 +45,6 @@ export const playRecording = async (uri: string) => {
       }
     });
     await sound.playAsync();
-
-    // const cobra = await sound.getStatusAsync();
-
-    // console.log('sound test:', cobra);
   } catch (err) {
     console.error('Failed to play recording', err);
   }

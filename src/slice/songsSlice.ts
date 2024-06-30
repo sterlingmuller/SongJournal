@@ -7,6 +7,7 @@ import {
 import {
   RemoveTakePayload,
   UpdatePageInfoSuccess,
+  UpdateTakeNotesSuccessPayload,
   fetchPageSuccessPayload,
   setSelectedTakeIdPayload,
   song,
@@ -52,12 +53,12 @@ const songsSlice = createSlice({
         (song: song) => song.songId === action.payload.songId,
       );
 
-      if (songIndex > -1) {
+      if (songIndex !== -1) {
         const takeIndex = state.songs[songIndex].takes.findIndex(
           (take: take) => take.takeId === action.payload.takeId,
         );
 
-        if (takeIndex > -1) {
+        if (takeIndex !== -1) {
           state.songs[songIndex].takes.splice(takeIndex, 1);
         }
       }
@@ -100,6 +101,26 @@ const songsSlice = createSlice({
       action: PayloadAction<Error>,
     ) => {
       state.error = action.payload;
+    },
+    updateTakeNotesSuccess: (
+      state: SongsSliceState,
+      action: PayloadAction<UpdateTakeNotesSuccessPayload>,
+    ) => {
+      const { songId, takeId, notes } = action.payload;
+
+      const songIndex = state.songs.findIndex(
+        (song: song) => song.songId === songId,
+      );
+
+      if (songIndex !== -1) {
+        const takeIndex = state.songs[songIndex].takes.findIndex(
+          (take: take) => take.takeId === takeId,
+        );
+
+        if (takeIndex !== -1) {
+          state.songs[songIndex].takes[takeIndex].notes = notes;
+        }
+      }
     },
   },
   extraReducers: (builder: ActionReducerMapBuilder<SongsSliceState>) => {
@@ -232,4 +253,5 @@ export const {
   addTake,
   fetchPageSuccess,
   fetchPageFailure,
+  updateTakeNotesSuccess,
 } = songsSlice.actions;
