@@ -6,7 +6,7 @@ import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
 import NotesIcon from '@src/icons/NotesIcon';
 import TrashIcon from '@src/icons/TrashIcon';
-import { take } from '@src/common/types';
+import { deleteObject, take } from '@src/common/types';
 import StarIcon from '@src/icons/StarIcon';
 import useDoubleTap from '@src/hooks/useDoubleTap';
 import useSongTakeStyles from '@styles/songTake';
@@ -15,27 +15,26 @@ import { updateSelectedTakeIdRequest } from '@src/sagas/actionCreators';
 import PauseIcon from '@src/icons/PauseIcon';
 import {
   selectIsPlaying,
-  selectPlayingId,
+  selectPlayingTakeId,
 } from '@src/selectors/playbackSelector';
 import { selectCurrentSongSelectedTakeId } from '@src/selectors/songsSelector';
 import { formatDateFromISOString } from '@src/utils/formateDateFromISOString';
 
 interface Props {
   take: take;
-  setIsDeleteModalOpen: (value: boolean) => void;
+  setToDelete: (value: deleteObject) => void;
   setIsNotesModalOpen: (value: boolean) => void;
   onTogglePlayback: (uri: string, id: number) => void;
 }
 
 const SongTake = (props: Props) => {
-  const { take, setIsDeleteModalOpen, setIsNotesModalOpen, onTogglePlayback } =
-    props;
-  const { takeId, songId } = take;
+  const { take, setToDelete, setIsNotesModalOpen, onTogglePlayback } = props;
+  const { takeId, songId, title } = take;
   const styles = useSongTakeStyles();
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
 
-  const selectedPlayingId = useAppSelector(selectPlayingId);
+  const selectedPlayingId = useAppSelector(selectPlayingTakeId);
   const isPlaying = useAppSelector(selectIsPlaying);
   const selectedTakeId = useAppSelector(selectCurrentSongSelectedTakeId);
 
@@ -52,7 +51,7 @@ const SongTake = (props: Props) => {
     <TouchableOpacity style={styles.container} onPress={onDoubleTap}>
       <View style={styles.contents}>
         <View style={styles.titleRow}>
-          <Text style={styles.title}>{take.title}</Text>
+          <Text style={styles.title}>{title}</Text>
           {isStarred && <StarIcon />}
         </View>
         <Text>{formattedDate}</Text>
@@ -67,7 +66,7 @@ const SongTake = (props: Props) => {
           <ShareIcon />
           <TouchableOpacity
             onPress={() => {
-              setIsDeleteModalOpen(true);
+              setToDelete({ type: 'take', songId, takeId, title });
             }}
           >
             <TrashIcon />

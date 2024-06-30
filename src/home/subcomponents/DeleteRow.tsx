@@ -16,7 +16,7 @@ const DeleteRow = (props: Props) => {
   const { title, id, setToDelete } = props;
 
   const onDeletePress = () => {
-    setToDelete({ type: 'song', id, title });
+    setToDelete({ type: 'song', songId: id, title });
   };
 
   return (
