@@ -1,10 +1,6 @@
 import { call, put, takeEvery, all, fork } from 'redux-saga/effects';
 import { createTake, updateTakeNotes } from '@src/repositories/TakeRepository';
-import {
-  UpdateTakeNotesPayload,
-  UpdateTakeNotesSagaPayload,
-  takePayload,
-} from '@src/common/types';
+import { UpdateTakeNotesSagaPayload, takePayload } from '@src/common/types';
 import {
   CREATE_TAKE_REQUEST,
   UPDATE_TAKE_NOTES_REQUEST,
