@@ -23,6 +23,10 @@ const NotesModal = (props: Props) => {
   const { notes, title, takeId, songId } = currentTake;
   const [newNote, setNewNote] = useState<string>(notes);
 
+  useEffect(() => {
+    setNewNote(notes);
+  }, [currentTake]);
+
   const onSavePress = () => {
     dispatch(updateTakeNotesRequest({ db, takeId, songId, notes: newNote }));
     setCurrentTake(EMPTY_TAKE);
