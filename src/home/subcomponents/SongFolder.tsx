@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import * as Sharing from 'expo-sharing';
 
 import StyledText from '@src/common/components/StyledText';
 import LyricsIcon from '@src/icons/LyricsIcon';
@@ -93,6 +94,11 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
     </StyledText>
   );
 
+  const handleShare = () => {
+    // update this to share a folder with uri and lyrics
+    Sharing.shareAsync(selectedTake.uri);
+  };
+
   return (
     <TouchableOpacity
       style={[styles.rowContainer, isPressed && styles.rowPressed]}
@@ -120,7 +126,9 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
           <TouchableOpacity onPress={() => handleOnPressNavigation('Lyrics')}>
             <LyricsIcon />
           </TouchableOpacity>
-          <ShareIcon />
+          <TouchableOpacity onPress={handleShare}>
+            <ShareIcon />
+          </TouchableOpacity>
           <PlaybackBar />
         </View>
       </View>
