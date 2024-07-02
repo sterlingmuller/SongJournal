@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { useSQLiteContext } from 'expo-sqlite';
+import * as Sharing from 'expo-sharing';
 
 import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
@@ -29,7 +30,7 @@ interface Props {
 
 const SongTake = (props: Props) => {
   const { take, setToDelete, setCurrentTake, onTogglePlayback } = props;
-  const { takeId, songId, title } = take;
+  const { takeId, songId, title, uri } = take;
   const styles = useSongTakeStyles();
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
@@ -47,6 +48,10 @@ const SongTake = (props: Props) => {
 
   const formattedDate = formatDateFromISOString(take.date);
 
+  const handleShare = () => {
+    Sharing.shareAsync(uri);
+  };
+
   return (
     <TouchableOpacity style={styles.container} onPress={onDoubleTap}>
       <View style={styles.contents}>
@@ -63,7 +68,9 @@ const SongTake = (props: Props) => {
           >
             <NotesIcon />
           </TouchableOpacity>
-          <ShareIcon />
+          <TouchableOpacity onPress={handleShare}>
+            <ShareIcon />
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
               setToDelete({ type: 'take', songId, takeId, title });
