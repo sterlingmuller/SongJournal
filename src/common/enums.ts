@@ -15,34 +15,28 @@ export const MONTH_NAMES = [
   'December',
 ];
 
-export const KEY_SIGNATURES = [
+export const ROOT_NOTES = [
   { label: 'C', value: 'C' },
-  { label: 'G', value: 'G' },
-  { label: 'D', value: 'D' },
-  { label: 'A', value: 'A' },
-  { label: 'E', value: 'E' },
-  { label: 'B', value: 'B' },
-  { label: 'F#', value: 'F#' },
   { label: 'C#', value: 'C#' },
-  { label: 'F', value: 'F' },
-  { label: 'B♭', value: 'B♭' },
+  { label: 'D', value: 'D' },
   { label: 'E♭', value: 'E♭' },
-  { label: 'A♭', value: 'A♭' },
-  { label: 'D♭', value: 'D♭' },
-  { label: 'Am', value: 'Am' },
-  { label: 'Em', value: 'Em' },
-  { label: 'Bm', value: 'Bm' },
-  { label: 'F#m', value: 'F#m' },
-  { label: 'C#m', value: 'C#m' },
-  { label: 'G#m', value: 'G#m' },
-  { label: 'D#m', value: 'D#m' },
-  { label: 'Dm', value: 'Dm' },
-  { label: 'Gm', value: 'Gm' },
-  { label: 'Cm', value: 'Cm' },
-  { label: 'Fm', value: 'Fm' },
-  { label: 'B♭m', value: 'B♭m' },
-  { label: 'E♭m', value: 'E♭m' },
-  { label: 'A♭m', value: 'A♭m' },
+  { label: 'E', value: 'E' },
+  { label: 'F', value: 'F' },
+  { label: 'F#', value: 'F#' },
+  { label: 'G', value: 'G' },
+  { label: 'G#', value: 'G#' },
+  { label: 'A', value: 'A' },
+  { label: 'B♭', value: 'B♭' },
+  { label: 'B', value: 'B' },
+];
+
+export const CHORD_EXTENSIONS = [
+  { label: '', value: '' },
+  { label: 'm', value: 'm' },
+  { label: '7', value: '7' },
+  { label: 'add9', value: 'add9' },
+  { label: 'sus4', value: 'sus4' },
+  { label: 'dim', value: 'dim' },
 ];
 
 export const TIME_SIGNATURES = [
