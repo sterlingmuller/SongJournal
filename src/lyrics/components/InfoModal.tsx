@@ -11,6 +11,7 @@ import { SONG_DETAILS } from '@src/common/constants';
 import useInfoModalStyle from '@styles/infoModal';
 import { useAppDispatch } from '@src/common/hooks';
 import { updatePageInfoRequest } from '@src/sagas/actionCreators';
+import SongDetailSelect from '../subcomponents/SongDetailSelect';
 
 interface Props {
   isInfoModalOpen: boolean;
@@ -42,10 +43,13 @@ const InfoModal = (props: Props) => {
   }, [newInfo, originalInfo]);
 
   const handleInputChange = (key: keyof SongInfo, value: string | boolean) => {
-    console.log('info:', newInfo);
+    console.log('key:', key);
+    console.log('value:', value);
     setNewInfo({ ...newInfo, [key]: value });
-    console.log('new info:', newInfo);
+    // console.log('new info:', newInfo);
   };
+
+  console.log('new info:', newInfo);
 
   const onSavePress = () => {
     if (isSaveButtonEnabled && newInfo) {
@@ -82,15 +86,28 @@ const InfoModal = (props: Props) => {
           />
         </View>
         <View style={styles.details}>
-          {SONG_DETAILS.map(({ label, key }: songDetail) => (
-            <SongDetail
-              key={key}
-              detailKey={key}
-              label={label}
-              value={newInfo[key]}
-              handleInputChange={handleInputChange}
-            />
-          ))}
+          {SONG_DETAILS.map(({ label, key }: songDetail) => {
+            if (key === 'keySignature' || key === 'time') {
+              return (
+                <SongDetailSelect
+                  key={key}
+                  detailKey={key}
+                  label={label}
+                  value={newInfo[key]}
+                  handleInputChange={handleInputChange}
+                />
+              );
+            }
+            return (
+              <SongDetail
+                key={key}
+                detailKey={key}
+                label={label}
+                value={newInfo[key]}
+                handleInputChange={handleInputChange}
+              />
+            );
+          })}
         </View>
         <CompletionStatus
           isCompleted={newInfo.completed}
