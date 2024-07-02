@@ -64,10 +64,14 @@ const useSongDetailStyles = () => {
     text: { fontSize: 16 },
 
     select: {
-      fontSize: 16,
+      fontSize: 14,
       paddingHorizontal: 10,
       paddingVertical: 8,
+      borderWidth: 1,
+      borderColor: 'blue',
+      borderRadius: 8,
       color: 'black',
+      paddingRight: 30,
     },
 
     pickerContainer: {
