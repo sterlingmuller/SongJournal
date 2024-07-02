@@ -57,7 +57,8 @@ const LyricsScreen = () => {
             ({ label, key }: songDetail) =>
               !!page[key] && (
                 <SongDetail
-                  key={label}
+                  key={key}
+                  detailKey={key}
                   label={label}
                   value={page[key]}
                   onPageScreen
