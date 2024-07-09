@@ -22,6 +22,7 @@ import { useSQLiteContext } from 'expo-sqlite';
 import useDoubleTap from '@src/hooks/useDoubleTap';
 import { TextInput } from 'react-native-gesture-handler';
 import { formatDateFromISOString } from '@src/utils/formateDateFromISOString';
+import useShareSongFolder from '@src/hooks/useShareSongFolder';
 
 interface Props {
   song: song;
@@ -94,9 +95,14 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
     </StyledText>
   );
 
+  const { shareSongFolder } = useShareSongFolder();
+
   const handleShare = () => {
     // update this to share a folder with uri and lyrics
-    Sharing.shareAsync(selectedTake.uri);
+    // Sharing.shareAsync(selectedTake.uri);
+    // const { shareSongFolder } = useShareSongFolder();
+
+    shareSongFolder(song);
   };
 
   return (
