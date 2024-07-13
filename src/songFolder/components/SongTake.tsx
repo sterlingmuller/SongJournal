@@ -22,7 +22,7 @@ import {
   selectCurrentSongTitle,
 } from '@src/selectors/songsSelector';
 import { formatDateFromISOString } from '@src/utils/formateDateFromISOString';
-import useShareSongFolder from '@src/hooks/useShareSongFolder';
+import useFileShare from '@src/hooks/useFileShare';
 
 interface Props {
   take: take;
@@ -37,6 +37,7 @@ const SongTake = (props: Props) => {
   const styles = useSongTakeStyles();
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
+  const { shareTake } = useFileShare();
 
   const selectedPlayingId = useAppSelector(selectPlayingTakeId);
   const isPlaying = useAppSelector(selectIsPlaying);
@@ -53,8 +54,7 @@ const SongTake = (props: Props) => {
   const formattedDate = formatDateFromISOString(take.date);
 
   const handleShare = () => {
-    // const { shareTake } = useShareSongFolder();
-    // shareTake(uri, title, songTitle);
+    shareTake(uri, title, songTitle);
   };
 
   return (
