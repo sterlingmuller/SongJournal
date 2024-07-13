@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { useSQLiteContext } from 'expo-sqlite';
-import * as Sharing from 'expo-sharing';
 
 import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
@@ -18,8 +17,12 @@ import {
   selectIsPlaying,
   selectPlayingTakeId,
 } from '@src/selectors/playbackSelector';
-import { selectCurrentSongSelectedTakeId } from '@src/selectors/songsSelector';
+import {
+  selectCurrentSongSelectedTakeId,
+  selectCurrentSongTitle,
+} from '@src/selectors/songsSelector';
 import { formatDateFromISOString } from '@src/utils/formateDateFromISOString';
+import useShareSongFolder from '@src/hooks/useShareSongFolder';
 
 interface Props {
   take: take;
@@ -38,6 +41,7 @@ const SongTake = (props: Props) => {
   const selectedPlayingId = useAppSelector(selectPlayingTakeId);
   const isPlaying = useAppSelector(selectIsPlaying);
   const selectedTakeId = useAppSelector(selectCurrentSongSelectedTakeId);
+  const songTitle = useAppSelector(selectCurrentSongTitle);
 
   const onDoubleTap: () => void = useDoubleTap(() =>
     dispatch(updateSelectedTakeIdRequest({ takeId, songId, db })),
@@ -49,7 +53,8 @@ const SongTake = (props: Props) => {
   const formattedDate = formatDateFromISOString(take.date);
 
   const handleShare = () => {
-    Sharing.shareAsync(uri);
+    // const { shareTake } = useShareSongFolder();
+    // shareTake(uri, title, songTitle);
   };
 
   return (

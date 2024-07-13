@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import * as Sharing from 'expo-sharing';
 
 import StyledText from '@src/common/components/StyledText';
 import LyricsIcon from '@src/icons/LyricsIcon';
@@ -23,6 +22,7 @@ import useDoubleTap from '@src/hooks/useDoubleTap';
 import { TextInput } from 'react-native-gesture-handler';
 import { formatDateFromISOString } from '@src/utils/formateDateFromISOString';
 import useShareSongFolder from '@src/hooks/useShareSongFolder';
+import { FILE_TYPE } from '@src/common/enums';
 
 interface Props {
   song: song;
@@ -46,6 +46,12 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
   const isPlaying = useAppSelector(selectIsPlaying);
 
   const isCurrentSongPlaying = songId === selectedPlayingSongId && isPlaying;
+
+  const handleShare = () => {
+    const { shareSongFolder } = useShareSongFolder();
+
+    shareSongFolder(song);
+  };
 
   const handlePressIn = () => {
     setIsPressed(true);
@@ -94,16 +100,6 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
       No takes have been recored
     </StyledText>
   );
-
-  const { shareSongFolder } = useShareSongFolder();
-
-  const handleShare = () => {
-    // update this to share a folder with uri and lyrics
-    // Sharing.shareAsync(selectedTake.uri);
-    // const { shareSongFolder } = useShareSongFolder();
-
-    shareSongFolder(song);
-  };
 
   return (
     <TouchableOpacity
