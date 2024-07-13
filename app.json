@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.sterling.silverado.songjournal"
@@ -38,6 +36,11 @@
       "eas": {
         "projectId": "782ab462-3c4f-4302-ae95-e24dfe286e87"
       }
+    },
+    "owner": "sterlo",
+    "runtimeVersion": "1.0.0",
+    "updates": {
+      "url": "https://u.expo.dev/782ab462-3c4f-4302-ae95-e24dfe286e87"
     }
   }
 }
