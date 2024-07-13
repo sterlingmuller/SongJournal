@@ -21,8 +21,7 @@ import { useSQLiteContext } from 'expo-sqlite';
 import useDoubleTap from '@src/hooks/useDoubleTap';
 import { TextInput } from 'react-native-gesture-handler';
 import { formatDateFromISOString } from '@src/utils/formateDateFromISOString';
-import useShareSongFolder from '@src/hooks/useShareSongFolder';
-import { FILE_TYPE } from '@src/common/enums';
+import useFileShare from '@src/hooks/useFileShare';
 
 interface Props {
   song: song;
@@ -34,6 +33,7 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
   const styles = useSongFolderStyles();
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
+  const { shareSongFolder } = useFileShare();
 
   const { title, songId } = song;
   const [isPressed, setIsPressed] = useState(false);
@@ -48,8 +48,6 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
   const isCurrentSongPlaying = songId === selectedPlayingSongId && isPlaying;
 
   const handleShare = () => {
-    const { shareSongFolder } = useShareSongFolder();
-
     shareSongFolder(song);
   };
 

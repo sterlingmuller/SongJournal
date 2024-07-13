@@ -17,11 +17,13 @@ import OptionsBar from '@src/lyrics/subcomponents/OptionsBar';
 import SongDetail from '@src/lyrics/subcomponents/SongDetail';
 import { SONG_DETAILS } from '@src/common/constants';
 import EditLyricsSheet from '@src/lyrics/components/EditLyricsSheet';
+import useFileShare from '@src/hooks/useFileShare';
 
 const LyricsScreen = () => {
   const styles = useLyricScreenStyles();
   const page = useAppSelector(selectCurrentSongPage);
   const songId = useAppSelector(selectCurrentSongId);
+  const { shareLyrics } = useFileShare();
 
   const [selectedOption, setSelectedOption] = useState<LyricsOptionName>('');
 
@@ -44,6 +46,12 @@ const LyricsScreen = () => {
       setSelectedOption('Edit');
     }
   }, [page]);
+
+  useEffect(() => {
+    if (selectedOption === 'Share') {
+      shareLyrics(page.lyrics).then(() => setSelectedOption(''));
+    }
+  }, [selectedOption]);
 
   if (!page) {
     return <LoadingIndicator />;
