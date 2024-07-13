@@ -17,17 +17,22 @@ function useFileShare() {
     setError(null);
 
     try {
-      const fileUri = `${FileSystem.cacheDirectory}${song.title}`;
+      const formattedTitle = convertToSnakeCase(song.title);
+
+      // Clean this up, shouldn't fetch if already exists
       const page = await fetchPageBySongId({ songId: song.songId, db });
 
+      const fileUri = `${FileSystem.cacheDirectory}${formattedTitle}`;
       const starredTake = song.takes.find(
         (take: take) => take.takeId === song.selectedTakeId,
       );
 
       if (starredTake) {
+        const formattedTakeTitle = convertToSnakeCase(starredTake.title);
+
         await FileSystem.copyAsync({
           from: starredTake.uri,
-          to: `${fileUri}/${starredTake.title}.m4a`,
+          to: `${fileUri}/${formattedTakeTitle}.m4a`,
         });
       }
 
