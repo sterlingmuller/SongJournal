@@ -18,6 +18,7 @@ import SongDetail from '@src/lyrics/subcomponents/SongDetail';
 import { SONG_DETAILS } from '@src/common/constants';
 import EditLyricsSheet from '@src/lyrics/components/EditLyricsSheet';
 import useFileShare from '@src/hooks/useFileShare';
+import { generatePageHtml } from '@src/utils/generatePageHtml';
 
 const LyricsScreen = () => {
   const styles = useLyricScreenStyles();
@@ -49,6 +50,9 @@ const LyricsScreen = () => {
 
   useEffect(() => {
     if (selectedOption === 'Share') {
+      const pageHtml = generatePageHtml('Test Title', page);
+
+      console.log('Page html:', pageHtml);
       shareLyrics(page.lyrics).then(() => setSelectedOption(''));
     }
   }, [selectedOption]);
