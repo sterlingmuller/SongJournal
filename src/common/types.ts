@@ -78,6 +78,15 @@ export type SongInfo = {
   completed: boolean;
 };
 
+export type DbPage = {
+  lyrics: string;
+  bpm: string;
+  keySignature: string;
+  time: string;
+  about: string;
+  completed: boolean;
+};
+
 export type page = {
   lyrics: string;
   info: SongInfo;
