@@ -1,7 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import * as Print from 'expo-print';
 
 import LyricsHeader from '@src/lyrics/components/LyricsHeader';
 import InfoModal from '@src/lyrics/components/InfoModal';

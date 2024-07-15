@@ -1,4 +1,5 @@
 import {
+  DbPage,
   fetchPagePayload,
   page,
   updateLyricsPayload,
@@ -9,10 +10,20 @@ export const fetchPageBySongId = async (payload: fetchPagePayload) => {
   const { db, songId } = payload;
 
   try {
-    const page: page = await db.getFirstAsync(
+    const dbPage: DbPage = await db.getFirstAsync(
       'SELECT * FROM Page WHERE songId = ?',
       songId,
     );
+
+    const songInfo = {
+      bpm: dbPage.bpm,
+      keySignature: dbPage.keySignature,
+      time: dbPage.time,
+      about: dbPage.about,
+      completed: dbPage.completed,
+    };
+
+    const page: page = { lyrics: dbPage.lyrics, info: songInfo };
 
     return page;
   } catch (err) {
