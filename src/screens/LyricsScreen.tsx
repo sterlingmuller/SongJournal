@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import * as Print from 'expo-print';
 
 import LyricsHeader from '@src/lyrics/components/LyricsHeader';
 import InfoModal from '@src/lyrics/components/InfoModal';
@@ -17,14 +18,11 @@ import OptionsBar from '@src/lyrics/subcomponents/OptionsBar';
 import SongDetail from '@src/lyrics/subcomponents/SongDetail';
 import { SONG_DETAILS } from '@src/common/constants';
 import EditLyricsSheet from '@src/lyrics/components/EditLyricsSheet';
-import useFileShare from '@src/hooks/useFileShare';
-import { generatePageHtml } from '@src/utils/generatePageHtml';
 
 const LyricsScreen = () => {
   const styles = useLyricScreenStyles();
   const page = useAppSelector(selectCurrentSongPage);
   const songId = useAppSelector(selectCurrentSongId);
-  const { shareLyrics } = useFileShare();
 
   const [selectedOption, setSelectedOption] = useState<LyricsOptionName>('');
 
@@ -47,15 +45,6 @@ const LyricsScreen = () => {
       setSelectedOption('Edit');
     }
   }, [page]);
-
-  useEffect(() => {
-    if (selectedOption === 'Share') {
-      const pageHtml = generatePageHtml('Test Title', page);
-
-      console.log('Page html:', pageHtml);
-      shareLyrics(page.lyrics).then(() => setSelectedOption(''));
-    }
-  }, [selectedOption]);
 
   if (!page) {
     return <LoadingIndicator />;
@@ -82,6 +71,7 @@ const LyricsScreen = () => {
         <OptionsBar
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
+          page={page}
         />
       </View>
       {selectedOption === 'Edit' ? (

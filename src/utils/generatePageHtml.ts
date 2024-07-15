@@ -9,13 +9,11 @@ export const generatePageHtml = (title: string, page: page) => {
       ({ label, key }: songDetail) => !!info[key] && `${label}: ${info[key]}`,
     ).filter((value: string | boolean) => value !== false);
 
-    console.log('infoToDiplay:', infoToDisplay);
-
     if (infoToDisplay.length) {
-      return `<p style="text-align: center;">${infoToDisplay.join(' &nbsp; &nbsp; ')}</p><hr />`;
+      return `<p style="text-align: center;">${infoToDisplay.join(' &nbsp; &nbsp; ')}</p>`;
     }
 
-    return '<hr />';
+    return '</>';
   };
 
   const renderAbout = () => {
@@ -25,16 +23,18 @@ export const generatePageHtml = (title: string, page: page) => {
     <p style="text-align: center;">${info.about}</p>`;
     }
 
-    return '<p>&nbsp;</p>';
+    return '</>';
   };
 
   return `
-    <div style="background-color: #fdc883; padding: 10px;">
+    <div style="background-color: #fdc883;">
+    <p>&nbsp;</p>
       <p style="text-align: center;"><strong>${title}</strong></p>
       ${renderInfo()}
+      <hr />
     </div>
     <p>&nbsp;</p>
-    <p style="padding-left: 60px;">${lyrics}</p>
+    <div style="padding-left: 60px;">${lyrics}</div>
     ${renderAbout()}
   `;
 };

@@ -84,13 +84,16 @@ function useFileShare() {
     [],
   );
 
-  const shareLyrics = useCallback(async (lyrics: string) => {
+  const shareLyrics = useCallback(async (pdfUri: string, title: string) => {
     try {
-      const formattedTitle = convertToSnakeCase('in progress');
-      const fileUri = `${FileSystem.cacheDirectory}${formattedTitle}.txt`;
+      const formattedTitle = convertToSnakeCase(title);
+      const fileUri = `${FileSystem.cacheDirectory}${formattedTitle}.pdf`;
 
-      await FileSystem.writeAsStringAsync(fileUri, lyrics);
-      await Sharing.shareAsync(fileUri);
+      await FileSystem.copyAsync({
+        from: pdfUri,
+        to: fileUri,
+      });
+      await Sharing.shareAsync(fileUri, { mimeType: 'application/pdf' });
 
       FileSystem.deleteAsync(fileUri, { idempotent: true });
     } catch (err) {
