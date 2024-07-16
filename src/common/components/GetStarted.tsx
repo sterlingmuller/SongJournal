@@ -8,6 +8,7 @@ import {
 } from '@src/common/constants';
 import EggIcon from '@src/icons/EggIcon';
 import useGetStartedHomeStyles from '@src/styles/getStartedHome';
+import Egg2Icon from '@src/icons/Egg2Icon';
 
 interface props {
   screen: 'home' | 'song';
@@ -25,7 +26,8 @@ const GetStarted = ({ screen }: props) => {
   return (
     <View style={styles.container}>
       <View style={styles.eggContainer}>
-        <EggIcon />
+        {/* <EggIcon /> */}
+        <Egg2Icon />
       </View>
       <View style={styles.textbox}>
         <StyledText style={styles.text}>{instructions}</StyledText>

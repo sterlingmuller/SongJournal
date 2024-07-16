@@ -47,7 +47,7 @@ const useGetStartedHomeStyles = () => {
       backgroundColor: theme.primary,
       justifyContent: 'center',
       alignItems: 'center',
-      paddingLeft: 15,
+      paddingLeft: 5,
     },
   });
 
