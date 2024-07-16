@@ -9,10 +9,9 @@ import {
   SongItem,
   deleteObject,
   song,
+  songs,
   sortByCategoryName,
 } from '@src/common/types';
-import { useAppSelector } from '@src/common/hooks';
-import { selectSongs } from '@src/selectors/songsSelector';
 import useAudioPlayer from '@src/utils/useAudioPlayer';
 import { sortSongs } from '@src/utils/sortSongs';
 
@@ -21,12 +20,13 @@ interface Props {
   sortedCategory: sortByCategoryName;
   isSortAscending: boolean;
   filterOptions: FilterOptions;
+  songs: songs;
 }
 
 const SongFolders = (props: Props) => {
-  const { setToDelete, sortedCategory, isSortAscending, filterOptions } = props;
+  const { setToDelete, sortedCategory, isSortAscending, filterOptions, songs } =
+    props;
   const { togglePlayback } = useAudioPlayer();
-  const songs = useAppSelector(selectSongs);
 
   const sortedSongs = sortSongs(
     songs,
