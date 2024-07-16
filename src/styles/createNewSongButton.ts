@@ -20,7 +20,7 @@ const useCreateNewSongButtonStyles = () => {
       borderRadius: 10,
       paddingVertical: 25,
       paddingHorizontal: 35,
-      bottom: 100,
+      bottom: 60,
       right: 0,
       marginRight: 20,
       marginBottom: 20,

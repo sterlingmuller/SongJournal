@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-import SongTake from '@src/songFolder/components/SongTake';
 import RecordButton from '@src/common/components/RecordButton';
 import DeleteModal from '@src/common/components/DeleteModal';
 import NotesModal from '@src/songFolder/components/NotesModal';
@@ -11,39 +10,26 @@ import {
   EMPTY_DELETE_OBJECT,
   EMPTY_TAKE,
 } from '@src/common/constants';
-import { ScrollView } from 'react-native-gesture-handler';
 import useSongScreenStyles from '@src/styles/songScreen';
 import useGlobalStyles from '@src/styles/global';
 import PermissionsNeededModal from '@src/songFolder/components/PermissionsNeededModal';
 import useMicrophonePermissions from '@src/hooks/useMicrophonePermissions';
 import { RootStackParamList, deleteObject, take } from '@src/common/types';
 import { useAppSelector } from '@src/common/hooks';
-import {
-  selectCurrentSongTakes,
-  selectCurrentSongTotalTakes,
-} from '@src/selectors/songsSelector';
-import useAudioPlayer from '@src/utils/useAudioPlayer';
+import { selectCurrentSongTotalTakes } from '@src/selectors/songsSelector';
+import SongDisplay from '@src/songFolder/components/SongDisplay';
 
 const SongScreen = () => {
   const styles = useSongScreenStyles();
   const globalStyles = useGlobalStyles();
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
-  const { togglePlayback } = useAudioPlayer();
-
-  const takes = useAppSelector(selectCurrentSongTakes);
   const totalTakes = useAppSelector(selectCurrentSongTotalTakes);
+  const isPermissionGranted = useMicrophonePermissions();
 
   const [toDelete, setToDelete] = useState<deleteObject>(EMPTY_DELETE_OBJECT);
   const [currentTake, setCurrentTake] = useState<take>(EMPTY_TAKE);
   const [isPermissionsNeededModalOpen, setIsPermissionsNeededModalOpen] =
     useState<boolean>(false);
-
-  const orderedTakes: take[] = [...takes].reverse();
-  const isPermissionGranted = useMicrophonePermissions();
-
-  const onTogglePlayback = (uri: string, takeId: number) => {
-    togglePlayback(uri, takeId);
-  };
 
   const onRecordPress = () => {
     const recording = () => {
@@ -65,22 +51,9 @@ const SongScreen = () => {
     setIsPermissionsNeededModalOpen,
   ]);
 
-  const renderTakes = () =>
-    orderedTakes.map((take: take) => (
-      <SongTake
-        key={take.title}
-        take={take}
-        setToDelete={setToDelete}
-        setCurrentTake={setCurrentTake}
-        onTogglePlayback={onTogglePlayback}
-      />
-    ));
-
   return (
     <View style={globalStyles.container}>
-      <ScrollView>
-        <View style={styles.takes}>{renderTakes()}</View>
-      </ScrollView>
+      <SongDisplay setToDelete={setToDelete} setCurrentTake={setCurrentTake} />
       <RecordButton
         onPress={onRecordPress}
         isRecording={false}

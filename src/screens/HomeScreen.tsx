@@ -1,9 +1,10 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { View } from 'react-native';
+import { useSQLiteContext } from 'expo-sqlite';
+import { useNavigation } from '@react-navigation/native';
 
 import HomeHeader from '@src/home/components/HomeHeader';
 import CreateNewSongButton from '@src/home/components/CreateNewSongButton';
-import SongFolders from '@src/home/components/SongFolders';
 import SortByModal from '@src/home/components/SortByModal';
 import NewSongModal from '@src/home/components/NewSongModal';
 import Footer from '@src/home/components/Footer';
@@ -12,13 +13,12 @@ import {
   deleteObject,
   sortByCategoryName,
 } from '@src/common/types';
-import { useNavigation } from '@react-navigation/native';
 import DeleteModal from '@src/common/components/DeleteModal';
 import { DELETE_SONG_TEXT, EMPTY_DELETE_OBJECT } from '@src/common/constants';
 import useGlobalStyles from '@styles/global';
-import { useSQLiteContext } from 'expo-sqlite';
 import { useAppDispatch } from '@src/common/hooks';
 import { fetchSongsWithTakesRequest } from '@src/sagas/actionCreators';
+import HomeDisplay from '@src/home/components/HomeDisplay';
 
 const HomeScreen = () => {
   const { setOptions } = useNavigation();
@@ -50,7 +50,7 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }}>
-        <SongFolders
+        <HomeDisplay
           setToDelete={setToDelete}
           sortedCategory={sortedCategory}
           isSortAscending={isSortAscending}
