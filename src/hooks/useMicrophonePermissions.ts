@@ -1,38 +1,45 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { AppState } from 'react-native';
-
-import { appState } from '@src/common/types';
-import { requestMicrophonePermissions } from '@src/utils/permissions';
+import { Audio } from 'expo-av';
 
 const useMicrophonePermissions = () => {
-  const [isPermissionGranted, setIsPermissionGranted] =
-    useState<boolean>(false);
+  const [permissionStatus, setPermissionStatus] = useState<
+    'undetermined' | 'granted' | 'denied'
+  >('undetermined');
+
+  const checkAndRequestPermission = useCallback(async () => {
+    try {
+      const { status } = await Audio.getPermissionsAsync();
+
+      if (status === 'granted') {
+        setPermissionStatus('granted');
+      } else if (status === 'denied') {
+        setPermissionStatus('denied');
+      } else {
+        const { status: newStatus } = await Audio.requestPermissionsAsync();
+        setPermissionStatus(newStatus === 'granted' ? 'granted' : 'denied');
+      }
+    } catch (error) {
+      console.error(
+        'Error checking or requesting microphone permission:',
+        error,
+      );
+      setPermissionStatus('denied');
+    }
+  }, []);
 
   useEffect(() => {
-    const getMicrophonePermission = async () => {
-      const status = await requestMicrophonePermissions();
-      setIsPermissionGranted(status === 'granted');
-    };
-
-    const handleAppStateChange = async (nextAppState: appState) => {
-      if (nextAppState === 'active') {
-        getMicrophonePermission();
-      }
-    };
-
-    handleAppStateChange('active');
+    checkAndRequestPermission();
 
     const subscription = AppState.addEventListener(
       'change',
-      handleAppStateChange,
+      checkAndRequestPermission,
     );
 
-    return () => {
-      subscription.remove();
-    };
-  }, []);
+    return () => subscription.remove();
+  }, [checkAndRequestPermission, permissionStatus]);
 
-  return isPermissionGranted;
+  return permissionStatus;
 };
 
 export default useMicrophonePermissions;

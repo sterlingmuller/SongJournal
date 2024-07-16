@@ -38,11 +38,13 @@ const SongScreen = () => {
       navigate('Recording', { title: newTakeTitle });
     };
 
-    isPermissionGranted ? recording() : setIsPermissionsNeededModalOpen(true);
+    isPermissionGranted === 'granted'
+      ? recording()
+      : setIsPermissionsNeededModalOpen(true);
   };
 
   useEffect(() => {
-    if (isPermissionGranted && isPermissionsNeededModalOpen) {
+    if (isPermissionGranted === 'granted' && isPermissionsNeededModalOpen) {
       setIsPermissionsNeededModalOpen(false);
     }
   }, [
