@@ -1,5 +1,6 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, Text } from 'react-native';
 import { documentDirectory } from 'expo-file-system';
+import React from 'react';
 
 import EditIcon from '@src/icons/EditIcon';
 import ChordsIcon from '@src/icons/ChordsIcon';
@@ -83,9 +84,6 @@ export const EMPTY_TAKE: t.take = {
 export const SCREEN_WIDTH: number = Dimensions.get('window').width;
 
 export const documentsDirectory = documentDirectory + 'SongJournal/';
-
-export const getStartedHomeInstructions =
-  'Looks like your journal is empty. To get started, visit Settings for help importing a journal or press the NEW SONG button below.';
 
 export const getStartedSongInstructions =
   'Press the RECORD button below to record your first take!';

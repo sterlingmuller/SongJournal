@@ -2,10 +2,6 @@ import React from 'react';
 import { View } from 'react-native';
 
 import StyledText from '@src/common/components/StyledText';
-import {
-  getStartedHomeInstructions,
-  getStartedSongInstructions,
-} from '@src/common/constants';
 import EggIcon from '@src/icons/EggIcon';
 import useGetStartedHomeStyles from '@src/styles/getStartedHome';
 import Egg2Icon from '@src/icons/Egg2Icon';
@@ -15,7 +11,24 @@ interface props {
 }
 const GetStarted = ({ screen }: props) => {
   const styles = useGetStartedHomeStyles();
-  let instructions = '';
+  let instructions: React.ReactElement;
+
+  const getStartedHomeInstructions = (
+    <StyledText style={styles.text}>
+      {`Looks like your journal is empty.\nTo get started, visit `}
+      <StyledText style={{ fontWeight: 'bold' }}>Settings</StyledText> for help
+      importing a journal or press the{' '}
+      <StyledText style={{ fontWeight: 'bold' }}>New Song</StyledText> button
+      below.
+    </StyledText>
+  );
+
+  const getStartedSongInstructions = (
+    <StyledText style={styles.text}>
+      Press the <StyledText style={{ fontWeight: 'bold' }}>Record</StyledText>{' '}
+      button below to record your first take!
+    </StyledText>
+  );
 
   if (screen === 'home') {
     instructions = getStartedHomeInstructions;
@@ -26,11 +39,10 @@ const GetStarted = ({ screen }: props) => {
   return (
     <View style={styles.container}>
       <View style={styles.eggContainer}>
-        {/* <EggIcon /> */}
         <Egg2Icon />
       </View>
       <View style={styles.textbox}>
-        <StyledText style={styles.text}>{instructions}</StyledText>
+        {instructions}
         <View style={styles.arrow} />
       </View>
     </View>
