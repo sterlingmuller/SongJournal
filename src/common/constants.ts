@@ -88,4 +88,4 @@ export const getStartedHomeInstructions =
   'Looks like your journal is empty. To get started, visit Settings for help importing a journal or press the NEW SONG button below.';
 
 export const getStartedSongInstructions =
-  'Press the RECORD button below to record the first take of this song!';
+  'Press the RECORD button below to record your first take!';
