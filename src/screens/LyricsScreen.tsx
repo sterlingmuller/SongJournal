@@ -55,12 +55,12 @@ const LyricsScreen = () => {
         <View style={styles.details}>
           {SONG_DETAILS.map(
             ({ label, key }: songDetail) =>
-              !!page[key] && (
+              !!page.info[key] && (
                 <SongDetail
                   key={key}
                   detailKey={key}
                   label={label}
-                  value={page[key]}
+                  value={page.info[key]}
                   onPageScreen
                   handleInputChange={() => {}}
                 />
