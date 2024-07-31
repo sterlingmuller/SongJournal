@@ -46,7 +46,6 @@ const InfoModal = (props: Props) => {
     console.log('key:', key);
     console.log('value:', value);
     setNewInfo({ ...newInfo, [key]: value });
-    // console.log('new info:', newInfo);
   };
 
   console.log('new info:', newInfo);

@@ -25,20 +25,7 @@ function* fetchPage({ payload }: FetchPageParams) {
   try {
     const page = yield call(fetchPageBySongId, payload);
 
-    const formattedPage: page = {
-      lyrics: page.lyrics,
-      info: {
-        bpm: page.bpm ?? '',
-        keySignature: page.keySignature ?? '',
-        time: page.time ?? '',
-        about: page.about ?? '',
-        completed: !!page.completed,
-      },
-    };
-
-    yield put(
-      fetchPageSuccess({ page: formattedPage, songId: payload.songId }),
-    );
+    yield put(fetchPageSuccess({ page, songId: payload.songId }));
   } catch (error) {
     yield put(fetchPageFailure(error.message));
   }
