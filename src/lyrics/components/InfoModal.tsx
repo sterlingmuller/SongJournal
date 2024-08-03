@@ -43,8 +43,6 @@ const InfoModal = (props: Props) => {
   }, [newInfo, originalInfo]);
 
   const handleInputChange = (key: keyof SongInfo, value: string | boolean) => {
-    console.log('key:', key);
-    console.log('value:', value);
     setNewInfo({ ...newInfo, [key]: value });
   };
 

@@ -16,8 +16,6 @@ const SongDetail = (props: Props) => {
   const { detailKey, label, value, onPageScreen, handleInputChange } = props;
   const styles = useSongDetailStyles();
 
-  console.log('label:', label);
-
   return (
     <View style={onPageScreen ? styles.pageContainer : styles.container}>
       <TextInput

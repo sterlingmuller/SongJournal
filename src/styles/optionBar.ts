@@ -11,7 +11,7 @@ const useOptionBarStyles = () => {
     options: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: 10,
+      gap: 15,
     },
 
     iconButton: {

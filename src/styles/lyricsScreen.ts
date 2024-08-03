@@ -15,17 +15,17 @@ const useLyricScreenStyles = () => {
 
   const lyricScreenStyles: Styles = StyleSheet.create({
     container: {
-      gap: 22,
+      gap: 20,
       flex: 1,
       backgroundColor: theme.primaryBackground,
+      paddingBottom: 15,
     },
 
     infoContainer: {
-      flexDirection: 'row',
-      alignItems: 'flex-end',
-      justifyContent: 'center',
-      paddingTop: 20,
-      gap: 20,
+      flexDirection: 'column',
+      alignItems: 'center',
+      paddingTop: 10,
+      gap: 10,
     },
 
     editTextContainer: {
@@ -48,7 +48,7 @@ const useLyricScreenStyles = () => {
 
     details: {
       flexDirection: 'row',
-      gap: 10,
+      gap: 15,
     },
   });
 
