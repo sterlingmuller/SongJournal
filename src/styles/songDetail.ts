@@ -31,6 +31,8 @@ const useSongDetailStyles = () => {
       height: 30,
       borderWidth: 1,
       borderColor: '#ccc',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
 
     pageTextbox: {

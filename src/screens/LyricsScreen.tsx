@@ -52,6 +52,11 @@ const LyricsScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.infoContainer}>
+        <OptionsBar
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption}
+          page={page}
+        />
         <View style={styles.details}>
           {SONG_DETAILS.map(
             ({ label, key }: songDetail) =>
@@ -67,11 +72,6 @@ const LyricsScreen = () => {
               ),
           )}
         </View>
-        <OptionsBar
-          selectedOption={selectedOption}
-          setSelectedOption={setSelectedOption}
-          page={page}
-        />
       </View>
       {selectedOption === 'Edit' ? (
         <EditLyricsSheet

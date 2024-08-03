@@ -4,25 +4,32 @@ import {
   SectionsWheelPicker,
   WheelPickerAlign,
   WheelPickerProps,
-  Fader,
 } from 'react-native-ui-lib';
 import Modal from 'react-native-modal';
 
 import { ROOT_NOTES, CHORD_EXTENSIONS } from '@src/common/enums';
 import useWheelPickerModalStyles from '@src/styles/wheelPickerModal';
 import StyledText from '@src/common/components/StyledText';
+import { SongInfo } from '@src/common/types';
 
 interface Props {
   isWheelOpen: boolean;
   setIsWheelOpen: (value: boolean) => void;
+  detailKey: string;
+  handleInputChange: (key: keyof SongInfo, value: string) => void;
 }
 
 const ChordWheelModal = (props: Props) => {
-  const { isWheelOpen, setIsWheelOpen } = props;
+  const { isWheelOpen, setIsWheelOpen, detailKey, handleInputChange } = props;
   const styles = useWheelPickerModalStyles();
 
   const [rootNote, setRootNote] = useState('');
   const [chordExtension, setChordExtension] = useState('');
+
+  const onExitPress = () => {
+    setIsWheelOpen(false);
+    handleInputChange(detailKey as keyof SongInfo, rootNote + chordExtension);
+  };
 
   const sections = useMemo((): WheelPickerProps[] => {
     return [
@@ -57,7 +64,7 @@ const ChordWheelModal = (props: Props) => {
     <Modal
       isVisible={isWheelOpen}
       avoidKeyboard
-      onBackdropPress={() => setIsWheelOpen(false)}
+      onBackdropPress={onExitPress}
       style={{ margin: 0 }}
     >
       <View style={styles.container}>

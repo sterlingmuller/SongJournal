@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, useWindowDimensions } from 'react-native';
+import { ScrollView, useWindowDimensions } from 'react-native';
 import RenderHtml from 'react-native-render-html';
 
 import useLyricScreenStyles from '@src/styles/lyricsScreen';
@@ -13,9 +13,9 @@ const LyricsSheet = ({ lyrics }: Props) => {
   const styles = useLyricScreenStyles();
 
   return (
-    <View style={styles.lyricsContainer}>
+    <ScrollView style={styles.lyricsContainer}>
       <RenderHtml contentWidth={width} source={{ html: lyrics }} />
-    </View>
+    </ScrollView>
   );
 };
 

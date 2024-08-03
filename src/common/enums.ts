@@ -16,6 +16,7 @@ export const MONTH_NAMES = [
 ];
 
 export const ROOT_NOTES = [
+  { label: '', value: '' },
   { label: 'C', value: 'C' },
   { label: 'C#', value: 'C#' },
   { label: 'D', value: 'D' },
