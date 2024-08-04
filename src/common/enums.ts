@@ -41,6 +41,7 @@ export const CHORD_EXTENSIONS = [
 ];
 
 export const TIME_SIGNATURES = [
+  { label: '', value: '' },
   { label: '4/4', value: '4/4' },
   { label: '3/4', value: '3/4' },
   { label: '2/4', value: '2/4' },
