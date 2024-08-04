@@ -5,6 +5,7 @@ import useSongDetailStyles from '@src/styles/songDetail';
 import { SongInfo } from '@src/common/types';
 import ChordWheelModal from '../components/ChordWheelModal';
 import StyledText from '@src/common/components/StyledText';
+import TimeSignatureWheelModal from '../components/TimeSignatureWheelModal';
 
 interface Props {
   detailKey: string;
@@ -18,24 +19,36 @@ const SongDetailSelect = (props: Props) => {
   const { detailKey, label, value, onPageScreen, handleInputChange } = props;
   const styles = useSongDetailStyles();
 
-  // Expand wheel selector to include time signature. Have Written By be a text input, in settings, user can set default author
+  const [isChordWheelOpen, setIsChordWheelOpen] = useState(false);
+  const [isTimeWheelOpen, setIsTimeWheelOpen] = useState(false);
 
-  const [isWheelOpen, setIsWheelOpen] = useState(false);
+  const songDetailPress = () => {
+    if (detailKey === 'keySignature') {
+      setIsChordWheelOpen(true);
+    } else {
+      setIsTimeWheelOpen(true);
+    }
+  };
 
   return (
     <View style={onPageScreen ? styles.pageContainer : styles.container}>
-      <TouchableOpacity
-        onPress={() => setIsWheelOpen(true)}
-        style={styles.textbox}
-      >
+      <TouchableOpacity onPress={songDetailPress} style={styles.textbox}>
         <StyledText>{value}</StyledText>
       </TouchableOpacity>
       <Text>{label}</Text>
       <ChordWheelModal
-        isWheelOpen={isWheelOpen}
-        setIsWheelOpen={setIsWheelOpen}
+        isWheelOpen={isChordWheelOpen}
+        setIsWheelOpen={setIsChordWheelOpen}
         detailKey={detailKey}
         handleInputChange={handleInputChange}
+        initialValue={value}
+      />
+      <TimeSignatureWheelModal
+        isWheelOpen={isTimeWheelOpen}
+        setIsWheelOpen={setIsTimeWheelOpen}
+        detailKey={detailKey}
+        handleInputChange={handleInputChange}
+        initialValue={value}
       />
     </View>
   );

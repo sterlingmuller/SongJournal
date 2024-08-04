@@ -11,24 +11,40 @@ import { ROOT_NOTES, CHORD_EXTENSIONS } from '@src/common/enums';
 import useWheelPickerModalStyles from '@src/styles/wheelPickerModal';
 import StyledText from '@src/common/components/StyledText';
 import { SongInfo } from '@src/common/types';
+import separateChordValue from '@src/utils/separateChordValue';
 
 interface Props {
   isWheelOpen: boolean;
   setIsWheelOpen: (value: boolean) => void;
   detailKey: string;
   handleInputChange: (key: keyof SongInfo, value: string) => void;
+  initialValue: string;
 }
 
 const ChordWheelModal = (props: Props) => {
-  const { isWheelOpen, setIsWheelOpen, detailKey, handleInputChange } = props;
+  const {
+    isWheelOpen,
+    setIsWheelOpen,
+    detailKey,
+    handleInputChange,
+    initialValue,
+  } = props;
   const styles = useWheelPickerModalStyles();
+  const initialValues = separateChordValue(initialValue);
 
-  const [rootNote, setRootNote] = useState('');
-  const [chordExtension, setChordExtension] = useState('');
+  const [rootNote, setRootNote] = useState(initialValues.rootNote);
+  const [chordExtension, setChordExtension] = useState(
+    initialValues.chordExtension,
+  );
 
   const onExitPress = () => {
+    let updatedChord = '';
+    if (rootNote) {
+      updatedChord = rootNote + chordExtension;
+    }
+
     setIsWheelOpen(false);
-    handleInputChange(detailKey as keyof SongInfo, rootNote + chordExtension);
+    handleInputChange(detailKey as keyof SongInfo, updatedChord);
   };
 
   const sections = useMemo((): WheelPickerProps[] => {

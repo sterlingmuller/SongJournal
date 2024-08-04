@@ -6,6 +6,7 @@ import { colors as c } from '@src/theme/colors';
 interface Styles {
   container: ViewStyle;
   section: ViewStyle;
+  timeSection: ViewStyle;
   seperator: ViewStyle;
   rightSection: ViewStyle;
   wheelText: TextStyle;
@@ -32,15 +33,16 @@ const useWheelPickerModalStyles = () => {
 
     section: {
       flex: 1,
-      // flexDirection: 'row-reverse',
       backgroundColor: theme.secondary,
-      // margin: 0,
       paddingRight: 10,
+    },
+
+    timeSection: {
+      backgroundColor: theme.secondary,
     },
 
     rightSection: {
       flex: 1,
-      // flexDirection: 'row',
       backgroundColor: theme.secondary,
       paddingRight: 10,
     },
