@@ -11,8 +11,8 @@ interface Props {
   handleInputChange: (key: keyof SongInfo, value: string) => void;
 }
 
-const SongDetail = (props: Props) => {
-  const { detailKey, label, value, handleInputChange } = props;
+const BpmDetail = (props: Props) => {
+  const { label, value, handleInputChange } = props;
   const styles = useSongDetailStyles();
 
   return (
@@ -20,14 +20,14 @@ const SongDetail = (props: Props) => {
       <TextInput
         style={styles.textbox}
         value={value}
-        onChangeText={(text: string) =>
-          handleInputChange(detailKey as keyof SongInfo, text)
-        }
+        onChangeText={(newBpm: string) => handleInputChange('bpm', newBpm)}
         textAlign="center"
+        keyboardType="numeric"
+        caretHidden
       />
       <Text>{label}</Text>
     </View>
   );
 };
 
-export default SongDetail;
+export default BpmDetail;

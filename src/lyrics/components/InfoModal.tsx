@@ -3,7 +3,6 @@ import { View, Text, TextInput } from 'react-native';
 import Modal from 'react-native-modal';
 import { useSQLiteContext } from 'expo-sqlite';
 
-import SongDetail from '@src/lyrics/subcomponents/SongDetail';
 import CompletionStatus from '@src/lyrics/subcomponents/CompletionStatus';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 import { SongInfo, songDetail } from '@src/common/types';
@@ -11,7 +10,8 @@ import { SONG_DETAILS } from '@src/common/constants';
 import useInfoModalStyle from '@styles/infoModal';
 import { useAppDispatch } from '@src/common/hooks';
 import { updatePageInfoRequest } from '@src/sagas/actionCreators';
-import SongDetailSelect from '../subcomponents/SongDetailSelect';
+import SongDetailSelect from '@src/lyrics/subcomponents/SongDetailSelect';
+import BpmDetail from '@src/lyrics/subcomponents/BpmDetail';
 
 interface Props {
   isInfoModalOpen: boolean;
@@ -33,6 +33,7 @@ const InfoModal = (props: Props) => {
 
   const [newInfo, setNewInfo] = useState<SongInfo>(originalInfo);
   const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false);
+  const bpmNum = Number(newInfo.bpm);
 
   const onExitPress = () => setIsInfoModalOpen(false);
 
@@ -47,6 +48,10 @@ const InfoModal = (props: Props) => {
   };
 
   const onSavePress = () => {
+    if (newInfo.bpm && (bpmNum < 60 || bpmNum > 180)) {
+      setNewInfo({ ...newInfo, bpm: '' });
+      return;
+    }
     if (isSaveButtonEnabled && newInfo) {
       dispatch(
         updatePageInfoRequest({
@@ -94,7 +99,7 @@ const InfoModal = (props: Props) => {
               );
             }
             return (
-              <SongDetail
+              <BpmDetail
                 key={key}
                 detailKey={key}
                 label={label}
