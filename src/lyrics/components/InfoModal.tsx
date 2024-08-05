@@ -46,8 +46,6 @@ const InfoModal = (props: Props) => {
     setNewInfo({ ...newInfo, [key]: value });
   };
 
-  console.log('new info:', newInfo);
-
   const onSavePress = () => {
     if (isSaveButtonEnabled && newInfo) {
       dispatch(

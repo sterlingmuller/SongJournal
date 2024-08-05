@@ -2,9 +2,7 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 interface Styles {
   container: ViewStyle;
-  pageContainer: ViewStyle;
   textbox: ViewStyle;
-  pageTextbox: ViewStyle;
   completedContainer: ViewStyle;
   checkbox: ViewStyle;
   text: TextStyle;
@@ -19,28 +17,15 @@ const useSongDetailStyles = () => {
       gap: 10,
     },
 
-    pageContainer: {
-      alignItems: 'center',
-      gap: 4,
-    },
-
     textbox: {
       backgroundColor: '#f0f0f0',
       borderRadius: 5,
-      width: 45,
+      width: 65,
       height: 30,
       borderWidth: 1,
       borderColor: '#ccc',
       alignItems: 'center',
       justifyContent: 'center',
-    },
-
-    pageTextbox: {
-      backgroundColor: '#D9D9D9',
-      width: 40,
-      height: 25,
-      borderWidth: 1,
-      borderColor: '#ccc',
     },
 
     completedContainer: {

@@ -2,7 +2,6 @@ import { StyleSheet, ViewStyle } from 'react-native';
 import { useColorTheme } from '@src/theme/ThemeContext';
 
 interface Styles {
-  infoContainer: ViewStyle;
   editTextContainer: ViewStyle;
   lyricsContainer: ViewStyle;
   container: ViewStyle;
@@ -15,17 +14,9 @@ const useLyricScreenStyles = () => {
 
   const lyricScreenStyles: Styles = StyleSheet.create({
     container: {
-      gap: 20,
       flex: 1,
       backgroundColor: theme.primaryBackground,
       paddingBottom: 15,
-    },
-
-    infoContainer: {
-      flexDirection: 'column',
-      alignItems: 'center',
-      paddingTop: 10,
-      gap: 10,
     },
 
     editTextContainer: {
@@ -37,7 +28,7 @@ const useLyricScreenStyles = () => {
       height: '75%',
       borderRadius: 15,
       paddingHorizontal: 20,
-      paddingVertical: 15,
+      paddingVertical: 10,
     },
 
     lyricsContainer: {

@@ -11,12 +11,11 @@ interface Props {
   detailKey: string;
   label: string;
   value: string;
-  onPageScreen?: boolean;
   handleInputChange: (key: keyof SongInfo, value: string) => void;
 }
 
 const SongDetailSelect = (props: Props) => {
-  const { detailKey, label, value, onPageScreen, handleInputChange } = props;
+  const { detailKey, label, value, handleInputChange } = props;
   const styles = useSongDetailStyles();
 
   const [isChordWheelOpen, setIsChordWheelOpen] = useState(false);
@@ -31,7 +30,7 @@ const SongDetailSelect = (props: Props) => {
   };
 
   return (
-    <View style={onPageScreen ? styles.pageContainer : styles.container}>
+    <View style={styles.container}>
       <TouchableOpacity onPress={songDetailPress} style={styles.textbox}>
         <StyledText>{value}</StyledText>
       </TouchableOpacity>
