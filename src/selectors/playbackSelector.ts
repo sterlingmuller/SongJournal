@@ -1,6 +1,6 @@
 import { RootState } from '@src/store';
 
-export const selectPlayingTakeId = (state: RootState) => state.playback.takeId;
+export const selectPlayingId = (state: RootState) => state.playback.id;
 
 export const selectIsPlaying = (state: RootState) => state.playback.isPlaying;
 

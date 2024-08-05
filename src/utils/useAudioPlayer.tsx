@@ -25,6 +25,7 @@ const useAudioPlayer = () => {
     if (soundRef.current) {
       await soundRef.current.stopAsync();
       await unloadSound();
+
       dispatch(stopPlayback());
     }
   }, [dispatch, unloadSound]);
@@ -58,7 +59,7 @@ const useAudioPlayer = () => {
   }, [uri, soundRef.current, stop]);
 
   const togglePlayback = useCallback(
-    async (newUri: string, takeId: number) => {
+    async (newUri: string, id: number) => {
       if (soundRef.current) {
         if (uri === newUri) {
           if (isPlaying) {
@@ -71,13 +72,11 @@ const useAudioPlayer = () => {
         } else {
           await stop();
           await loadSound(newUri);
-          dispatch(startPlayback({ uri: newUri, takeId }));
-
-          // newSound.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
+          dispatch(startPlayback({ uri: newUri, id }));
         }
       } else {
         await loadSound(newUri);
-        dispatch(startPlayback({ uri: newUri, takeId }));
+        dispatch(startPlayback({ uri: newUri, id }));
       }
     },
     [uri, isPlaying, stop, loadSound, dispatch],

@@ -22,7 +22,7 @@ const SongDisplay = (props: Props) => {
   const { togglePlayback } = useAudioPlayer();
 
   const orderedTakes: take[] = [...takes].reverse();
-  const onTogglePlayback = (uri: string, takeId: number) => {
+  const handleTogglePlayback = (uri: string, takeId: number) => {
     togglePlayback(uri, takeId);
   };
 
@@ -33,7 +33,7 @@ const SongDisplay = (props: Props) => {
         take={take}
         setToDelete={setToDelete}
         setCurrentTake={setCurrentTake}
-        onTogglePlayback={onTogglePlayback}
+        onTogglePlayback={handleTogglePlayback}
       />
     ));
 

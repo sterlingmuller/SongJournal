@@ -15,7 +15,7 @@ import { updateSelectedTakeIdRequest } from '@src/sagas/actionCreators';
 import PauseIcon from '@src/icons/PauseIcon';
 import {
   selectIsPlaying,
-  selectPlayingTakeId,
+  selectPlayingId,
 } from '@src/selectors/playbackSelector';
 import {
   selectCurrentSongSelectedTakeId,
@@ -28,7 +28,7 @@ interface Props {
   take: take;
   setToDelete: (value: deleteObject) => void;
   setCurrentTake: (value: take) => void;
-  onTogglePlayback: (uri: string, id: number) => void;
+  onTogglePlayback: (uri: string, takeId: number) => void;
 }
 
 const SongTake = (props: Props) => {
@@ -39,7 +39,7 @@ const SongTake = (props: Props) => {
   const db = useSQLiteContext();
   const { shareTake } = useFileShare();
 
-  const selectedPlayingId = useAppSelector(selectPlayingTakeId);
+  const selectedPlayingId = useAppSelector(selectPlayingId);
   const isPlaying = useAppSelector(selectIsPlaying);
   const selectedTakeId = useAppSelector(selectCurrentSongSelectedTakeId);
   const songTitle = useAppSelector(selectCurrentSongTitle);
