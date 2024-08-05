@@ -20,9 +20,9 @@ const filterSongs = (songs: song[], filterOptions: FilterOptions) =>
             }
             break;
           case 'Completed':
-            if (filterValue === true && !song.page?.completed) {
+            if (filterValue === true && !song.page?.info.completed) {
               return false;
-            } else if (filterValue === false && song.page?.completed) {
+            } else if (filterValue === false && song.page?.info.completed) {
               return false;
             }
             break;
