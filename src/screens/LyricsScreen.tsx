@@ -12,10 +12,8 @@ import {
 } from '@src/selectors/songsSelector';
 import LoadingIndicator from '@src/common/components/LoadingIndicator';
 import useLyricScreenStyles from '@src/styles/lyricsScreen';
-import { LyricsOptionName, songDetail } from '@src/common/types';
+import { LyricsOptionName } from '@src/common/types';
 import OptionsBar from '@src/lyrics/subcomponents/OptionsBar';
-import SongDetail from '@src/lyrics/subcomponents/SongDetail';
-import { SONG_DETAILS } from '@src/common/constants';
 import EditLyricsSheet from '@src/lyrics/components/EditLyricsSheet';
 
 const LyricsScreen = () => {
@@ -51,28 +49,11 @@ const LyricsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.infoContainer}>
-        <OptionsBar
-          selectedOption={selectedOption}
-          setSelectedOption={setSelectedOption}
-          page={page}
-        />
-        <View style={styles.details}>
-          {SONG_DETAILS.map(
-            ({ label, key }: songDetail) =>
-              !!page.info[key] && (
-                <SongDetail
-                  key={key}
-                  detailKey={key}
-                  label={label}
-                  value={page.info[key]}
-                  onPageScreen
-                  handleInputChange={() => {}}
-                />
-              ),
-          )}
-        </View>
-      </View>
+      <OptionsBar
+        selectedOption={selectedOption}
+        setSelectedOption={setSelectedOption}
+        page={page}
+      />
       {selectedOption === 'Edit' ? (
         <EditLyricsSheet
           setSelectedOption={setSelectedOption}

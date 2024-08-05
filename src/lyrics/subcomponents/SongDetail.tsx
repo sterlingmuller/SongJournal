@@ -8,18 +8,17 @@ interface Props {
   detailKey: string;
   label: string;
   value: string;
-  onPageScreen?: boolean;
   handleInputChange: (key: keyof SongInfo, value: string) => void;
 }
 
 const SongDetail = (props: Props) => {
-  const { detailKey, label, value, onPageScreen, handleInputChange } = props;
+  const { detailKey, label, value, handleInputChange } = props;
   const styles = useSongDetailStyles();
 
   return (
-    <View style={onPageScreen ? styles.pageContainer : styles.container}>
+    <View style={styles.container}>
       <TextInput
-        style={onPageScreen ? styles.pageTextbox : styles.textbox}
+        style={styles.textbox}
         value={value}
         onChangeText={(text: string) =>
           handleInputChange(detailKey as keyof SongInfo, text)
