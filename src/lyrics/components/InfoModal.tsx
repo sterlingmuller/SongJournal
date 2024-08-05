@@ -49,7 +49,7 @@ const InfoModal = (props: Props) => {
 
   const onSavePress = () => {
     if (newInfo.bpm && (bpmNum < 60 || bpmNum > 180)) {
-      setNewInfo({ ...newInfo, bpm: '' });
+      setNewInfo({ ...newInfo, bpm: originalInfo.bpm });
       return;
     }
     if (isSaveButtonEnabled && newInfo) {
