@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { AVPlaybackStatusSuccess, Audio } from 'expo-av';
 import { useAppDispatch, useAppSelector } from '@src/common/hooks';
 import { selectPlaybackInfo } from '@src/selectors/playbackSelector';
@@ -14,73 +14,74 @@ const useAudioPlayer = () => {
   const { isPlaying, uri } = useAppSelector(selectPlaybackInfo);
   const dispatch = useAppDispatch();
 
+  const unloadSound = useCallback(async () => {
+    if (soundRef.current) {
+      await soundRef.current.unloadAsync();
+      soundRef.current = null;
+    }
+  }, []);
+
+  const stop = useCallback(async () => {
+    if (soundRef.current) {
+      await soundRef.current.stopAsync();
+      await unloadSound();
+      dispatch(stopPlayback());
+    }
+  }, [dispatch, unloadSound]);
+
+  const loadSound = useCallback(async (newUri: string) => {
+    const { sound: newSound } = await Audio.Sound.createAsync(
+      { uri: newUri },
+      { shouldPlay: true },
+    );
+    // { shouldPlay: true, progressUpdateIntervalMillis: 100 },
+
+    soundRef.current = newSound;
+  }, []);
+
   useEffect(() => {
-    const onPlaybackStatusUpdate = (
+    const handlePlaybackStatusUpdate = (
       playbackStatus: AVPlaybackStatusSuccess,
     ) => {
       if (playbackStatus.didJustFinish) {
-        soundRef.current.unloadAsync();
-        dispatch(stopPlayback());
+        stop();
       }
     };
 
     if (soundRef.current) {
-      soundRef.current.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
+      soundRef.current.setOnPlaybackStatusUpdate(handlePlaybackStatusUpdate);
     }
 
     return () => {
       soundRef.current?.setOnPlaybackStatusUpdate(null);
     };
-  }, [uri, soundRef.current]);
+  }, [uri, soundRef.current, stop]);
 
-  const togglePlayback = async (newUri: string, takeId: number) => {
-    if (soundRef.current) {
-      if (uri === newUri) {
-        if (isPlaying) {
-          soundRef.current.pauseAsync().then(() => dispatch(pausePlayback()));
+  const togglePlayback = useCallback(
+    async (newUri: string, takeId: number) => {
+      if (soundRef.current) {
+        if (uri === newUri) {
+          if (isPlaying) {
+            await soundRef.current.pauseAsync();
+            dispatch(pausePlayback());
+          } else {
+            await soundRef.current.playAsync();
+            dispatch(resumePlayback());
+          }
         } else {
-          soundRef.current.playAsync().then(() => dispatch(resumePlayback()));
+          await stop();
+          await loadSound(newUri);
+          dispatch(startPlayback({ uri: newUri, takeId }));
+
+          // newSound.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
         }
       } else {
-        // soundRef.current.stopAsync();
-        soundRef.current.unloadAsync().then(() => (soundRef.current = null));
-        dispatch(stopPlayback());
-
-        const { sound: newSound } = await Audio.Sound.createAsync(
-          { uri: newUri },
-          { shouldPlay: true },
-        );
-
+        await loadSound(newUri);
         dispatch(startPlayback({ uri: newUri, takeId }));
-
-        soundRef.current = newSound;
-
-        // newSound.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
       }
-    } else {
-      const { sound } = await Audio.Sound.createAsync(
-        { uri: newUri },
-        // { shouldPlay: true, progressUpdateIntervalMillis: 100 },
-      );
-      soundRef.current = sound;
-
-      soundRef.current
-        .playAsync()
-        .then(() => dispatch(startPlayback({ uri: newUri, takeId })));
-
-      // dispatch(startPlayback({ uri: newUri, id: newId }));
-    }
-  };
-
-  const stop = async () => {
-    if (soundRef.current) {
-      await soundRef.current.stopAsync();
-      await soundRef.current.unloadAsync();
-      soundRef.current = null;
-
-      dispatch(stopPlayback());
-    }
-  };
+    },
+    [uri, isPlaying, stop, loadSound, dispatch],
+  );
 
   return { stop, togglePlayback };
 };
