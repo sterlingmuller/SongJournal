@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useMemo, useCallback } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
@@ -14,7 +14,7 @@ import { setCurrentSongId } from '@src/slice/currentSongSlice';
 import PauseIcon from '@src/icons/PauseIcon';
 import {
   selectIsPlaying,
-  selectPlayingTakeId,
+  selectPlayingId,
 } from '@src/selectors/playbackSelector';
 import { fetchPageRequest } from '@src/sagas/actionCreators';
 import { useSQLiteContext } from 'expo-sqlite';
@@ -25,7 +25,7 @@ import useFileShare from '@src/hooks/useFileShare';
 
 interface Props {
   song: song;
-  togglePlayback: (uri: string, id: number) => void;
+  togglePlayback: (uri: string, songId: number) => void;
 }
 
 const SongFolder = ({ song, togglePlayback }: Props) => {
@@ -35,69 +35,66 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
   const db = useSQLiteContext();
   const { shareSongFolder } = useFileShare();
 
-  const { title, songId } = song;
+  const { title, songId, takes, selectedTakeId } = song;
   const [isPressed, setIsPressed] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState<string>(title);
 
   const inputRef = useRef<TextInput | null>(null);
 
-  const selectedPlayingSongId = useAppSelector(selectPlayingTakeId);
+  const selectedPlayingSongId = useAppSelector(selectPlayingId);
   const isPlaying = useAppSelector(selectIsPlaying);
 
   const isCurrentSongPlaying = songId === selectedPlayingSongId && isPlaying;
 
-  const handleShare = () => {
+  const selectedTake = useMemo(
+    () => takes.find((take: take) => take.takeId === selectedTakeId),
+    [takes, selectedTakeId],
+  );
+
+  const handleShare = useCallback(() => {
     shareSongFolder(song);
-  };
+  }, [shareSongFolder, song]);
 
-  const handlePressIn = () => {
-    setIsPressed(true);
-  };
+  const handlePressIn = useCallback(() => setIsPressed(true), []);
+  const handlePressOut = useCallback(() => setIsPressed(false), []);
 
-  const handlePressOut = () => {
-    setIsPressed(false);
-  };
+  const handleOnPressNavigation = useCallback(
+    (screen: 'Song' | 'Lyrics') => {
+      dispatch(setCurrentSongId(songId));
+      if (screen === 'Lyrics') {
+        dispatch(fetchPageRequest({ songId, db }));
+      }
+      navigate(screen);
+    },
+    [dispatch, songId, db, navigate],
+  );
 
-  const handleOnPressNavigation = (screen: 'Song' | 'Lyrics') => {
-    dispatch(setCurrentSongId(songId));
-    if (screen === 'Lyrics') {
-      dispatch(fetchPageRequest({ songId, db }));
-    }
-    navigate(screen);
-  };
+  const handleBlur = useCallback(() => setIsEditing(false), []);
 
-  // add check and x under title to save title change
-  const handleBlur = () => {
-    setIsEditing(false);
-  };
-
-  const onTogglePlayback = () => {
-    const selectedTake = song.takes.find(
-      (take: take) => take.takeId === song.selectedTakeId,
-    );
-
+  const onTogglePlayback = useCallback(() => {
     if (selectedTake) {
-      togglePlayback(selectedTake.uri, selectedTake.takeId);
+      togglePlayback(selectedTake.uri, songId);
     }
-  };
+  }, [selectedTake, togglePlayback, songId]);
 
   const onDoubleTap: () => void = useDoubleTap(() => {
     setIsEditing(true);
     setTimeout(() => inputRef.current?.focus(), 100);
   });
 
-  const selectedTake = song.takes.find(
-    (take: take) => take.takeId === song.selectedTakeId,
-  );
-  const date = selectedTake?.date;
-  const formattedDate = date ? (
-    <StyledText>{formatDateFromISOString(date)}</StyledText>
-  ) : (
-    <StyledText style={styles.warningText}>
-      No takes have been recored
-    </StyledText>
-  );
+  const formattedDate = useMemo(() => {
+    if (selectedTake?.date) {
+      return (
+        <StyledText>{formatDateFromISOString(selectedTake.date)}</StyledText>
+      );
+    }
+    return (
+      <StyledText style={styles.warningText}>
+        No takes have been recorded
+      </StyledText>
+    );
+  }, [selectedTake, styles.warningText]);
 
   return (
     <TouchableOpacity

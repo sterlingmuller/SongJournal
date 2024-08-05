@@ -177,7 +177,7 @@ export type setSelectedTakeIdPayload = {
 };
 
 export type playbackPayload = {
-  takeId: number;
+  id: number;
   uri: string;
 };
 
