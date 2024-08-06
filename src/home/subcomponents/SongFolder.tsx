@@ -22,18 +22,19 @@ import useDoubleTap from '@src/hooks/useDoubleTap';
 import { TextInput } from 'react-native-gesture-handler';
 import { formatDateFromISOString } from '@src/utils/formateDateFromISOString';
 import useFileShare from '@src/hooks/useFileShare';
+import { useAudioPlayer } from '@src/context/AudioContext';
 
 interface Props {
   song: song;
-  togglePlayback: (uri: string, songId: number) => void;
 }
 
-const SongFolder = ({ song, togglePlayback }: Props) => {
+const SongFolder = ({ song }: Props) => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   const styles = useSongFolderStyles();
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
   const { shareSongFolder } = useFileShare();
+  const { togglePlayback, stop } = useAudioPlayer();
 
   const { title, songId, takes, selectedTakeId } = song;
   const [isPressed, setIsPressed] = useState(false);
@@ -65,9 +66,13 @@ const SongFolder = ({ song, togglePlayback }: Props) => {
       if (screen === 'Lyrics') {
         dispatch(fetchPageRequest({ songId, db }));
       }
+      if (isPlaying) {
+        stop();
+      }
+
       navigate(screen);
     },
-    [dispatch, songId, db, navigate],
+    [dispatch, songId, db, navigate, isPlaying],
   );
 
   const handleBlur = useCallback(() => setIsEditing(false), []);

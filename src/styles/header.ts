@@ -1,4 +1,4 @@
-import { useColorTheme } from '@src/theme/ThemeContext';
+import { useColorTheme } from '@src/context/ThemeContext';
 import { TextStyle, ViewStyle } from 'react-native';
 
 interface Styles {

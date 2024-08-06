@@ -12,7 +12,6 @@ import {
   songs,
   sortByCategoryName,
 } from '@src/common/types';
-import useAudioPlayer from '@src/utils/useAudioPlayer';
 import { sortSongs } from '@src/utils/sortSongs';
 
 interface Props {
@@ -26,7 +25,6 @@ interface Props {
 const SongFolders = (props: Props) => {
   const { setToDelete, sortedCategory, isSortAscending, filterOptions, songs } =
     props;
-  const { togglePlayback } = useAudioPlayer();
 
   const sortedSongs = sortSongs(
     songs,
@@ -58,7 +56,7 @@ const SongFolders = (props: Props) => {
       keyExtractor={(item: song) => item.songId.toString()}
       onRowDidOpen={onRowDidOpen}
       renderItem={(data: ListRenderItemInfo<song>) => {
-        return <SongFolder song={data.item} togglePlayback={togglePlayback} />;
+        return <SongFolder song={data.item} />;
       }}
       renderHiddenItem={(data: ListRenderItemInfo<SongItem>) => (
         <DeleteRow

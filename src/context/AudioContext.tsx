@@ -1,5 +1,13 @@
-import { useEffect, useRef, useCallback } from 'react';
-import { AVPlaybackStatusSuccess, Audio } from 'expo-av';
+import React, {
+  Context,
+  createContext,
+  useContext,
+  useRef,
+  useCallback,
+  useEffect,
+  ReactNode,
+} from 'react';
+import { Audio, AVPlaybackStatusSuccess } from 'expo-av';
 import { useAppDispatch, useAppSelector } from '@src/common/hooks';
 import { selectPlaybackInfo } from '@src/selectors/playbackSelector';
 import {
@@ -9,7 +17,18 @@ import {
   stopPlayback,
 } from '@src/slice/playbackSlice';
 
-const useAudioPlayer = () => {
+interface AudioContextType {
+  togglePlayback: (uri: string, id: number) => Promise<void>;
+  stop: () => Promise<void>;
+}
+
+const AudioContext: Context<AudioContextType> = createContext(undefined);
+
+type Props = {
+  children?: ReactNode;
+};
+
+export const AudioProvider = ({ children }: Props) => {
   const soundRef = useRef<Audio.Sound | null>(null);
   const { isPlaying, uri } = useAppSelector(selectPlaybackInfo);
   const dispatch = useAppDispatch();
@@ -82,7 +101,11 @@ const useAudioPlayer = () => {
     [uri, isPlaying, stop, loadSound, dispatch],
   );
 
-  return { stop, togglePlayback };
+  return (
+    <AudioContext.Provider value={{ togglePlayback, stop }}>
+      {children}
+    </AudioContext.Provider>
+  );
 };
 
-export default useAudioPlayer;
+export const useAudioPlayer = () => useContext(AudioContext);

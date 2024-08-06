@@ -23,21 +23,22 @@ import {
 } from '@src/selectors/songsSelector';
 import { formatDateFromISOString } from '@src/utils/formateDateFromISOString';
 import useFileShare from '@src/hooks/useFileShare';
+import { useAudioPlayer } from '@src/context/AudioContext';
 
 interface Props {
   take: take;
   setToDelete: (value: deleteObject) => void;
   setCurrentTake: (value: take) => void;
-  onTogglePlayback: (uri: string, takeId: number) => void;
 }
 
 const SongTake = (props: Props) => {
-  const { take, setToDelete, setCurrentTake, onTogglePlayback } = props;
+  const { take, setToDelete, setCurrentTake } = props;
   const { takeId, songId, title, uri } = take;
   const styles = useSongTakeStyles();
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
   const { shareTake } = useFileShare();
+  const { togglePlayback } = useAudioPlayer();
 
   const selectedPlayingId = useAppSelector(selectPlayingId);
   const isPlaying = useAppSelector(selectIsPlaying);
@@ -88,7 +89,7 @@ const SongTake = (props: Props) => {
       </View>
       <TouchableOpacity
         style={styles.playIcon}
-        onPress={() => onTogglePlayback(take.uri, take.takeId)}
+        onPress={() => togglePlayback(take.uri, take.takeId)}
       >
         {isCurrentTakePlaying ? <PauseIcon /> : <PlayIcon />}
       </TouchableOpacity>
