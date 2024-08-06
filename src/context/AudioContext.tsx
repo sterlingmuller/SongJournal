@@ -19,7 +19,7 @@ import {
 
 interface AudioContextType {
   togglePlayback: (uri: string, id: number) => Promise<void>;
-  stop: () => Promise<void>;
+  clearPlayback: () => Promise<void>;
 }
 
 const AudioContext: Context<AudioContextType> = createContext(undefined);
@@ -40,7 +40,7 @@ export const AudioProvider = ({ children }: Props) => {
     }
   }, []);
 
-  const stop = useCallback(async () => {
+  const clearPlayback = useCallback(async () => {
     if (soundRef.current) {
       await soundRef.current.stopAsync();
       await unloadSound();
@@ -64,7 +64,7 @@ export const AudioProvider = ({ children }: Props) => {
       playbackStatus: AVPlaybackStatusSuccess,
     ) => {
       if (playbackStatus.didJustFinish) {
-        stop();
+        clearPlayback();
       }
     };
 
@@ -75,7 +75,7 @@ export const AudioProvider = ({ children }: Props) => {
     return () => {
       soundRef.current?.setOnPlaybackStatusUpdate(null);
     };
-  }, [uri, soundRef.current, stop]);
+  }, [uri, soundRef.current, clearPlayback]);
 
   const togglePlayback = useCallback(
     async (newUri: string, id: number) => {
@@ -89,7 +89,7 @@ export const AudioProvider = ({ children }: Props) => {
             dispatch(resumePlayback());
           }
         } else {
-          await stop();
+          await clearPlayback();
           await loadSound(newUri);
           dispatch(startPlayback({ uri: newUri, id }));
         }
@@ -98,11 +98,11 @@ export const AudioProvider = ({ children }: Props) => {
         dispatch(startPlayback({ uri: newUri, id }));
       }
     },
-    [uri, isPlaying, stop, loadSound, dispatch],
+    [uri, isPlaying, clearPlayback, loadSound, dispatch],
   );
 
   return (
-    <AudioContext.Provider value={{ togglePlayback, stop }}>
+    <AudioContext.Provider value={{ togglePlayback, clearPlayback }}>
       {children}
     </AudioContext.Provider>
   );

@@ -18,13 +18,15 @@ import { RootStackParamList, deleteObject, take } from '@src/common/types';
 import { useAppSelector } from '@src/common/hooks';
 import { selectCurrentSongTotalTakes } from '@src/selectors/songsSelector';
 import SongDisplay from '@src/songFolder/components/SongDisplay';
+import { useAudioPlayer } from '@src/context/AudioContext';
 
 const SongScreen = () => {
   const styles = useSongScreenStyles();
   const globalStyles = useGlobalStyles();
-  const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const totalTakes = useAppSelector(selectCurrentSongTotalTakes);
   const isPermissionGranted = useMicrophonePermissions();
+  const { clearPlayback } = useAudioPlayer();
 
   const [toDelete, setToDelete] = useState<deleteObject>(EMPTY_DELETE_OBJECT);
   const [currentTake, setCurrentTake] = useState<take>(EMPTY_TAKE);
@@ -35,7 +37,7 @@ const SongScreen = () => {
     const recording = () => {
       const newTakeTitle = `Take ${totalTakes + 1}`;
 
-      navigate('Recording', { title: newTakeTitle });
+      navigation.navigate('Recording', { title: newTakeTitle });
     };
 
     isPermissionGranted === 'granted'
@@ -52,6 +54,12 @@ const SongScreen = () => {
     isPermissionsNeededModalOpen,
     setIsPermissionsNeededModalOpen,
   ]);
+
+  useEffect(() => {
+    navigation.addListener('beforeRemove', () => {
+      clearPlayback();
+    });
+  }, [navigation]);
 
   return (
     <View style={globalStyles.container}>

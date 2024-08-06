@@ -6,19 +6,15 @@ import { RootStackParamList, tab, tabNames } from '@src/common/types';
 import useHomeFooterStyles from '@styles/homeFooter';
 import { TABS } from '@src/common/constants';
 import { useAudioPlayer } from '@src/context/AudioContext';
-import { useAppSelector } from '@src/common/hooks';
-import { selectIsPlaying } from '@src/selectors/playbackSelector';
 
 const Footer = () => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   const styles = useHomeFooterStyles();
-  const { stop } = useAudioPlayer();
-  const isPlaying = useAppSelector(selectIsPlaying);
+  const { clearPlayback } = useAudioPlayer();
 
   const handleTabPress = (screenName: tabNames) => {
-    if (isPlaying) {
-      stop();
-    }
+    clearPlayback();
+
     // ts error because no playlist screen atm
     navigate(screenName);
   };
