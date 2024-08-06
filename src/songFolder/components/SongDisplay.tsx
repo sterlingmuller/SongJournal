@@ -1,7 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import useAudioPlayer from '@src/utils/useAudioPlayer';
 
 import useSongScreenStyles from '@src/styles/songScreen';
 import { deleteObject, take } from '@src/common/types';
@@ -19,12 +18,8 @@ const SongDisplay = (props: Props) => {
   const { setToDelete, setCurrentTake } = props;
   const takes = useAppSelector(selectCurrentSongTakes);
   const styles = useSongScreenStyles();
-  const { togglePlayback } = useAudioPlayer();
 
   const orderedTakes: take[] = [...takes].reverse();
-  const handleTogglePlayback = (uri: string, takeId: number) => {
-    togglePlayback(uri, takeId);
-  };
 
   const renderTakes = () =>
     orderedTakes.map((take: take) => (
@@ -33,7 +28,6 @@ const SongDisplay = (props: Props) => {
         take={take}
         setToDelete={setToDelete}
         setCurrentTake={setCurrentTake}
-        onTogglePlayback={handleTogglePlayback}
       />
     ));
 
