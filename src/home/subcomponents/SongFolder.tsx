@@ -34,7 +34,7 @@ const SongFolder = ({ song }: Props) => {
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
   const { shareSongFolder } = useFileShare();
-  const { togglePlayback, stop } = useAudioPlayer();
+  const { togglePlayback, clearPlayback } = useAudioPlayer();
 
   const { title, songId, takes, selectedTakeId } = song;
   const [isPressed, setIsPressed] = useState(false);
@@ -66,13 +66,11 @@ const SongFolder = ({ song }: Props) => {
       if (screen === 'Lyrics') {
         dispatch(fetchPageRequest({ songId, db }));
       }
-      if (isPlaying) {
-        stop();
-      }
+      clearPlayback();
 
       navigate(screen);
     },
-    [dispatch, songId, db, navigate, isPlaying],
+    [dispatch, songId, db, navigate],
   );
 
   const handleBlur = useCallback(() => setIsEditing(false), []);
