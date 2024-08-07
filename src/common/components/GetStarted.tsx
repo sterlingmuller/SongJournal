@@ -2,16 +2,15 @@ import React from 'react';
 import { View } from 'react-native';
 
 import StyledText from '@src/common/components/StyledText';
-import EggIcon from '@src/icons/EggIcon';
 import useGetStartedHomeStyles from '@src/styles/getStartedHome';
-import Egg2Icon from '@src/icons/Egg2Icon';
+import EggIcon from '@src/icons/EggIcon';
 
 interface props {
-  screen: 'home' | 'song';
+  screen: 'home' | 'song' | 'musicPlayer';
 }
 const GetStarted = ({ screen }: props) => {
   const styles = useGetStartedHomeStyles();
-  let instructions: React.ReactElement;
+  let message: React.ReactElement;
 
   const getStartedHomeInstructions = (
     <StyledText style={styles.text}>
@@ -30,19 +29,35 @@ const GetStarted = ({ screen }: props) => {
     </StyledText>
   );
 
-  if (screen === 'home') {
-    instructions = getStartedHomeInstructions;
-  } else {
-    instructions = getStartedSongInstructions;
+  const musicPlayerPlansMessage = (
+    <StyledText style={styles.text}>
+      Ah! What are <StyledText style={{ fontStyle: 'italic' }}>you</StyledText>{' '}
+      doing here? The{' '}
+      <StyledText style={{ fontWeight: 'bold' }}>Music Player</StyledText> is
+      not ready for the world to{' '}
+      <StyledText style={{ fontWeight: 'bold' }}>C</StyledText>!
+    </StyledText>
+  );
+
+  switch (screen) {
+    case 'home':
+      message = getStartedHomeInstructions;
+      break;
+    case 'song':
+      message = getStartedSongInstructions;
+      break;
+    case 'musicPlayer':
+      message = musicPlayerPlansMessage;
+      break;
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.eggContainer}>
-        <Egg2Icon />
+        <EggIcon />
       </View>
       <View style={styles.textbox}>
-        {instructions}
+        {message}
         <View style={styles.arrow} />
       </View>
     </View>
