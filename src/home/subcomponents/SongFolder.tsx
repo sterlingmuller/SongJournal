@@ -3,7 +3,6 @@ import { View, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 import StyledText from '@src/common/components/StyledText';
-import LyricsIcon from '@src/icons/LyricsIcon';
 import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
 import PlaybackBar from '@src/home/subcomponents/PlaybackBar';
@@ -23,6 +22,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { formatDateFromISOString } from '@src/utils/formateDateFromISOString';
 import useFileShare from '@src/hooks/useFileShare';
 import { useAudioPlayer } from '@src/context/AudioContext';
+import PageIcon from '@src/icons/PageIcon';
 
 interface Props {
   song: song;
@@ -123,8 +123,11 @@ const SongFolder = ({ song }: Props) => {
         </TouchableOpacity>
         {formattedDate}
         <View style={styles.iconRow}>
-          <TouchableOpacity onPress={() => handleOnPressNavigation('Lyrics')}>
-            <LyricsIcon />
+          <TouchableOpacity
+            onPress={() => handleOnPressNavigation('Lyrics')}
+            style={{ paddingBottom: 4 }}
+          >
+            <PageIcon />
           </TouchableOpacity>
           <TouchableOpacity onPress={handleShare}>
             <ShareIcon />
