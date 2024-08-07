@@ -9,8 +9,10 @@ import useDeleteModalStyles from '@src/styles/deleteModal';
 import { deleteSong } from '@src/repositories/SongsRepository';
 import { useSQLiteContext } from 'expo-sqlite';
 import { removeSong, removeTake } from '@src/slice/songsSlice';
-import { useAppDispatch } from '@src/common/hooks';
+import { useAppDispatch, useAppSelector } from '@src/common/hooks';
 import { deleteTake } from '@src/repositories/TakeRepository';
+import { useAudioPlayer } from '@src/context/AudioContext';
+import { selectPlayingId } from '@src/selectors/playbackSelector';
 
 interface Props {
   setToDelete: (value: deleteObject | null) => void;
@@ -22,6 +24,8 @@ const DeleteModal = (props: Props) => {
   const styles = useDeleteModalStyles();
   const db = useSQLiteContext();
   const dispatch = useAppDispatch();
+  const { clearPlayback } = useAudioPlayer();
+  const playingId = useAppSelector(selectPlayingId);
 
   const { deleteText, setToDelete, toDelete } = props;
   const { title, songId, takeId, type } = toDelete;
@@ -32,11 +36,18 @@ const DeleteModal = (props: Props) => {
 
   const onDeletePress = async () => {
     if (type === 'song') {
+      if (songId === playingId) {
+        clearPlayback();
+      }
+
       await deleteSong(db, songId);
 
       dispatch(removeSong(songId));
     } else if (type === 'take') {
-      await deleteTake(db, takeId);
+      if (takeId === playingId) {
+        clearPlayback();
+      }
+      deleteTake(db, takeId);
 
       dispatch(removeTake({ songId, takeId }));
     }

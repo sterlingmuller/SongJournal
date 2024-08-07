@@ -40,6 +40,8 @@ const SongScreen = () => {
       navigation.navigate('Recording', { title: newTakeTitle });
     };
 
+    clearPlayback();
+
     isPermissionGranted === 'granted'
       ? recording()
       : setIsPermissionsNeededModalOpen(true);
