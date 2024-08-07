@@ -46,7 +46,8 @@ const useSongFolderStyles = () => {
 
     iconRow: {
       flexDirection: 'row',
-      gap: 24,
+      gap: 20,
+      alignItems: 'center',
     },
 
     playIcon: {
