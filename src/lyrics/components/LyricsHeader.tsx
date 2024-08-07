@@ -6,6 +6,7 @@ import InfoIcon from '@src/icons/InfoIcon';
 import BackIcon from '@src/icons/BackIcon';
 import useLyricsHeaderStyles from '@src/styles/lyricsHeader';
 import { selectCurrentSongTitle } from '@src/selectors/songsSelector';
+import { useNavigation } from '@react-navigation/native';
 
 interface Props {
   isInfoModalOpen: boolean;
@@ -16,11 +17,14 @@ const LyricsHeader = (props: Props) => {
   const { isInfoModalOpen, setIsInfoModalOpen } = props;
   const styles = useLyricsHeaderStyles();
   const title = useSelector(selectCurrentSongTitle);
+  const { goBack } = useNavigation();
 
   return (
     <View style={styles.container}>
       <View style={styles.titlePlusArrow}>
-        <BackIcon />
+        <TouchableOpacity onPress={goBack}>
+          <BackIcon />
+        </TouchableOpacity>
         <Text style={styles.title}>{title}</Text>
       </View>
       <TouchableOpacity

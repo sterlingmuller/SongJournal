@@ -1,6 +1,9 @@
 import React from 'react';
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
 
 import SettingsScreen from '@src/screens/SettingsScreen';
 import SongScreen from '@src/screens/SongScreen';
@@ -13,6 +16,8 @@ import HeaderPageButton from '@src/songFolder/subcomponents/HeaderPageButton';
 import useHeaderStyles from '@src/styles/header';
 import { selectCurrentSongTitle } from '@src/selectors/songsSelector';
 import { useAppSelector } from '@src/common/hooks';
+import { TouchableOpacity } from 'react-native';
+import BackIcon from '@src/icons/BackIcon';
 
 const AppNavigator = () => {
   const RootStack: any = createNativeStackNavigator<RootStackParamList>();
@@ -27,11 +32,20 @@ const AppNavigator = () => {
         <RootStack.Screen
           name="Song"
           component={SongScreen}
-          options={{
+          options={({
+            navigation,
+          }: {
+            navigation: NativeStackNavigationProp<RootStackParamList, 'Song'>;
+          }) => ({
             ...styles,
             title,
             headerRight: () => <HeaderPageButton />,
-          }}
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <BackIcon />
+              </TouchableOpacity>
+            ),
+          })}
         />
         <RootStack.Screen
           name="Recording"

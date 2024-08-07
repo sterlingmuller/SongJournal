@@ -15,8 +15,8 @@ const GetStarted = ({ screen }: props) => {
   const getStartedHomeInstructions = (
     <StyledText style={styles.text}>
       {`Looks like your journal is empty.\nTo get started, visit `}
-      <StyledText style={{ fontWeight: 'bold' }}>Settings</StyledText> for help
-      importing a journal or press the{' '}
+      <StyledText style={{ fontWeight: 'bold' }}>Settings</StyledText> 4&#8260;4
+      help importing a journal or press the{' '}
       <StyledText style={{ fontWeight: 'bold' }}>New Song</StyledText> button
       below.
     </StyledText>
@@ -32,10 +32,10 @@ const GetStarted = ({ screen }: props) => {
   const musicPlayerPlansMessage = (
     <StyledText style={styles.text}>
       Ah! What are <StyledText style={{ fontStyle: 'italic' }}>you</StyledText>{' '}
-      doing here? The{' '}
+      doing here!? The{' '}
       <StyledText style={{ fontWeight: 'bold' }}>Music Player</StyledText> is
-      not ready for the world to{' '}
-      <StyledText style={{ fontWeight: 'bold' }}>C</StyledText>!
+      not ready 4&#8260;4 the world to{' '}
+      <StyledText style={{ fontWeight: 'bold' }}>C</StyledText>
     </StyledText>
   );
 
