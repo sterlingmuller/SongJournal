@@ -7,7 +7,7 @@ import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 import { LyricsOptionName } from '@src/common/types';
 import { useAppDispatch } from '@src/common/hooks';
 import useLyricScreenStyles from '@src/styles/lyricsScreen';
-import { selectCurrentSongPage } from '@src/selectors/songsSelector';
+import { selectCurrentSongPage } from '@src/selectors/pagesSelector';
 import { updateLyricsRequest } from '@src/sagas/actionCreators';
 import TextEditor from '@src/common/components/TextEditor';
 

@@ -3,7 +3,7 @@ import { EMPTY_SONG } from '@src/common/constants';
 import { song, songs } from '@src/common/types';
 import { RootState } from '@src/store';
 
-export const selectSongs = (state: RootState) => state.songs.songs;
+export const selectSongs = (state: RootState) => state.songs.items;
 
 export const selectCurrentSongId = (state: RootState) => state.currentSong;
 
@@ -26,11 +26,6 @@ export const selectCurrentSongTotalTakes = createSelector(
 export const selectCurrentSongTitle = createSelector(
   [selectCurrentSong],
   (song: song) => song.title,
-);
-
-export const selectCurrentSongPage = createSelector(
-  [selectCurrentSong],
-  (song: song) => song.page,
 );
 
 export const selectCurrentSongTakes = createSelector(

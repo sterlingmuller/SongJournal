@@ -6,10 +6,8 @@ import LyricsHeader from '@src/lyrics/components/LyricsHeader';
 import InfoModal from '@src/lyrics/components/InfoModal';
 import LyricsSheet from '@src/lyrics/components/LyricsSheet';
 import { useAppSelector } from '@src/common/hooks';
-import {
-  selectCurrentSongId,
-  selectCurrentSongPage,
-} from '@src/selectors/songsSelector';
+import { selectCurrentSongId } from '@src/selectors/songsSelector';
+import { selectCurrentSongPage } from '@src/selectors/pagesSelector';
 import LoadingIndicator from '@src/common/components/LoadingIndicator';
 import useLyricScreenStyles from '@src/styles/lyricsScreen';
 import { LyricsOptionName } from '@src/common/types';
