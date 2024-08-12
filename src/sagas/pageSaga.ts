@@ -1,8 +1,7 @@
-import { call, put, takeEvery, all, fork } from 'redux-saga/effects';
+import { call, put, takeEvery, all, fork, select } from 'redux-saga/effects';
 
 import {
   fetchPagePayload,
-  page,
   updateLyricsPayload,
   updatePageInfoPayload,
 } from '@src/common/types';
@@ -12,22 +11,29 @@ import {
   updateLyrics,
   updatePageInfo,
 } from '@src/repositories/PageRepository';
-import { fetchPageFailure, fetchPageSuccess } from '@src/slice/songsSlice';
+import { fetchPageFailure, fetchPageSuccess } from '@src/slice/pagesSlice';
 import {
   updateLyricsSuccess,
   updatePageInfoFailure,
   updatePageInfoSuccess,
 } from './actionCreators';
+import { RootState } from '@src/store';
 
 type FetchPageParams = { payload: fetchPagePayload; type: string };
 
 function* fetchPage({ payload }: FetchPageParams) {
-  try {
-    const page = yield call(fetchPageBySongId, payload);
+  const pageExists = yield select(
+    (state: RootState) => !!state.pages.items[payload.songId],
+  );
 
-    yield put(fetchPageSuccess({ page, songId: payload.songId }));
-  } catch (error) {
-    yield put(fetchPageFailure(error.message));
+  if (!pageExists) {
+    try {
+      const page = yield call(fetchPageBySongId, payload);
+
+      yield put(fetchPageSuccess({ page, songId: payload.songId }));
+    } catch (error) {
+      yield put(fetchPageFailure(error.message));
+    }
   }
 }
 
