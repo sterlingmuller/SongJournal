@@ -1,12 +1,8 @@
-import {
-  FilterOptions,
-  song,
-  sortByCategoryName,
-  take,
-} from '@src/common/types';
+import { SortBy } from '@src/common/enums';
+import { FilterOptions, Song, Songs, Take } from '@src/common/types';
 
-const filterSongs = (songs: song[], filterOptions: FilterOptions) =>
-  songs.filter((song: song) => {
+const filterSongs = (songs: Songs, filterOptions: FilterOptions) =>
+  songs.filter((song: Song) => {
     for (const filterKey in filterOptions) {
       const filterValue = filterOptions[filterKey];
 
@@ -33,46 +29,41 @@ const filterSongs = (songs: song[], filterOptions: FilterOptions) =>
   });
 
 export const sortSongs = (
-  songs: song[],
-  sortedCategory: sortByCategoryName,
+  songs: Songs,
+  sortedCategory: SortBy,
   isSortAscending: boolean = true,
   filterOptions: FilterOptions,
-): song[] => {
+): Songs => {
   const filteredSongs = filterSongs(songs, filterOptions);
   const sortedSongs = [...filteredSongs];
 
-  sortedSongs.sort((a: song, b: song) => {
+  sortedSongs.sort((a: Song, b: Song) => {
     switch (sortedCategory) {
-      case 'Date': {
+      case SortBy.DATE: {
         const dateA =
-          a.takes.find((take: take) => take.takeId === a.selectedTakeId)
+          a.takes.find((take: Take) => take.takeId === a.selectedTakeId)
             ?.date || '';
         const dateB =
-          b.takes.find((take: take) => take.takeId === b.selectedTakeId)
+          b.takes.find((take: Take) => take.takeId === b.selectedTakeId)
             ?.date || '';
         return isSortAscending
           ? new Date(dateA).getTime() - new Date(dateB).getTime()
           : new Date(dateB).getTime() - new Date(dateA).getTime();
       }
-      case 'Name':
+      case SortBy.NAME:
         return isSortAscending
           ? a.title.localeCompare(b.title)
           : b.title.localeCompare(a.title);
-      case 'Length':
-        {
-          const durationA =
-            a.takes.find((take: take) => take.takeId === a.selectedTakeId)
-              ?.duration || 0;
-          const durationB =
-            b.takes.find((take: take) => take.takeId === b.selectedTakeId)
-              ?.duration || 0;
-          return isSortAscending
-            ? durationA - durationB
-            : durationB - durationA;
-        }
-        return isSortAscending
-          ? (a.page?.lyrics.length || 0) - (b.page?.lyrics.length || 0)
-          : (b.page?.lyrics.length || 0) - (a.page?.lyrics.length || 0);
+      case SortBy.LENGTH: {
+        const durationA =
+          a.takes.find((take: Take) => take.takeId === a.selectedTakeId)
+            ?.duration || 0;
+        const durationB =
+          b.takes.find((take: Take) => take.takeId === b.selectedTakeId)
+            ?.duration || 0;
+        return isSortAscending ? durationA - durationB : durationB - durationA;
+      }
+
       default:
         return 0;
     }

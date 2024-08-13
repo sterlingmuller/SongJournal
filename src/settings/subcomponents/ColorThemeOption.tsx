@@ -2,12 +2,12 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 
 import StyledText from '@src/common/components/StyledText';
-import { colorThemeName } from '@src/common/types';
 import { useColorTheme } from '@src/context/ThemeContext';
 import useSettingsStyle from '@styles/settings';
+import { ColorTheme } from '@src/common/enums';
 
 interface Props {
-  label: colorThemeName;
+  label: ColorTheme;
 }
 
 const ColorThemeOption = ({ label }: Props) => {

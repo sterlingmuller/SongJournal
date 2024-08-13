@@ -41,4 +41,3 @@ const takeSlice = createSlice({
 });
 
 export default takeSlice.reducer;
-// export const {} = takeSlice.actions;

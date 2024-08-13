@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Modal, TouchableOpacity, TextInput } from 'react-native';
 
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
-import { take } from '@src/common/types';
+import { Take } from '@src/common/types';
 import useTakeNotesModalStyles from '@styles/takeNotesModal';
 import { EMPTY_TAKE } from '@src/common/constants';
-import { useAppDispatch } from '@src/common/hooks';
+import { useAppDispatch } from '@src/hooks/typedReduxHooks';
 import { useSQLiteContext } from 'expo-sqlite';
 import { updateTakeNotesRequest } from '@src/sagas/actionCreators';
 
 interface Props {
-  setCurrentTake: (value: take) => void;
-  currentTake: take;
+  setCurrentTake: (value: Take) => void;
+  currentTake: Take;
 }
 
 const NotesModal = (props: Props) => {

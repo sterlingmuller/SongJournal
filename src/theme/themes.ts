@@ -1,4 +1,4 @@
-import { colorThemeName } from '@src/common/types';
+import { ColorTheme } from '@src/common/enums';
 import { colors as c } from '@src/theme/colors';
 
 export interface Theme {
@@ -11,7 +11,7 @@ export interface Theme {
   highlight: string;
 }
 
-const themes: Record<colorThemeName, Theme> = {
+const themes: Record<ColorTheme, Theme> = {
   Light: {
     primary: c.coral,
     secondary: c.gold,

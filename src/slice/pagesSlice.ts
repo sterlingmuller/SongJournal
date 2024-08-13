@@ -6,15 +6,15 @@ import {
 
 import {
   UpdatePageInfoSuccess,
-  fetchPageSuccessPayload,
-  page,
-  updateLyricsSuccess,
+  FetchPageSuccessPayload,
+  Page,
+  UpdateLyricsSuccess,
 } from '@src/common/types';
 import * as ac from '@src/sagas/actionCreators';
 import * as at from '@src/sagas/actionTypes';
 
 type PagesSliceState = {
-  items: page[];
+  items: Page[];
   isLoading: boolean;
   error: Error | null;
 };
@@ -31,7 +31,7 @@ const pagesSlice = createSlice({
   reducers: {
     fetchPageSuccess: (
       state: PagesSliceState,
-      action: PayloadAction<fetchPageSuccessPayload>,
+      action: PayloadAction<FetchPageSuccessPayload>,
     ) => {
       const { page, songId } = action.payload;
 
@@ -54,7 +54,7 @@ const pagesSlice = createSlice({
         ac.updateLyricsSuccess,
         (
           state: PagesSliceState,
-          action: PayloadAction<updateLyricsSuccess>,
+          action: PayloadAction<UpdateLyricsSuccess>,
         ) => {
           const { songId, lyrics } = action.payload;
 

@@ -3,12 +3,12 @@ import { View, TouchableOpacity } from 'react-native';
 
 import TrashIcon from '@src/icons/TrashIcon';
 import useSongFolderStyles from '@styles/songFolder';
-import { deleteObject } from '@src/common/types';
+import { DeleteObject } from '@src/common/types';
 
 interface Props {
   title: string;
   id: number;
-  setToDelete: (value: deleteObject | null) => void;
+  setToDelete: (value: DeleteObject | null) => void;
 }
 
 const DeleteRow = (props: Props) => {

@@ -1,22 +1,23 @@
-import {
-  createSongPayload,
-  page,
-  songInfo,
-  take,
-  updateSelectedTakeIdPayloadDb,
-} from '@src/common/types';
 import { SQLiteDatabase } from 'expo-sqlite';
+
+import {
+  CreateSongPayload,
+  Page,
+  DbSong,
+  UpdateSelectedTakeIdPayloadDb,
+  Takes,
+} from '@src/common/types';
 
 export const fetchSongs = (db: SQLiteDatabase) =>
   db.getAllSync('SELECT selectedTakeID, songId, title, totalTakes FROM Songs');
 
 export const getTakesAndPageBySongId = (db: SQLiteDatabase, songId: number) => {
-  const takes: take[] = db.getAllSync(
+  const takes: Takes = db.getAllSync(
     'SELECT * FROM Takes WHERE songId = ?',
     songId,
   );
 
-  const page: page = db.getFirstSync(
+  const page: Page = db.getFirstSync(
     'SELECT * FROM Page WHERE songId = ?',
     songId,
   );
@@ -24,7 +25,7 @@ export const getTakesAndPageBySongId = (db: SQLiteDatabase, songId: number) => {
   return { takes, page };
 };
 
-export const createSong = async ({ db, title }: createSongPayload) => {
+export const createSong = async ({ db, title }: CreateSongPayload) => {
   try {
     const result = await db.runAsync(
       'INSERT INTO Songs (title, selectedTakeId, totalTakes) VALUES (?, -1, 0)',
@@ -37,12 +38,12 @@ export const createSong = async ({ db, title }: createSongPayload) => {
       songId,
     );
 
-    const song: songInfo = db.getFirstSync(
+    const song: DbSong = db.getFirstSync(
       'SELECT * FROM Songs WHERE songId = ?',
       songId,
     );
 
-    const page: page = db.getFirstSync(
+    const page: Page = db.getFirstSync(
       'SELECT * FROM Page WHERE songId = ?',
       songId,
     );
@@ -69,7 +70,7 @@ export const updateSelectedTakeId = async ({
   db,
   songId,
   takeId,
-}: updateSelectedTakeIdPayloadDb) => {
+}: UpdateSelectedTakeIdPayloadDb) => {
   try {
     await db.runAsync(
       'UPDATE Songs SET selectedTakeId = ? WHERE songId = ?',

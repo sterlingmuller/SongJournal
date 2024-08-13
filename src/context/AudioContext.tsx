@@ -8,7 +8,8 @@ import React, {
   ReactNode,
 } from 'react';
 import { Audio, AVPlaybackStatusSuccess } from 'expo-av';
-import { useAppDispatch, useAppSelector } from '@src/common/hooks';
+
+import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectPlaybackInfo } from '@src/selectors/playbackSelector';
 import {
   pausePlayback,
@@ -54,7 +55,6 @@ export const AudioProvider = ({ children }: Props) => {
       { uri: newUri },
       { shouldPlay: true },
     );
-    // { shouldPlay: true, progressUpdateIntervalMillis: 100 },
 
     soundRef.current = newSound;
   }, []);

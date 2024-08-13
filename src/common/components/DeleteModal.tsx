@@ -1,23 +1,23 @@
 import React from 'react';
 import { View, Button } from 'react-native';
 import Modal from 'react-native-modal';
+import { useSQLiteContext } from 'expo-sqlite';
 
-import { deleteObject } from '@src/common/types';
+import { DeleteObject } from '@src/common/types';
 import { EMPTY_DELETE_OBJECT } from '@src/common/constants';
 import StyledText from '@src/common/components/StyledText';
-import useDeleteModalStyles from '@src/styles/deleteModal';
+import useDeleteModalStyles from '@styles/deleteModal';
 import { deleteSong } from '@src/repositories/SongsRepository';
-import { useSQLiteContext } from 'expo-sqlite';
 import { removeSong, removeTake } from '@src/slice/songsSlice';
-import { useAppDispatch, useAppSelector } from '@src/common/hooks';
+import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { deleteTake } from '@src/repositories/TakeRepository';
 import { useAudioPlayer } from '@src/context/AudioContext';
 import { selectPlayingId } from '@src/selectors/playbackSelector';
 
 interface Props {
-  setToDelete: (value: deleteObject | null) => void;
+  setToDelete: (value: DeleteObject | null) => void;
   deleteText: string;
-  toDelete: deleteObject | null;
+  toDelete: DeleteObject | null;
 }
 
 const DeleteModal = (props: Props) => {

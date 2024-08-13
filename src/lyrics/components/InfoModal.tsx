@@ -5,13 +5,14 @@ import { useSQLiteContext } from 'expo-sqlite';
 
 import CompletionStatus from '@src/lyrics/subcomponents/CompletionStatus';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
-import { SongInfo, songDetail } from '@src/common/types';
+import { SongInfo } from '@src/common/types';
 import { SONG_DETAILS } from '@src/common/constants';
 import useInfoModalStyle from '@styles/infoModal';
-import { useAppDispatch } from '@src/common/hooks';
+import { useAppDispatch } from '@src/hooks/typedReduxHooks';
 import { updatePageInfoRequest } from '@src/sagas/actionCreators';
 import SongDetailSelect from '@src/lyrics/subcomponents/SongDetailSelect';
 import BpmDetail from '@src/lyrics/subcomponents/BpmDetail';
+import { SongDetail } from '@src/common/enums';
 
 interface Props {
   isInfoModalOpen: boolean;
@@ -86,24 +87,22 @@ const InfoModal = (props: Props) => {
           />
         </View>
         <View style={styles.details}>
-          {SONG_DETAILS.map(({ label, key }: songDetail) => {
-            if (key === 'keySignature' || key === 'time') {
+          {SONG_DETAILS.map((detail: SongDetail) => {
+            if (detail === SongDetail.KEY || detail === SongDetail.TIME) {
               return (
                 <SongDetailSelect
-                  key={key}
-                  detailKey={key}
-                  label={label}
-                  value={newInfo[key]}
+                  key={detail}
+                  detail={detail}
+                  value={newInfo[detail]}
                   handleInputChange={handleInputChange}
                 />
               );
             }
             return (
               <BpmDetail
-                key={key}
-                detailKey={key}
-                label={label}
-                value={newInfo[key]}
+                key={detail}
+                detail={detail}
+                value={newInfo[detail]}
                 handleInputChange={handleInputChange}
               />
             );

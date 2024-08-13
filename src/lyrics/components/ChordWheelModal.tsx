@@ -7,8 +7,8 @@ import {
 } from 'react-native-ui-lib';
 import Modal from 'react-native-modal';
 
-import { ROOT_NOTES, CHORD_EXTENSIONS } from '@src/common/enums';
-import useWheelPickerModalStyles from '@src/styles/wheelPickerModal';
+import { ROOT_NOTES, CHORD_EXTENSIONS, SongDetail } from '@src/common/enums';
+import useWheelPickerModalStyles from '@styles/wheelPickerModal';
 import StyledText from '@src/common/components/StyledText';
 import { SongInfo } from '@src/common/types';
 import separateChordValue from '@src/utils/separateChordValue';
@@ -16,7 +16,7 @@ import separateChordValue from '@src/utils/separateChordValue';
 interface Props {
   isWheelOpen: boolean;
   setIsWheelOpen: (value: boolean) => void;
-  detailKey: string;
+  detail: SongDetail;
   handleInputChange: (key: keyof SongInfo, value: string) => void;
   initialValue: string;
 }
@@ -25,7 +25,7 @@ const ChordWheelModal = (props: Props) => {
   const {
     isWheelOpen,
     setIsWheelOpen,
-    detailKey,
+    detail,
     handleInputChange,
     initialValue,
   } = props;
@@ -44,7 +44,7 @@ const ChordWheelModal = (props: Props) => {
     }
 
     setIsWheelOpen(false);
-    handleInputChange(detailKey as keyof SongInfo, updatedChord);
+    handleInputChange(detail.toLowerCase() as keyof SongInfo, updatedChord);
   };
 
   const sections = useMemo((): WheelPickerProps[] => {

@@ -5,13 +5,14 @@ import React, {
   useContext,
   useState,
 } from 'react';
+
 import themes, { Theme } from '@src/theme/themes';
-import { colorThemeName } from '../common/types';
+import { ColorTheme } from '@src/common/enums';
 
 interface ColorThemeContextType {
   theme: Theme;
-  switchTheme: (newTheme: colorThemeName) => void;
-  themeName: colorThemeName;
+  switchTheme: (newTheme: ColorTheme) => void;
+  themeName: ColorTheme;
 }
 
 const ColorThemeContext: Context<ColorThemeContextType> = createContext(null);
@@ -21,10 +22,10 @@ type Props = {
 };
 
 export const ColorThemeProvider = ({ children }: Props) => {
-  const [themeName, setThemeName] = useState<colorThemeName>('Light');
+  const [themeName, setThemeName] = useState<ColorTheme>(ColorTheme.LIGHT);
   const theme: Theme = themes[themeName];
 
-  const switchTheme = (newTheme: colorThemeName) => {
+  const switchTheme = (newTheme: ColorTheme) => {
     setThemeName(newTheme);
   };
 

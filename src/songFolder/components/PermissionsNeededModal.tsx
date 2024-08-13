@@ -4,7 +4,7 @@ import { openSettings } from 'expo-linking';
 
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 import StyledText from '@src/common/components/StyledText';
-import usePermissionsNeededModalStyles from '@src/styles/permissionsNeededModal';
+import usePermissionsNeededModalStyles from '@styles/permissionsNeededModal';
 
 interface Props {
   isPermissionsNeededModalOpen: boolean;

@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
-import useSongDetailStyles from '@src/styles/songDetail';
+import useSongDetailStyles from '@styles/songDetail';
 import { SongInfo } from '@src/common/types';
-import ChordWheelModal from '../components/ChordWheelModal';
 import StyledText from '@src/common/components/StyledText';
-import TimeSignatureWheelModal from '../components/TimeSignatureWheelModal';
+import ChordWheelModal from '@src/lyrics/components/ChordWheelModal';
+import TimeSignatureWheelModal from '@src/lyrics/components/TimeSignatureWheelModal';
+import { SongDetail } from '@src/common/enums';
 
 interface Props {
-  detailKey: string;
-  label: string;
+  detail: SongDetail;
   value: string;
   handleInputChange: (key: keyof SongInfo, value: string) => void;
 }
 
 const SongDetailSelect = (props: Props) => {
-  const { detailKey, label, value, handleInputChange } = props;
+  const { detail, value, handleInputChange } = props;
   const styles = useSongDetailStyles();
 
   const [isChordWheelOpen, setIsChordWheelOpen] = useState(false);
   const [isTimeWheelOpen, setIsTimeWheelOpen] = useState(false);
 
   const songDetailPress = () => {
-    if (detailKey === 'keySignature') {
+    if (detail === SongDetail.KEY) {
       setIsChordWheelOpen(true);
     } else {
       setIsTimeWheelOpen(true);
@@ -34,18 +34,18 @@ const SongDetailSelect = (props: Props) => {
       <TouchableOpacity onPress={songDetailPress} style={styles.textbox}>
         <StyledText>{value}</StyledText>
       </TouchableOpacity>
-      <Text>{label}</Text>
+      <Text>{detail}</Text>
       <ChordWheelModal
         isWheelOpen={isChordWheelOpen}
         setIsWheelOpen={setIsChordWheelOpen}
-        detailKey={detailKey}
+        detail={detail}
         handleInputChange={handleInputChange}
         initialValue={value}
       />
       <TimeSignatureWheelModal
         isWheelOpen={isTimeWheelOpen}
         setIsWheelOpen={setIsTimeWheelOpen}
-        detailKey={detailKey}
+        detail={detail}
         handleInputChange={handleInputChange}
         initialValue={value}
       />

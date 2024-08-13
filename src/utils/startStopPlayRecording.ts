@@ -1,4 +1,4 @@
-import { Audio } from 'expo-av';
+import { Audio, AVPlaybackStatusSuccess } from 'expo-av';
 
 export const startRecording = async (
   setRecording: (value: Audio.Recording | null) => void,
@@ -38,12 +38,10 @@ export const playRecording = async (uri: string) => {
   try {
     const { sound } = await Audio.Sound.createAsync({ uri });
 
-    sound.setOnPlaybackStatusUpdate((status) => {
-      console.log('status:', status);
-      if (status.durationMillis === status.positionMillis) {
-        console.log('weee');
-      }
-    });
+    // Todo: Progress playback tracker bar
+    // sound.setOnPlaybackStatusUpdate((status: AVPlaybackStatusSuccess) => {
+    // });
+
     await sound.playAsync();
   } catch (err) {
     console.error('Failed to play recording', err);

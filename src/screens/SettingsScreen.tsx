@@ -5,7 +5,7 @@ import BackupAndSync from '@src/settings/components/BackupAndSync';
 import Theme from '@src/settings/components/Theme';
 import About from '@src/settings/components/About';
 import useSettingsStyle from '@styles/settings';
-import useGlobalStyles from '@src/styles/global';
+import useGlobalStyles from '@styles/global';
 import StyledText from '@src/common/components/StyledText';
 
 const SettingsScreen = () => {

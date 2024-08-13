@@ -1,10 +1,9 @@
 import { useColorTheme } from '@src/context/ThemeContext';
-import { TextStyle, ViewStyle } from 'react-native';
 
 interface Styles {
-  headerStyle: ViewStyle;
-  headerTitleStyle: TextStyle;
-  rightIcon: ViewStyle;
+  headerStyle: { backgroundColor: string };
+  headerTitleStyle: { fontSize: number; color: string };
+  rightIcon: { padding: number };
   headerTintColor: string;
 }
 

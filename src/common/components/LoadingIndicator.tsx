@@ -1,6 +1,7 @@
-import useLoadingIndicatorStyles from '@src/styles/loadingIndicator';
 import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
+
+import useLoadingIndicatorStyles from '@styles/loadingIndicator';
 
 const LoadingIndicator = () => {
   const styles = useLoadingIndicatorStyles();

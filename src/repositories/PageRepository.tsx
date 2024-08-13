@@ -1,12 +1,12 @@
 import {
   DbPage,
-  fetchPagePayload,
-  page,
-  updateLyricsPayload,
-  updatePageInfoPayload,
+  FetchPagePayload,
+  Page,
+  UpdateLyricsPayload,
+  UpdatePageInfoPayload,
 } from '@src/common/types';
 
-export const fetchPageBySongId = async (payload: fetchPagePayload) => {
+export const fetchPageBySongId = async (payload: FetchPagePayload) => {
   const { db, songId } = payload;
 
   try {
@@ -23,7 +23,7 @@ export const fetchPageBySongId = async (payload: fetchPagePayload) => {
       completed: dbPage.completed,
     };
 
-    const page: page = { lyrics: dbPage.lyrics, info: songInfo };
+    const page: Page = { lyrics: dbPage.lyrics, info: songInfo };
 
     return page;
   } catch (err) {
@@ -31,12 +31,12 @@ export const fetchPageBySongId = async (payload: fetchPagePayload) => {
   }
 };
 
-export const updatePageInfo = async (payload: updatePageInfoPayload) => {
+export const updatePageInfo = async (payload: UpdatePageInfoPayload) => {
   const { songId, info: updates, db } = payload;
 
   try {
     const clauses = Object.keys(updates)
-      .map((key: keyof page) => `${key} = ?`)
+      .map((key: keyof Page) => `${key} = ?`)
       .join(', ');
 
     const params = Object.values(updates);
@@ -51,7 +51,7 @@ export const updatePageInfo = async (payload: updatePageInfoPayload) => {
   }
 };
 
-export const updateLyrics = async (payload: updateLyricsPayload) => {
+export const updateLyrics = async (payload: UpdateLyricsPayload) => {
   const { songId, lyrics, db } = payload;
 
   try {

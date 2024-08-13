@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Modal from 'react-native-modal';
+import { useSQLiteContext } from 'expo-sqlite';
 
 import { RootStackParamList } from '@src/common/types';
 import StyledText from '@src/common/components/StyledText';
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
-import useNewSongModalStyle from '@src/styles/newSongModal';
-import { useSQLiteContext } from 'expo-sqlite';
-import { useAppDispatch } from '@src/common/hooks';
+import useNewSongModalStyle from '@styles/newSongModal';
+import { useAppDispatch } from '@src/hooks/typedReduxHooks';
 import { createSongRequest } from '@src/sagas/actionCreators';
+import { Screen } from '@src/common/enums';
 
 interface Props {
   isNewSongOpen: boolean;
@@ -34,7 +35,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
   const onSavePress = () => {
     dispatch(createSongRequest({ db, title: songTitle }));
 
-    navigate('Song');
+    navigate(Screen.SONG);
   };
 
   useEffect(

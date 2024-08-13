@@ -1,17 +1,17 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 
-import { LyricsOptionName, LyricsScreenOption, page } from '@src/common/types';
-import useOptionBarStyles from '@src/styles/optionBar';
+import { LyricsOptionName, LyricsScreenOption, Page } from '@src/common/types';
+import useOptionBarStyles from '@styles/optionBar';
 import { LYRIC_SCREEN_OPTIONS } from '@src/common/constants';
 import useFileShare from '@src/hooks/useFileShare';
-import { useAppSelector } from '@src/common/hooks';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectCurrentSongTitle } from '@src/selectors/songsSelector';
 
 interface Props {
   selectedOption: LyricsOptionName;
   setSelectedOption: (value: LyricsOptionName) => void;
-  page: page;
+  page: Page;
 }
 
 const OptionsBar = ({ selectedOption, setSelectedOption, page }: Props) => {

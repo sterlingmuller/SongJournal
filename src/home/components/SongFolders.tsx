@@ -4,22 +4,16 @@ import { RowMap, SwipeListView } from 'react-native-swipe-list-view';
 import SongFolder from '@src/home/subcomponents/SongFolder';
 import DeleteRow from '@src/home/subcomponents/DeleteRow';
 import { ListRenderItemInfo } from 'react-native';
-import {
-  FilterOptions,
-  SongItem,
-  deleteObject,
-  song,
-  songs,
-  sortByCategoryName,
-} from '@src/common/types';
+import * as t from '@src/common/types';
 import { sortSongs } from '@src/utils/sortSongs';
+import { SortBy } from '@src/common/enums';
 
 interface Props {
-  setToDelete: (value: deleteObject | null) => void;
-  sortedCategory: sortByCategoryName;
+  setToDelete: (value: t.DeleteObject | null) => void;
+  sortedCategory: SortBy;
   isSortAscending: boolean;
-  filterOptions: FilterOptions;
-  songs: songs;
+  filterOptions: t.FilterOptions;
+  songs: t.Songs;
 }
 
 const SongFolders = (props: Props) => {
@@ -41,7 +35,7 @@ const SongFolders = (props: Props) => {
     }
   }, [songs]);
 
-  const onRowDidOpen = (rowKey: string, rowMap: RowMap<song>) => {
+  const onRowDidOpen = (rowKey: string, rowMap: RowMap<t.Song>) => {
     openRowRef.current = rowMap[rowKey];
   };
 
@@ -53,12 +47,12 @@ const SongFolders = (props: Props) => {
       previewRowKey={'0'}
       previewOpenValue={-40}
       previewOpenDelay={3000}
-      keyExtractor={(item: song) => item.songId.toString()}
+      keyExtractor={(item: t.Song) => item.songId.toString()}
       onRowDidOpen={onRowDidOpen}
-      renderItem={(data: ListRenderItemInfo<song>) => {
+      renderItem={(data: ListRenderItemInfo<t.Song>) => {
         return <SongFolder song={data.item} />;
       }}
-      renderHiddenItem={(data: ListRenderItemInfo<SongItem>) => (
+      renderHiddenItem={(data: ListRenderItemInfo<t.SongItem>) => (
         <DeleteRow
           title={data.item.title}
           id={data.item.songId}

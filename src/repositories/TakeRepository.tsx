@@ -1,7 +1,13 @@
-import { UpdateTakeNotesDbPayload, take, takePayload } from '@src/common/types';
 import { SQLiteDatabase } from 'expo-sqlite';
 
-export const createTake = async (takePayload: takePayload) => {
+import {
+  UpdateTakeNotesDbPayload,
+  Take,
+  TakePayload,
+  Takes,
+} from '@src/common/types';
+
+export const createTake = async (takePayload: TakePayload) => {
   const { songId, title, date, uri, duration, db } = takePayload;
 
   try {
@@ -21,7 +27,7 @@ export const createTake = async (takePayload: takePayload) => {
       takeId,
     );
 
-    const take: take = db.getFirstSync(
+    const take: Take = db.getFirstSync(
       'SELECT * FROM Takes WHERE takeId = ?',
       takeId,
     );
@@ -40,7 +46,7 @@ export const deleteTake = (db: SQLiteDatabase, takeId: number) => {
   }
 };
 
-export const fetchTakes = (db: SQLiteDatabase): take[] =>
+export const fetchTakes = (db: SQLiteDatabase): Takes =>
   db.getAllSync(
     'SELECT takeId, songId, title, date, notes, uri, duration FROM Takes',
   );

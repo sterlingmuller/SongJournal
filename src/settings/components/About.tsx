@@ -19,7 +19,7 @@ const About = () => {
         <StyledText style={styles.aboutSignature}>Cheers,</StyledText>
         <StyledText style={styles.about}>Sterling</StyledText>
         <StyledText style={styles.aboutSignature}>
-          sterlingmuller93@gmail.com if you want to fight
+          sterlingmuller93@gmail.com
         </StyledText>
       </View>
     </View>

@@ -3,12 +3,13 @@ import { View, Text } from 'react-native';
 import Modal from 'react-native-modal';
 
 import SortByCategories from '@src/home/subcomponents/SortCategories';
-import { FilterOptions, sortByCategoryName } from '@src/common/types';
+import { FilterOptions } from '@src/common/types';
 import useSortByModalStyles from '@styles/sortByModal';
+import { SortBy } from '@src/common/enums';
 
 interface Props {
-  sortedCategory: sortByCategoryName;
-  setSortedCategory: (categoryName: sortByCategoryName) => void;
+  sortedCategory: SortBy;
+  setSortedCategory: (categoryName: SortBy) => void;
   isSortOpen: boolean;
   setIsSortOpen: (value: boolean) => void;
   isSortAscending: boolean;

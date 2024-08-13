@@ -10,15 +10,16 @@ import {
   EMPTY_DELETE_OBJECT,
   EMPTY_TAKE,
 } from '@src/common/constants';
-import useSongScreenStyles from '@src/styles/songScreen';
-import useGlobalStyles from '@src/styles/global';
+import useSongScreenStyles from '@styles/songScreen';
+import useGlobalStyles from '@styles/global';
 import PermissionsNeededModal from '@src/songFolder/components/PermissionsNeededModal';
 import useMicrophonePermissions from '@src/hooks/useMicrophonePermissions';
-import { RootStackParamList, deleteObject, take } from '@src/common/types';
-import { useAppSelector } from '@src/common/hooks';
+import { RootStackParamList, DeleteObject, Take } from '@src/common/types';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectCurrentSongTotalTakes } from '@src/selectors/songsSelector';
 import SongDisplay from '@src/songFolder/components/SongDisplay';
 import { useAudioPlayer } from '@src/context/AudioContext';
+import { Screen } from '@src/common/enums';
 
 const SongScreen = () => {
   const styles = useSongScreenStyles();
@@ -28,8 +29,8 @@ const SongScreen = () => {
   const isPermissionGranted = useMicrophonePermissions();
   const { clearPlayback } = useAudioPlayer();
 
-  const [toDelete, setToDelete] = useState<deleteObject>(EMPTY_DELETE_OBJECT);
-  const [currentTake, setCurrentTake] = useState<take>(EMPTY_TAKE);
+  const [toDelete, setToDelete] = useState<DeleteObject>(EMPTY_DELETE_OBJECT);
+  const [currentTake, setCurrentTake] = useState<Take>(EMPTY_TAKE);
   const [isPermissionsNeededModalOpen, setIsPermissionsNeededModalOpen] =
     useState<boolean>(false);
 
@@ -37,7 +38,7 @@ const SongScreen = () => {
     const recording = () => {
       const newTakeTitle = `Take ${totalTakes + 1}`;
 
-      navigation.navigate('Recording', { title: newTakeTitle });
+      navigation.navigate(Screen.RECORDING, { title: newTakeTitle });
     };
 
     clearPlayback();
