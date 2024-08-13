@@ -6,11 +6,11 @@ import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
 import NotesIcon from '@src/icons/NotesIcon';
 import TrashIcon from '@src/icons/TrashIcon';
-import { deleteObject, take } from '@src/common/types';
+import { DeleteObject, Take } from '@src/common/types';
 import StarIcon from '@src/icons/StarIcon';
 import useDoubleTap from '@src/hooks/useDoubleTap';
 import useSongTakeStyles from '@styles/songTake';
-import { useAppDispatch, useAppSelector } from '@src/common/hooks';
+import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { updateSelectedTakeIdRequest } from '@src/sagas/actionCreators';
 import PauseIcon from '@src/icons/PauseIcon';
 import {
@@ -26,9 +26,9 @@ import useFileShare from '@src/hooks/useFileShare';
 import { useAudioPlayer } from '@src/context/AudioContext';
 
 interface Props {
-  take: take;
-  setToDelete: (value: deleteObject) => void;
-  setCurrentTake: (value: take) => void;
+  take: Take;
+  setToDelete: (value: DeleteObject) => void;
+  setCurrentTake: (value: Take) => void;
 }
 
 const SongTake = (props: Props) => {

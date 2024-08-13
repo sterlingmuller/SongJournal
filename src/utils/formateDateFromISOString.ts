@@ -1,9 +1,9 @@
-import { MONTH_NAMES } from '@src/common/enums';
+import { MONTHS } from '@src/common/constants';
 
 export function formatDateFromISOString(isoString: string): string {
   const date = new Date(isoString);
 
-  const month = MONTH_NAMES[date.getMonth()];
+  const month = MONTHS[date.getMonth()];
   const day = date.getDate();
   const year = date.getFullYear();
 

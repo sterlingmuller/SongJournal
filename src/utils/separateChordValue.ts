@@ -1,4 +1,5 @@
 import { CHORD_EXTENSIONS, ROOT_NOTES } from '@src/common/enums';
+import { SelectEntry } from '@src/common/types';
 
 const separateChordValue = (chord: string) => {
   if (!chord) {
@@ -6,10 +7,10 @@ const separateChordValue = (chord: string) => {
   }
 
   const sortedRootNotes = ROOT_NOTES.slice(1).sort(
-    (a, b) => b.value.length - a.value.length,
+    (a: SelectEntry, b: SelectEntry) => b.value.length - a.value.length,
   );
 
-  const matchedRoot = sortedRootNotes.find((root) =>
+  const matchedRoot = sortedRootNotes.find((root: SelectEntry) =>
     chord.startsWith(root.value),
   );
 
@@ -21,7 +22,7 @@ const separateChordValue = (chord: string) => {
   const remainingValue = chord.slice(rootNote.length);
 
   const matchedExtension = CHORD_EXTENSIONS.find(
-    (ext) => remainingValue === ext.value,
+    (ext: SelectEntry) => remainingValue === ext.value,
   );
 
   return {

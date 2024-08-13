@@ -1,9 +1,6 @@
 import React from 'react';
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
-import {
-  createNativeStackNavigator,
-  NativeStackNavigationProp,
-} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import SettingsScreen from '@src/screens/SettingsScreen';
 import SongScreen from '@src/screens/SongScreen';
@@ -13,42 +10,34 @@ import HomeScreen from '@src/screens/HomeScreen';
 import MusicPlayerScreen from '@src/screens/MusicPlayerScreen';
 import { RootStackParamList } from '@src/common/types';
 import HeaderPageButton from '@src/songFolder/subcomponents/HeaderPageButton';
-import useHeaderStyles from '@src/styles/header';
+import useHeaderStyles from '@styles/header';
 import { selectCurrentSongTitle } from '@src/selectors/songsSelector';
-import { useAppSelector } from '@src/common/hooks';
-import { TouchableOpacity } from 'react-native';
-import BackIcon from '@src/icons/BackIcon';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
+import HeaderBackButton from '@src/common/components/HeaderBackButton';
+import { Screen } from '@src/common/enums';
 
 const AppNavigator = () => {
-  const RootStack: any = createNativeStackNavigator<RootStackParamList>();
+  const RootStack = createNativeStackNavigator<RootStackParamList>();
   const styles = useHeaderStyles();
 
   const title = useAppSelector(selectCurrentSongTitle);
 
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName="Home">
-        <RootStack.Screen name="Home" component={HomeScreen} />
+      <RootStack.Navigator initialRouteName={Screen.HOME}>
+        <RootStack.Screen name={Screen.HOME} component={HomeScreen} />
         <RootStack.Screen
-          name="Song"
+          name={Screen.SONG}
           component={SongScreen}
-          options={({
-            navigation,
-          }: {
-            navigation: NativeStackNavigationProp<RootStackParamList, 'Song'>;
-          }) => ({
+          options={{
             ...styles,
             title,
             headerRight: () => <HeaderPageButton />,
-            headerLeft: () => (
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <BackIcon />
-              </TouchableOpacity>
-            ),
-          })}
+            headerLeft: () => <HeaderBackButton />,
+          }}
         />
         <RootStack.Screen
-          name="Recording"
+          name={Screen.RECORDING}
           component={RecordingScreen}
           options={({
             route,
@@ -61,17 +50,17 @@ const AppNavigator = () => {
           })}
         />
         <RootStack.Screen
-          name="Lyrics"
+          name={Screen.LYRICS}
           component={LyricsScreen}
           options={{ ...styles }}
         />
         <RootStack.Screen
-          name="MusicPlayer"
+          name={Screen.MUSIC_PLAYER}
           component={MusicPlayerScreen}
           options={{ ...styles }}
         />
         <RootStack.Screen
-          name="Settings"
+          name={Screen.SETTINGS}
           component={SettingsScreen}
           options={{ ...styles }}
         />

@@ -1,9 +1,9 @@
 import { call, put, takeEvery, all, fork, select } from 'redux-saga/effects';
 
 import {
-  fetchPagePayload,
-  updateLyricsPayload,
-  updatePageInfoPayload,
+  FetchPagePayload,
+  UpdateLyricsPayload,
+  UpdatePageInfoPayload,
 } from '@src/common/types';
 import * as at from '@src/sagas/actionTypes';
 import {
@@ -19,7 +19,7 @@ import {
 } from './actionCreators';
 import { RootState } from '@src/store';
 
-type FetchPageParams = { payload: fetchPagePayload; type: string };
+type FetchPageParams = { payload: FetchPagePayload; type: string };
 
 function* fetchPage({ payload }: FetchPageParams) {
   const pageExists = yield select(
@@ -41,7 +41,7 @@ function* watchFetchPage() {
   yield takeEvery(at.FETCH_PAGE_REQUEST, fetchPage);
 }
 
-type UpdatePageInfoParams = { payload: updatePageInfoPayload; type: string };
+type UpdatePageInfoParams = { payload: UpdatePageInfoPayload; type: string };
 
 function* updatePageInfoSaga({ payload }: UpdatePageInfoParams) {
   const { songId, info } = payload;
@@ -59,7 +59,7 @@ function* watchUpdatePageInfo() {
   yield takeEvery(at.UPDATE_PAGE_INFO_REQUEST, updatePageInfoSaga);
 }
 
-type UpdateLyricsParams = { payload: updateLyricsPayload; type: string };
+type UpdateLyricsParams = { payload: UpdateLyricsPayload; type: string };
 
 function* updateLyricsSaga({ payload }: UpdateLyricsParams) {
   const { songId, lyrics } = payload;

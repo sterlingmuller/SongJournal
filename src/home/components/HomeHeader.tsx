@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 
 import SearchBar from '@src/home/subcomponents/SearchBar';
-import useHomeHeaderStyles from '@src/styles/homeHeader';
+import useHomeHeaderStyles from '@styles/homeHeader';
 import HorzDotsIcon from '@src/icons/HorzDotsIcon';
 import VertDotsIcon from '@src/icons/VertDotsIcon';
 

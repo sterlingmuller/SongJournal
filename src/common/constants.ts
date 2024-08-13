@@ -1,6 +1,5 @@
-import { Dimensions, Text } from 'react-native';
+import { Dimensions } from 'react-native';
 import { documentDirectory } from 'expo-file-system';
-import React from 'react';
 
 import EditIcon from '@src/icons/EditIcon';
 import ChordsIcon from '@src/icons/ChordsIcon';
@@ -10,27 +9,13 @@ import PlaylistIcon from '@src/icons/PlaylistIcon';
 import MusicPlayerIcon from '@src/icons/MusicPlayerIcon';
 import SettingIcon from '@src/icons/SettingIcon';
 import * as t from '@src/common/types';
+import { ColorTheme, SongDetail, SortBy } from '@src/common/enums';
 
-export const SORTBY_CATEGORY_NAMES: t.sortByCategoryName[] = [
-  'Date',
-  'Name',
-  'Length',
-];
+export const SORT_BY_OPTIONS: SortBy[] = Object.values(SortBy);
 
-export const COLOR_THEME_NAMES: t.colorThemeName[] = [
-  'Light',
-  'Dark',
-  'Metal',
-  'Psych',
-  'Pop',
-  'Surf',
-];
+export const COLOR_THEME_OPTIONS: ColorTheme[] = Object.values(ColorTheme);
 
-export const SONG_DETAILS: t.songDetail[] = [
-  { label: 'Key', key: 'keySignature' },
-  { label: 'Time', key: 'time' },
-  { label: 'Bpm', key: 'bpm' },
-];
+export const SONG_DETAILS: SongDetail[] = Object.values(SongDetail);
 
 export const LYRIC_SCREEN_OPTIONS: t.LyricsScreenOption[] = [
   { name: 'Edit', icon: EditIcon },
@@ -39,18 +24,18 @@ export const LYRIC_SCREEN_OPTIONS: t.LyricsScreenOption[] = [
   { name: 'Share', icon: ShareIcon },
 ];
 
-export const TABS: t.tab[] = [
+export const TABS: t.Tab[] = [
   { name: 'Playlist', icon: PlaylistIcon },
   { name: 'MusicPlayer', icon: MusicPlayerIcon },
   { name: 'Settings', icon: SettingIcon },
 ];
 
-export const EMPTY_PAGE: t.page = {
+export const EMPTY_PAGE: t.Page = {
   lyrics: '',
   info: { about: '', bpm: '', keySignature: '', time: '', completed: false },
 };
 
-export const EMPTY_SONG: t.song = {
+export const EMPTY_SONG: t.Song = {
   songId: -1,
   title: '',
   selectedTakeId: 0,
@@ -65,13 +50,13 @@ export const DELETE_TAKE_TEXT: string =
 export const DELETE_SONG_TEXT: string =
   ', its journal entry, and all takes of this song will be permanently deleted. This action cannot be undone.';
 
-export const EMPTY_DELETE_OBJECT: t.deleteObject = {
+export const EMPTY_DELETE_OBJECT: t.DeleteObject = {
   type: null,
   songId: -1,
   title: '',
 };
 
-export const EMPTY_TAKE: t.take = {
+export const EMPTY_TAKE: t.Take = {
   takeId: -1,
   songId: -1,
   title: '',
@@ -87,3 +72,18 @@ export const documentsDirectory = documentDirectory + 'SongJournal/';
 
 export const getStartedSongInstructions =
   'Press the RECORD button below to record your first take!';
+
+export const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];

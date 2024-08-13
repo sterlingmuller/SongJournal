@@ -2,11 +2,12 @@ import React from 'react';
 import { View } from 'react-native';
 
 import StyledText from '@src/common/components/StyledText';
-import useGetStartedHomeStyles from '@src/styles/getStartedHome';
+import useGetStartedHomeStyles from '@styles/getStartedHome';
 import EggIcon from '@src/icons/EggIcon';
+import { Screen } from '@src/common/enums';
 
 interface props {
-  screen: 'home' | 'song' | 'musicPlayer';
+  screen: 'Home' | 'Song' | 'MusicPlayer';
 }
 const GetStarted = ({ screen }: props) => {
   const styles = useGetStartedHomeStyles();
@@ -15,38 +16,36 @@ const GetStarted = ({ screen }: props) => {
   const getStartedHomeInstructions = (
     <StyledText style={styles.text}>
       {`Looks like your journal is empty.\nTo get started, visit `}
-      <StyledText style={{ fontWeight: 'bold' }}>Settings</StyledText> 4&#8260;4
-      help importing a journal or press the{' '}
-      <StyledText style={{ fontWeight: 'bold' }}>New Song</StyledText> button
-      below.
+      <StyledText style={styles.boldText}>Settings 4&#8260;4</StyledText> help
+      importing a journal or press the{' '}
+      <StyledText style={styles.boldText}>New Song</StyledText> button below.
     </StyledText>
   );
 
   const getStartedSongInstructions = (
     <StyledText style={styles.text}>
-      Press the <StyledText style={{ fontWeight: 'bold' }}>Record</StyledText>{' '}
-      button below to record your first take!
+      Press the <StyledText style={styles.boldText}>Record</StyledText> button
+      below to record your first take!
     </StyledText>
   );
 
   const musicPlayerPlansMessage = (
     <StyledText style={styles.text}>
-      Ah! What are <StyledText style={{ fontStyle: 'italic' }}>you</StyledText>{' '}
-      doing here!? The{' '}
-      <StyledText style={{ fontWeight: 'bold' }}>Music Player</StyledText> is
-      not ready 4&#8260;4 the world to{' '}
-      <StyledText style={{ fontWeight: 'bold' }}>C</StyledText>
+      Ah! What are <StyledText style={styles.italicText}>you</StyledText> doing
+      here!? The <StyledText style={styles.boldText}>Music Player</StyledText>{' '}
+      is not ready <StyledText style={styles.boldText}>4&#8260;4</StyledText>{' '}
+      the world to <StyledText style={styles.boldText}>C</StyledText>
     </StyledText>
   );
 
   switch (screen) {
-    case 'home':
+    case Screen.HOME:
       message = getStartedHomeInstructions;
       break;
-    case 'song':
+    case Screen.SONG:
       message = getStartedSongInstructions;
       break;
-    case 'musicPlayer':
+    case Screen.MUSIC_PLAYER:
       message = musicPlayerPlansMessage;
       break;
   }

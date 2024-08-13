@@ -2,20 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { Audio } from 'expo-av';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { useSQLiteContext } from 'expo-sqlite';
 
 import StyledText from '@src/common/components/StyledText';
 import RecordButton from '@src/common/components/RecordButton';
-import useGlobalStyles from '@src/styles/global';
+import useGlobalStyles from '@styles/global';
 import {
   playRecording,
   startRecording,
   stopRecording,
 } from '@src/utils/startStopPlayRecording';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import useRecordingStyles from '@src/styles/recording';
-import { useSQLiteContext } from 'expo-sqlite';
+import useRecordingStyles from '@styles/recording';
 import { RootStackParamList } from '@src/common/types';
-import { useAppDispatch, useAppSelector } from '@src/common/hooks';
+import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectCurrentSongId } from '@src/selectors/songsSelector';
 import { createTakeRequest } from '@src/sagas/actionCreators';
 

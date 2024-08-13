@@ -1,8 +1,8 @@
 import { call, put, takeEvery, all, fork } from 'redux-saga/effects';
 
 import {
-  createSongPayload,
-  updateSelectedTakeIdPayloadDb,
+  CreateSongPayload,
+  UpdateSelectedTakeIdPayloadDb,
 } from '@src/common/types';
 import {
   CREATE_SONG_REQUEST,
@@ -20,9 +20,9 @@ import {
 } from '@src/repositories/SongsRepository';
 import { setCurrentSongId } from '@src/slice/currentSongSlice';
 
-type CreateSongParams = { payload: createSongPayload; type: string };
+type CreateSongParams = { payload: CreateSongPayload; type: string };
 type UpdateSelectedTakeParams = {
-  payload: updateSelectedTakeIdPayloadDb;
+  payload: UpdateSelectedTakeIdPayloadDb;
   type: string;
 };
 

@@ -8,17 +8,14 @@ import CreateNewSongButton from '@src/home/components/CreateNewSongButton';
 import SortByModal from '@src/home/components/SortByModal';
 import NewSongModal from '@src/home/components/NewSongModal';
 import Footer from '@src/home/components/Footer';
-import {
-  FilterOptions,
-  deleteObject,
-  sortByCategoryName,
-} from '@src/common/types';
+import { FilterOptions, DeleteObject } from '@src/common/types';
 import DeleteModal from '@src/common/components/DeleteModal';
 import { DELETE_SONG_TEXT, EMPTY_DELETE_OBJECT } from '@src/common/constants';
 import useGlobalStyles from '@styles/global';
-import { useAppDispatch } from '@src/common/hooks';
+import { useAppDispatch } from '@src/hooks/typedReduxHooks';
 import { fetchSongsWithTakesRequest } from '@src/sagas/actionCreators';
 import HomeDisplay from '@src/home/components/HomeDisplay';
+import { SortBy } from '@src/common/enums';
 
 const HomeScreen = () => {
   const { setOptions } = useNavigation();
@@ -27,13 +24,12 @@ const HomeScreen = () => {
   const styles = useGlobalStyles();
 
   const [isSortOpen, setIsSortOpen] = useState(false);
-  const [sortedCategory, setSortedCategory] =
-    useState<sortByCategoryName>('Date');
+  const [sortedCategory, setSortedCategory] = useState<SortBy>(SortBy.DATE);
   const [isSortAscending, setIsSortAscending] = useState<boolean>(false);
   const [filterOptions, setFilterOptions] = useState<FilterOptions>({});
 
   const [isNewSongOpen, setIsNewSongOpen] = useState<boolean>(false);
-  const [toDelete, setToDelete] = useState<deleteObject>(EMPTY_DELETE_OBJECT);
+  const [toDelete, setToDelete] = useState<DeleteObject>(EMPTY_DELETE_OBJECT);
 
   useEffect(() => {
     dispatch(fetchSongsWithTakesRequest(db));

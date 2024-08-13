@@ -4,18 +4,12 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 
-import {
-  RemoveTakePayload,
-  UpdateTakeNotesSuccessPayload,
-  setSelectedTakeIdPayload,
-  song,
-  take,
-} from '@src/common/types';
+import * as t from '@src/common/types';
 import * as ac from '@src/sagas/actionCreators';
 import * as at from '@src/sagas/actionTypes';
 
 type SongsSliceState = {
-  items: song[];
+  items: t.Songs;
   isLoading: boolean;
   error: Error | null;
 };
@@ -32,27 +26,27 @@ const songsSlice = createSlice({
   reducers: {
     removeSong: (state: SongsSliceState, action: PayloadAction<number>) => {
       const indexToRemove = state.items.findIndex(
-        (song: song) => song.songId === action.payload,
+        (song: t.Song) => song.songId === action.payload,
       );
 
       if (indexToRemove !== -1) {
         state.items.splice(indexToRemove, 1);
       }
     },
-    addSong: (state: SongsSliceState, action: PayloadAction<song>) => {
+    addSong: (state: SongsSliceState, action: PayloadAction<t.Song>) => {
       state.items.push(action.payload);
     },
     removeTake: (
       state: SongsSliceState,
-      action: PayloadAction<RemoveTakePayload>,
+      action: PayloadAction<t.RemoveTakePayload>,
     ) => {
       const songIndex = state.items.findIndex(
-        (song: song) => song.songId === action.payload.songId,
+        (song: t.Song) => song.songId === action.payload.songId,
       );
 
       if (songIndex !== -1) {
         const takeIndex = state.items[songIndex].takes.findIndex(
-          (take: take) => take.takeId === action.payload.takeId,
+          (take: t.Take) => take.takeId === action.payload.takeId,
         );
 
         if (takeIndex !== -1) {
@@ -60,10 +54,10 @@ const songsSlice = createSlice({
         }
       }
     },
-    addTake: (state: SongsSliceState, action: PayloadAction<take>) => {
+    addTake: (state: SongsSliceState, action: PayloadAction<t.Take>) => {
       const newTake = action.payload;
       const songIndex = state.items.findIndex(
-        (song: song) => song.songId === newTake.songId,
+        (song: t.Song) => song.songId === newTake.songId,
       );
 
       if (songIndex !== -1) {
@@ -79,17 +73,17 @@ const songsSlice = createSlice({
     },
     updateTakeNotesSuccess: (
       state: SongsSliceState,
-      action: PayloadAction<UpdateTakeNotesSuccessPayload>,
+      action: PayloadAction<t.UpdateTakeNotesSuccessPayload>,
     ) => {
       const { songId, takeId, notes } = action.payload;
 
       const songIndex = state.items.findIndex(
-        (song: song) => song.songId === songId,
+        (song: t.Song) => song.songId === songId,
       );
 
       if (songIndex !== -1) {
         const takeIndex = state.items[songIndex].takes.findIndex(
-          (take: take) => take.takeId === takeId,
+          (take: t.Take) => take.takeId === takeId,
         );
 
         if (takeIndex !== -1) {
@@ -106,7 +100,7 @@ const songsSlice = createSlice({
       })
       .addCase(
         ac.fetchSongsWithTakesSuccess,
-        (state: SongsSliceState, action: PayloadAction<song[]>) => {
+        (state: SongsSliceState, action: PayloadAction<t.Songs>) => {
           state.isLoading = false;
           state.items = action.payload;
         },
@@ -124,7 +118,7 @@ const songsSlice = createSlice({
       })
       .addCase(
         ac.createSongSuccess,
-        (state: SongsSliceState, action: PayloadAction<song>) => {
+        (state: SongsSliceState, action: PayloadAction<t.Song>) => {
           state.isLoading = false;
           state.items.push(action.payload);
         },
@@ -144,12 +138,12 @@ const songsSlice = createSlice({
         ac.updateSelectedTakeIdSuccess,
         (
           state: SongsSliceState,
-          action: PayloadAction<setSelectedTakeIdPayload>,
+          action: PayloadAction<t.SetSelectedTakeIdPayload>,
         ) => {
           const { songId, takeId } = action.payload;
 
           const songIndex = state.items.findIndex(
-            (song: song) => song.songId === songId,
+            (song: t.Song) => song.songId === songId,
           );
 
           state.isLoading = false;

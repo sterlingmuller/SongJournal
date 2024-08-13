@@ -1,18 +1,18 @@
 import React from 'react';
 import { TextInput, View, Text } from 'react-native';
 
-import useSongDetailStyles from '@src/styles/songDetail';
+import useSongDetailStyles from '@styles/songDetail';
 import { SongInfo } from '@src/common/types';
+import { SongDetail } from '@src/common/enums';
 
 interface Props {
-  detailKey: string;
-  label: string;
+  detail: SongDetail;
   value: string;
   handleInputChange: (key: keyof SongInfo, value: string) => void;
 }
 
 const BpmDetail = (props: Props) => {
-  const { label, value, handleInputChange } = props;
+  const { detail, value, handleInputChange } = props;
   const styles = useSongDetailStyles();
 
   return (
@@ -25,7 +25,7 @@ const BpmDetail = (props: Props) => {
         keyboardType="numeric"
         caretHidden
       />
-      <Text>{label}</Text>
+      <Text>{detail}</Text>
     </View>
   );
 };

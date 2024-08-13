@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { playbackPayload } from '@src/common/types';
+
+import { PlaybackPayload } from '@src/common/types';
 
 interface PlaybackState {
   isPlaying: boolean;
@@ -17,7 +18,7 @@ const playbackSlice = createSlice({
   name: 'playback',
   initialState,
   reducers: {
-    startPlayback(state, action: PayloadAction<playbackPayload>) {
+    startPlayback(state, action: PayloadAction<PlaybackPayload>) {
       state.isPlaying = true;
       state.uri = action.payload.uri;
       state.id = action.payload.id;

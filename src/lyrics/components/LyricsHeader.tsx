@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 import InfoIcon from '@src/icons/InfoIcon';
 import BackIcon from '@src/icons/BackIcon';
-import useLyricsHeaderStyles from '@src/styles/lyricsHeader';
+import useLyricsHeaderStyles from '@styles/lyricsHeader';
 import { selectCurrentSongTitle } from '@src/selectors/songsSelector';
-import { useNavigation } from '@react-navigation/native';
 
 interface Props {
   isInfoModalOpen: boolean;

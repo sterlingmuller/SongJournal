@@ -1,18 +1,15 @@
 import React from 'react';
 
 import SongFolders from '@src/home/components/SongFolders';
-import {
-  FilterOptions,
-  deleteObject,
-  sortByCategoryName,
-} from '@src/common/types';
-import { useAppSelector } from '@src/common/hooks';
+import { FilterOptions, DeleteObject } from '@src/common/types';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectSongs } from '@src/selectors/songsSelector';
 import GetStarted from '@src/common/components/GetStarted';
+import { Screen, SortBy } from '@src/common/enums';
 
 interface Props {
-  setToDelete: (value: deleteObject | null) => void;
-  sortedCategory: sortByCategoryName;
+  setToDelete: (value: DeleteObject | null) => void;
+  sortedCategory: SortBy;
   isSortAscending: boolean;
   filterOptions: FilterOptions;
 }
@@ -33,7 +30,7 @@ const HomeDisplay = (props: Props) => {
     );
   }
 
-  return <GetStarted screen={'home'} />;
+  return <GetStarted screen={Screen.HOME} />;
 };
 
 export default HomeDisplay;

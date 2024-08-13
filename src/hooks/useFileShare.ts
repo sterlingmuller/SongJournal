@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import { zip } from 'react-native-zip-archive';
-import { page, song, take } from '@src/common/types';
+import { Page, Song, Take } from '@src/common/types';
 import { convertToSnakeCase } from '@src/utils/convertToSnakeCase';
 import { useSQLiteContext } from 'expo-sqlite';
 import { fetchPageBySongId } from '@src/repositories/PageRepository';
@@ -14,7 +14,7 @@ function useFileShare() {
   const [error, setError] = useState<string | null>(null);
   const db = useSQLiteContext();
 
-  const shareSongFolder = useCallback(async (song: song) => {
+  const shareSongFolder = useCallback(async (song: Song) => {
     setError(null);
 
     try {
@@ -25,7 +25,7 @@ function useFileShare() {
 
       const fileUri = `${FileSystem.cacheDirectory}${formattedTitle}`;
       const starredTake = song.takes.find(
-        (take: take) => take.takeId === song.selectedTakeId,
+        (take: Take) => take.takeId === song.selectedTakeId,
       );
 
       if (starredTake) {
@@ -85,7 +85,7 @@ function useFileShare() {
     [],
   );
 
-  const shareLyrics = useCallback(async (title: string, page: page) => {
+  const shareLyrics = useCallback(async (title: string, page: Page) => {
     try {
       const formattedTitle = convertToSnakeCase(title);
       const fileUri = `${FileSystem.cacheDirectory}${formattedTitle}.pdf`;

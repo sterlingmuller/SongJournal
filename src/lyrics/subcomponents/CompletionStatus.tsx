@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
 import CheckIcon from '@src/icons/CheckIcon';
-import useSongDetailStyles from '@src/styles/songDetail';
+import useSongDetailStyles from '@styles/songDetail';
 import { SongInfo } from '@src/common/types';
 
 interface Props {

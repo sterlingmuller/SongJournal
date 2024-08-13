@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Button } from 'react-native';
 
-import useSaveAndCancelButtonsStyle from '@src/styles/saveAndCancelButtons';
+import useSaveAndCancelButtonsStyle from '@styles/saveAndCancelButtons';
 
 interface Props {
   onPress: () => void;

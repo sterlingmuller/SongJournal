@@ -1,6 +1,7 @@
 import { call, put, takeEvery, all, fork } from 'redux-saga/effects';
+
 import { createTake, updateTakeNotes } from '@src/repositories/TakeRepository';
-import { UpdateTakeNotesSagaPayload, takePayload } from '@src/common/types';
+import { UpdateTakeNotesSagaPayload, TakePayload } from '@src/common/types';
 import {
   CREATE_TAKE_REQUEST,
   UPDATE_TAKE_NOTES_REQUEST,
@@ -11,7 +12,7 @@ import {
 } from '@src/sagas/actionCreators';
 import { addTake, updateTakeNotesSuccess } from '@src/slice/songsSlice';
 
-type CreateTakeParams = { payload: takePayload; type: string };
+type CreateTakeParams = { payload: TakePayload; type: string };
 type UpdateNotesParams = { payload: UpdateTakeNotesSagaPayload; type: string };
 
 function* createTakeSaga({ payload }: CreateTakeParams) {

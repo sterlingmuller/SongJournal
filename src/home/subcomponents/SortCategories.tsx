@@ -1,14 +1,14 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { SORTBY_CATEGORY_NAMES } from '@src/common/constants';
+import { SORT_BY_OPTIONS } from '@src/common/constants';
 import SortByCategory from '@src/home/subcomponents/SortByCategory';
-import { sortByCategoryName } from '@src/common/types';
 import useSortByModalStyles from '@styles/sortByModal';
+import { SortBy } from '@src/common/enums';
 
 interface Props {
-  sortedCategory: sortByCategoryName;
-  setSortedCategory: (categoryName: sortByCategoryName) => void;
+  sortedCategory: SortBy;
+  setSortedCategory: (categoryName: SortBy) => void;
   isSortAscending: boolean;
   setIsSortAscending: (value: boolean) => void;
 }
@@ -24,7 +24,7 @@ const SortByCategories = (props: Props) => {
 
   return (
     <View style={styles.categories}>
-      {SORTBY_CATEGORY_NAMES.map((categoryName: sortByCategoryName) => (
+      {SORT_BY_OPTIONS.map((categoryName: SortBy) => (
         <SortByCategory
           key={categoryName}
           label={categoryName}

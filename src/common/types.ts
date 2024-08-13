@@ -1,23 +1,11 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootState } from '@src/store';
 import { SQLiteDatabase } from 'expo-sqlite';
 
-export type appState = 'active' | 'background';
-
-export type sortByCategoryName = 'Date' | 'Name' | 'Length';
+import { RootState } from '@src/store';
 
 export type FilterOptions = {
   lyrics?: boolean;
   completed?: boolean;
 };
-
-export type colorThemeName =
-  | 'Light'
-  | 'Dark'
-  | 'Metal'
-  | 'Psych'
-  | 'Pop'
-  | 'Surf';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -28,23 +16,8 @@ export type RootStackParamList = {
   MusicPlayer: undefined;
 };
 
-export type songNavigation = NativeStackScreenProps<RootStackParamList, 'Song'>;
-
-export type lyricNavigation = NativeStackScreenProps<
-  RootStackParamList,
-  'Lyrics'
->;
-
-export type lyricsScreenRouteParams = {
-  song: song;
-};
-
-export type tabNames = 'Playlist' | 'MusicPlayer' | 'Settings';
-export type tab = { name: tabNames; icon: React.ComponentType };
-
-export type test = { params: lyricsScreenRouteParams };
-
-export type songDetail = { label: string; key: string };
+export type TabNames = 'Playlist' | 'MusicPlayer' | 'Settings';
+export type Tab = { name: TabNames; icon: React.ComponentType };
 
 export type LyricsScreenOption = {
   name: LyricsOptionName;
@@ -53,14 +26,16 @@ export type LyricsScreenOption = {
 
 export type LyricsOptionName = 'Edit' | 'Chords' | 'Metronome' | 'Share' | '';
 
-export type songInfo = {
+export type SelectEntry = { label: string; value: string };
+
+export type DbSong = {
   songId: number;
   title: string;
   selectedTakeId: number;
   totalTakes: number;
 };
 
-export type take = {
+export type Take = {
   takeId: number;
   songId: number;
   title: string;
@@ -87,52 +62,49 @@ export type DbPage = {
   completed: boolean;
 };
 
-export type page = {
+export type Page = {
   lyrics: string;
   info: SongInfo;
 };
 
-export type song = {
+export type Song = {
   songId: number;
   title: string;
   selectedTakeId: number;
   totalTakes: number;
-  takes: take[];
-  page: page;
+  takes: Takes;
+  page: Page;
 };
 
-export interface SongItem extends song {
+export interface SongItem extends Song {
   key: string;
 }
 
-export type currentSong = {
+export type CurrentSong = {
   songId: number;
   songsIndex: number;
 };
 
-export type songs = song[];
+export type Songs = Song[];
 
-export type createSongResult = {
+export type Takes = Take[];
+
+export type CreateSongResult = {
   songId: number;
   title: string;
   selectedTakeId: number;
-  page: page;
+  page: Page;
   totalTakes: number;
 };
 
-export type getTakesAndPageResult = {
-  takes: take[];
-  page: page;
-};
-
-export type deleteObject = {
+export type DeleteObject = {
   type: 'song' | 'take';
   title: string;
   songId: number;
   takeId?: number;
 };
 
-export type takePayload = {
+export type TakePayload = {
   songId: number;
   title: string;
   date: string;
@@ -160,38 +132,38 @@ export type UpdateTakeNotesSuccessPayload = {
   notes: string;
 };
 
-export type createSongPayload = {
+export type CreateSongPayload = {
   title: string;
   db: SQLiteDatabase;
 };
 
-export type updateSelectedTakeIdPayloadDb = {
+export type UpdateSelectedTakeIdPayloadDb = {
   songId: number;
   takeId: number;
   db: SQLiteDatabase;
 };
 
-export type setSelectedTakeIdPayload = {
+export type SetSelectedTakeIdPayload = {
   songId: number;
   takeId: number;
 };
 
-export type playbackPayload = {
+export type PlaybackPayload = {
   id: number;
   uri: string;
 };
 
-export type fetchPagePayload = {
+export type FetchPagePayload = {
   songId: number;
   db: SQLiteDatabase;
 };
 
-export type fetchPageSuccessPayload = {
+export type FetchPageSuccessPayload = {
   songId: number;
-  page: page;
+  page: Page;
 };
 
-export type updatePageInfoPayload = {
+export type UpdatePageInfoPayload = {
   songId: number;
   info: SongInfo;
   db: SQLiteDatabase;
@@ -202,13 +174,13 @@ export type UpdatePageInfoSuccess = {
   info: SongInfo;
 };
 
-export type updateLyricsPayload = {
+export type UpdateLyricsPayload = {
   songId: number;
   lyrics: string;
   db: SQLiteDatabase;
 };
 
-export type updateLyricsSuccess = {
+export type UpdateLyricsSuccess = {
   songId: number;
   lyrics: string;
 };

@@ -7,6 +7,8 @@ interface Styles {
   eggContainer: ViewStyle;
   arrow: ViewStyle;
   text: TextStyle;
+  boldText: TextStyle;
+  italicText: TextStyle;
 }
 
 const useGetStartedHomeStyles = () => {
@@ -49,6 +51,12 @@ const useGetStartedHomeStyles = () => {
       justifyContent: 'center',
       alignItems: 'center',
       paddingLeft: 5,
+    },
+    boldText: {
+      fontWeight: 'bold',
+    },
+    italicText: {
+      fontStyle: 'italic',
     },
   });
 

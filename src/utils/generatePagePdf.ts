@@ -1,17 +1,16 @@
 import * as Print from 'expo-print';
 
 import { SONG_DETAILS } from '@src/common/constants';
-import { page, songDetail } from '@src/common/types';
+import { Page } from '@src/common/types';
+import { SongDetail } from '@src/common/enums';
 
-export const generatePagePdf = async (title: string, page: page) => {
+export const generatePagePdf = async (title: string, page: Page) => {
   const { lyrics, info } = page;
 
   const renderInfo = () => {
     const infoToDisplay = SONG_DETAILS.map(
-      ({ label, key }: songDetail) => !!info[key] && `${label}: ${info[key]}`,
+      (detail: SongDetail) => !!info[detail] && `${detail}: ${info[detail]}`,
     ).filter((value: string | boolean) => value !== false);
-
-    console.log('info to display:', infoToDisplay);
 
     if (infoToDisplay.length) {
       return `<p style="text-align: center;">${infoToDisplay.join(' &nbsp; &nbsp; ')}</p>`;

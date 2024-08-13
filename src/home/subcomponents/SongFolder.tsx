@@ -6,9 +6,9 @@ import StyledText from '@src/common/components/StyledText';
 import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
 import PlaybackBar from '@src/home/subcomponents/PlaybackBar';
-import { RootStackParamList, song, take } from '@src/common/types';
+import { RootStackParamList, Song, Take } from '@src/common/types';
 import useSongFolderStyles from '@styles/songFolder';
-import { useAppDispatch, useAppSelector } from '@src/common/hooks';
+import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { setCurrentSongId } from '@src/slice/currentSongSlice';
 import PauseIcon from '@src/icons/PauseIcon';
 import {
@@ -23,9 +23,10 @@ import { formatDateFromISOString } from '@src/utils/formateDateFromISOString';
 import useFileShare from '@src/hooks/useFileShare';
 import { useAudioPlayer } from '@src/context/AudioContext';
 import PageIcon from '@src/icons/PageIcon';
+import { Screen } from '@src/common/enums';
 
 interface Props {
-  song: song;
+  song: Song;
 }
 
 const SongFolder = ({ song }: Props) => {
@@ -49,7 +50,7 @@ const SongFolder = ({ song }: Props) => {
   const isCurrentSongPlaying = songId === selectedPlayingSongId && isPlaying;
 
   const selectedTake = useMemo(
-    () => takes.find((take: take) => take.takeId === selectedTakeId),
+    () => takes.find((take: Take) => take.takeId === selectedTakeId),
     [takes, selectedTakeId],
   );
 
@@ -61,9 +62,9 @@ const SongFolder = ({ song }: Props) => {
   const handlePressOut = useCallback(() => setIsPressed(false), []);
 
   const handleOnPressNavigation = useCallback(
-    (screen: 'Song' | 'Lyrics') => {
+    (screen: Screen.SONG | Screen.LYRICS) => {
       dispatch(setCurrentSongId(songId));
-      if (screen === 'Lyrics') {
+      if (screen === Screen.LYRICS) {
         dispatch(fetchPageRequest({ songId, db }));
       }
       clearPlayback();
@@ -105,7 +106,7 @@ const SongFolder = ({ song }: Props) => {
       activeOpacity={1}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
-      onPress={() => handleOnPressNavigation('Song')}
+      onPress={() => handleOnPressNavigation(Screen.SONG)}
     >
       <View style={styles.contents}>
         <TouchableOpacity onPress={onDoubleTap}>
@@ -124,7 +125,7 @@ const SongFolder = ({ song }: Props) => {
         {formattedDate}
         <View style={styles.iconRow}>
           <TouchableOpacity
-            onPress={() => handleOnPressNavigation('Lyrics')}
+            onPress={() => handleOnPressNavigation(Screen.LYRICS)}
             style={{ paddingBottom: 4 }}
           >
             <PageIcon />

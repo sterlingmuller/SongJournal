@@ -2,16 +2,17 @@ import React from 'react';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import useSongScreenStyles from '@src/styles/songScreen';
-import { deleteObject, take } from '@src/common/types';
-import { useAppSelector } from '@src/common/hooks';
+import useSongScreenStyles from '@styles/songScreen';
+import { DeleteObject, Take } from '@src/common/types';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectCurrentSongTakes } from '@src/selectors/songsSelector';
 import GetStarted from '@src/common/components/GetStarted';
 import SongTake from '@src/songFolder/components/SongTake';
+import { Screen } from '@src/common/enums';
 
 interface Props {
-  setToDelete: (value: deleteObject) => void;
-  setCurrentTake: (value: take) => void;
+  setToDelete: (value: DeleteObject) => void;
+  setCurrentTake: (value: Take) => void;
 }
 
 const SongDisplay = (props: Props) => {
@@ -19,10 +20,10 @@ const SongDisplay = (props: Props) => {
   const takes = useAppSelector(selectCurrentSongTakes);
   const styles = useSongScreenStyles();
 
-  const orderedTakes: take[] = [...takes].reverse();
+  const orderedTakes: Take[] = [...takes].reverse();
 
   const renderTakes = () =>
-    orderedTakes.map((take: take) => (
+    orderedTakes.map((take: Take) => (
       <SongTake
         key={take.title}
         take={take}
@@ -39,7 +40,7 @@ const SongDisplay = (props: Props) => {
     );
   }
 
-  return <GetStarted screen={'song'} />;
+  return <GetStarted screen={Screen.SONG} />;
 };
 
 export default SongDisplay;

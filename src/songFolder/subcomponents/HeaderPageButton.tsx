@@ -1,14 +1,15 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useSQLiteContext } from 'expo-sqlite';
 
 import PageIcon from '@src/icons/PageIcon';
 import { RootStackParamList } from '@src/common/types';
 import { useAudioPlayer } from '@src/context/AudioContext';
-import { useAppDispatch, useAppSelector } from '@src/common/hooks';
+import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { fetchPageRequest } from '@src/sagas/actionCreators';
-import { useSQLiteContext } from 'expo-sqlite';
 import { selectCurrentSongId } from '@src/selectors/songsSelector';
+import { Screen } from '@src/common/enums';
 
 const HeaderPageButton = () => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
@@ -21,7 +22,7 @@ const HeaderPageButton = () => {
     dispatch(fetchPageRequest({ songId, db }));
     clearPlayback();
 
-    navigate('Lyrics');
+    navigate(Screen.Lyrics);
   };
 
   return (

@@ -1,17 +1,17 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
-import { sortByCategoryName } from '@src/common/types';
 import useSortByModalStyles from '@styles/sortByModal';
 import ArrowUpIcon from '@src/icons/ArrowUpIcon';
 import ArrowDownIcon from '@src/icons/ArrowDownIcon';
+import { SortBy } from '@src/common/enums';
 
 interface Props {
-  sortedCategory: sortByCategoryName;
-  setSortedCategory: (categoryName: sortByCategoryName) => void;
+  sortedCategory: SortBy;
+  setSortedCategory: (categoryName: SortBy) => void;
   isSortAscending: boolean;
   setIsSortAscending: (value: boolean) => void;
-  label: sortByCategoryName;
+  label: SortBy;
 }
 
 const SortByCategory = (props: Props) => {
