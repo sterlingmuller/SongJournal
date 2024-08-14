@@ -12,10 +12,17 @@ interface Props {
   sortedCategory: SortBy;
   isSortAscending: boolean;
   filterOptions: FilterOptions;
+  searchText: string;
 }
 
 const HomeDisplay = (props: Props) => {
-  const { setToDelete, sortedCategory, isSortAscending, filterOptions } = props;
+  const {
+    setToDelete,
+    sortedCategory,
+    isSortAscending,
+    filterOptions,
+    searchText,
+  } = props;
   const songs = useAppSelector(selectSongs);
 
   if (songs.length > 0) {
@@ -26,6 +33,7 @@ const HomeDisplay = (props: Props) => {
         isSortAscending={isSortAscending}
         filterOptions={filterOptions}
         songs={songs}
+        searchText={searchText}
       />
     );
   }

@@ -5,7 +5,7 @@ import SongFolder from '@src/home/subcomponents/SongFolder';
 import DeleteRow from '@src/home/subcomponents/DeleteRow';
 import { ListRenderItemInfo } from 'react-native';
 import * as t from '@src/common/types';
-import { sortSongs } from '@src/utils/sortSongs';
+import { processSongs } from '@src/utils/songExplorer';
 import { SortBy } from '@src/common/enums';
 
 interface Props {
@@ -14,17 +14,32 @@ interface Props {
   isSortAscending: boolean;
   filterOptions: t.FilterOptions;
   songs: t.Songs;
+  searchText: string;
 }
 
 const SongFolders = (props: Props) => {
-  const { setToDelete, sortedCategory, isSortAscending, filterOptions, songs } =
-    props;
+  const {
+    setToDelete,
+    sortedCategory,
+    isSortAscending,
+    filterOptions,
+    songs,
+    searchText,
+  } = props;
 
-  const sortedSongs = sortSongs(
+  // const sortedSongs = sortSongs(
+  //   songs,
+  //   sortedCategory,
+  //   isSortAscending,
+  //   filterOptions,
+  // );
+
+  const songsToDisplay = processSongs(
     songs,
     sortedCategory,
     isSortAscending,
     filterOptions,
+    searchText,
   );
 
   const openRowRef = useRef(null);
@@ -42,7 +57,7 @@ const SongFolders = (props: Props) => {
   return (
     <SwipeListView
       contentContainerStyle={{ paddingBottom: 200 }}
-      data={sortedSongs}
+      data={songsToDisplay}
       disableRightSwipe
       previewRowKey={'0'}
       previewOpenValue={-40}
