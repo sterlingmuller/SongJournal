@@ -1,4 +1,4 @@
-import { CHORD_EXTENSIONS, ROOT_NOTES } from '@src/common/enums';
+import { CHORD_EXTENSIONS, ROOT_NOTES } from '@src/common/constants';
 import { SelectEntry } from '@src/common/types';
 
 const separateChordValue = (chord: string) => {

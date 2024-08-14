@@ -5,6 +5,7 @@ import StyledText from '@src/common/components/StyledText';
 import useGetStartedHomeStyles from '@styles/getStartedHome';
 import EggIcon from '@src/icons/EggIcon';
 import { Screen } from '@src/common/enums';
+import { FRACTION_4_4 } from '../constants';
 
 interface props {
   screen: 'Home' | 'Song' | 'MusicPlayer';
@@ -16,8 +17,10 @@ const GetStarted = ({ screen }: props) => {
   const getStartedHomeInstructions = (
     <StyledText style={styles.text}>
       {`Looks like your journal is empty.\nTo get started, visit `}
-      <StyledText style={styles.boldText}>Settings 4&#8260;4</StyledText> help
-      importing a journal or press the{' '}
+      <StyledText style={styles.boldText}>
+        Settings {FRACTION_4_4}
+      </StyledText>{' '}
+      help importing a journal or press the{' '}
       <StyledText style={styles.boldText}>New Song</StyledText> button below.
     </StyledText>
   );
@@ -33,8 +36,9 @@ const GetStarted = ({ screen }: props) => {
     <StyledText style={styles.text}>
       Ah! What are <StyledText style={styles.italicText}>you</StyledText> doing
       here!? The <StyledText style={styles.boldText}>Music Player</StyledText>{' '}
-      is not ready <StyledText style={styles.boldText}>4&#8260;4</StyledText>{' '}
-      the world to <StyledText style={styles.boldText}>C</StyledText>
+      is not ready{' '}
+      <StyledText style={styles.boldText}>{FRACTION_4_4}</StyledText> the world
+      to <StyledText style={styles.boldText}>C</StyledText>
     </StyledText>
   );
 
