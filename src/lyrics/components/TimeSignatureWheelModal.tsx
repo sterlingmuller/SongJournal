@@ -3,7 +3,8 @@ import { View } from 'react-native';
 import { WheelPicker, WheelPickerAlign } from 'react-native-ui-lib';
 import Modal from 'react-native-modal';
 
-import { SongDetail, TIME_SIGNATURES } from '@src/common/enums';
+import { TIME_SIGNATURES } from '@src/common/constants';
+import { SongDetail } from '@src/common/enums';
 import useWheelPickerModalStyles from '@styles/wheelPickerModal';
 import StyledText from '@src/common/components/StyledText';
 import { SongInfo } from '@src/common/types';
