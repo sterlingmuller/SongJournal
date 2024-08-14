@@ -9,15 +9,19 @@ import VertDotsIcon from '@src/icons/VertDotsIcon';
 interface Props {
   isSortOpen: boolean;
   setIsSortOpen: (value: boolean) => void;
+  searchText: string;
+  setSearchText: (value: string) => void;
 }
 
-const HomeHeader = ({ isSortOpen, setIsSortOpen }: Props) => {
+const HomeHeader = (props: Props) => {
+  const { isSortOpen, setIsSortOpen, searchText, setSearchText } = props;
+
   const toggleSort = () => setIsSortOpen(!isSortOpen);
   const styles = useHomeHeaderStyles();
 
   return (
     <View style={styles.container}>
-      <SearchBar />
+      <SearchBar searchText={searchText} setSearchText={setSearchText} />
       <TouchableOpacity onPress={toggleSort}>
         {isSortOpen ? <HorzDotsIcon /> : <VertDotsIcon />}
       </TouchableOpacity>

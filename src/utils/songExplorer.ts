@@ -28,16 +28,21 @@ const filterSongs = (songs: Songs, filterOptions: FilterOptions) =>
     return true;
   });
 
-export const sortSongs = (
+const searchSongs = (songs: Songs, searchText: string): Songs => {
+  if (!searchText) {
+    return songs;
+  }
+  return songs.filter((song: Song) =>
+    song.title.toLowerCase().includes(searchText.toLowerCase()),
+  );
+};
+
+const sortSongs = (
   songs: Songs,
   sortedCategory: SortBy,
-  isSortAscending: boolean = true,
-  filterOptions: FilterOptions,
+  isSortAscending: boolean,
 ): Songs => {
-  const filteredSongs = filterSongs(songs, filterOptions);
-  const sortedSongs = [...filteredSongs];
-
-  sortedSongs.sort((a: Song, b: Song) => {
+  return [...songs].sort((a: Song, b: Song) => {
     switch (sortedCategory) {
       case SortBy.DATE: {
         const dateA =
@@ -63,11 +68,24 @@ export const sortSongs = (
             ?.duration || 0;
         return isSortAscending ? durationA - durationB : durationB - durationA;
       }
-
       default:
         return 0;
     }
   });
+};
 
-  return sortedSongs;
+export const processSongs = (
+  songs: Songs,
+  sortedCategory: SortBy,
+  isSortAscending: boolean,
+  filterOptions: FilterOptions,
+  searchText: string,
+): Songs => {
+  let processedSongs = filterSongs(songs, filterOptions);
+
+  processedSongs = searchSongs(processedSongs, searchText);
+
+  processedSongs = sortSongs(processedSongs, sortedCategory, isSortAscending);
+
+  return processedSongs;
 };

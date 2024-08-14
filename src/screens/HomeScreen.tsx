@@ -27,6 +27,7 @@ const HomeScreen = () => {
   const [sortedCategory, setSortedCategory] = useState<SortBy>(SortBy.DATE);
   const [isSortAscending, setIsSortAscending] = useState<boolean>(false);
   const [filterOptions, setFilterOptions] = useState<FilterOptions>({});
+  const [searchText, setSearchText] = useState(null);
 
   const [isNewSongOpen, setIsNewSongOpen] = useState<boolean>(false);
   const [toDelete, setToDelete] = useState<DeleteObject>(EMPTY_DELETE_OBJECT);
@@ -38,7 +39,12 @@ const HomeScreen = () => {
   useLayoutEffect(() => {
     setOptions({
       header: () => (
-        <HomeHeader isSortOpen={isSortOpen} setIsSortOpen={setIsSortOpen} />
+        <HomeHeader
+          isSortOpen={isSortOpen}
+          setIsSortOpen={setIsSortOpen}
+          searchText={searchText}
+          setSearchText={setSearchText}
+        />
       ),
     });
   }, [isSortOpen, setIsSortOpen]);
@@ -51,6 +57,7 @@ const HomeScreen = () => {
           sortedCategory={sortedCategory}
           isSortAscending={isSortAscending}
           filterOptions={filterOptions}
+          searchText={searchText}
         />
         <CreateNewSongButton setIsNewSongOpen={setIsNewSongOpen} />
         <SortByModal
