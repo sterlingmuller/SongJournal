@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { Audio } from 'expo-av';
@@ -16,12 +16,18 @@ import { createTakeRequest } from '@src/sagas/actionCreators';
 import { RootStackParamList } from '@src/common/types';
 import { selectCurrentSongId } from '@src/selectors/songsSelector';
 import PlaybackButton from '../subcomponents/PlaybackButton';
+import { EMPTY_AUDIO_WAVE_ARRAY } from '@src/common/constants';
 
 interface Props {
   duration: number;
   setDuration: (value: number | ((value: number) => void)) => void;
   uri: string;
   setUri: (value: string) => void;
+  isRecording: boolean;
+  setIsRecording: (value: boolean) => void;
+  recording: Audio.Recording;
+  setRecording: (value: Audio.Recording) => void;
+  setWave: (value: number[]) => void;
 }
 
 const RecordingControls = (props: Props) => {
@@ -33,11 +39,18 @@ const RecordingControls = (props: Props) => {
   const songId = useAppSelector(selectCurrentSongId);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
 
-  const { duration, setDuration, uri, setUri } = props;
+  const {
+    duration,
+    setDuration,
+    uri,
+    setUri,
+    isRecording,
+    setIsRecording,
+    recording,
+    setRecording,
+    setWave,
+  } = props;
   const { title } = route.params;
-
-  const [recording, setRecording] = useState<Audio.Recording | null>(null);
-  const [isRecording, setIsRecording] = useState<boolean>(true);
 
   const handleStartRecording = async () => {
     await startRecording(setRecording);
@@ -66,11 +79,12 @@ const RecordingControls = (props: Props) => {
     setIsRecording(!isRecording);
   };
 
-  const onCancelPress = () => {
+  const onClearPress = () => {
     if (timerRef.current) {
       clearInterval(timerRef.current);
     }
 
+    setWave(EMPTY_AUDIO_WAVE_ARRAY);
     clearRecording(recording, setRecording, setUri, setDuration);
     setIsRecording(false);
   };
@@ -98,7 +112,7 @@ const RecordingControls = (props: Props) => {
 
   return (
     <View style={styles.recordingRow}>
-      <TouchableOpacity onPress={onCancelPress} style={styles.sideButton}>
+      <TouchableOpacity onPress={onClearPress} style={styles.sideButton}>
         <Text style={styles.buttonText}>Clear</Text>
       </TouchableOpacity>
       <View style={styles.recordButtonContainer}>

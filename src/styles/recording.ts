@@ -18,7 +18,8 @@ const useRecordingStyles = () => {
     container: {
       flex: 1,
       backgroundColor: theme.primaryBackground,
-      bottom: 0,
+      display: 'flex',
+      flexDirection: 'column',
     },
     recordingRow: {
       flexDirection: 'row',

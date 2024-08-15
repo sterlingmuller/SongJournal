@@ -129,3 +129,11 @@ export const TIME_SIGNATURES = [
   { label: '11/8', value: '11/8' },
   { label: '2/2', value: '2/2' },
 ];
+
+export const MAX_AUDIO_WAVE_BARS = 34;
+
+export const LEADING_DOTS_ARRAY = new Array(5).fill(null);
+
+export const EMPTY_AUDIO_WAVE_ARRAY = new Array(
+  MAX_AUDIO_WAVE_BARS - LEADING_DOTS_ARRAY.length,
+).fill(null);
