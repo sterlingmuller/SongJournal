@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { createTakeRequest } from '@src/sagas/actionCreators';
 import { RootStackParamList } from '@src/common/types';
 import { selectCurrentSongId } from '@src/selectors/songsSelector';
+import PlaybackButton from '../subcomponents/PlaybackButton';
 
 interface Props {
   duration: number;
@@ -38,9 +39,9 @@ const RecordingControls = (props: Props) => {
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const [isRecording, setIsRecording] = useState<boolean>(true);
 
-  const handleStartRecording = () => {
+  const handleStartRecording = async () => {
+    await startRecording(setRecording);
     setDuration(0);
-    startRecording(setRecording);
 
     timerRef.current = setInterval(() => {
       setDuration((prevDuration: number) => (prevDuration || 0) + 1);
@@ -51,16 +52,16 @@ const RecordingControls = (props: Props) => {
     handleStartRecording();
   }, []);
 
-  const handleStopRecording = () => {
-    stopRecording(recording, setRecording, setUri, setDuration);
+  const handleStopRecording = async () => {
+    await stopRecording(recording, setRecording, setUri, setDuration);
 
     if (timerRef.current) {
       clearInterval(timerRef.current);
     }
   };
 
-  const onRecordPress = () => {
-    isRecording ? handleStopRecording() : handleStartRecording();
+  const onRecordPress = async () => {
+    isRecording ? await handleStopRecording() : await handleStartRecording();
 
     setIsRecording(!isRecording);
   };
@@ -98,10 +99,14 @@ const RecordingControls = (props: Props) => {
   return (
     <View style={styles.recordingRow}>
       <TouchableOpacity onPress={onCancelPress} style={styles.sideButton}>
-        <Text style={styles.buttonText}>Cancel</Text>
+        <Text style={styles.buttonText}>Clear</Text>
       </TouchableOpacity>
       <View style={styles.recordButtonContainer}>
-        <RecordButton onPress={onRecordPress} isRecording={isRecording} />
+        {uri ? (
+          <PlaybackButton uri={uri} songId={songId} />
+        ) : (
+          <RecordButton onPress={onRecordPress} isRecording={isRecording} />
+        )}
       </View>
       <TouchableOpacity onPress={onSavePress} style={styles.sideButton}>
         <Text style={styles.buttonText}>Save</Text>

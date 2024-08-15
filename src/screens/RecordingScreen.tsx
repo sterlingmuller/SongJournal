@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
-import { playRecording } from '@src/utils/startStopPlayRecording';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import useRecordingStyles from '@styles/recording';
 import Timer from '@src/recording/components/Timer';
 import RecordingControls from '@src/recording/components/RecordingControls';
@@ -15,11 +13,6 @@ const RecordingScreen = () => {
 
   return (
     <View style={styles.container}>
-      {!!uri && (
-        <TouchableOpacity onPress={() => playRecording(uri)}>
-          <Text>Press here to play sound</Text>
-        </TouchableOpacity>
-      )}
       <Timer duration={duration} />
       <RecordingControls
         duration={duration}
