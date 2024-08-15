@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Modal, TouchableOpacity, TextInput } from 'react-native';
+import {
+  View,
+  Text,
+  Modal,
+  TouchableOpacity,
+  TextInput,
+  KeyboardAvoidingView,
+} from 'react-native';
 
 import SaveAndCancelButtons from '@src/common/components/SaveAndCancelButtons';
 import { Take } from '@src/common/types';
@@ -44,7 +51,7 @@ const NotesModal = (props: Props) => {
         activeOpacity={1}
         onPress={onExitPress}
       >
-        <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.container}>
           <Text style={styles.title}>{title} Notes</Text>
           <View style={styles.textbox}>
             <TextInput
@@ -61,7 +68,7 @@ const NotesModal = (props: Props) => {
             onExitPress={onExitPress}
             disabled={disabled}
           />
-        </View>
+        </KeyboardAvoidingView>
       </TouchableOpacity>
     </Modal>
   );

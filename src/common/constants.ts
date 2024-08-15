@@ -88,7 +88,7 @@ export const MONTHS = [
   'December',
 ];
 
-export const FRACTION_4_4 = '4&#8260;4';
+export const FRACTION_UNICODE = '\u2044';
 
 export const ROOT_NOTES = [
   { label: '', value: '' },

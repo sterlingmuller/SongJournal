@@ -1,4 +1,4 @@
-import { Audio, AVPlaybackStatusSuccess } from 'expo-av';
+import { Audio } from 'expo-av';
 
 export const startRecording = async (
   setRecording: (value: Audio.Recording | null) => void,
@@ -31,7 +31,24 @@ export const stopRecording = async (
   await recording.stopAndUnloadAsync();
   const uri = recording.getURI();
   setRecordingUri(uri);
-  setDuration(recording._finalDurationMillis / 1000);
+
+  const duration = Math.floor(recording._finalDurationMillis / 1000);
+
+  setDuration(duration);
+};
+
+export const clearRecording = async (
+  recording: Audio.Recording | null,
+  setRecording: (value: Audio.Recording | null) => void,
+  setRecordingUri: (uri: string | null) => void,
+  setDuration: (duration: number) => void,
+) => {
+  if (recording) {
+    await recording.stopAndUnloadAsync();
+  }
+  setRecording(null);
+  setRecordingUri(null);
+  setDuration(null);
 };
 
 export const playRecording = async (uri: string) => {
