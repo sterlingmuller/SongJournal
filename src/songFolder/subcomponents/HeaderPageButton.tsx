@@ -22,7 +22,7 @@ const HeaderPageButton = () => {
     dispatch(fetchPageRequest({ songId, db }));
     clearPlayback();
 
-    navigate(Screen.Lyrics);
+    navigate(Screen.LYRICS);
   };
 
   return (
