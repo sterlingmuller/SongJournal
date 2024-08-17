@@ -141,6 +141,11 @@ export type CreateSongPayload = {
   db: SQLiteDatabase;
 };
 
+export type DeleteSongPayload = {
+  songId: number;
+  db: SQLiteDatabase;
+};
+
 export type UpdateSelectedTakeIdPayloadDb = {
   songId: number;
   takeId: number;
@@ -189,9 +194,20 @@ export type UpdateLyricsSuccess = {
   lyrics: string;
 };
 
-export type RemoveTakePayload = {
+export type DeleteTakeSuccessPayload = {
   takeId: number;
   songId: number;
+};
+
+export type DeleteTakeSagaPayload = {
+  takeId: number;
+  songId: number;
+  db: SQLiteDatabase;
+};
+
+export type DeleteTakeDbPayload = {
+  takeId: number;
+  db: SQLiteDatabase;
 };
 
 export type Selector<S> = (state: RootState) => S;

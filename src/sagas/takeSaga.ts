@@ -1,51 +1,87 @@
-import { call, put, takeEvery, all, fork } from 'redux-saga/effects';
+import { call, put, takeEvery, all } from 'redux-saga/effects';
+import { PayloadAction } from '@reduxjs/toolkit';
 
-import { createTake, updateTakeNotes } from '@src/repositories/TakeRepository';
-import { UpdateTakeNotesSagaPayload, TakePayload } from '@src/common/types';
 import {
-  CREATE_TAKE_REQUEST,
-  UPDATE_TAKE_NOTES_REQUEST,
-} from '@src/sagas/actionTypes';
+  createTake,
+  updateTakeNotes,
+  deleteTake,
+} from '@src/repositories/TakeRepository';
 import {
-  createTakeFailure,
+  TakePayload,
+  UpdateTakeNotesSagaPayload,
+  DeleteTakeSagaPayload,
+  UpdateSelectedTakeIdPayloadDb,
+} from '@src/common/types';
+import {
+  removeTakeSuccess,
+  updateTakeNotesSuccess,
   createTakeSuccess,
-} from '@src/sagas/actionCreators';
-import { addTake, updateTakeNotesSuccess } from '@src/slice/songsSlice';
+  updateSelectedTakeIdSuccess,
+} from '@src/slice/songsSlice';
+import { startLoading, setError, endLoading } from '@src/slice/asyncSlice';
+import * as at from '@src/sagas/actionTypes';
+import { updateSelectedTakeId } from '@src/repositories/SongsRepository';
 
-type CreateTakeParams = { payload: TakePayload; type: string };
-type UpdateNotesParams = { payload: UpdateTakeNotesSagaPayload; type: string };
+function* deleteTakeSaga(action: PayloadAction<DeleteTakeSagaPayload>) {
+  const { db, takeId, songId } = action.payload;
 
-function* createTakeSaga({ payload }: CreateTakeParams) {
+  yield put(startLoading());
   try {
-    const newTake = yield call(createTake, payload);
+    yield call(deleteTake, { db, takeId });
 
-    yield put(addTake(newTake));
-    yield put(createTakeSuccess(newTake));
+    yield put(removeTakeSuccess({ takeId, songId }));
+    yield put(endLoading());
   } catch (error) {
-    yield put(createTakeFailure(error.message));
+    yield put(setError(error));
   }
 }
 
-function* watchCreateTake() {
-  yield takeEvery(CREATE_TAKE_REQUEST, createTakeSaga);
-}
-
-function* updateTakeNotesSaga({ payload }: UpdateNotesParams) {
-  const { db, takeId, songId, notes } = payload;
-
+function* updateTakeNotesSaga(
+  action: PayloadAction<UpdateTakeNotesSagaPayload>,
+) {
+  const { db, takeId, songId, notes } = action.payload;
+  yield put(startLoading());
   try {
     yield call(updateTakeNotes, { db, takeId, notes });
 
     yield put(updateTakeNotesSuccess({ takeId, songId, notes }));
+    yield put(endLoading());
   } catch (error) {
-    yield put(createTakeFailure(error.message));
+    yield put(setError(error));
   }
 }
 
-function* watchUpdateTakeNotes() {
-  yield takeEvery(UPDATE_TAKE_NOTES_REQUEST, updateTakeNotesSaga);
+function* createTakeSaga(action: PayloadAction<TakePayload>) {
+  yield put(startLoading());
+  try {
+    const newTake = yield call(createTake, action.payload);
+
+    yield put(createTakeSuccess(newTake));
+    yield put(endLoading());
+  } catch (error) {
+    yield put(setError(error));
+  }
 }
 
-export default function* takeSaga() {
-  yield all([fork(watchCreateTake), fork(watchUpdateTakeNotes)]);
+function* updateSelectedTakeIdSaga(
+  action: PayloadAction<UpdateSelectedTakeIdPayloadDb>,
+) {
+  yield put(startLoading());
+  try {
+    yield call(updateSelectedTakeId, action.payload);
+
+    yield put(updateSelectedTakeIdSuccess(action.payload));
+    yield put(endLoading());
+  } catch (error) {
+    yield put(setError(error));
+  }
+}
+
+export default function* songSaga() {
+  yield all([
+    takeEvery(at.DELETE_TAKE_REQUEST, deleteTakeSaga),
+    takeEvery(at.UPDATE_TAKE_NOTES_REQUEST, updateTakeNotesSaga),
+    takeEvery(at.CREATE_TAKE_REQUEST, createTakeSaga),
+    takeEvery(at.UPDATE_SELECTED_TAKE_ID_REQUEST, updateSelectedTakeIdSaga),
+  ]);
 }

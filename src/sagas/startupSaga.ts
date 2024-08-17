@@ -1,21 +1,19 @@
-import { call, put, takeEvery, all, fork } from 'redux-saga/effects';
+import { call, put, takeEvery, all } from 'redux-saga/effects';
+import { PayloadAction } from '@reduxjs/toolkit';
 import { SQLiteDatabase } from 'expo-sqlite';
 
-import { fetchTakes } from '@src/repositories/TakeRepository';
-import { Song, Songs, Take, Takes } from '@src/common/types';
-import {
-  fetchSongsWithTakesFailure,
-  fetchSongsWithTakesSuccess,
-} from '@src/sagas/actionCreators';
 import { fetchSongs } from '@src/repositories/SongsRepository';
-import { FETCH_SONGS_WITH_TAKES_REQUEST } from '@src/sagas/actionTypes';
+import { Song, Songs, Take, Takes } from '@src/common/types';
+import { fetchSongsWithTakesSuccess } from '@src/slice/songsSlice';
+import { startLoading, setError, endLoading } from '@src/slice/asyncSlice';
+import { fetchTakes } from '@src/repositories/TakeRepository';
+import * as at from '@src/sagas/actionTypes';
 
-type Params = { payload: SQLiteDatabase; type: string };
-
-function* fetchSongsWithTakes({ payload: db }: Params) {
+function* fetchSongsWithTakesSaga(action: PayloadAction<SQLiteDatabase>) {
+  yield put(startLoading());
   try {
-    const songs: Songs = yield call(fetchSongs, db);
-    const takes: Takes = yield call(fetchTakes, db);
+    const songs: Songs = yield call(fetchSongs, action.payload);
+    const takes: Takes = yield call(fetchTakes, action.payload);
 
     const songsWithTakes = songs.map((song: Song) => ({
       ...song,
@@ -23,15 +21,14 @@ function* fetchSongsWithTakes({ payload: db }: Params) {
     }));
 
     yield put(fetchSongsWithTakesSuccess(songsWithTakes));
+    yield put(endLoading());
   } catch (error) {
-    yield put(fetchSongsWithTakesFailure(error.message));
+    yield put(setError(error));
   }
 }
 
-function* watchFetchSongsAndTakes() {
-  yield takeEvery(FETCH_SONGS_WITH_TAKES_REQUEST, fetchSongsWithTakes);
-}
-
 export default function* startupSaga() {
-  yield all([fork(watchFetchSongsAndTakes)]);
+  yield all([
+    takeEvery(at.FETCH_SONGS_WITH_TAKES_REQUEST, fetchSongsWithTakesSaga),
+  ]);
 }

@@ -6,6 +6,7 @@ import {
   DbSong,
   UpdateSelectedTakeIdPayloadDb,
   Takes,
+  DeleteSongPayload,
 } from '@src/common/types';
 
 export const fetchSongs = (db: SQLiteDatabase) =>
@@ -54,7 +55,7 @@ export const createSong = async ({ db, title }: CreateSongPayload) => {
   }
 };
 
-export const deleteSong = async (db: SQLiteDatabase, songId: number) => {
+export const deleteSong = async ({ db, songId }: DeleteSongPayload) => {
   const statement = await db.prepareAsync(
     'DELETE FROM Songs WHERE songId = $songId; DELETE FROM Takes WHERE songId = $songId; DELETE FROM Page WHERE songId = $songId;',
   );

@@ -1,34 +1,41 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-
 import * as t from '@src/common/types';
 
 type SongsSliceState = {
   items: t.Songs;
-  isLoading: boolean;
-  error: Error | null;
 };
 
 const initialState: SongsSliceState = {
   items: [],
-  isLoading: false,
-  error: null,
 };
 
 const songsSlice = createSlice({
   name: 'songs',
   initialState,
   reducers: {
-    removeSong: (state: SongsSliceState, action: PayloadAction<number>) => {
+    fetchSongsWithTakesSuccess: (
+      state: SongsSliceState,
+      action: PayloadAction<t.Songs>,
+    ) => {
+      state.items = action.payload;
+    },
+    createSongSuccess: (
+      state: SongsSliceState,
+      action: PayloadAction<t.Song>,
+    ) => {
+      state.items.push(action.payload);
+    },
+    removeSongSuccess: (
+      state: SongsSliceState,
+      action: PayloadAction<number>,
+    ) => {
       state.items = state.items.filter(
         (song: t.Song) => song.songId !== action.payload,
       );
     },
-    addSong: (state: SongsSliceState, action: PayloadAction<t.Song>) => {
-      state.items.push(action.payload);
-    },
-    removeTake: (
+    removeTakeSuccess: (
       state: SongsSliceState,
-      action: PayloadAction<t.RemoveTakePayload>,
+      action: PayloadAction<t.DeleteTakeSuccessPayload>,
     ) => {
       const { songId, takeId } = action.payload;
       const song = state.items.find((song: t.Song) => song.songId === songId);
@@ -38,18 +45,7 @@ const songsSlice = createSlice({
         );
       }
     },
-    addTake: (state: SongsSliceState, action: PayloadAction<t.Take>) => {
-      const { songId } = action.payload;
-      const song = state.items.find((song: t.Song) => song.songId === songId);
-      if (song) {
-        song.takes.push(action.payload);
-        song.totalTakes++;
-        if (song.selectedTakeId === -1) {
-          song.selectedTakeId = action.payload.takeId;
-        }
-      }
-    },
-    updateTakeNotes: (
+    updateTakeNotesSuccess: (
       state: SongsSliceState,
       action: PayloadAction<t.UpdateTakeNotesSuccessPayload>,
     ) => {
@@ -62,47 +58,19 @@ const songsSlice = createSlice({
         }
       }
     },
-    fetchSongsWithTakesRequest: (state: SongsSliceState) => {
-      state.isLoading = true;
-      state.error = null;
-    },
-    fetchSongsWithTakesSuccess: (
+    createTakeSuccess: (
       state: SongsSliceState,
-      action: PayloadAction<t.Songs>,
+      action: PayloadAction<t.Take>,
     ) => {
-      state.isLoading = false;
-      state.items = action.payload;
-      state.error = null;
-    },
-    fetchSongsWithTakesFailure: (
-      state: SongsSliceState,
-      action: PayloadAction<Error>,
-    ) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
-    createSongRequest: (state: SongsSliceState) => {
-      state.isLoading = true;
-      state.error = null;
-    },
-    createSongSuccess: (
-      state: SongsSliceState,
-      action: PayloadAction<t.Song>,
-    ) => {
-      state.isLoading = false;
-      state.items.push(action.payload);
-      state.error = null;
-    },
-    createSongFailure: (
-      state: SongsSliceState,
-      action: PayloadAction<Error>,
-    ) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
-    updateSelectedTakeIdRequest: (state: SongsSliceState) => {
-      state.isLoading = true;
-      state.error = null;
+      const { songId } = action.payload;
+      const song = state.items.find((song: t.Song) => song.songId === songId);
+      if (song) {
+        song.takes.push(action.payload);
+        song.totalTakes++;
+        if (song.selectedTakeId === -1) {
+          song.selectedTakeId = action.payload.takeId;
+        }
+      }
     },
     updateSelectedTakeIdSuccess: (
       state: SongsSliceState,
@@ -113,34 +81,18 @@ const songsSlice = createSlice({
       if (song) {
         song.selectedTakeId = takeId;
       }
-      state.isLoading = false;
-      state.error = null;
-    },
-    updateSelectedTakeIdFailure: (
-      state: SongsSliceState,
-      action: PayloadAction<Error>,
-    ) => {
-      state.isLoading = false;
-      state.error = action.payload;
     },
   },
 });
 
 export const {
-  removeSong,
-  addSong,
-  removeTake,
-  addTake,
-  updateTakeNotes,
-  fetchSongsWithTakesRequest,
   fetchSongsWithTakesSuccess,
-  fetchSongsWithTakesFailure,
-  createSongRequest,
   createSongSuccess,
-  createSongFailure,
-  updateSelectedTakeIdRequest,
+  removeSongSuccess,
+  removeTakeSuccess,
+  updateTakeNotesSuccess,
+  createTakeSuccess,
   updateSelectedTakeIdSuccess,
-  updateSelectedTakeIdFailure,
 } = songsSlice.actions;
 
 export default songsSlice.reducer;

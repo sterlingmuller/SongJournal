@@ -5,6 +5,7 @@ import {
   Take,
   TakePayload,
   Takes,
+  DeleteTakeDbPayload,
 } from '@src/common/types';
 
 export const createTake = async (takePayload: TakePayload) => {
@@ -38,7 +39,7 @@ export const createTake = async (takePayload: TakePayload) => {
   }
 };
 
-export const deleteTake = (db: SQLiteDatabase, takeId: number) => {
+export const deleteTake = ({ db, takeId }: DeleteTakeDbPayload) => {
   try {
     db.runSync('DELETE FROM Takes WHERE takeId = ?', takeId);
   } catch (err) {
