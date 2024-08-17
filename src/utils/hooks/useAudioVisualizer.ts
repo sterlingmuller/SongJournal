@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { useAppSelector } from '@src/hooks/typedReduxHooks';
+import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectIsPlaying } from '@src/state/selectors/playbackSelector';
 import {
   EMPTY_AUDIO_WAVE_ARRAY,

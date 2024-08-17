@@ -1,7 +1,5 @@
 import { SQLiteDatabase } from 'expo-sqlite';
 
-import { RootState } from '@src/state/store';
-
 export type FilterOptions = {
   lyrics?: boolean;
   completed?: boolean;
@@ -93,14 +91,6 @@ export type Songs = Song[];
 
 export type Takes = Take[];
 
-export type CreateSongResult = {
-  songId: number;
-  title: string;
-  selectedTakeId: number;
-  page: Page;
-  totalTakes: number;
-};
-
 export type DeleteObject = {
   type: 'song' | 'take';
   title: string;
@@ -178,20 +168,10 @@ export type UpdatePageInfoPayload = {
   db: SQLiteDatabase;
 };
 
-export type UpdatePageInfoSuccess = {
-  songId: number;
-  info: SongInfo;
-};
-
 export type UpdateLyricsPayload = {
   songId: number;
   lyrics: string;
   db: SQLiteDatabase;
-};
-
-export type UpdateLyricsSuccess = {
-  songId: number;
-  lyrics: string;
 };
 
 export type DeleteTakeSuccessPayload = {
@@ -209,5 +189,3 @@ export type DeleteTakeDbPayload = {
   takeId: number;
   db: SQLiteDatabase;
 };
-
-export type Selector<S> = (state: RootState) => S;
