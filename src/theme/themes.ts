@@ -1,4 +1,4 @@
-import { ColorTheme } from '@src/common/enums';
+import { ColorTheme } from '@src/components/common/enums';
 import { colors as c } from '@src/theme/colors';
 
 export interface Theme {

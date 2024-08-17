@@ -4,10 +4,10 @@ import { Provider } from 'react-redux';
 import { SQLiteProvider } from 'expo-sqlite';
 
 import AppNavigator from '@src/navigation/AppNavigator';
-import { ColorThemeProvider } from '@src/context/ThemeContext';
-import { store } from '@src/store/index';
-import { migrateDbIfNeeded } from '@src/database/db';
-import { AudioProvider } from '@src/context/AudioContext';
+import { ColorThemeProvider } from '@src/state/context/ThemeContext';
+import { store } from '@src/state/store/index';
+import { migrateDbIfNeeded } from '@src/data/database/db';
+import { AudioProvider } from '@src/state/context/AudioContext';
 
 const App = () => (
   <GestureHandlerRootView style={{ flex: 1 }}>

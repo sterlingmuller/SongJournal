@@ -3,18 +3,17 @@ import { View } from 'react-native';
 import { Audio } from 'expo-av';
 
 import useRecordingStyles from '@styles/recording';
-import Timer from '@src/recording/components/Timer';
-import RecordingControls from '@src/recording/components/RecordingControls';
-import AudioWaveDisplay from '@src/recording/components/AudioWaveDisplay';
+import Timer from '@src/components/recording/components/Timer';
+import RecordingControls from '@src/components/recording/components/RecordingControls';
+import AudioWaveDisplay from '@src/components/recording/components/AudioWaveDisplay';
 import {
   AUDIO_UPDATE_INTERVAL,
-  AUDIO_UPDATES_PER_SECOND,
   EMPTY_AUDIO_WAVE_ARRAY,
   LEADING_DOTS_ARRAY,
   MAX_AUDIO_WAVE_BARS,
-} from '@src/common/constants';
-import { selectIsPlaying } from '@src/selectors/playbackSelector';
-import { useAppSelector } from '@src/hooks/typedReduxHooks';
+} from '@src/components/common/constants';
+import { selectIsPlaying } from '@src/state/selectors/playbackSelector';
+import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 
 const RecordingScreen = () => {
   const styles = useRecordingStyles();

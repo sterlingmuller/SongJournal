@@ -1,5 +1,5 @@
-import { CHORD_EXTENSIONS, ROOT_NOTES } from '@src/common/constants';
-import { SelectEntry } from '@src/common/types';
+import { CHORD_EXTENSIONS, ROOT_NOTES } from '@src/components/common/constants';
+import { SelectEntry } from '@src/components/common/types';
 
 const separateChordValue = (chord: string) => {
   if (!chord) {

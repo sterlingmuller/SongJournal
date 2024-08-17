@@ -1,4 +1,4 @@
-import { AUDIO_UPDATE_INTERVAL } from '@src/common/constants';
+import { AUDIO_UPDATE_INTERVAL } from '@src/components/common/constants';
 import { Audio } from 'expo-av';
 import { RecordingStatus } from 'expo-av/build/Audio';
 

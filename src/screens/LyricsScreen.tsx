@@ -2,17 +2,17 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import LyricsHeader from '@src/lyrics/components/LyricsHeader';
-import InfoModal from '@src/lyrics/components/InfoModal';
-import LyricsSheet from '@src/lyrics/components/LyricsSheet';
-import { useAppSelector } from '@src/hooks/typedReduxHooks';
-import { selectCurrentSongId } from '@src/selectors/songsSelector';
-import { selectCurrentSongPage } from '@src/selectors/pagesSelector';
-import LoadingIndicator from '@src/common/components/LoadingIndicator';
+import LyricsHeader from '@src/components/lyrics/components/LyricsHeader';
+import InfoModal from '@src/components/lyrics/components/InfoModal';
+import LyricsSheet from '@src/components/lyrics/components/LyricsSheet';
+import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { selectCurrentSongId } from '@src/state/selectors/songsSelector';
+import { selectCurrentSongPage } from '@src/state/selectors/pagesSelector';
+import LoadingIndicator from '@src/components/common/components/LoadingIndicator';
 import useLyricScreenStyles from '@styles/lyricsScreen';
-import { LyricsOptionName } from '@src/common/types';
-import OptionsBar from '@src/lyrics/subcomponents/OptionsBar';
-import EditLyricsSheet from '@src/lyrics/components/EditLyricsSheet';
+import { LyricsOptionName } from '@src/components/common/types';
+import OptionsBar from '@src/components/lyrics/subcomponents/OptionsBar';
+import EditLyricsSheet from '@src/components/lyrics/components/EditLyricsSheet';
 
 const LyricsScreen = () => {
   const styles = useLyricScreenStyles();

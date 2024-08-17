@@ -1,4 +1,4 @@
-import { MONTHS } from '@src/common/constants';
+import { MONTHS } from '@src/components/common/constants';
 
 export function formatDateFromISOString(isoString: string): string {
   const date = new Date(isoString);

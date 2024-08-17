@@ -1,5 +1,5 @@
-import { SortBy } from '@src/common/enums';
-import { FilterOptions, Song, Songs, Take } from '@src/common/types';
+import { SortBy } from '@src/components/common/enums';
+import { FilterOptions, Song, Songs, Take } from '@src/components/common/types';
 
 const filterSongs = (songs: Songs, filterOptions: FilterOptions) =>
   songs.filter((song: Song) => {

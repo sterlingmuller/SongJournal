@@ -1,6 +1,6 @@
 import { StyleSheet, ViewStyle } from 'react-native';
-import { useColorTheme } from '@src/context/ThemeContext';
-import { SCREEN_WIDTH } from '@src/common/constants';
+import { useColorTheme } from '@src/state/context/ThemeContext';
+import { SCREEN_WIDTH } from '@src/components/common/constants';
 
 interface Styles {
   waveContainer: ViewStyle;

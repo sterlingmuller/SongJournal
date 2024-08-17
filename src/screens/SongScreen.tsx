@@ -2,24 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-import RecordButton from '@src/common/components/RecordButton';
-import DeleteModal from '@src/common/components/DeleteModal';
-import NotesModal from '@src/songFolder/components/NotesModal';
+import RecordButton from '@src/components/common/components/RecordButton';
+import DeleteModal from '@src/components/common/components/DeleteModal';
+import NotesModal from '@src/components/songFolder/components/NotesModal';
 import {
   DELETE_TAKE_TEXT,
   EMPTY_DELETE_OBJECT,
   EMPTY_TAKE,
-} from '@src/common/constants';
+} from '@src/components/common/constants';
 import useSongScreenStyles from '@styles/songScreen';
 import useGlobalStyles from '@styles/global';
-import PermissionsNeededModal from '@src/songFolder/components/PermissionsNeededModal';
-import useMicrophonePermissions from '@src/hooks/useMicrophonePermissions';
-import { RootStackParamList, DeleteObject, Take } from '@src/common/types';
-import { useAppSelector } from '@src/hooks/typedReduxHooks';
-import { selectCurrentSongTotalTakes } from '@src/selectors/songsSelector';
-import SongDisplay from '@src/songFolder/components/SongDisplay';
-import { useAudioPlayer } from '@src/context/AudioContext';
-import { Screen } from '@src/common/enums';
+import PermissionsNeededModal from '@src/components/songFolder/components/PermissionsNeededModal';
+import useMicrophonePermissions from '@src/utils/hooks/useMicrophonePermissions';
+import { RootStackParamList, DeleteObject, Take } from '@src/components/common/types';
+import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { selectCurrentSongTotalTakes } from '@src/state/selectors/songsSelector';
+import SongDisplay from '@src/components/songFolder/components/SongDisplay';
+import { useAudioPlayer } from '@src/state/context/AudioContext';
+import { Screen } from '@src/components/common/enums';
 
 const SongScreen = () => {
   const styles = useSongScreenStyles();
