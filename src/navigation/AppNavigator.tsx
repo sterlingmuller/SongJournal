@@ -8,13 +8,13 @@ import RecordingScreen from '@src/screens/RecordingScreen';
 import LyricsScreen from '@src/screens/LyricsScreen';
 import HomeScreen from '@src/screens/HomeScreen';
 import MusicPlayerScreen from '@src/screens/MusicPlayerScreen';
-import { RootStackParamList } from '@src/common/types';
-import HeaderPageButton from '@src/songFolder/subcomponents/HeaderPageButton';
+import { RootStackParamList } from '@src/components/common/types';
+import HeaderPageButton from '@src/components/songFolder/subcomponents/HeaderPageButton';
 import useHeaderStyles from '@styles/header';
-import { selectCurrentSongTitle } from '@src/selectors/songsSelector';
-import { useAppSelector } from '@src/hooks/typedReduxHooks';
-import HeaderBackButton from '@src/common/components/HeaderBackButton';
-import { Screen } from '@src/common/enums';
+import { selectCurrentSongTitle } from '@src/state/selectors/songsSelector';
+import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import HeaderBackButton from '@src/components/common/components/HeaderBackButton';
+import { Screen } from '@src/components/common/enums';
 
 const AppNavigator = () => {
   const RootStack = createNativeStackNavigator<RootStackParamList>();

@@ -1,8 +1,8 @@
 import * as Print from 'expo-print';
 
-import { SONG_DETAILS } from '@src/common/constants';
-import { Page } from '@src/common/types';
-import { SongDetail } from '@src/common/enums';
+import { SONG_DETAILS } from '@src/components/common/constants';
+import { Page } from '@src/components/common/types';
+import { SongDetail } from '@src/components/common/enums';
 
 export const generatePagePdf = async (title: string, page: Page) => {
   const { lyrics, info } = page;

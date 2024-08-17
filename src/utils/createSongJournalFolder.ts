@@ -1,6 +1,6 @@
 import * as FileSystem from 'expo-file-system';
 
-import { documentsDirectory } from '@src/common/constants';
+import { documentsDirectory } from '@src/components/common/constants';
 
 const createSongJournalFolder = async () => {
   const folderInfo = await FileSystem.getInfoAsync(documentsDirectory);

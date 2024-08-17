@@ -1,4 +1,4 @@
-import { useColorTheme } from '@src/context/ThemeContext';
+import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Styles {
   headerStyle: { backgroundColor: string };

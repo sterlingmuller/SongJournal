@@ -3,19 +3,19 @@ import { View } from 'react-native';
 import { useSQLiteContext } from 'expo-sqlite';
 import { useNavigation } from '@react-navigation/native';
 
-import HomeHeader from '@src/home/components/HomeHeader';
-import CreateNewSongButton from '@src/home/components/CreateNewSongButton';
-import SortByModal from '@src/home/components/SortByModal';
-import NewSongModal from '@src/home/components/NewSongModal';
-import Footer from '@src/home/components/Footer';
-import { FilterOptions, DeleteObject } from '@src/common/types';
-import DeleteModal from '@src/common/components/DeleteModal';
-import { DELETE_SONG_TEXT, EMPTY_DELETE_OBJECT } from '@src/common/constants';
+import HomeHeader from '@src/components/home/components/HomeHeader';
+import CreateNewSongButton from '@src/components/home/components/CreateNewSongButton';
+import SortByModal from '@src/components/home/components/SortByModal';
+import NewSongModal from '@src/components/home/components/NewSongModal';
+import Footer from '@src/components/home/components/Footer';
+import { FilterOptions, DeleteObject } from '@src/components/common/types';
+import DeleteModal from '@src/components/common/components/DeleteModal';
+import { DELETE_SONG_TEXT, EMPTY_DELETE_OBJECT } from '@src/components/common/constants';
 import useGlobalStyles from '@styles/global';
-import { useAppDispatch } from '@src/hooks/typedReduxHooks';
-import { fetchSongsWithTakesRequest } from '@src/sagas/actionCreators';
-import HomeDisplay from '@src/home/components/HomeDisplay';
-import { SortBy } from '@src/common/enums';
+import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
+import { fetchSongsWithTakesRequest } from '@src/state/sagas/actionCreators';
+import HomeDisplay from '@src/components/home/components/HomeDisplay';
+import { SortBy } from '@src/components/common/enums';
 
 const HomeScreen = () => {
   const { setOptions } = useNavigation();
