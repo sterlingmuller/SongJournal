@@ -130,9 +130,15 @@ export const TIME_SIGNATURES = [
   { label: '2/2', value: '2/2' },
 ];
 
-export const MAX_AUDIO_WAVE_BARS = 34;
+export const MAX_AUDIO_WAVE_BARS = 24;
 
-export const LEADING_DOTS_ARRAY = new Array(5).fill(null);
+export const AUDIO_WAVE_MIDPOINT = 12;
+
+export const AUDIO_UPDATES_PER_SECOND = 10;
+
+export const AUDIO_UPDATE_INTERVAL = 1000 / AUDIO_UPDATES_PER_SECOND;
+
+export const LEADING_DOTS_ARRAY: null[] = new Array(5).fill(null);
 
 export const EMPTY_AUDIO_WAVE_ARRAY = new Array(
   MAX_AUDIO_WAVE_BARS - LEADING_DOTS_ARRAY.length,

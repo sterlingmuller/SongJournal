@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import useAudioWaveStyles from '@src/styles/audioWave';
+import { AUDIO_WAVE_MIDPOINT } from '@src/common/constants';
 
 interface Props {
   waveHeight: number;
@@ -26,7 +27,8 @@ const WaveBar = ({ waveHeight, index, isRecording }: Props) => {
         styles.bar,
         {
           height: waveHeight * 2,
-          backgroundColor: isRecording ? '#ff4081' : '#3f51b5',
+          backgroundColor:
+            index < AUDIO_WAVE_MIDPOINT || isRecording ? '#ff4081' : '#3f51b5',
         },
       ]}
     />

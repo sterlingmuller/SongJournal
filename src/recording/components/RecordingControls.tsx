@@ -16,7 +16,10 @@ import { createTakeRequest } from '@src/sagas/actionCreators';
 import { RootStackParamList } from '@src/common/types';
 import { selectCurrentSongId } from '@src/selectors/songsSelector';
 import PlaybackButton from '../subcomponents/PlaybackButton';
-import { EMPTY_AUDIO_WAVE_ARRAY } from '@src/common/constants';
+import {
+  EMPTY_AUDIO_WAVE_ARRAY,
+  LEADING_DOTS_ARRAY,
+} from '@src/common/constants';
 
 interface Props {
   duration: number;
@@ -28,6 +31,9 @@ interface Props {
   recording: Audio.Recording;
   setRecording: (value: Audio.Recording) => void;
   setWave: (value: number[]) => void;
+  // fullWaveRef: React.MutableRefObject<number[]>;
+  fullWave: number[];
+  setFullWave: (value: number[]) => void;
 }
 
 const RecordingControls = (props: Props) => {
@@ -49,11 +55,13 @@ const RecordingControls = (props: Props) => {
     recording,
     setRecording,
     setWave,
+    fullWave,
+    setFullWave,
   } = props;
   const { title } = route.params;
 
   const handleStartRecording = async () => {
-    await startRecording(setRecording);
+    await startRecording(setRecording, fullWave, setWave);
     setDuration(0);
 
     timerRef.current = setInterval(() => {
@@ -84,7 +92,7 @@ const RecordingControls = (props: Props) => {
       clearInterval(timerRef.current);
     }
 
-    setWave(EMPTY_AUDIO_WAVE_ARRAY);
+    setFullWave([...LEADING_DOTS_ARRAY]);
     clearRecording(recording, setRecording, setUri, setDuration);
     setIsRecording(false);
   };

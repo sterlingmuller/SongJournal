@@ -19,6 +19,11 @@ const useAudioWave = ({ isRecording, setWave }: Props) => {
   const scrollPositionRef = useRef<number>(0);
   const fullWaveLength = fullWaveRef.current.length;
 
+  // const handleAudioData = (level: number) => {
+  //   fullWaveRef.current.push(level);
+  //   setWave((prevWave: number[]) => [...prevWave.slice(1), level]);
+  // };
+
   useEffect(() => {
     let intervalId: NodeJS.Timeout | null = null;
 
