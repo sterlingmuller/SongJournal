@@ -7,6 +7,7 @@ interface Styles {
   bar: ViewStyle;
   dotContainer: ViewStyle;
   dot: ViewStyle;
+  midpointLine: ViewStyle;
 }
 
 const useAudioWaveStyles = () => {
@@ -37,6 +38,13 @@ const useAudioWaveStyles = () => {
       height: 4,
       borderRadius: 2,
       backgroundColor: '#3f51b5',
+    },
+    midpointLine: {
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      width: 2,
+      backgroundColor: 'green',
     },
   });
 
