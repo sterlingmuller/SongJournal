@@ -67,6 +67,10 @@ export type Page = {
   info: SongInfo;
 };
 
+export type SongToPageMap = {
+  [songId: number]: Page;
+};
+
 export type Song = {
   songId: number;
   title: string;

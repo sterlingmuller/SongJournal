@@ -1,12 +1,6 @@
-import {
-  ActionReducerMapBuilder,
-  PayloadAction,
-  createSlice,
-} from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import * as t from '@src/common/types';
-import * as ac from '@src/sagas/actionCreators';
-import * as at from '@src/sagas/actionTypes';
 
 type SongsSliceState = {
   items: t.Songs;
@@ -25,13 +19,9 @@ const songsSlice = createSlice({
   initialState,
   reducers: {
     removeSong: (state: SongsSliceState, action: PayloadAction<number>) => {
-      const indexToRemove = state.items.findIndex(
-        (song: t.Song) => song.songId === action.payload,
+      state.items = state.items.filter(
+        (song: t.Song) => song.songId !== action.payload,
       );
-
-      if (indexToRemove !== -1) {
-        state.items.splice(indexToRemove, 1);
-      }
     },
     addSong: (state: SongsSliceState, action: PayloadAction<t.Song>) => {
       state.items.push(action.payload);
@@ -40,131 +30,117 @@ const songsSlice = createSlice({
       state: SongsSliceState,
       action: PayloadAction<t.RemoveTakePayload>,
     ) => {
-      const songIndex = state.items.findIndex(
-        (song: t.Song) => song.songId === action.payload.songId,
-      );
-
-      if (songIndex !== -1) {
-        const takeIndex = state.items[songIndex].takes.findIndex(
-          (take: t.Take) => take.takeId === action.payload.takeId,
+      const { songId, takeId } = action.payload;
+      const song = state.items.find((song: t.Song) => song.songId === songId);
+      if (song) {
+        song.takes = song.takes.filter(
+          (take: t.Take) => take.takeId !== takeId,
         );
-
-        if (takeIndex !== -1) {
-          state.items[songIndex].takes.splice(takeIndex, 1);
-        }
       }
     },
     addTake: (state: SongsSliceState, action: PayloadAction<t.Take>) => {
-      const newTake = action.payload;
-      const songIndex = state.items.findIndex(
-        (song: t.Song) => song.songId === newTake.songId,
-      );
-
-      if (songIndex !== -1) {
-        state.items[songIndex].takes.push(newTake);
-        state.items[songIndex].totalTakes++;
-
-        if (state.items[songIndex].selectedTakeId === -1) {
-          state.items[songIndex].selectedTakeId = newTake.takeId;
+      const { songId } = action.payload;
+      const song = state.items.find((song: t.Song) => song.songId === songId);
+      if (song) {
+        song.takes.push(action.payload);
+        song.totalTakes++;
+        if (song.selectedTakeId === -1) {
+          song.selectedTakeId = action.payload.takeId;
         }
-      } else {
-        console.warn(`Song with ID ${newTake.songId} not found`);
       }
     },
-    updateTakeNotesSuccess: (
+    updateTakeNotes: (
       state: SongsSliceState,
       action: PayloadAction<t.UpdateTakeNotesSuccessPayload>,
     ) => {
       const { songId, takeId, notes } = action.payload;
-
-      const songIndex = state.items.findIndex(
-        (song: t.Song) => song.songId === songId,
-      );
-
-      if (songIndex !== -1) {
-        const takeIndex = state.items[songIndex].takes.findIndex(
-          (take: t.Take) => take.takeId === takeId,
-        );
-
-        if (takeIndex !== -1) {
-          state.items[songIndex].takes[takeIndex].notes = notes;
+      const song = state.items.find((song: t.Song) => song.songId === songId);
+      if (song) {
+        const take = song.takes.find((take: t.Take) => take.takeId === takeId);
+        if (take) {
+          take.notes = notes;
         }
       }
     },
-  },
-  extraReducers: (builder: ActionReducerMapBuilder<SongsSliceState>) => {
-    builder
-      .addCase(at.FETCH_SONGS_WITH_TAKES_REQUEST, (state: SongsSliceState) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(
-        ac.fetchSongsWithTakesSuccess,
-        (state: SongsSliceState, action: PayloadAction<t.Songs>) => {
-          state.isLoading = false;
-          state.items = action.payload;
-        },
-      )
-      .addCase(
-        ac.fetchSongsWithTakesFailure,
-        (state: SongsSliceState, action: PayloadAction<Error>) => {
-          state.isLoading = false;
-          state.error = action.payload;
-        },
-      )
-      .addCase(at.CREATE_SONG_REQUEST, (state: SongsSliceState) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(
-        ac.createSongSuccess,
-        (state: SongsSliceState, action: PayloadAction<t.Song>) => {
-          state.isLoading = false;
-          state.items.push(action.payload);
-        },
-      )
-      .addCase(
-        ac.createSongFailure,
-        (state: SongsSliceState, action: PayloadAction<Error>) => {
-          state.isLoading = false;
-          state.error = action.payload;
-        },
-      )
-      .addCase(at.UPDATE_SELECTED_TAKE_ID_REQUEST, (state: SongsSliceState) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(
-        ac.updateSelectedTakeIdSuccess,
-        (
-          state: SongsSliceState,
-          action: PayloadAction<t.SetSelectedTakeIdPayload>,
-        ) => {
-          const { songId, takeId } = action.payload;
-
-          const songIndex = state.items.findIndex(
-            (song: t.Song) => song.songId === songId,
-          );
-
-          state.isLoading = false;
-          state.items[songIndex].selectedTakeId = takeId;
-        },
-      )
-      .addCase(
-        ac.updateSelectedTakeIdFailure,
-        (state: SongsSliceState, action: PayloadAction<Error>) => {
-          state.isLoading = false;
-          state.error = action.payload;
-        },
-      );
+    fetchSongsWithTakesRequest: (state: SongsSliceState) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    fetchSongsWithTakesSuccess: (
+      state: SongsSliceState,
+      action: PayloadAction<t.Songs>,
+    ) => {
+      state.isLoading = false;
+      state.items = action.payload;
+      state.error = null;
+    },
+    fetchSongsWithTakesFailure: (
+      state: SongsSliceState,
+      action: PayloadAction<Error>,
+    ) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    createSongRequest: (state: SongsSliceState) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    createSongSuccess: (
+      state: SongsSliceState,
+      action: PayloadAction<t.Song>,
+    ) => {
+      state.isLoading = false;
+      state.items.push(action.payload);
+      state.error = null;
+    },
+    createSongFailure: (
+      state: SongsSliceState,
+      action: PayloadAction<Error>,
+    ) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    updateSelectedTakeIdRequest: (state: SongsSliceState) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    updateSelectedTakeIdSuccess: (
+      state: SongsSliceState,
+      action: PayloadAction<t.SetSelectedTakeIdPayload>,
+    ) => {
+      const { songId, takeId } = action.payload;
+      const song = state.items.find((song: t.Song) => song.songId === songId);
+      if (song) {
+        song.selectedTakeId = takeId;
+      }
+      state.isLoading = false;
+      state.error = null;
+    },
+    updateSelectedTakeIdFailure: (
+      state: SongsSliceState,
+      action: PayloadAction<Error>,
+    ) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
 
-export default songsSlice.reducer;
 export const {
   removeSong,
   addSong,
   removeTake,
   addTake,
-  updateTakeNotesSuccess,
+  updateTakeNotes,
+  fetchSongsWithTakesRequest,
+  fetchSongsWithTakesSuccess,
+  fetchSongsWithTakesFailure,
+  createSongRequest,
+  createSongSuccess,
+  createSongFailure,
+  updateSelectedTakeIdRequest,
+  updateSelectedTakeIdSuccess,
+  updateSelectedTakeIdFailure,
 } = songsSlice.actions;
+
+export default songsSlice.reducer;

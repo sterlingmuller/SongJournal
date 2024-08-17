@@ -18,22 +18,21 @@ const playbackSlice = createSlice({
   name: 'playback',
   initialState,
   reducers: {
-    startPlayback(state, action: PayloadAction<PlaybackPayload>) {
+    startPlayback: (
+      state: PlaybackState,
+      action: PayloadAction<PlaybackPayload>,
+    ) => {
       state.isPlaying = true;
       state.uri = action.payload.uri;
       state.id = action.payload.id;
     },
-    resumePlayback(state) {
+    resumePlayback: (state: PlaybackState) => {
       state.isPlaying = true;
     },
-    pausePlayback(state) {
+    pausePlayback: (state: PlaybackState) => {
       state.isPlaying = false;
     },
-    stopPlayback(state) {
-      state.isPlaying = false;
-      state.uri = null;
-      state.id = -1;
-    },
+    stopPlayback: () => initialState,
   },
 });
 

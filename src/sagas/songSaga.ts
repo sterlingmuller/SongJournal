@@ -1,4 +1,5 @@
 import { call, put, takeEvery, all, fork } from 'redux-saga/effects';
+import { PayloadAction } from '@reduxjs/toolkit';
 
 import {
   CreateSongPayload,
@@ -9,31 +10,27 @@ import {
   UPDATE_SELECTED_TAKE_ID_REQUEST,
 } from '@src/sagas/actionTypes';
 import {
-  createSongFailure,
+  createSongRequest,
   createSongSuccess,
-  updateSelectedTakeIdFailure,
+  createSongFailure,
+  updateSelectedTakeIdRequest,
   updateSelectedTakeIdSuccess,
-} from '@src/sagas/actionCreators';
+  updateSelectedTakeIdFailure,
+} from '@src/slice/songsSlice';
 import {
   createSong,
   updateSelectedTakeId,
 } from '@src/repositories/SongsRepository';
 import { setCurrentSongId } from '@src/slice/currentSongSlice';
 
-type CreateSongParams = { payload: CreateSongPayload; type: string };
-type UpdateSelectedTakeParams = {
-  payload: UpdateSelectedTakeIdPayloadDb;
-  type: string;
-};
-
-function* createSongSaga({ payload }: CreateSongParams) {
+function* createSongSaga(action: PayloadAction<CreateSongPayload>) {
+  yield put(createSongRequest());
   try {
-    const newSong = yield call(createSong, payload);
-
+    const newSong = yield call(createSong, action.payload);
     yield put(setCurrentSongId(newSong.songId));
     yield put(createSongSuccess(newSong));
   } catch (error) {
-    yield put(createSongFailure(error.message));
+    yield put(createSongFailure(error));
   }
 }
 
@@ -41,14 +38,16 @@ function* watchCreateSong() {
   yield takeEvery(CREATE_SONG_REQUEST, createSongSaga);
 }
 
-function* updateSelectedTakeIdSaga({ payload }: UpdateSelectedTakeParams) {
-  const { songId, takeId } = payload;
-
+function* updateSelectedTakeIdSaga(
+  action: PayloadAction<UpdateSelectedTakeIdPayloadDb>,
+) {
+  yield put(updateSelectedTakeIdRequest());
+  const { songId, takeId } = action.payload;
   try {
-    yield call(updateSelectedTakeId, payload);
+    yield call(updateSelectedTakeId, action.payload);
     yield put(updateSelectedTakeIdSuccess({ songId, takeId }));
   } catch (error) {
-    yield put(updateSelectedTakeIdFailure(error.message));
+    yield put(updateSelectedTakeIdFailure(error));
   }
 }
 
