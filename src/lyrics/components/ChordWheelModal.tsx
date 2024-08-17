@@ -45,7 +45,10 @@ const ChordWheelModal = (props: Props) => {
     }
 
     setIsWheelOpen(false);
-    handleInputChange(detail.toLowerCase() as keyof SongInfo, updatedChord);
+    handleInputChange(
+      (detail.charAt(0).toLowerCase() + detail.slice(1)) as keyof SongInfo,
+      updatedChord,
+    );
   };
 
   const sections = useMemo((): WheelPickerProps[] => {

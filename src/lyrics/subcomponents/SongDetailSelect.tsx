@@ -21,6 +21,8 @@ const SongDetailSelect = (props: Props) => {
   const [isChordWheelOpen, setIsChordWheelOpen] = useState(false);
   const [isTimeWheelOpen, setIsTimeWheelOpen] = useState(false);
 
+  const modifiedDetail = detail === SongDetail.KEY ? 'Key' : detail;
+
   const songDetailPress = () => {
     if (detail === SongDetail.KEY) {
       setIsChordWheelOpen(true);
@@ -34,7 +36,7 @@ const SongDetailSelect = (props: Props) => {
       <TouchableOpacity onPress={songDetailPress} style={styles.textbox}>
         <StyledText>{value}</StyledText>
       </TouchableOpacity>
-      <Text>{detail}</Text>
+      <Text>{modifiedDetail}</Text>
       <ChordWheelModal
         isWheelOpen={isChordWheelOpen}
         setIsWheelOpen={setIsChordWheelOpen}

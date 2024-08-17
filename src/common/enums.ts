@@ -23,7 +23,7 @@ export enum SortBy {
 }
 
 export enum SongDetail {
-  KEY = 'Key',
+  KEY = 'KeySignature',
   TIME = 'Time',
   BPM = 'Bpm',
 }
