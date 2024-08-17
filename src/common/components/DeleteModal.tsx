@@ -7,12 +7,13 @@ import { DeleteObject } from '@src/common/types';
 import { EMPTY_DELETE_OBJECT } from '@src/common/constants';
 import StyledText from '@src/common/components/StyledText';
 import useDeleteModalStyles from '@styles/deleteModal';
-import { deleteSong } from '@src/repositories/SongsRepository';
-import { removeSong, removeTake } from '@src/slice/songsSlice';
 import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
-import { deleteTake } from '@src/repositories/TakeRepository';
 import { useAudioPlayer } from '@src/context/AudioContext';
 import { selectPlayingId } from '@src/selectors/playbackSelector';
+import {
+  deleteSongRequest,
+  deleteTakeRequest,
+} from '@src/sagas/actionCreators';
 
 interface Props {
   setToDelete: (value: DeleteObject | null) => void;
@@ -40,16 +41,12 @@ const DeleteModal = (props: Props) => {
         clearPlayback();
       }
 
-      await deleteSong(db, songId);
-
-      dispatch(removeSong(songId));
+      dispatch(deleteSongRequest({ db, songId }));
     } else if (type === 'take') {
       if (takeId === playingId) {
         clearPlayback();
       }
-      deleteTake(db, takeId);
-
-      dispatch(removeTake({ songId, takeId }));
+      dispatch(deleteTakeRequest({ songId, takeId, db }));
     }
 
     setToDelete(EMPTY_DELETE_OBJECT);

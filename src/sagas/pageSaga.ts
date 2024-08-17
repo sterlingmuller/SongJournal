@@ -1,5 +1,6 @@
 import { call, put, takeEvery, all, select } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
+
 import {
   FetchPagePayload,
   UpdateLyricsPayload,
@@ -12,51 +13,51 @@ import {
   updatePageInfo,
 } from '@src/repositories/PageRepository';
 import {
-  fetchPageRequest,
   fetchPageSuccess,
-  fetchPageFailure,
-  updateLyricsRequest,
-  updateLyricsSuccess,
-  updateLyricsFailure,
-  updatePageInfoRequest,
-  updatePageInfoSuccess,
-  updatePageInfoFailure,
+  updateLyrics as updateLyricsAction,
+  updatePageInfo as updatePageInfoAction,
 } from '@src/slice/pagesSlice';
+import { startLoading, setError, endLoading } from '@src/slice/asyncSlice';
 import { RootState } from '@src/store';
 
 function* fetchPage(action: PayloadAction<FetchPagePayload>) {
-  yield put(fetchPageRequest());
-  const pageExists = yield select(
-    (state: RootState) => action.payload.songId in state.pages.items,
-  );
+  yield put(startLoading());
+  try {
+    const pageExists = yield select(
+      (state: RootState) => action.payload.songId in state.pages.items,
+    );
 
-  if (!pageExists) {
-    try {
+    if (!pageExists) {
       const page = yield call(fetchPageBySongId, action.payload);
       yield put(fetchPageSuccess({ page, songId: action.payload.songId }));
-    } catch (error) {
-      yield put(fetchPageFailure(error));
     }
+    yield put(endLoading());
+  } catch (error) {
+    yield put(setError(error));
   }
 }
 
 function* updateLyricsSaga(action: PayloadAction<UpdateLyricsPayload>) {
-  yield put(updateLyricsRequest());
+  yield put(startLoading());
   try {
     yield call(updateLyrics, action.payload);
-    yield put(updateLyricsSuccess(action.payload));
+
+    yield put(updateLyricsAction(action.payload));
+    yield put(endLoading());
   } catch (error) {
-    yield put(updateLyricsFailure(error));
+    yield put(setError(error));
   }
 }
 
 function* updatePageInfoSaga(action: PayloadAction<UpdatePageInfoPayload>) {
-  yield put(updatePageInfoRequest());
+  yield put(startLoading());
   try {
     yield call(updatePageInfo, action.payload);
-    yield put(updatePageInfoSuccess(action.payload));
+
+    yield put(updatePageInfoAction(action.payload));
+    yield put(endLoading());
   } catch (error) {
-    yield put(updatePageInfoFailure(error));
+    yield put(setError(error));
   }
 }
 

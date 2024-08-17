@@ -1,60 +1,41 @@
-import { call, put, takeEvery, all, fork } from 'redux-saga/effects';
+import { call, put, takeEvery, all } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 
-import {
-  CreateSongPayload,
-  UpdateSelectedTakeIdPayloadDb,
-} from '@src/common/types';
-import {
-  CREATE_SONG_REQUEST,
-  UPDATE_SELECTED_TAKE_ID_REQUEST,
-} from '@src/sagas/actionTypes';
-import {
-  createSongRequest,
-  createSongSuccess,
-  createSongFailure,
-  updateSelectedTakeIdRequest,
-  updateSelectedTakeIdSuccess,
-  updateSelectedTakeIdFailure,
-} from '@src/slice/songsSlice';
-import {
-  createSong,
-  updateSelectedTakeId,
-} from '@src/repositories/SongsRepository';
+import { createSong, deleteSong } from '@src/repositories/SongsRepository';
+import { CreateSongPayload, DeleteSongPayload } from '@src/common/types';
+import { createSongSuccess, removeSongSuccess } from '@src/slice/songsSlice';
+import { startLoading, setError, endLoading } from '@src/slice/asyncSlice';
 import { setCurrentSongId } from '@src/slice/currentSongSlice';
+import * as at from '@src/sagas/actionTypes';
 
 function* createSongSaga(action: PayloadAction<CreateSongPayload>) {
-  yield put(createSongRequest());
+  yield put(startLoading());
   try {
     const newSong = yield call(createSong, action.payload);
+
     yield put(setCurrentSongId(newSong.songId));
     yield put(createSongSuccess(newSong));
+    yield put(endLoading());
   } catch (error) {
-    yield put(createSongFailure(error));
+    yield put(setError(error));
   }
 }
 
-function* watchCreateSong() {
-  yield takeEvery(CREATE_SONG_REQUEST, createSongSaga);
-}
-
-function* updateSelectedTakeIdSaga(
-  action: PayloadAction<UpdateSelectedTakeIdPayloadDb>,
-) {
-  yield put(updateSelectedTakeIdRequest());
-  const { songId, takeId } = action.payload;
+function* DeleteSongSaga(action: PayloadAction<DeleteSongPayload>) {
+  yield put(startLoading());
   try {
-    yield call(updateSelectedTakeId, action.payload);
-    yield put(updateSelectedTakeIdSuccess({ songId, takeId }));
-  } catch (error) {
-    yield put(updateSelectedTakeIdFailure(error));
-  }
-}
+    yield call(deleteSong, action.payload);
 
-function* watchUpdateSelectedTakeId() {
-  yield takeEvery(UPDATE_SELECTED_TAKE_ID_REQUEST, updateSelectedTakeIdSaga);
+    yield put(removeSongSuccess(action.payload.songId));
+    yield put(endLoading());
+  } catch (error) {
+    yield put(setError(error));
+  }
 }
 
 export default function* songSaga() {
-  yield all([fork(watchCreateSong), fork(watchUpdateSelectedTakeId)]);
+  yield all([
+    takeEvery(at.CREATE_SONG_REQUEST, createSongSaga),
+    takeEvery(at.DELETE_SONG_REQUEST, DeleteSongSaga),
+  ]);
 }
