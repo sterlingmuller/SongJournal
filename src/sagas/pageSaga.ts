@@ -1,5 +1,5 @@
-import { call, put, takeEvery, all, fork, select } from 'redux-saga/effects';
-
+import { call, put, takeEvery, all, select } from 'redux-saga/effects';
+import { PayloadAction } from '@reduxjs/toolkit';
 import {
   FetchPagePayload,
   UpdateLyricsPayload,
@@ -11,76 +11,59 @@ import {
   updateLyrics,
   updatePageInfo,
 } from '@src/repositories/PageRepository';
-import { fetchPageFailure, fetchPageSuccess } from '@src/slice/pagesSlice';
 import {
+  fetchPageRequest,
+  fetchPageSuccess,
+  fetchPageFailure,
+  updateLyricsRequest,
   updateLyricsSuccess,
-  updatePageInfoFailure,
+  updateLyricsFailure,
+  updatePageInfoRequest,
   updatePageInfoSuccess,
-} from './actionCreators';
+  updatePageInfoFailure,
+} from '@src/slice/pagesSlice';
 import { RootState } from '@src/store';
 
-type FetchPageParams = { payload: FetchPagePayload; type: string };
-
-function* fetchPage({ payload }: FetchPageParams) {
+function* fetchPage(action: PayloadAction<FetchPagePayload>) {
+  yield put(fetchPageRequest());
   const pageExists = yield select(
-    (state: RootState) => !!state.pages.items[payload.songId],
+    (state: RootState) => action.payload.songId in state.pages.items,
   );
 
   if (!pageExists) {
     try {
-      const page = yield call(fetchPageBySongId, payload);
-
-      yield put(fetchPageSuccess({ page, songId: payload.songId }));
+      const page = yield call(fetchPageBySongId, action.payload);
+      yield put(fetchPageSuccess({ page, songId: action.payload.songId }));
     } catch (error) {
-      yield put(fetchPageFailure(error.message));
+      yield put(fetchPageFailure(error));
     }
   }
 }
 
-function* watchFetchPage() {
-  yield takeEvery(at.FETCH_PAGE_REQUEST, fetchPage);
-}
-
-type UpdatePageInfoParams = { payload: UpdatePageInfoPayload; type: string };
-
-function* updatePageInfoSaga({ payload }: UpdatePageInfoParams) {
-  const { songId, info } = payload;
-
+function* updateLyricsSaga(action: PayloadAction<UpdateLyricsPayload>) {
+  yield put(updateLyricsRequest());
   try {
-    yield call(updatePageInfo, payload);
-
-    yield put(updatePageInfoSuccess({ info, songId }));
+    yield call(updateLyrics, action.payload);
+    yield put(updateLyricsSuccess(action.payload));
   } catch (error) {
-    yield put(updatePageInfoFailure(error));
+    yield put(updateLyricsFailure(error));
   }
 }
 
-function* watchUpdatePageInfo() {
-  yield takeEvery(at.UPDATE_PAGE_INFO_REQUEST, updatePageInfoSaga);
-}
-
-type UpdateLyricsParams = { payload: UpdateLyricsPayload; type: string };
-
-function* updateLyricsSaga({ payload }: UpdateLyricsParams) {
-  const { songId, lyrics } = payload;
-
+function* updatePageInfoSaga(action: PayloadAction<UpdatePageInfoPayload>) {
+  yield put(updatePageInfoRequest());
   try {
-    yield call(updateLyrics, payload);
-
-    yield put(updateLyricsSuccess({ songId, lyrics }));
+    yield call(updatePageInfo, action.payload);
+    yield put(updatePageInfoSuccess(action.payload));
   } catch (error) {
     yield put(updatePageInfoFailure(error));
   }
-}
-
-function* watchUpdateLyrics() {
-  yield takeEvery(at.UPDATE_LYRICS_REQUEST, updateLyricsSaga);
 }
 
 export default function* pageSaga() {
   yield all([
-    fork(watchFetchPage),
-    fork(watchUpdatePageInfo),
-    fork(watchUpdateLyrics),
+    takeEvery(at.FETCH_PAGE_REQUEST, fetchPage),
+    takeEvery(at.UPDATE_LYRICS_REQUEST, updateLyricsSaga),
+    takeEvery(at.UPDATE_PAGE_INFO_REQUEST, updatePageInfoSaga),
   ]);
 }

@@ -1,26 +1,19 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-  ActionReducerMapBuilder,
-  PayloadAction,
-  createSlice,
-} from '@reduxjs/toolkit';
-
-import {
-  UpdatePageInfoSuccess,
   FetchPageSuccessPayload,
-  Page,
-  UpdateLyricsSuccess,
+  UpdateLyricsPayload,
+  UpdatePageInfoPayload,
+  SongToPageMap,
 } from '@src/common/types';
-import * as ac from '@src/sagas/actionCreators';
-import * as at from '@src/sagas/actionTypes';
 
 type PagesSliceState = {
-  items: Page[];
+  items: SongToPageMap;
   isLoading: boolean;
   error: Error | null;
 };
 
 const initialState: PagesSliceState = {
-  items: [],
+  items: {},
   isLoading: false,
   error: null,
 };
@@ -29,71 +22,83 @@ const pagesSlice = createSlice({
   name: 'pages',
   initialState,
   reducers: {
+    fetchPageRequest: (state: PagesSliceState) => {
+      state.isLoading = true;
+      state.error = null;
+    },
     fetchPageSuccess: (
       state: PagesSliceState,
       action: PayloadAction<FetchPageSuccessPayload>,
     ) => {
       const { page, songId } = action.payload;
-
       state.items[songId] = page;
+      state.isLoading = false;
+      state.error = null;
     },
     fetchPageFailure: (
       state: PagesSliceState,
       action: PayloadAction<Error>,
     ) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    updateLyricsRequest: (state: PagesSliceState) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    updateLyricsSuccess: (
+      state: PagesSliceState,
+      action: PayloadAction<UpdateLyricsPayload>,
+    ) => {
+      const { songId, lyrics } = action.payload;
+      if (state.items[songId]) {
+        state.items[songId].lyrics = lyrics;
+      }
+      state.isLoading = false;
+      state.error = null;
+    },
+    updateLyricsFailure: (
+      state: PagesSliceState,
+      action: PayloadAction<Error>,
+    ) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    updatePageInfoRequest: (state: PagesSliceState) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    updatePageInfoSuccess: (
+      state: PagesSliceState,
+      action: PayloadAction<UpdatePageInfoPayload>,
+    ) => {
+      const { songId, info } = action.payload;
+      if (state.items[songId]) {
+        state.items[songId].info = info;
+      }
+      state.isLoading = false;
+      state.error = null;
+    },
+    updatePageInfoFailure: (
+      state: PagesSliceState,
+      action: PayloadAction<Error>,
+    ) => {
+      state.isLoading = false;
       state.error = action.payload;
     },
   },
-  extraReducers: (builder: ActionReducerMapBuilder<PagesSliceState>) => {
-    builder
-      .addCase(at.UPDATE_LYRICS_REQUEST, (state: PagesSliceState) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(
-        ac.updateLyricsSuccess,
-        (
-          state: PagesSliceState,
-          action: PayloadAction<UpdateLyricsSuccess>,
-        ) => {
-          const { songId, lyrics } = action.payload;
-
-          state.isLoading = false;
-          state.items[songId].lyrics = lyrics;
-        },
-      )
-      .addCase(
-        ac.updateLyricsFailure,
-        (state: PagesSliceState, action: PayloadAction<Error>) => {
-          state.isLoading = false;
-          state.error = action.payload;
-        },
-      )
-      .addCase(at.UPDATE_PAGE_INFO_REQUEST, (state: PagesSliceState) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(
-        ac.updatePageInfoSuccess,
-        (
-          state: PagesSliceState,
-          action: PayloadAction<UpdatePageInfoSuccess>,
-        ) => {
-          const { songId, info } = action.payload;
-
-          state.isLoading = false;
-          state.items[songId].info = info;
-        },
-      )
-      .addCase(
-        ac.updatePageInfoFailure,
-        (state: PagesSliceState, action: PayloadAction<Error>) => {
-          state.isLoading = false;
-          state.error = action.payload;
-        },
-      );
-  },
 });
 
+export const {
+  fetchPageRequest,
+  fetchPageSuccess,
+  fetchPageFailure,
+  updateLyricsRequest,
+  updateLyricsSuccess,
+  updateLyricsFailure,
+  updatePageInfoRequest,
+  updatePageInfoSuccess,
+  updatePageInfoFailure,
+} = pagesSlice.actions;
+
 export default pagesSlice.reducer;
-export const { fetchPageSuccess, fetchPageFailure } = pagesSlice.actions;
