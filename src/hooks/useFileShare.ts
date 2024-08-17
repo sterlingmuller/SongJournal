@@ -29,7 +29,6 @@ function useFileShare() {
       );
 
       if (starredTake) {
-        console.log('starredTake uri:', starredTake.uri);
         await FileSystem.copyAsync({
           from: starredTake.uri,
           to: `${fileUri}/${formattedTitle}.m4a`,
