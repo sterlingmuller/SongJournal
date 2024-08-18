@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View } from 'react-native';
-import { Audio } from 'expo-av';
 
 import useRecordingStyles from '@styles/recording';
 import Timer from '@src/components/recording/components/Timer';
@@ -21,18 +20,14 @@ const RecordingScreen = () => {
   const [uri, setUri] = useState<string | null>(null);
   const [duration, setDuration] = useState<number | null>(null);
   const [isRecording, setIsRecording] = useState<boolean>(true);
-  // maybe move recording to controls, might need it in audiowave
-  const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const [visibleWave, setVisibleWave] = useState<number[]>([
     ...EMPTY_AUDIO_WAVE_ARRAY,
   ]);
 
-  // const fullWaveRef = useRef<number[]>([...LEADING_DOTS_ARRAY]);
   const [fullWave, setFullWave] = useState<number[]>([...LEADING_DOTS_ARRAY]);
   const scrollPositionRef = useRef<number>(0);
 
   const isPlaying = useAppSelector(selectIsPlaying);
-  // const fullWaveLength = fullWave.length - LEADING_DOTS_ARRAY.length;
   let intervalId: NodeJS.Timeout | null = null;
 
   useEffect(() => {
@@ -77,11 +72,7 @@ const RecordingScreen = () => {
 
   return (
     <View style={styles.container}>
-      <AudioWaveDisplay
-        isRecording={isRecording}
-        wave={visibleWave}
-        setWave={setVisibleWave}
-      />
+      <AudioWaveDisplay isRecording={isRecording} wave={visibleWave} />
       <Timer duration={duration} />
       <RecordingControls
         duration={duration}
@@ -90,8 +81,6 @@ const RecordingScreen = () => {
         setUri={setUri}
         isRecording={isRecording}
         setIsRecording={setIsRecording}
-        recording={recording}
-        setRecording={setRecording}
         setWave={setVisibleWave}
         fullWave={fullWave}
         setFullWave={setFullWave}

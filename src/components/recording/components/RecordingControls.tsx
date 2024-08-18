@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { Audio } from 'expo-av';
@@ -28,22 +28,12 @@ interface Props {
   setUri: (value: string) => void;
   isRecording: boolean;
   setIsRecording: (value: boolean) => void;
-  recording: Audio.Recording;
-  setRecording: (value: Audio.Recording) => void;
   setWave: (value: number[]) => void;
   fullWave: number[];
   setFullWave: (value: number[]) => void;
 }
 
 const RecordingControls = (props: Props) => {
-  const { goBack } = useNavigation();
-  const styles = useRecordingStyles();
-  const db = useSQLiteContext();
-  const dispatch = useAppDispatch();
-  const route = useRoute<RouteProp<RootStackParamList, 'Recording'>>();
-  const songId = useAppSelector(selectCurrentSongId);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
-
   const {
     duration,
     setDuration,
@@ -51,12 +41,19 @@ const RecordingControls = (props: Props) => {
     setUri,
     isRecording,
     setIsRecording,
-    recording,
-    setRecording,
     setWave,
     fullWave,
     setFullWave,
   } = props;
+
+  const { goBack } = useNavigation();
+  const styles = useRecordingStyles();
+  const db = useSQLiteContext();
+  const dispatch = useAppDispatch();
+  const route = useRoute<RouteProp<RootStackParamList, 'Recording'>>();
+  const songId = useAppSelector(selectCurrentSongId);
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
+  const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const { title } = route.params;
 
   const handleStartRecording = async () => {
