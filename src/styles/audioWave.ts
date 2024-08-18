@@ -21,6 +21,8 @@ const useAudioWaveStyles = () => {
       overflow: 'hidden',
       height: 200,
       width: SCREEN_WIDTH * 0.7,
+      position: 'relative',
+      marginTop: 150,
     },
     bar: {
       width: 8,

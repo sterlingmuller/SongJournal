@@ -45,9 +45,9 @@ const useRecordingStyles = () => {
       justifyContent: 'center',
       alignSelf: 'center',
       position: 'absolute',
-      bottom: 200,
+      bottom: 220,
     },
-    timer: { fontSize: 82 },
+    timer: { fontSize: 92 },
   });
 
   return recordingStyles;

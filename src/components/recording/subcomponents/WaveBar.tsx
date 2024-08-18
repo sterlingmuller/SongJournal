@@ -26,7 +26,7 @@ const WaveBar = ({ waveHeight, index, isRecording }: Props) => {
       style={[
         styles.bar,
         {
-          height: waveHeight * 2,
+          height: waveHeight * 2.5,
           backgroundColor:
             index < AUDIO_WAVE_MIDPOINT || isRecording ? '#ff4081' : '#3f51b5',
         },

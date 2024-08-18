@@ -26,10 +26,7 @@ const AudioWaveDisplay = (props: Props) => {
       ))}
       {!isRecording && (
         <View
-          style={[
-            styles.midpointLine,
-            { left: (SCREEN_WIDTH * 0.7) / 2 }, // Assuming the wave container is 80% of screen width
-          ]}
+          style={[styles.midpointLine, { left: (SCREEN_WIDTH * 0.7) / 2 }]}
         />
       )}
     </View>
