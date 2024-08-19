@@ -12,7 +12,7 @@ import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
 import { updatePageInfoRequest } from '@src/state/sagas/actionCreators';
 import SongDetailSelect from '@src/components/lyrics/subcomponents/SongDetailSelect';
 import BpmDetail from '@src/components/lyrics/subcomponents/BpmDetail';
-import { SongDetail } from '@src/components/common/enums';
+import { SongDetailKey } from '@src/components/common/enums';
 
 interface Props {
   isInfoModalOpen: boolean;
@@ -87,26 +87,30 @@ const InfoModal = (props: Props) => {
           />
         </View>
         <View style={styles.details}>
-          {SONG_DETAILS.map((detail: SongDetail) => {
-            if (detail === SongDetail.KEY || detail === SongDetail.TIME) {
+          {Object.entries(SONG_DETAILS).map(
+            ([key, label]: [SongDetailKey, string]) => {
+              if (
+                key === SongDetailKey.KEY_SIGNATURE ||
+                key === SongDetailKey.TIME
+              ) {
+                return (
+                  <SongDetailSelect
+                    key={key}
+                    label={label}
+                    value={newInfo[key]}
+                    handleInputChange={handleInputChange}
+                  />
+                );
+              }
               return (
-                <SongDetailSelect
-                  key={detail}
-                  detail={detail}
-                  value={newInfo[detail]}
+                <BpmDetail
+                  key={key}
+                  value={newInfo[key]}
                   handleInputChange={handleInputChange}
                 />
               );
-            }
-            return (
-              <BpmDetail
-                key={detail}
-                detail={detail}
-                value={newInfo[detail]}
-                handleInputChange={handleInputChange}
-              />
-            );
-          })}
+            },
+          )}
         </View>
         <CompletionStatus
           isCompleted={newInfo.completed}

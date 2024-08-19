@@ -4,7 +4,7 @@ import { WheelPicker, WheelPickerAlign } from 'react-native-ui-lib';
 import Modal from 'react-native-modal';
 
 import { TIME_SIGNATURES } from '@src/components/common/constants';
-import { SongDetail } from '@src/components/common/enums';
+import { SongDetailKey } from '@src/components/common/enums';
 import useWheelPickerModalStyles from '@src/styles/wheelPickerModal';
 import StyledText from '@src/components/common/components/StyledText';
 import { SongInfo } from '@src/components/common/types';
@@ -12,26 +12,20 @@ import { SongInfo } from '@src/components/common/types';
 interface Props {
   isWheelOpen: boolean;
   setIsWheelOpen: (value: boolean) => void;
-  detail: SongDetail;
   handleInputChange: (key: keyof SongInfo, value: string) => void;
   initialValue: string;
 }
 
 const TimeSignatureWheelModal = (props: Props) => {
-  const {
-    isWheelOpen,
-    setIsWheelOpen,
-    detail,
-    handleInputChange,
-    initialValue,
-  } = props;
+  const { isWheelOpen, setIsWheelOpen, handleInputChange, initialValue } =
+    props;
   const styles = useWheelPickerModalStyles();
 
   const [timeSignature, setTimeSignature] = useState('');
 
   const onExitPress = () => {
     setIsWheelOpen(false);
-    handleInputChange(detail.toLowerCase() as keyof SongInfo, timeSignature);
+    handleInputChange(SongDetailKey.TIME, timeSignature);
   };
 
   return (
