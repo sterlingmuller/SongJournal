@@ -22,8 +22,8 @@ export enum SortBy {
   LENGTH = 'Length',
 }
 
-export enum SongDetail {
-  KEY = 'KeySignature',
-  TIME = 'Time',
-  BPM = 'Bpm',
+export enum SongDetailKey {
+  KEY_SIGNATURE = 'keySignature',
+  TIME = 'time',
+  BPM = 'bpm',
 }

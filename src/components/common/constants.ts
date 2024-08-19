@@ -9,13 +9,21 @@ import PlaylistIcon from '@src/icons/PlaylistIcon';
 import MusicPlayerIcon from '@src/icons/MusicPlayerIcon';
 import SettingIcon from '@src/icons/SettingIcon';
 import * as t from '@src/components/common/types';
-import { ColorTheme, SongDetail, SortBy } from '@src/components/common/enums';
+import {
+  ColorTheme,
+  SongDetailKey,
+  SortBy,
+} from '@src/components/common/enums';
 
 export const SORT_BY_OPTIONS: SortBy[] = Object.values(SortBy);
 
 export const COLOR_THEME_OPTIONS: ColorTheme[] = Object.values(ColorTheme);
 
-export const SONG_DETAILS: SongDetail[] = Object.values(SongDetail);
+export const SONG_DETAILS: Record<SongDetailKey, string> = {
+  [SongDetailKey.KEY_SIGNATURE]: 'Key',
+  [SongDetailKey.TIME]: 'Time',
+  [SongDetailKey.BPM]: 'Bpm',
+};
 
 export const LYRIC_SCREEN_OPTIONS: t.LyricsScreenOption[] = [
   { name: 'Edit', icon: EditIcon },
