@@ -3,9 +3,9 @@ import { View, Text } from 'react-native';
 import Modal from 'react-native-modal';
 
 import SortByCategories from '@src/components/home/subcomponents/SortCategories';
-import { FilterOptions } from '@src/components/common/types';
 import useSortByModalStyles from '@src/styles/sortByModal';
-import { SortBy } from '@src/components/common/enums';
+import { Filter, SortBy } from '@src/components/common/enums';
+import FilterSection from '../subcomponents/FilterSection';
 
 interface Props {
   sortedCategory: SortBy;
@@ -14,8 +14,8 @@ interface Props {
   setIsSortOpen: (value: boolean) => void;
   isSortAscending: boolean;
   setIsSortAscending: (value: boolean) => void;
-  filterOptions: FilterOptions;
-  setFilterOptions: (options: FilterOptions) => void;
+  activeFilters: Filter[];
+  setActiveFilters: (value: Filter[]) => void;
 }
 
 const SortByModal = (props: Props) => {
@@ -26,8 +26,8 @@ const SortByModal = (props: Props) => {
     setIsSortOpen,
     isSortAscending,
     setIsSortAscending,
-    filterOptions,
-    setFilterOptions,
+    activeFilters,
+    setActiveFilters,
   } = props;
   const styles = useSortByModalStyles();
   const onExitPress = () => setIsSortOpen(false);
@@ -49,6 +49,12 @@ const SortByModal = (props: Props) => {
           setSortedCategory={setSortedCategory}
           isSortAscending={isSortAscending}
           setIsSortAscending={setIsSortAscending}
+        />
+        <Text style={styles.title}>Filter</Text>
+        <View style={styles.line} />
+        <FilterSection
+          activeFilters={activeFilters}
+          setActiveFilters={setActiveFilters}
         />
       </View>
     </Modal>

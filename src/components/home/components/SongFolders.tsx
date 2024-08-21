@@ -6,13 +6,13 @@ import DeleteRow from '@src/components/home/subcomponents/DeleteRow';
 import { ListRenderItemInfo } from 'react-native';
 import * as t from '@src/components/common/types';
 import { processSongs } from '@src/utils/songExplorer';
-import { SortBy } from '@src/components/common/enums';
+import { Filter, SortBy } from '@src/components/common/enums';
 
 interface Props {
   setToDelete: (value: t.DeleteObject | null) => void;
   sortedCategory: SortBy;
   isSortAscending: boolean;
-  filterOptions: t.FilterOptions;
+  activeFilters: Filter[];
   songs: t.Songs;
   searchText: string;
 }
@@ -22,7 +22,7 @@ const SongFolders = (props: Props) => {
     setToDelete,
     sortedCategory,
     isSortAscending,
-    filterOptions,
+    activeFilters,
     songs,
     searchText,
   } = props;
@@ -38,7 +38,7 @@ const SongFolders = (props: Props) => {
     songs,
     sortedCategory,
     isSortAscending,
-    filterOptions,
+    activeFilters,
     searchText,
   );
 

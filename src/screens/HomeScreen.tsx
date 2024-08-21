@@ -8,14 +8,17 @@ import CreateNewSongButton from '@src/components/home/components/CreateNewSongBu
 import SortByModal from '@src/components/home/components/SortByModal';
 import NewSongModal from '@src/components/home/components/NewSongModal';
 import Footer from '@src/components/home/components/Footer';
-import { FilterOptions, DeleteObject } from '@src/components/common/types';
+import { DeleteObject } from '@src/components/common/types';
 import DeleteModal from '@src/components/common/components/DeleteModal';
-import { DELETE_SONG_TEXT, EMPTY_DELETE_OBJECT } from '@src/components/common/constants';
+import {
+  DELETE_SONG_TEXT,
+  EMPTY_DELETE_OBJECT,
+} from '@src/components/common/constants';
 import useGlobalStyles from '@styles/global';
 import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
 import { fetchSongsWithTakesRequest } from '@src/state/sagas/actionCreators';
 import HomeDisplay from '@src/components/home/components/HomeDisplay';
-import { SortBy } from '@src/components/common/enums';
+import { Filter, SortBy } from '@src/components/common/enums';
 
 const HomeScreen = () => {
   const { setOptions } = useNavigation();
@@ -26,7 +29,7 @@ const HomeScreen = () => {
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [sortedCategory, setSortedCategory] = useState<SortBy>(SortBy.DATE);
   const [isSortAscending, setIsSortAscending] = useState<boolean>(false);
-  const [filterOptions, setFilterOptions] = useState<FilterOptions>({});
+  const [activeFilters, setActiveFilters] = useState<Filter[]>([]);
   const [searchText, setSearchText] = useState(null);
 
   const [isNewSongOpen, setIsNewSongOpen] = useState<boolean>(false);
@@ -56,7 +59,7 @@ const HomeScreen = () => {
           setToDelete={setToDelete}
           sortedCategory={sortedCategory}
           isSortAscending={isSortAscending}
-          filterOptions={filterOptions}
+          activeFilters={activeFilters}
           searchText={searchText}
         />
         <CreateNewSongButton setIsNewSongOpen={setIsNewSongOpen} />
@@ -67,8 +70,8 @@ const HomeScreen = () => {
           setSortedCategory={setSortedCategory}
           isSortAscending={isSortAscending}
           setIsSortAscending={setIsSortAscending}
-          filterOptions={filterOptions}
-          setFilterOptions={setFilterOptions}
+          activeFilters={activeFilters}
+          setActiveFilters={setActiveFilters}
         />
         <NewSongModal
           isNewSongOpen={isNewSongOpen}

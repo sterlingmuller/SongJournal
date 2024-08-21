@@ -1,28 +1,25 @@
-import { SortBy } from '@src/components/common/enums';
-import { FilterOptions, Song, Songs, Take } from '@src/components/common/types';
+import { Filter, SortBy } from '@src/components/common/enums';
+import { Song, Songs, Take } from '@src/components/common/types';
 
-const filterSongs = (songs: Songs, filterOptions: FilterOptions) =>
+const filterSongs = (songs: Songs, activeFilters: Filter[]) =>
   songs.filter((song: Song) => {
-    for (const filterKey in filterOptions) {
-      const filterValue = filterOptions[filterKey];
-
-      if (filterValue !== undefined) {
-        switch (filterKey) {
-          case 'Lyrics':
-            if (filterValue === true && !song.page?.lyrics.trim()) {
-              return false;
-            } else if (filterValue === false && song.page?.lyrics.trim()) {
-              return false;
-            }
-            break;
-          case 'Completed':
-            if (filterValue === true && !song.page?.info.completed) {
-              return false;
-            } else if (filterValue === false && song.page?.info.completed) {
-              return false;
-            }
-            break;
-        }
+    for (const filter of activeFilters) {
+      switch (filter) {
+        case Filter.LYRICS:
+          if (!song.page?.lyrics.trim()) {
+            return false;
+          }
+          break;
+        case Filter.COMPLETED:
+          if (!song.page?.info.completed) {
+            return false;
+          }
+          break;
+        case Filter.IN_PROGRESS:
+          if (song.page?.info.completed) {
+            return false;
+          }
+          break;
       }
     }
     return true;
@@ -78,10 +75,10 @@ export const processSongs = (
   songs: Songs,
   sortedCategory: SortBy,
   isSortAscending: boolean,
-  filterOptions: FilterOptions,
+  activeFilters: Filter[],
   searchText: string,
 ): Songs => {
-  let processedSongs = filterSongs(songs, filterOptions);
+  let processedSongs = filterSongs(songs, activeFilters);
 
   processedSongs = searchSongs(processedSongs, searchText);
 

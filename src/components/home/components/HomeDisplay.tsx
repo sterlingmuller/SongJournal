@@ -1,17 +1,17 @@
 import React from 'react';
 
 import SongFolders from '@src/components/home/components/SongFolders';
-import { FilterOptions, DeleteObject } from '@src/components/common/types';
+import { DeleteObject } from '@src/components/common/types';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectSongs } from '@src/state/selectors/songsSelector';
 import GetStarted from '@src/components/common/components/GetStarted';
-import { Screen, SortBy } from '@src/components/common/enums';
+import { Filter, Screen, SortBy } from '@src/components/common/enums';
 
 interface Props {
   setToDelete: (value: DeleteObject | null) => void;
   sortedCategory: SortBy;
   isSortAscending: boolean;
-  filterOptions: FilterOptions;
+  activeFilters: Filter[];
   searchText: string;
 }
 
@@ -20,7 +20,7 @@ const HomeDisplay = (props: Props) => {
     setToDelete,
     sortedCategory,
     isSortAscending,
-    filterOptions,
+    activeFilters,
     searchText,
   } = props;
   const songs = useAppSelector(selectSongs);
@@ -31,7 +31,7 @@ const HomeDisplay = (props: Props) => {
         setToDelete={setToDelete}
         sortedCategory={sortedCategory}
         isSortAscending={isSortAscending}
-        filterOptions={filterOptions}
+        activeFilters={activeFilters}
         songs={songs}
         searchText={searchText}
       />
