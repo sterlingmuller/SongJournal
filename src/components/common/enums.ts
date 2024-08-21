@@ -22,6 +22,12 @@ export enum SortBy {
   LENGTH = 'Length',
 }
 
+export enum Filter {
+  COMPLETED = 'Completed',
+  IN_PROGRESS = 'In Progress',
+  LYRICS = 'Lyrics',
+}
+
 export enum SongDetailKey {
   KEY_SIGNATURE = 'keySignature',
   TIME = 'time',

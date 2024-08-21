@@ -13,9 +13,12 @@ import {
   ColorTheme,
   SongDetailKey,
   SortBy,
+  Filter,
 } from '@src/components/common/enums';
 
 export const SORT_BY_OPTIONS: SortBy[] = Object.values(SortBy);
+
+export const FILTER_OPTIONS: Filter[] = Object.values(Filter);
 
 export const COLOR_THEME_OPTIONS: ColorTheme[] = Object.values(ColorTheme);
 
