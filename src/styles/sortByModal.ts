@@ -11,6 +11,11 @@ interface Styles {
   label: ViewStyle;
   arrow: ViewStyle;
   title: TextStyle;
+  filterContainer: ViewStyle;
+  filterRow: ViewStyle;
+  filterToggle: ViewStyle;
+  activeToggle: ViewStyle;
+  inactiveToggle: ViewStyle;
 }
 
 const useSortByModalStyles = () => {
@@ -63,6 +68,18 @@ const useSortByModalStyles = () => {
       paddingLeft: 15,
       position: 'absolute',
     },
+
+    filterContainer: {
+      flexDirection: 'column',
+    },
+
+    filterRow: { flexDirection: 'row' },
+
+    filterToggle: {},
+
+    activeToggle: {},
+
+    inactiveToggle: {},
   });
 
   return sortByModalStyles;

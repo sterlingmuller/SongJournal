@@ -80,6 +80,8 @@ export const processSongs = (
 ): Songs => {
   let processedSongs = filterSongs(songs, activeFilters);
 
+  console.log('processedSongs:', processedSongs);
+
   processedSongs = searchSongs(processedSongs, searchText);
 
   processedSongs = sortSongs(processedSongs, sortedCategory, isSortAscending);
