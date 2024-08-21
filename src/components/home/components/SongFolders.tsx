@@ -27,13 +27,6 @@ const SongFolders = (props: Props) => {
     searchText,
   } = props;
 
-  // const sortedSongs = sortSongs(
-  //   songs,
-  //   sortedCategory,
-  //   isSortAscending,
-  //   filterOptions,
-  // );
-
   const songsToDisplay = processSongs(
     songs,
     sortedCategory,
