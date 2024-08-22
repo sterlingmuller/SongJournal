@@ -3,7 +3,7 @@ import {
   FetchPagePayload,
   Page,
   UpdateLyricsPayload,
-  UpdatePageInfoPayload,
+  UpdateSongInfoPayload,
 } from '@src/components/common/types';
 
 export const fetchPageBySongId = async (payload: FetchPagePayload) => {
@@ -20,7 +20,6 @@ export const fetchPageBySongId = async (payload: FetchPagePayload) => {
       keySignature: dbPage.keySignature,
       time: dbPage.time,
       about: dbPage.about,
-      completed: dbPage.completed,
     };
 
     const page: Page = { lyrics: dbPage.lyrics, info: songInfo };
@@ -31,21 +30,30 @@ export const fetchPageBySongId = async (payload: FetchPagePayload) => {
   }
 };
 
-export const updatePageInfo = async (payload: UpdatePageInfoPayload) => {
-  const { songId, info: updates, db } = payload;
+export const UpdateSongInfo = async (payload: UpdateSongInfoPayload) => {
+  const { songId, info, completed, db } = payload;
 
   try {
-    const clauses = Object.keys(updates)
-      .map((key: keyof Page) => `${key} = ?`)
-      .join(', ');
+    if (info && Object.keys(info).length > 0) {
+      const clauses = Object.keys(info)
+        .map((key: keyof Page) => `${key} = ?`)
+        .join(', ');
+      const params = Object.values(info);
 
-    const params = Object.values(updates);
+      await db.runAsync(
+        `UPDATE Page SET ${clauses} WHERE songId = ?`,
+        ...params,
+        songId,
+      );
+    }
 
-    await db.runAsync(
-      `UPDATE Page SET ${clauses} WHERE songId = ?`,
-      ...params,
-      songId,
-    );
+    if (completed !== undefined) {
+      await db.runAsync(
+        `UPDATE Songs SET completed = ? WHERE songId = ?`,
+        completed,
+        songId,
+      );
+    }
   } catch (err) {
     console.error('Error updating page,', err);
   }

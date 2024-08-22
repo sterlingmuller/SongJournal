@@ -4,18 +4,18 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import {
   FetchPagePayload,
   UpdateLyricsPayload,
-  UpdatePageInfoPayload,
+  UpdateSongInfoPayload,
 } from '@src/components/common/types';
 import * as at from '@src/state/sagas/actionTypes';
 import {
   fetchPageBySongId,
   updateLyrics,
-  updatePageInfo,
+  UpdateSongInfo,
 } from '@src/data/repositories/PageRepository';
 import {
   fetchPageSuccess,
   updateLyrics as updateLyricsAction,
-  updatePageInfo as updatePageInfoAction,
+  UpdatePageInfo as UpdatePageInfoAction,
 } from '@src/state/slice/pagesSlice';
 import {
   startLoading,
@@ -23,6 +23,7 @@ import {
   endLoading,
 } from '@src/state/slice/asyncSlice';
 import { RootState } from '@src/state/store';
+import { UpdateSongCompletion as UpdateSongCompletionAction } from '@src/state/slice/songsSlice';
 
 function* fetchPage(action: PayloadAction<FetchPagePayload>) {
   yield put(startLoading());
@@ -53,12 +54,20 @@ function* updateLyricsSaga(action: PayloadAction<UpdateLyricsPayload>) {
   }
 }
 
-function* updatePageInfoSaga(action: PayloadAction<UpdatePageInfoPayload>) {
+function* UpdateSongInfoSaga(action: PayloadAction<UpdateSongInfoPayload>) {
+  const { songId, info, completed } = action.payload;
+
   yield put(startLoading());
   try {
-    yield call(updatePageInfo, action.payload);
+    yield call(UpdateSongInfo, action.payload);
 
-    yield put(updatePageInfoAction(action.payload));
+    if (info) {
+      yield put(UpdatePageInfoAction({ songId, info }));
+    }
+
+    if (completed !== undefined) {
+      yield put(UpdateSongCompletionAction({ songId, completed }));
+    }
     yield put(endLoading());
   } catch (error) {
     yield put(setError(error));
@@ -69,6 +78,6 @@ export default function* pageSaga() {
   yield all([
     takeEvery(at.FETCH_PAGE_REQUEST, fetchPage),
     takeEvery(at.UPDATE_LYRICS_REQUEST, updateLyricsSaga),
-    takeEvery(at.UPDATE_PAGE_INFO_REQUEST, updatePageInfoSaga),
+    takeEvery(at.UPDATE_PAGE_INFO_REQUEST, UpdateSongInfoSaga),
   ]);
 }

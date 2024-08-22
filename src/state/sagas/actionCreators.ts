@@ -34,7 +34,7 @@ export const updateLyricsRequest = (payload: t.UpdateLyricsPayload) => ({
   payload,
 });
 
-export const updatePageInfoRequest = (payload: t.UpdatePageInfoPayload) => ({
+export const UpdateSongInfoRequest = (payload: t.UpdateSongInfoPayload) => ({
   type: at.UPDATE_PAGE_INFO_REQUEST,
   payload,
 });

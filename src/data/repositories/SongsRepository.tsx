@@ -10,7 +10,9 @@ import {
 } from '@src/components/common/types';
 
 export const fetchSongs = (db: SQLiteDatabase) =>
-  db.getAllSync('SELECT selectedTakeID, songId, title, totalTakes FROM Songs');
+  db.getAllSync(
+    'SELECT selectedTakeID, songId, title, totalTakes, completed, hasLyrics FROM Songs',
+  );
 
 export const getTakesAndPageBySongId = (db: SQLiteDatabase, songId: number) => {
   const takes: Takes = db.getAllSync(
@@ -29,13 +31,13 @@ export const getTakesAndPageBySongId = (db: SQLiteDatabase, songId: number) => {
 export const createSong = async ({ db, title }: CreateSongPayload) => {
   try {
     const result = await db.runAsync(
-      'INSERT INTO Songs (title, selectedTakeId, totalTakes) VALUES (?, -1, 0)',
+      'INSERT INTO Songs (title, selectedTakeId, totalTakes, completed, hasLyrics) VALUES (?, -1, 0, false, false)',
       title,
     );
     const songId = result.lastInsertRowId;
 
     await db.runAsync(
-      'INSERT INTO Page (songId, completed, lyrics, bpm, keySignature, time, about) VALUES (?, false, "", "", "", "", "")',
+      'INSERT INTO Page (songId, lyrics, bpm, keySignature, time, about) VALUES (?, "", "", "", "", "")',
       songId,
     );
 
