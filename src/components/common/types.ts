@@ -31,6 +31,8 @@ export type DbSong = {
   title: string;
   selectedTakeId: number;
   totalTakes: number;
+  completed: boolean;
+  hasLyrics: boolean;
 };
 
 export type Take = {
@@ -48,6 +50,9 @@ export type SongInfo = {
   keySignature?: string;
   time?: string;
   about?: string;
+};
+
+export type SongUpdates = SongInfo & {
   completed: boolean;
 };
 
@@ -57,7 +62,6 @@ export type DbPage = {
   keySignature: string;
   time: string;
   about: string;
-  completed: boolean;
 };
 
 export type Page = {
@@ -76,6 +80,8 @@ export type Song = {
   totalTakes: number;
   takes: Takes;
   page: Page;
+  completed: boolean;
+  hasLyrics: boolean;
 };
 
 export interface SongItem extends Song {
@@ -162,10 +168,21 @@ export type FetchPageSuccessPayload = {
   page: Page;
 };
 
-export type UpdatePageInfoPayload = {
+export type UpdateSongInfoPayload = {
+  songId: number;
+  info?: SongInfo;
+  completed?: boolean;
+  db: SQLiteDatabase;
+};
+
+export type UpdatePageInfoStatePayload = {
   songId: number;
   info: SongInfo;
-  db: SQLiteDatabase;
+};
+
+export type UpdateSongCompletionStatePayload = {
+  songId: number;
+  completed: boolean;
 };
 
 export type UpdateLyricsPayload = {

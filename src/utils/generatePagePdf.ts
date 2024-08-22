@@ -2,14 +2,14 @@ import * as Print from 'expo-print';
 
 import { SONG_DETAILS } from '@src/components/common/constants';
 import { Page } from '@src/components/common/types';
-import { SongDetail } from '@src/components/common/enums';
+import { SongDetailKey } from '@src/components/common/enums';
 
 export const generatePagePdf = async (title: string, page: Page) => {
   const { lyrics, info } = page;
 
   const renderInfo = () => {
     const infoToDisplay = SONG_DETAILS.map(
-      (detail: SongDetail) => !!info[detail] && `${detail}: ${info[detail]}`,
+      (detail: SongDetailKey) => !!info[detail] && `${detail}: ${info[detail]}`,
     ).filter((value: string | boolean) => value !== false);
 
     if (infoToDisplay.length) {

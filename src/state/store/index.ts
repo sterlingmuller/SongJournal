@@ -1,5 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { GetDefaultMiddleware } from '@reduxjs/toolkit/dist/getDefaultMiddleware';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-expo-dev-plugin';
 import createSagaMiddleware from 'redux-saga';
 
 import rootReducer from '@src/state/store/rootReducer';
@@ -7,15 +7,10 @@ import rootSaga from '@src/state/sagas/rootSaga';
 
 const sagaMiddleware = createSagaMiddleware();
 
-export const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware: GetDefaultMiddleware) =>
-    getDefaultMiddleware({
-      thunk: false,
-      serializableCheck: false,
-    }).concat(sagaMiddleware),
-  devTools: process.env.NODE_ENV !== 'production',
-});
+export const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(sagaMiddleware)),
+);
 
 sagaMiddleware.run(rootSaga);
 
