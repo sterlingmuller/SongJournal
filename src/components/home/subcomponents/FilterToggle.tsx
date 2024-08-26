@@ -1,6 +1,8 @@
-import { Button, View } from 'react-native';
+import { Switch, View } from 'react-native';
 
 import useSortByModalStyles from '@src/styles/sortByModal';
+import StyledText from '@src/components/common/components/StyledText';
+import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Props {
   label: string;
@@ -10,15 +12,17 @@ interface Props {
 
 const FilterToggle = ({ label, isActive, onPress }: Props) => {
   const styles = useSortByModalStyles();
+  const { theme } = useColorTheme();
 
   return (
-    <View
-      style={[
-        styles.filterToggle,
-        isActive ? styles.activeToggle : styles.inactiveToggle,
-      ]}
-    >
-      <Button title={label} onPress={onPress} />
+    <View style={styles.filterToggle}>
+      <StyledText style={styles.toggleLabel}>{label}</StyledText>
+      <Switch
+        value={isActive}
+        onValueChange={onPress}
+        trackColor={{ false: theme.highlight, true: theme.mutedPrimary }}
+        thumbColor={isActive ? theme.primary : '#f4f3f4'}
+      />
     </View>
   );
 };

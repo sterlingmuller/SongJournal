@@ -6,17 +6,17 @@ const filterSongs = (songs: Songs, activeFilters: Filter[]) =>
     for (const filter of activeFilters) {
       switch (filter) {
         case Filter.LYRICS:
-          if (!song.page?.lyrics.trim()) {
+          if (!song.hasLyrics) {
             return false;
           }
           break;
         case Filter.COMPLETED:
-          if (!song.page?.info.completed) {
+          if (!song.completed) {
             return false;
           }
           break;
         case Filter.IN_PROGRESS:
-          if (song.page?.info.completed) {
+          if (song.completed) {
             return false;
           }
           break;
@@ -80,10 +80,7 @@ export const processSongs = (
 ): Songs => {
   let processedSongs = filterSongs(songs, activeFilters);
 
-  console.log('processedSongs:', processedSongs);
-
   processedSongs = searchSongs(processedSongs, searchText);
-
   processedSongs = sortSongs(processedSongs, sortedCategory, isSortAscending);
 
   return processedSongs;

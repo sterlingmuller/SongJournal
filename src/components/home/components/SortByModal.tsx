@@ -32,8 +32,6 @@ const SortByModal = (props: Props) => {
   const styles = useSortByModalStyles();
   const onExitPress = () => setIsSortOpen(false);
 
-  // Add filter toggles here
-
   return (
     <Modal
       isVisible={isSortOpen}
