@@ -82,7 +82,7 @@ const songsSlice = createSlice({
         song.selectedTakeId = takeId;
       }
     },
-    UpdateSongCompletion: (
+    updateSongCompletion: (
       state: SongsSliceState,
       action: PayloadAction<t.UpdateSongCompletionStatePayload>,
     ) => {
@@ -90,6 +90,16 @@ const songsSlice = createSlice({
       const song = state.items.find((song: t.Song) => song.songId === songId);
       if (song) {
         song.completed = completed;
+      }
+    },
+    updateSongHasLyrics: (
+      state: SongsSliceState,
+      action: PayloadAction<t.UpdateSongHasLyricsStatePayload>,
+    ) => {
+      const { songId, lyrics } = action.payload;
+      const song = state.items.find((song: t.Song) => song.songId === songId);
+      if (song) {
+        song.hasLyrics = !!lyrics.trim();
       }
     },
   },
@@ -103,7 +113,8 @@ export const {
   updateTakeNotesSuccess,
   createTakeSuccess,
   updateSelectedTakeIdSuccess,
-  UpdateSongCompletion,
+  updateSongCompletion,
+  updateSongHasLyrics,
 } = songsSlice.actions;
 
 export default songsSlice.reducer;

@@ -26,6 +26,7 @@ export enum Filter {
   COMPLETED = 'Completed',
   IN_PROGRESS = 'In Progress',
   LYRICS = 'Lyrics',
+  LYRICLESS = 'Lyricless',
 }
 
 export enum SongDetailKey {

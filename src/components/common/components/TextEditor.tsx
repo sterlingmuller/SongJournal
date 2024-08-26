@@ -20,9 +20,14 @@ const TextEditor = ({ initialText, setText }: Props) => {
   });
 
   const content = useEditorContent(editor, { type: 'html' });
+
   useEffect(() => {
     if (content !== undefined) {
-      setText(content);
+      editor
+        .getText()
+        .then((updateText: string) =>
+          setText(updateText.trim() ? content : ''),
+        );
     }
   }, [content]);
 

@@ -185,10 +185,20 @@ export type UpdateSongCompletionStatePayload = {
   completed: boolean;
 };
 
+export type UpdateSongHasLyricsStatePayload = {
+  songId: number;
+  lyrics: string;
+};
+
 export type UpdateLyricsPayload = {
   songId: number;
   lyrics: string;
   db: SQLiteDatabase;
+};
+
+export type UpdateLyricsStatePayload = {
+  songId: number;
+  lyrics: string;
 };
 
 export type DeleteTakeSuccessPayload = {

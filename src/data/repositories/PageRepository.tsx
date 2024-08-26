@@ -30,7 +30,7 @@ export const fetchPageBySongId = async (payload: FetchPagePayload) => {
   }
 };
 
-export const UpdateSongInfo = async (payload: UpdateSongInfoPayload) => {
+export const updateSongInfo = async (payload: UpdateSongInfoPayload) => {
   const { songId, info, completed, db } = payload;
 
   try {
@@ -66,6 +66,12 @@ export const updateLyrics = async (payload: UpdateLyricsPayload) => {
     await db.runAsync(
       'UPDATE Page SET lyrics = ? WHERE songId = ?',
       lyrics,
+      songId,
+    );
+
+    await db.runAsync(
+      'UPDATE Songs SET hasLyrics = ? WHERE songId = ?',
+      !!lyrics.trim(),
       songId,
     );
   } catch (err) {

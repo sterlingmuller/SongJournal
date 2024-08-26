@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import {
   FetchPageSuccessPayload,
-  UpdateLyricsPayload,
+  UpdateLyricsStatePayload,
   SongToPageMap,
   UpdatePageInfoStatePayload,
 } from '@src/components/common/types';
@@ -27,14 +27,14 @@ const pagesSlice = createSlice({
     },
     updateLyrics: (
       state: PagesSliceState,
-      action: PayloadAction<UpdateLyricsPayload>,
+      action: PayloadAction<UpdateLyricsStatePayload>,
     ) => {
       const { songId, lyrics } = action.payload;
       if (state.items[songId]) {
         state.items[songId].lyrics = lyrics;
       }
     },
-    UpdatePageInfo: (
+    updatePageInfo: (
       state: PagesSliceState,
       action: PayloadAction<UpdatePageInfoStatePayload>,
     ) => {
@@ -46,7 +46,7 @@ const pagesSlice = createSlice({
   },
 });
 
-export const { fetchPageSuccess, updateLyrics, UpdatePageInfo } =
+export const { fetchPageSuccess, updateLyrics, updatePageInfo } =
   pagesSlice.actions;
 
 export default pagesSlice.reducer;
