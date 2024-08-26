@@ -14,8 +14,7 @@ interface Styles {
   filterContainer: ViewStyle;
   filterRow: ViewStyle;
   filterToggle: ViewStyle;
-  activeToggle: ViewStyle;
-  inactiveToggle: ViewStyle;
+  toggleLabel: TextStyle;
 }
 
 const useSortByModalStyles = () => {
@@ -73,13 +72,18 @@ const useSortByModalStyles = () => {
       flexDirection: 'column',
     },
 
-    filterRow: { flexDirection: 'row' },
+    filterRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: 20,
+      marginLeft: 20,
+      marginTop: 20,
+      marginRight: 10,
+    },
 
-    filterToggle: {},
+    filterToggle: { flexDirection: 'row', alignItems: 'center', width: '45%' },
 
-    activeToggle: {},
-
-    inactiveToggle: {},
+    toggleLabel: { fontSize: 16, fontWeight: 'bold', flex: 1 },
   });
 
   return sortByModalStyles;

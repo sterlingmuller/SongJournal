@@ -50,17 +50,19 @@ const FilterSection = (props: Props) => {
           />
         ))}
       </View>
-      {FILTER_OPTIONS.filter(
-        (option: Filter) =>
-          option !== Filter.COMPLETED && option !== Filter.IN_PROGRESS,
-      ).map((option: Filter) => (
-        <FilterToggle
-          key={option}
-          label={option}
-          isActive={activeFilters.includes(option)}
-          onPress={() => handleToggle(option)}
-        />
-      ))}
+      <View style={styles.filterRow}>
+        {FILTER_OPTIONS.filter(
+          (option: Filter) =>
+            option !== Filter.COMPLETED && option !== Filter.IN_PROGRESS,
+        ).map((option: Filter) => (
+          <FilterToggle
+            key={option}
+            label={option}
+            isActive={activeFilters.includes(option)}
+            onPress={() => handleToggle(option)}
+          />
+        ))}
+      </View>
     </View>
   );
 };
