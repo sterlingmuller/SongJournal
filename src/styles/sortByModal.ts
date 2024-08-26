@@ -25,7 +25,7 @@ const useSortByModalStyles = () => {
       position: 'absolute',
       backgroundColor: theme.secondary,
       width: '100%',
-      height: '60%',
+      height: '42%',
       borderBottomWidth: 1,
       borderBottomColor: c.black,
       bottom: 0,
@@ -75,13 +75,10 @@ const useSortByModalStyles = () => {
     filterRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      marginBottom: 20,
-      marginLeft: 20,
-      marginTop: 20,
-      marginRight: 10,
+      margin: 20,
     },
 
-    filterToggle: { flexDirection: 'row', alignItems: 'center', width: '45%' },
+    filterToggle: { flexDirection: 'row', alignItems: 'center', width: '42%' },
 
     toggleLabel: { fontSize: 16, fontWeight: 'bold', flex: 1 },
   });

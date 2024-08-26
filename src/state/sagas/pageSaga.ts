@@ -10,20 +10,21 @@ import * as at from '@src/state/sagas/actionTypes';
 import {
   fetchPageBySongId,
   updateLyrics,
-  UpdateSongInfo,
+  updateSongInfo,
 } from '@src/data/repositories/PageRepository';
 import {
   fetchPageSuccess,
   updateLyrics as updateLyricsAction,
-  UpdatePageInfo as UpdatePageInfoAction,
+  updatePageInfo as updatePageInfoAction,
 } from '@src/state/slice/pagesSlice';
+import { updateSongHasLyrics } from '@src/state/slice/songsSlice';
 import {
   startLoading,
   setError,
   endLoading,
 } from '@src/state/slice/asyncSlice';
 import { RootState } from '@src/state/store';
-import { UpdateSongCompletion as UpdateSongCompletionAction } from '@src/state/slice/songsSlice';
+import { updateSongCompletion as UpdateSongCompletionAction } from '@src/state/slice/songsSlice';
 
 function* fetchPage(action: PayloadAction<FetchPagePayload>) {
   yield put(startLoading());
@@ -43,11 +44,14 @@ function* fetchPage(action: PayloadAction<FetchPagePayload>) {
 }
 
 function* updateLyricsSaga(action: PayloadAction<UpdateLyricsPayload>) {
+  const { songId, lyrics } = action.payload;
   yield put(startLoading());
+
   try {
     yield call(updateLyrics, action.payload);
 
-    yield put(updateLyricsAction(action.payload));
+    yield put(updateLyricsAction({ songId, lyrics }));
+    yield put(updateSongHasLyrics({ songId, lyrics }));
     yield put(endLoading());
   } catch (error) {
     yield put(setError(error));
@@ -59,10 +63,10 @@ function* UpdateSongInfoSaga(action: PayloadAction<UpdateSongInfoPayload>) {
 
   yield put(startLoading());
   try {
-    yield call(UpdateSongInfo, action.payload);
+    yield call(updateSongInfo, action.payload);
 
     if (info) {
-      yield put(UpdatePageInfoAction({ songId, info }));
+      yield put(updatePageInfoAction({ songId, info }));
     }
 
     if (completed !== undefined) {

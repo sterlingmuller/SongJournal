@@ -20,11 +20,11 @@ export const createTake = async (takePayload: TakePayload) => {
     const takeId = result.lastInsertRowId;
 
     await db.runAsync(
-      'UPDATE songs SET totalTakes = totalTakes + 1 WHERE songId = ?;',
+      'UPDATE Songs SET totalTakes = totalTakes + 1 WHERE songId = ?;',
       songId,
     );
     await db.runAsync(
-      'UPDATE songs Set selectedTakeId = ? WHERE selectedTakeId = -1;',
+      'UPDATE Songs Set selectedTakeId = ? WHERE selectedTakeId = -1;',
       takeId,
     );
 

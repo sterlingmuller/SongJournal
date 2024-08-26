@@ -39,7 +39,7 @@ const EditLyricsSheet = ({ setSelectedOption, songId }: Props) => {
       }),
     );
 
-    setSelectedOption('');
+    if (newLyrics) setSelectedOption('');
   };
 
   return (

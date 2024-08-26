@@ -27,10 +27,14 @@ const FilterSection = (props: Props) => {
     setActiveFilters(newFilters);
   };
 
-  const handleToggle = (filterToUpdate: Filter) => {
-    const newFilters = activeFilters.includes(filterToUpdate)
-      ? activeFilters.filter((f: Filter) => f !== filterToUpdate)
-      : [...activeFilters, filterToUpdate];
+  const handleLyricsToggle = (filterToUpdate: Filter) => {
+    const newFilters: Filter[] = activeFilters.filter(
+      (f: Filter) => f !== Filter.LYRICS && f !== Filter.LYRICLESS,
+    );
+
+    if (!activeFilters.includes(filterToUpdate)) {
+      newFilters.push(filterToUpdate);
+    }
 
     setActiveFilters(newFilters);
   };
@@ -53,13 +57,13 @@ const FilterSection = (props: Props) => {
       <View style={styles.filterRow}>
         {FILTER_OPTIONS.filter(
           (option: Filter) =>
-            option !== Filter.COMPLETED && option !== Filter.IN_PROGRESS,
+            option === Filter.LYRICS || option === Filter.LYRICLESS,
         ).map((option: Filter) => (
           <FilterToggle
             key={option}
             label={option}
             isActive={activeFilters.includes(option)}
-            onPress={() => handleToggle(option)}
+            onPress={() => handleLyricsToggle(option)}
           />
         ))}
       </View>
