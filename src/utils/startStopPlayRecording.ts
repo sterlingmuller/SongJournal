@@ -2,25 +2,6 @@ import { AUDIO_UPDATE_INTERVAL } from '@src/components/common/constants';
 import { Audio } from 'expo-av';
 import { RecordingStatus } from 'expo-av/build/Audio';
 
-// export const startRecording = async (
-//   setRecording: (value: Audio.Recording | null) => void,
-// ) => {
-//   try {
-//     await Audio.requestPermissionsAsync();
-//     await Audio.setAudioModeAsync({
-//       allowsRecordingIOS: true,
-//       playsInSilentModeIOS: true,
-//     });
-
-//     const { recording } = await Audio.Recording.createAsync(
-//       Audio.RecordingOptionsPresets.HIGH_QUALITY,
-//     );
-//     setRecording(recording);
-//   } catch (err) {
-//     console.error('Failed to start recording', err);
-//   }
-// };
-
 let levelSum = 0;
 let levelCount = 0;
 let audioWaveIntervalId: NodeJS.Timeout;
