@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { Slider } from 'react-native-awesome-slider';
-import {
-  useDerivedValue,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import { useSharedValue } from 'react-native-reanimated';
+import * as Haptics from 'expo-haptics';
 
 import usePlaybackBarStyles from '@src/styles/playbackBar';
 import StyledText from '@src/components/common/components/StyledText';
@@ -26,13 +23,14 @@ const PlaybackBar = ({ duration }: Props) => {
   const min = useSharedValue(0);
   const max = useSharedValue(duration);
 
-  const smoothProgress = useDerivedValue(() => {
-    return withTiming(currentTime, { duration: 100 });
-  });
-
   useEffect(() => {
-    progress.value = smoothProgress.value;
+    progress.value = currentTime;
   }, [currentTime]);
+
+  const handleOnValueChange = (time: number) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    seekTo(time);
+  };
 
   return (
     <View style={styles.container}>
@@ -43,9 +41,10 @@ const PlaybackBar = ({ duration }: Props) => {
           progress={progress}
           minimumValue={min}
           maximumValue={max}
-          onValueChange={(time: number) => {
-            seekTo(time);
+          onSlidingStart={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
           }}
+          onSlidingComplete={handleOnValueChange}
           thumbWidth={25}
           theme={{
             minimumTrackTintColor: theme.primary,

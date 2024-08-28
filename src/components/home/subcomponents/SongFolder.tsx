@@ -27,7 +27,6 @@ import useFileShare from '@src/utils/hooks/useFileShare';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
 import PageIcon from '@src/icons/PageIcon';
 import { Screen } from '@src/components/common/enums';
-import { selectCurrentSong } from '@src/state/selectors/songsSelector';
 import formatDuration from '@src/utils/formatDuration';
 
 interface Props {
