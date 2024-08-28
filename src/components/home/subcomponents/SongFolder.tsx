@@ -27,6 +27,8 @@ import useFileShare from '@src/utils/hooks/useFileShare';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
 import PageIcon from '@src/icons/PageIcon';
 import { Screen } from '@src/components/common/enums';
+import { selectCurrentSong } from '@src/state/selectors/songsSelector';
+import formatDuration from '@src/utils/formatDuration';
 
 interface Props {
   song: Song;
@@ -90,16 +92,25 @@ const SongFolder = ({ song }: Props) => {
     setTimeout(() => inputRef.current?.focus(), 100);
   });
 
-  const formattedDate = useMemo(() => {
+  const displaySubtext = useMemo(() => {
     if (selectedTake?.date) {
       return (
-        <StyledText>{formatDateFromISOString(selectedTake.date)}</StyledText>
+        <>
+          <StyledText style={styles.trackSubtext}>
+            {formatDateFromISOString(selectedTake.date)}
+          </StyledText>
+          <StyledText style={styles.trackSubtext}>
+            {formatDuration(selectedTake.duration)}
+          </StyledText>
+        </>
       );
     }
     return (
-      <StyledText style={styles.warningText}>
-        No takes have been recorded
-      </StyledText>
+      <View style={styles.warningContainer}>
+        <StyledText style={styles.warningText}>
+          No takes have been recorded
+        </StyledText>
+      </View>
     );
   }, [selectedTake, styles.warningText]);
 
@@ -125,7 +136,7 @@ const SongFolder = ({ song }: Props) => {
             <StyledText style={styles.title}>{title}</StyledText>
           )}
         </TouchableOpacity>
-        {formattedDate}
+        <View style={styles.subtextContainer}>{displaySubtext}</View>
         <View style={styles.iconRow}>
           <TouchableOpacity
             onPress={() => handleOnPressNavigation(Screen.LYRICS)}
@@ -136,10 +147,10 @@ const SongFolder = ({ song }: Props) => {
           <TouchableOpacity onPress={handleShare}>
             <ShareIcon />
           </TouchableOpacity>
-          {isCurrentSongPlaying ? (
+          {selectedPlayingSongId === songId ? (
             <PlaybackBar duration={selectedTake ? selectedTake.duration : 0} />
           ) : (
-            <View style={styles.playbackBar} />
+            <View style={styles.staticPlaybackBar} />
           )}
         </View>
       </View>
