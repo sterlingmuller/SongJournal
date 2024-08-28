@@ -1,41 +1,65 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
+import { Slider } from 'react-native-awesome-slider';
+import {
+  Easing,
+  ReduceMotion,
+  useDerivedValue,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
-import useSongFolderStyles from '@src/styles/songFolder';
-import Slider from '@react-native-community/slider';
-import { Take } from '@src/components/common/types';
+import usePlaybackBarStyles from '@src/styles/playbackBar';
+import StyledText from '@src/components/common/components/StyledText';
+import formatDuration from '@src/utils/formatDuration';
+import { useAudioPlayer } from '@src/state/context/AudioContext';
 
 interface Props {
   duration: number;
-  // currentTime: number;
-  // handleOnSeek: (value: number) => void;
 }
 
 const PlaybackBar = ({ duration }: Props) => {
-  const styles = useSongFolderStyles();
-  const [sliderValue, setSliderValue] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
+  const styles = usePlaybackBarStyles();
+  const { currentTime, seekTo } = useAudioPlayer();
 
-  const handleOnSeek = (time: number) => {
-    console.log('seeking to:', time);
-  };
+  const progress = useSharedValue(currentTime);
+  const min = useSharedValue(0);
+  const max = useSharedValue(duration);
+
+  const smoothProgress = useDerivedValue(() => {
+    return withTiming(currentTime, { duration: 100 });
+  });
 
   useEffect(() => {
-    setSliderValue(currentTime);
+    progress.value = smoothProgress.value;
   }, [currentTime]);
 
-  const handleSliderChange = (value: number) => setSliderValue(value);
-
-  const handleSliderComplete = (value: number) => handleOnSeek(value);
-
   return (
-    <View>
+    <View style={styles.container}>
       <Slider
-        maximumValue={duration}
-        value={sliderValue}
-        onValueChange={handleSliderChange}
-        onSlidingComplete={handleSliderComplete}
+        renderBubble={() => null}
+        progress={progress}
+        minimumValue={min}
+        maximumValue={max}
+        onValueChange={(time: number) => {
+          seekTo(time);
+        }}
+        thumbWidth={25}
+        theme={{
+          minimumTrackTintColor: '#ee865b',
+          maximumTrackTintColor: '#d3d3d3',
+          heartbeatColor: '#999',
+        }}
+        sliderHeight={15}
       />
+      <View style={styles.timeContainer}>
+        <StyledText style={styles.timeText}>
+          {formatDuration(currentTime)}
+        </StyledText>
+        <StyledText style={styles.timeText}>
+          {formatDuration(duration)}
+        </StyledText>
+      </View>
     </View>
   );
 };

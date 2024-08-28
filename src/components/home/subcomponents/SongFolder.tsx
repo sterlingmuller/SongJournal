@@ -136,7 +136,11 @@ const SongFolder = ({ song }: Props) => {
           <TouchableOpacity onPress={handleShare}>
             <ShareIcon />
           </TouchableOpacity>
-          <PlaybackBar duration={selectedTake ? selectedTake.duration : 0} />
+          {isCurrentSongPlaying ? (
+            <PlaybackBar duration={selectedTake ? selectedTake.duration : 0} />
+          ) : (
+            <View style={styles.playbackBar} />
+          )}
         </View>
       </View>
       {selectedTake && (
