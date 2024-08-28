@@ -1,5 +1,6 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { useColorTheme } from '@src/state/context/ThemeContext';
+import { SCREEN_WIDTH } from '@src/components/common/constants';
 
 interface Styles {
   rowContainer: ViewStyle;
@@ -7,12 +8,16 @@ interface Styles {
   iconRow: ViewStyle;
   playIcon: ViewStyle;
   deleteRow: ViewStyle;
-  playbackBar: ViewStyle;
+  playbackBarContainer: ViewStyle;
+  staticPlaybackBar: ViewStyle;
   deleteButton: ViewStyle;
   rowPressed: ViewStyle;
+  subtextContainer: ViewStyle;
+  warningContainer: ViewStyle;
   title: TextStyle;
   editTitleText: TextStyle;
   warningText: TextStyle;
+  trackSubtext: TextStyle;
 }
 
 const useSongFolderStyles = () => {
@@ -36,18 +41,19 @@ const useSongFolderStyles = () => {
 
     contents: {
       flexDirection: 'column',
-      gap: 10,
     },
 
     title: {
       fontSize: 24,
       color: theme.primaryText,
+      fontWeight: 'bold',
     },
 
     iconRow: {
       flexDirection: 'row',
       gap: 20,
       alignItems: 'center',
+      paddingTop: 5,
     },
 
     playIcon: {
@@ -57,11 +63,12 @@ const useSongFolderStyles = () => {
       right: 40,
     },
 
-    playbackBar: {
+    staticPlaybackBar: {
       height: 15,
-      width: '66%',
+      width: SCREEN_WIDTH * 0.5,
       backgroundColor: theme.primary,
-      alignSelf: 'center',
+      marginLeft: 10,
+      borderRadius: 8,
     },
 
     deleteRow: {
@@ -85,11 +92,21 @@ const useSongFolderStyles = () => {
       width: '50%',
       fontSize: 24,
       color: theme.primaryText,
+      fontWeight: 'bold',
     },
 
     warningText: {
       fontStyle: 'italic',
+      alignSelf: 'center',
     },
+
+    trackSubtext: {
+      fontStyle: 'italic',
+    },
+
+    warningContainer: { height: 40, flexDirection: 'row' },
+
+    subtextContainer: { height: 40 },
   });
 
   return songFolderStyles;

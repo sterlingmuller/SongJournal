@@ -1,8 +1,10 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { useColorTheme } from '@src/state/context/ThemeContext';
+import { SCREEN_WIDTH } from '@src/components/common/constants';
 
 interface Styles {
   container: ViewStyle;
+  sliderContainer: ViewStyle;
   slider: ViewStyle;
   track: ViewStyle;
   timeContainer: ViewStyle;
@@ -13,15 +15,13 @@ const usePlaybackBarStyles = () => {
   const { theme } = useColorTheme();
 
   const playbackBarStyles: Styles = StyleSheet.create({
-    // playbackBar: {
-    //   height: 15,
-    //   width: '66%',
-    //   backgroundColor: theme.primary,
-    //   alignSelf: 'center',
-    // },
     container: {
-      width: '60%',
-      marginLeft: 20,
+      flexDirection: 'row',
+      marginLeft: 10,
+    },
+    sliderContainer: {
+      width: SCREEN_WIDTH * 0.5,
+      marginRight: 10,
     },
     slider: {
       width: 200,
@@ -29,8 +29,6 @@ const usePlaybackBarStyles = () => {
     },
     timeContainer: {
       flexDirection: 'row',
-      // justifyContent: 'space-between',
-      // marginTop: 8,
       gap: 10,
     },
     timeText: {
@@ -38,7 +36,7 @@ const usePlaybackBarStyles = () => {
       fontWeight: 'bold',
     },
     track: {
-      height: 30, // Adjust the height to control thickness
+      height: 30,
       borderRadius: 5,
     },
   });
