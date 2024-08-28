@@ -28,7 +28,7 @@ const PlaybackBar = ({ duration }: Props) => {
   }, [currentTime]);
 
   const handleOnValueChange = (time: number) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     seekTo(time);
   };
 
@@ -42,7 +42,7 @@ const PlaybackBar = ({ duration }: Props) => {
           minimumValue={min}
           maximumValue={max}
           onSlidingStart={() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
           }}
           onSlidingComplete={handleOnValueChange}
           thumbWidth={25}
