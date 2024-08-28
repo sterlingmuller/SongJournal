@@ -146,11 +146,14 @@ const SongFolder = ({ song }: Props) => {
           <TouchableOpacity onPress={handleShare}>
             <ShareIcon />
           </TouchableOpacity>
-          {selectedPlayingSongId === songId ? (
-            <PlaybackBar duration={selectedTake ? selectedTake.duration : 0} />
-          ) : (
-            <View style={styles.staticPlaybackBar} />
-          )}
+          {selectedTake &&
+            (selectedPlayingSongId === songId ? (
+              <PlaybackBar
+                duration={selectedTake ? selectedTake.duration : 0}
+              />
+            ) : (
+              <View style={styles.staticPlaybackBar} />
+            ))}
         </View>
       </View>
       {selectedTake && (
