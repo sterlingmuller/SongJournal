@@ -34,3 +34,11 @@ export enum SongDetailKey {
   TIME = 'time',
   BPM = 'bpm',
 }
+
+export enum LyricsOption {
+  EDIT = 'Edit',
+  CHORDS = 'Chords',
+  METRONOME = 'Metronome',
+  SHARE = 'Share',
+  NONE = '',
+}

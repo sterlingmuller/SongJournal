@@ -1,4 +1,5 @@
 import { SQLiteDatabase } from 'expo-sqlite';
+import { LyricsOption } from '@src/components/common/enums';
 
 export type FilterOptions = {
   lyrics?: boolean;
@@ -18,11 +19,9 @@ export type TabNames = 'Playlist' | 'MusicPlayer' | 'Settings';
 export type Tab = { name: TabNames; icon: React.ComponentType };
 
 export type LyricsScreenOption = {
-  name: LyricsOptionName;
+  name: LyricsOption;
   icon: React.ComponentType;
 };
-
-export type LyricsOptionName = 'Edit' | 'Chords' | 'Metronome' | 'Share' | '';
 
 export type SelectEntry = { label: string; value: string };
 

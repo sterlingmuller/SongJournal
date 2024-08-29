@@ -10,16 +10,18 @@ import { selectCurrentSongId } from '@src/state/selectors/songsSelector';
 import { selectCurrentSongPage } from '@src/state/selectors/pagesSelector';
 import LoadingIndicator from '@src/components/common/components/LoadingIndicator';
 import useLyricScreenStyles from '@styles/lyricsScreen';
-import { LyricsOptionName } from '@src/components/common/types';
 import OptionsBar from '@src/components/lyrics/subcomponents/OptionsBar';
 import EditLyricsSheet from '@src/components/lyrics/components/EditLyricsSheet';
+import { LyricsOption } from '@src/components/common/enums';
 
 const LyricsScreen = () => {
   const styles = useLyricScreenStyles();
   const page = useAppSelector(selectCurrentSongPage);
   const songId = useAppSelector(selectCurrentSongId);
 
-  const [selectedOption, setSelectedOption] = useState<LyricsOptionName>('');
+  const [selectedOption, setSelectedOption] = useState<LyricsOption>(
+    LyricsOption.NONE,
+  );
 
   const { setOptions } = useNavigation();
   const [isInfoModalOpen, setIsInfoModalOpen] = useState<boolean>(false);
@@ -37,7 +39,7 @@ const LyricsScreen = () => {
 
   useEffect(() => {
     if (page && !page.lyrics) {
-      setSelectedOption('Edit');
+      setSelectedOption(LyricsOption.EDIT);
     }
   }, [page]);
 
@@ -52,7 +54,7 @@ const LyricsScreen = () => {
         setSelectedOption={setSelectedOption}
         page={page}
       />
-      {selectedOption === 'Edit' ? (
+      {selectedOption === LyricsOption.EDIT ? (
         <EditLyricsSheet
           setSelectedOption={setSelectedOption}
           songId={songId}
