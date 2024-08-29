@@ -12,9 +12,10 @@ import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Props {
   duration: number;
+  fromSongTakes?: boolean;
 }
 
-const PlaybackBar = ({ duration }: Props) => {
+const PlaybackBar = ({ duration, fromSongTakes }: Props) => {
   const styles = usePlaybackBarStyles();
   const { currentTime, seekTo } = useAudioPlayer();
   const { theme } = useColorTheme();
@@ -33,8 +34,12 @@ const PlaybackBar = ({ duration }: Props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.sliderContainer}>
+    <View style={fromSongTakes ? styles.takesContainer : styles.container}>
+      <View
+        style={
+          fromSongTakes ? styles.takesSliderContainer : styles.sliderContainer
+        }
+      >
         <Slider
           containerStyle={{ borderRadius: 8 }}
           renderBubble={() => null}
