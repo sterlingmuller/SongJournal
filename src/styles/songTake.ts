@@ -1,12 +1,14 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { useColorTheme } from '@src/state/context/ThemeContext';
+import { SCREEN_WIDTH } from '@src/components/common/constants';
 
 interface Styles {
   contents: ViewStyle;
   container: ViewStyle;
   iconRow: ViewStyle;
   playIcon: ViewStyle;
-  playbackBar: ViewStyle;
+  trackSubtext: TextStyle;
+  staticPlaybackBar: ViewStyle;
   titleRow: ViewStyle;
   title: TextStyle;
 }
@@ -31,7 +33,7 @@ const useSongTakeStyles = () => {
 
     contents: {
       flexDirection: 'column',
-      gap: 10,
+      gap: 5,
     },
 
     title: {
@@ -41,8 +43,9 @@ const useSongTakeStyles = () => {
     titleRow: { flexDirection: 'row', gap: 10 },
 
     iconRow: {
+      paddingTop: 5,
       flexDirection: 'row',
-      gap: 18,
+      gap: 16,
     },
 
     playIcon: {
@@ -52,12 +55,17 @@ const useSongTakeStyles = () => {
       right: 20,
     },
 
-    playbackBar: {
+    trackSubtext: {
+      fontStyle: 'italic',
+    },
+
+    staticPlaybackBar: {
       height: 15,
-      width: '52%',
+      width: SCREEN_WIDTH * 0.35,
       backgroundColor: theme.primary,
+      marginLeft: 0,
       alignSelf: 'center',
-      marginLeft: 10,
+      borderRadius: 8,
     },
   });
 

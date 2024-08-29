@@ -4,17 +4,16 @@ import { SCREEN_WIDTH } from '@src/components/common/constants';
 
 interface Styles {
   rowContainer: ViewStyle;
+  rowPressed: ViewStyle;
   contents: ViewStyle;
+  title: TextStyle;
   iconRow: ViewStyle;
   playIcon: ViewStyle;
   deleteRow: ViewStyle;
-  playbackBarContainer: ViewStyle;
-  staticPlaybackBar: ViewStyle;
   deleteButton: ViewStyle;
-  rowPressed: ViewStyle;
+  staticPlaybackBar: ViewStyle;
   subtextContainer: ViewStyle;
   warningContainer: ViewStyle;
-  title: TextStyle;
   editTitleText: TextStyle;
   warningText: TextStyle;
   trackSubtext: TextStyle;
@@ -63,14 +62,6 @@ const useSongFolderStyles = () => {
       right: 40,
     },
 
-    staticPlaybackBar: {
-      height: 15,
-      width: SCREEN_WIDTH * 0.5,
-      backgroundColor: theme.primary,
-      marginLeft: 10,
-      borderRadius: 8,
-    },
-
     deleteRow: {
       alignItems: 'center',
       backgroundColor: 'red',
@@ -93,6 +84,14 @@ const useSongFolderStyles = () => {
       fontSize: 24,
       color: theme.primaryText,
       fontWeight: 'bold',
+    },
+
+    staticPlaybackBar: {
+      height: 15,
+      width: SCREEN_WIDTH * 0.5,
+      backgroundColor: theme.primary,
+      marginLeft: 10,
+      borderRadius: 8,
     },
 
     warningText: {

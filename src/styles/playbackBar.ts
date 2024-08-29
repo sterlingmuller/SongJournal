@@ -1,9 +1,10 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
-import { useColorTheme } from '@src/state/context/ThemeContext';
 import { SCREEN_WIDTH } from '@src/components/common/constants';
 
 interface Styles {
   container: ViewStyle;
+  takesContainer: ViewStyle;
+  takesSliderContainer: ViewStyle;
   sliderContainer: ViewStyle;
   slider: ViewStyle;
   track: ViewStyle;
@@ -12,15 +13,21 @@ interface Styles {
 }
 
 const usePlaybackBarStyles = () => {
-  const { theme } = useColorTheme();
-
   const playbackBarStyles: Styles = StyleSheet.create({
     container: {
       flexDirection: 'row',
       marginLeft: 10,
     },
+    takesContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
     sliderContainer: {
       width: SCREEN_WIDTH * 0.5,
+      marginRight: 10,
+    },
+    takesSliderContainer: {
+      width: SCREEN_WIDTH * 0.35,
       marginRight: 10,
     },
     slider: {

@@ -10,7 +10,10 @@ import { DeleteObject, Take } from '@src/components/common/types';
 import StarIcon from '@src/icons/StarIcon';
 import useDoubleTap from '@src/utils/hooks/useDoubleTap';
 import useSongTakeStyles from '@src/styles/songTake';
-import { useAppDispatch, useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '@src/utils/hooks/typedReduxHooks';
 import { updateSelectedTakeIdRequest } from '@src/state/sagas/actionCreators';
 import PauseIcon from '@src/icons/PauseIcon';
 import {
@@ -24,6 +27,9 @@ import {
 import { formatDateFromISOString } from '@src/utils/formateDateFromISOString';
 import useFileShare from '@src/utils/hooks/useFileShare';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
+import PlaybackBar from '@src/components/home/subcomponents/PlaybackBar';
+import formatDuration from '@src/utils/formatDuration';
+import StyledText from '@src/components/common/components/StyledText';
 
 interface Props {
   take: Take;
@@ -33,7 +39,7 @@ interface Props {
 
 const SongTake = (props: Props) => {
   const { take, setToDelete, setCurrentTake } = props;
-  const { takeId, songId, title, uri } = take;
+  const { takeId, songId, title, uri, duration } = take;
   const styles = useSongTakeStyles();
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
@@ -65,7 +71,12 @@ const SongTake = (props: Props) => {
           <Text style={styles.title}>{title}</Text>
           {isStarred && <StarIcon />}
         </View>
-        <Text>{formattedDate}</Text>
+        <View>
+          <StyledText style={styles.trackSubtext}>{formattedDate}</StyledText>
+          <StyledText style={styles.trackSubtext}>
+            {formatDuration(duration)}
+          </StyledText>
+        </View>
         <View style={styles.iconRow}>
           <TouchableOpacity
             onPress={() => {
@@ -84,7 +95,11 @@ const SongTake = (props: Props) => {
           >
             <TrashIcon />
           </TouchableOpacity>
-          <View style={styles.playbackBar} />
+          {selectedPlayingId === takeId ? (
+            <PlaybackBar duration={duration} fromSongTakes />
+          ) : (
+            <View style={styles.staticPlaybackBar} />
+          )}
         </View>
       </View>
       <TouchableOpacity
