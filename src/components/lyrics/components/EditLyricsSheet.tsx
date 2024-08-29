@@ -4,15 +4,15 @@ import { useSQLiteContext } from 'expo-sqlite';
 import { useSelector } from 'react-redux';
 
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
-import { LyricsOptionName } from '@src/components/common/types';
 import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
 import useLyricScreenStyles from '@src/styles/lyricsScreen';
 import { selectCurrentSongPage } from '@src/state/selectors/pagesSelector';
 import { updateLyricsRequest } from '@src/state/sagas/actionCreators';
 import TextEditor from '@src/components/common/components/TextEditor';
+import { LyricsOption } from '@src/components/common/enums';
 
 interface Props {
-  setSelectedOption: (value: LyricsOptionName) => void;
+  setSelectedOption: (value: LyricsOption) => void;
   songId: number;
 }
 
@@ -27,7 +27,7 @@ const EditLyricsSheet = ({ setSelectedOption, songId }: Props) => {
   const disabled: boolean = newLyrics === lyrics;
   const onCancelPress = () => {
     setNewLyrics(lyrics);
-    setSelectedOption('');
+    setSelectedOption(LyricsOption.NONE);
   };
 
   const onSavePress = () => {
@@ -39,7 +39,7 @@ const EditLyricsSheet = ({ setSelectedOption, songId }: Props) => {
       }),
     );
 
-    if (newLyrics) setSelectedOption('');
+    if (newLyrics) setSelectedOption(LyricsOption.NONE);
   };
 
   return (

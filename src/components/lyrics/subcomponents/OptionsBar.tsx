@@ -1,16 +1,17 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 
-import { LyricsOptionName, LyricsScreenOption, Page } from '@src/components/common/types';
+import { LyricsScreenOption, Page } from '@src/components/common/types';
 import useOptionBarStyles from '@src/styles/optionBar';
 import { LYRIC_SCREEN_OPTIONS } from '@src/components/common/constants';
 import useFileShare from '@src/utils/hooks/useFileShare';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectCurrentSongTitle } from '@src/state/selectors/songsSelector';
+import { LyricsOption } from '@src/components/common/enums';
 
 interface Props {
-  selectedOption: LyricsOptionName;
-  setSelectedOption: (value: LyricsOptionName) => void;
+  selectedOption: LyricsOption;
+  setSelectedOption: (value: LyricsOption) => void;
   page: Page;
 }
 
@@ -21,14 +22,16 @@ const OptionsBar = ({ selectedOption, setSelectedOption, page }: Props) => {
 
   const shareLyricsSync = async () => {
     await shareLyrics(songTitle, page);
-    setSelectedOption('');
+    setSelectedOption(LyricsOption.NONE);
   };
 
-  const handleOptionPress = (optionName: LyricsOptionName) => {
-    setSelectedOption(optionName === selectedOption ? '' : optionName);
+  const handleOptionPress = (optionName: LyricsOption) => {
+    setSelectedOption(
+      optionName === selectedOption ? LyricsOption.NONE : optionName,
+    );
 
     switch (optionName) {
-      case 'Share': {
+      case LyricsOption.SHARE: {
         shareLyricsSync();
       }
     }
