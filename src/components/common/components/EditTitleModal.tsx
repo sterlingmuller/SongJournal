@@ -7,7 +7,7 @@ import { useSQLiteContext } from 'expo-sqlite';
 import { RootStackParamList } from '@src/components/common/types';
 import StyledText from '@src/components/common/components/StyledText';
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
-import useNewSongModalStyle from '@src/styles/newSongModal';
+import useNewTitleModalStyle from '@src/styles/newTitleModal';
 import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
 import {
   updateSongTitleRequest,
@@ -28,11 +28,12 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
   const dispatch = useAppDispatch();
   const { navigate, addListener } =
     useNavigation<NavigationProp<RootStackParamList>>();
-  const styles = useNewSongModalStyle();
+  const styles = useNewTitleModalStyle();
   const { title: originalTitle, songId, takeId } = titleToEdit;
   const [updatedTitle, setUpdatedTitle] = useState<string>('');
 
   const disabled: boolean = updatedTitle === originalTitle || !updatedTitle;
+  const modalTitle = takeId ? 'Edit Take Title' : 'Edit Song Title';
 
   useEffect(() => {
     setUpdatedTitle(originalTitle);
@@ -68,7 +69,7 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
       onBackdropPress={onExitPress}
     >
       <View style={styles.container}>
-        <StyledText style={styles.title}>Edit Song Title</StyledText>
+        <StyledText style={styles.title}>{modalTitle}</StyledText>
         <View style={styles.textbox}>
           <TextInput
             style={styles.input}

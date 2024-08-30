@@ -1,10 +1,12 @@
 # SongJournal
+
 SongJournal is a tool for organizing song recordings and writing lyrics.
 
-The Starred version of a Song is displayed on the Home Screen. Pressing on a Song will open the Song Folder, containing all takes of a song. Takes can be appended with notes, starred, or renamed. Songs include a Lyrics Page for adding lyrics, chords, time signature, and bpm. User can export songs, individual takes, or lyrics as a print-ready pdf. 
+The Starred version of a Song is displayed on the Home Screen. Pressing on a Song will open the Song Folder, containing all takes of a song. Takes can be appended with notes, starred, or renamed. Songs include a Lyrics Page for adding lyrics, chords, time signature, and bpm. User can export songs, individual takes, or lyrics as a print-ready pdf.
 
 # Downloading the Android APK
-The latest APK can be found in the Releases section of this repository. Navigate to the most recent release and download the file with the .apk extension under Assets. 
+
+The latest APK can be found in the Releases section of this repository. Navigate to the most recent release and download the file with the .apk extension under Assets.
 
 ## Access, share, and delete songs on Home Screen and change Theme on Settings Screen
 

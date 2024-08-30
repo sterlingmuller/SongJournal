@@ -7,7 +7,7 @@ import { useSQLiteContext } from 'expo-sqlite';
 import { RootStackParamList } from '@src/components/common/types';
 import StyledText from '@src/components/common/components/StyledText';
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
-import useNewSongModalStyle from '@src/styles/newSongModal';
+import useNewSongModalStyle from '@src/styles/newTitleModal';
 import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
 import { createSongRequest } from '@src/state/sagas/actionCreators';
 import { Screen } from '@src/components/common/enums';
@@ -54,14 +54,19 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
       onBackdropPress={onExitPress}
     >
       <View style={styles.container}>
-        <StyledText style={styles.title}>Song title</StyledText>
-        <View style={styles.textbox}>
-          <TextInput
-            style={styles.input}
-            placeholder="Cobra Strike Alpha Deluxe"
-            value={songTitle}
-            onChangeText={(title: string) => setSongTitle(title)}
-          />
+        <StyledText style={styles.title}>Song Title</StyledText>
+        <View>
+          <View style={styles.textbox}>
+            <TextInput
+              style={styles.input}
+              placeholder="Cobra Strike Alpha Deluxe"
+              value={songTitle}
+              onChangeText={(title: string) => setSongTitle(title)}
+            />
+          </View>
+          <StyledText style={styles.tipText}>
+            Tip: Double Tap the Title of a saved Song or Take to rename
+          </StyledText>
         </View>
         <SaveAndCancelButtons
           onPress={onSavePress}
