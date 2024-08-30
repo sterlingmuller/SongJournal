@@ -1,5 +1,5 @@
-import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import React, { useRef } from 'react';
+import { Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { useSQLiteContext } from 'expo-sqlite';
 
 import ShareIcon from '@src/icons/ShareIcon';
@@ -35,10 +35,15 @@ interface Props {
   take: Take;
   setToDelete: (value: DeleteObject) => void;
   setCurrentTake: (value: Take) => void;
+  setTitleToEdit: (value: {
+    title: string;
+    songId: number;
+    takeId?: number;
+  }) => void;
 }
 
 const SongTake = (props: Props) => {
-  const { take, setToDelete, setCurrentTake } = props;
+  const { take, setToDelete, setCurrentTake, setTitleToEdit } = props;
   const { takeId, songId, title, uri, duration } = take;
   const styles = useSongTakeStyles();
   const dispatch = useAppDispatch();
@@ -51,9 +56,16 @@ const SongTake = (props: Props) => {
   const selectedTakeId = useAppSelector(selectCurrentSongSelectedTakeId);
   const songTitle = useAppSelector(selectCurrentSongTitle);
 
+  const inputRef = useRef<TextInput | null>(null);
+
   const onDoubleTap: () => void = useDoubleTap(() =>
     dispatch(updateSelectedTakeIdRequest({ takeId, songId, db })),
   );
+
+  const onTitleDoubleTap: () => void = useDoubleTap(() => {
+    setTitleToEdit({ title, songId, takeId });
+    setTimeout(() => inputRef.current?.focus(), 100);
+  });
 
   const isStarred = take.takeId === selectedTakeId;
   const isCurrentTakePlaying = takeId === selectedPlayingId && isPlaying;
@@ -68,7 +80,9 @@ const SongTake = (props: Props) => {
     <TouchableOpacity style={styles.container} onPress={onDoubleTap}>
       <View style={styles.contents}>
         <View style={styles.titleRow}>
-          <Text style={styles.title}>{title}</Text>
+          <TouchableOpacity onPress={onTitleDoubleTap}>
+            <StyledText style={styles.title}>{title}</StyledText>
+          </TouchableOpacity>
           {isStarred && <StarIcon />}
         </View>
         <View>

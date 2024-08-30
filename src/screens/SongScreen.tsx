@@ -14,12 +14,17 @@ import useSongScreenStyles from '@styles/songScreen';
 import useGlobalStyles from '@styles/global';
 import PermissionsNeededModal from '@src/components/songFolder/components/PermissionsNeededModal';
 import useMicrophonePermissions from '@src/utils/hooks/useMicrophonePermissions';
-import { RootStackParamList, DeleteObject, Take } from '@src/components/common/types';
+import {
+  RootStackParamList,
+  DeleteObject,
+  Take,
+} from '@src/components/common/types';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectCurrentSongTotalTakes } from '@src/state/selectors/songsSelector';
 import SongDisplay from '@src/components/songFolder/components/SongDisplay';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
 import { Screen } from '@src/components/common/enums';
+import EditTitleModal from '@src/components/common/components/EditTitleModal';
 
 const SongScreen = () => {
   const styles = useSongScreenStyles();
@@ -33,6 +38,11 @@ const SongScreen = () => {
   const [currentTake, setCurrentTake] = useState<Take>(EMPTY_TAKE);
   const [isPermissionsNeededModalOpen, setIsPermissionsNeededModalOpen] =
     useState<boolean>(false);
+  const [titleToEdit, setTitleToEdit] = useState<{
+    title: string;
+    songId: number;
+    takeId?: number;
+  }>({ title: '', songId: -1, takeId: -1 });
 
   const onRecordPress = () => {
     const recording = () => {
@@ -66,7 +76,11 @@ const SongScreen = () => {
 
   return (
     <View style={globalStyles.container}>
-      <SongDisplay setToDelete={setToDelete} setCurrentTake={setCurrentTake} />
+      <SongDisplay
+        setToDelete={setToDelete}
+        setCurrentTake={setCurrentTake}
+        setTitleToEdit={setTitleToEdit}
+      />
       <RecordButton
         onPress={onRecordPress}
         isRecording={false}
@@ -81,6 +95,10 @@ const SongScreen = () => {
       <PermissionsNeededModal
         isPermissionsNeededModalOpen={isPermissionsNeededModalOpen}
         setIsPermissionsNeededModalOpen={setIsPermissionsNeededModalOpen}
+      />
+      <EditTitleModal
+        titleToEdit={titleToEdit}
+        setTitleToEdit={setTitleToEdit}
       />
     </View>
   );

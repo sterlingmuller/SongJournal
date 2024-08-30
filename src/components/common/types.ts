@@ -147,9 +147,28 @@ export type UpdateSongTitleSagaPayload = {
   db: SQLiteDatabase;
 };
 
+export type UpdateTakeTitleSagaPayload = {
+  title: string;
+  songId: number;
+  takeId: number;
+  db: SQLiteDatabase;
+};
+
+export type UpdateTakeTitleDbPayload = {
+  title: string;
+  takeId: number;
+  db: SQLiteDatabase;
+};
+
 export type UpdateSongTitleStatePayload = {
   title: string;
   songId: number;
+};
+
+export type UpdateTakeTitleStatePayload = {
+  title: string;
+  songId: number;
+  takeId: number;
 };
 
 export type UpdateSelectedTakeIdPayloadDb = {
