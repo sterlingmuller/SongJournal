@@ -16,7 +16,13 @@ import { selectPlayingId } from '@src/state/selectors/playbackSelector';
 import {
   deleteSongRequest,
   deleteTakeRequest,
+  updateSelectedTakeIdRequest,
 } from '@src/state/sagas/actionCreators';
+import {
+  selectCurrentSongSelectedTakeId,
+  selectCurrentSongTakes,
+} from '@src/state/selectors/songsSelector';
+import { findReplacementStarredTakeId } from '@src/utils/replaceStarredTake';
 
 interface Props {
   setToDelete: (value: DeleteObject | null) => void;
@@ -30,6 +36,8 @@ const DeleteModal = (props: Props) => {
   const dispatch = useAppDispatch();
   const { clearPlayback } = useAudioPlayer();
   const playingId = useAppSelector(selectPlayingId);
+  const selectedTakeId = useAppSelector(selectCurrentSongSelectedTakeId);
+  const currentSongTakes = useAppSelector(selectCurrentSongTakes);
 
   const { deleteText, setToDelete, toDelete } = props;
   const { title, songId, takeId, type } = toDelete;
@@ -49,6 +57,22 @@ const DeleteModal = (props: Props) => {
       if (takeId === playingId) {
         clearPlayback();
       }
+
+      if (takeId === selectedTakeId) {
+        const newSelectedTakeId = findReplacementStarredTakeId(
+          takeId,
+          currentSongTakes,
+        );
+
+        dispatch(
+          updateSelectedTakeIdRequest({
+            songId,
+            db,
+            takeId: newSelectedTakeId,
+          }),
+        );
+      }
+
       dispatch(deleteTakeRequest({ songId, takeId, db }));
     }
 

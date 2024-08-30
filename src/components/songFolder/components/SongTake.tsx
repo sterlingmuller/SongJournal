@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { View, TouchableOpacity, TextInput } from 'react-native';
 import { useSQLiteContext } from 'expo-sqlite';
 
 import ShareIcon from '@src/icons/ShareIcon';
