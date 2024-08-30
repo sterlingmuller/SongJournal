@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
 import { useSQLiteContext } from 'expo-sqlite';
 
@@ -43,7 +43,10 @@ const InfoModal = (props: Props) => {
   const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false);
   const bpmNum = Number(newInfo.bpm);
 
-  const onExitPress = () => setIsInfoModalOpen(false);
+  const onExitPress = () => {
+    setIsInfoModalOpen(false);
+    setNewInfo(originalInfo);
+  };
 
   const changedInfo = useMemo(() => {
     return Object.entries(newInfo).reduce(
@@ -98,56 +101,61 @@ const InfoModal = (props: Props) => {
       isVisible={isInfoModalOpen}
       avoidKeyboard
       onBackdropPress={onExitPress}
+      style={styles.modal}
     >
       <View style={styles.container}>
-        <Text style={styles.title}>About</Text>
-        <View style={styles.textbox}>
-          <TextInput
-            style={styles.input}
-            placeholder="Add details for the song..."
-            value={newInfo.about}
-            onChangeText={(newAbout: string) =>
-              handleInputChange('about', newAbout)
-            }
-            multiline={true}
-            textAlignVertical="top"
-          />
-        </View>
-        <View style={styles.details}>
-          {Object.entries(SONG_DETAILS).map(
-            ([key, label]: [SongDetailKey, string]) => {
-              if (
-                key === SongDetailKey.KEY_SIGNATURE ||
-                key === SongDetailKey.TIME
-              ) {
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <Text style={styles.title}>About</Text>
+          <View style={styles.textbox}>
+            <TextInput
+              style={styles.input}
+              placeholder="Add details for the song..."
+              value={newInfo.about}
+              onChangeText={(newAbout: string) =>
+                handleInputChange('about', newAbout)
+              }
+              multiline={true}
+              textAlignVertical="top"
+            />
+          </View>
+          <View style={styles.details}>
+            {Object.entries(SONG_DETAILS).map(
+              ([key, label]: [SongDetailKey, string]) => {
+                if (
+                  key === SongDetailKey.KEY_SIGNATURE ||
+                  key === SongDetailKey.TIME
+                ) {
+                  return (
+                    <SongDetailSelect
+                      key={key}
+                      label={label}
+                      value={newInfo[key]}
+                      handleInputChange={handleInputChange}
+                    />
+                  );
+                }
                 return (
-                  <SongDetailSelect
+                  <BpmDetail
                     key={key}
-                    label={label}
                     value={newInfo[key]}
                     handleInputChange={handleInputChange}
                   />
                 );
-              }
-              return (
-                <BpmDetail
-                  key={key}
-                  value={newInfo[key]}
-                  handleInputChange={handleInputChange}
-                />
-              );
-            },
-          )}
+              },
+            )}
+          </View>
+          <CompletionStatus
+            isCompleted={newCompletionStatus}
+            handleInputChange={handleCompletionStatusChange}
+          />
+        </ScrollView>
+        <View style={styles.buttonContainer}>
+          <SaveAndCancelButtons
+            onPress={onSavePress}
+            onExitPress={onExitPress}
+            disabled={!isSaveButtonEnabled}
+          />
         </View>
-        <CompletionStatus
-          isCompleted={newCompletionStatus}
-          handleInputChange={handleCompletionStatusChange}
-        />
-        <SaveAndCancelButtons
-          onPress={onSavePress}
-          onExitPress={() => setIsInfoModalOpen(false)}
-          disabled={!isSaveButtonEnabled}
-        />
       </View>
     </Modal>
   );
