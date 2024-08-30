@@ -14,6 +14,7 @@ import {
   SongDetailKey,
   SortBy,
   Filter,
+  LyricsOption,
 } from '@src/components/common/enums';
 
 export const SORT_BY_OPTIONS: SortBy[] = Object.values(SortBy);
@@ -29,10 +30,10 @@ export const SONG_DETAILS: Record<SongDetailKey, string> = {
 };
 
 export const LYRIC_SCREEN_OPTIONS: t.LyricsScreenOption[] = [
-  { name: 'Edit', icon: EditIcon },
-  { name: 'Chords', icon: ChordsIcon },
-  { name: 'Metronome', icon: MetronomeIcon },
-  { name: 'Share', icon: ShareIcon },
+  { name: LyricsOption.EDIT, icon: EditIcon },
+  { name: LyricsOption.CHORDS, icon: ChordsIcon },
+  { name: LyricsOption.METRONOME, icon: MetronomeIcon },
+  { name: LyricsOption.SHARE, icon: ShareIcon },
 ];
 
 export const TABS: t.Tab[] = [
@@ -43,7 +44,7 @@ export const TABS: t.Tab[] = [
 
 export const EMPTY_PAGE: t.Page = {
   lyrics: '',
-  info: { about: '', bpm: '', keySignature: '', time: '', completed: false },
+  info: { about: '', bpm: '', keySignature: '', time: '' },
 };
 
 export const EMPTY_SONG: t.Song = {
@@ -53,6 +54,8 @@ export const EMPTY_SONG: t.Song = {
   totalTakes: 0,
   takes: [],
   page: EMPTY_PAGE,
+  completed: false,
+  hasLyrics: false,
 };
 
 export const DELETE_TAKE_TEXT: string =
@@ -78,6 +81,7 @@ export const EMPTY_TAKE: t.Take = {
 };
 
 export const SCREEN_WIDTH: number = Dimensions.get('window').width;
+export const SCREEN_HEIGHT: number = Dimensions.get('window').height;
 
 export const documentsDirectory = documentDirectory + 'SongJournal/';
 

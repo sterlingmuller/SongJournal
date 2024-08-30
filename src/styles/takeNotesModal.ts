@@ -1,31 +1,25 @@
+import { SCREEN_HEIGHT } from '@src/components/common/constants';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
-import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Styles {
-  modalContainer: ViewStyle;
+  modal: ViewStyle;
   container: ViewStyle;
   textbox: ViewStyle;
-  buttons: ViewStyle;
-  button: ViewStyle;
+  buttonContainer: ViewStyle;
   title: TextStyle;
   input: TextStyle;
 }
 
 const useTakeNotesModalStyles = () => {
-  const { theme } = useColorTheme();
-
   const takeNotesModalStyles: Styles = StyleSheet.create({
-    modalContainer: {
-      flex: 1,
-      backgroundColor: 'rgba(0, 0, 0, .5)',
-      justifyContent: 'center',
+    modal: {
+      margin: 0,
     },
-
     container: {
       alignSelf: 'center',
       backgroundColor: '#fff',
       width: '80%',
-      height: '60%',
+      maxHeight: SCREEN_HEIGHT * 0.6,
       borderRadius: 15,
       gap: 20,
     },
@@ -53,14 +47,8 @@ const useTakeNotesModalStyles = () => {
       fontSize: 14,
     },
 
-    buttons: {
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
-    },
-
-    button: {
-      width: 100,
-      borderRadius: 10,
+    buttonContainer: {
+      paddingBottom: 20,
     },
   });
 
