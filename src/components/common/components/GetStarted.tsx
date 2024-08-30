@@ -13,6 +13,7 @@ interface props {
 const GetStarted = ({ screen }: props) => {
   const styles = useGetStartedHomeStyles();
   let message: React.ReactElement;
+  let tip: string;
 
   const getStartedHomeInstructions = (
     <StyledText style={styles.text}>
@@ -24,6 +25,11 @@ const GetStarted = ({ screen }: props) => {
       <StyledText style={styles.boldText}>New Song</StyledText> button below.
     </StyledText>
   );
+
+  const homeTip: string =
+    'Tip: Visit Settings for the options to display Song Counts and disable future tips';
+  const songTip: string =
+    'Tip: When there are multiple Takes of a Song, Double Tap a Take to set it as the new Selected Take';
 
   const getStartedSongInstructions = (
     <StyledText style={styles.text}>
@@ -45,12 +51,15 @@ const GetStarted = ({ screen }: props) => {
   switch (screen) {
     case Screen.HOME:
       message = getStartedHomeInstructions;
+      tip = homeTip;
       break;
     case Screen.SONG:
       message = getStartedSongInstructions;
+      tip = songTip;
       break;
     case Screen.MUSIC_PLAYER:
       message = musicPlayerPlansMessage;
+      tip = '';
       break;
   }
 
@@ -59,10 +68,13 @@ const GetStarted = ({ screen }: props) => {
       <View style={styles.eggContainer}>
         <EggIcon />
       </View>
-      <View style={styles.textbox}>
-        {message}
-        <View style={styles.arrow} />
+      <View>
+        <View style={styles.textbox}>
+          {message}
+          <View style={styles.arrow} />
+        </View>
       </View>
+      <StyledText style={styles.tipText}>{tip}</StyledText>
     </View>
   );
 };

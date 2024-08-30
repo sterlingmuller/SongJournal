@@ -9,10 +9,11 @@ interface Styles {
   title: TextStyle;
   input: TextStyle;
   clearText: TextStyle;
+  tipText: TextStyle;
 }
 
-const useNewSongModalStyle = () => {
-  const newSongModalStyle: Styles = StyleSheet.create({
+const useNewTitleModalStyle = () => {
+  const newTitleModalStyle: Styles = StyleSheet.create({
     container: {
       alignSelf: 'center',
       backgroundColor: '#fff',
@@ -62,9 +63,16 @@ const useNewSongModalStyle = () => {
     },
 
     clearText: { fontWeight: 'bold' },
+
+    tipText: {
+      fontStyle: 'italic',
+      fontSize: 12,
+      textAlign: 'center',
+      marginHorizontal: 20,
+    },
   });
 
-  return newSongModalStyle;
+  return newTitleModalStyle;
 };
 
-export default useNewSongModalStyle;
+export default useNewTitleModalStyle;

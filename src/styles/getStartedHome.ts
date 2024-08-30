@@ -6,6 +6,7 @@ interface Styles {
   textbox: ViewStyle;
   eggContainer: ViewStyle;
   arrow: ViewStyle;
+  tipText: TextStyle;
   text: TextStyle;
   boldText: TextStyle;
   italicText: TextStyle;
@@ -18,8 +19,9 @@ const useGetStartedHomeStyles = () => {
     container: {
       alignItems: 'center',
       justifyContent: 'center',
+      // height: 580,
       height: 520,
-      gap: 50,
+      gap: 20,
     },
     textbox: {
       width: '85%',
@@ -51,11 +53,20 @@ const useGetStartedHomeStyles = () => {
       justifyContent: 'center',
       alignItems: 'center',
       paddingLeft: 5,
+      marginBottom: 30,
     },
     boldText: {
       fontWeight: 'bold',
     },
     italicText: {
+      fontStyle: 'italic',
+    },
+    tipText: {
+      position: 'absolute',
+      bottom: 20,
+      fontSize: 14,
+      textAlign: 'center',
+      paddingHorizontal: 30,
       fontStyle: 'italic',
     },
   });
