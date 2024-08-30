@@ -30,15 +30,15 @@ export const startRecording = async (
       playsInSilentModeIOS: true,
     });
 
-    const { recording } = await Audio.Recording.createAsync(
+    const { recording: newRecording } = await Audio.Recording.createAsync(
       Audio.RecordingOptionsPresets.HIGH_QUALITY,
-      (status: RecordingStatus) => {
-        if (status.isRecording) {
-          updateAudioLevelSum(recording);
-        }
-      },
-      100,
     );
+
+    newRecording.setOnRecordingStatusUpdate((status: RecordingStatus) => {
+      if (status.isRecording) {
+        updateAudioLevelSum(newRecording);
+      }
+    });
 
     audioWaveIntervalId = setInterval(() => {
       const averageLevel = Math.round(levelSum / levelCount);
@@ -49,15 +49,12 @@ export const startRecording = async (
           averageLevel,
         ]);
       }
-      // else {
-      //   handleAudioData(0);
-      // }
 
       levelSum = 0;
       levelCount = 0;
     }, AUDIO_UPDATE_INTERVAL);
 
-    setRecording(recording);
+    setRecording(newRecording);
   } catch (err) {
     console.error('Failed to start recording', err);
   }
@@ -100,10 +97,6 @@ export const clearRecording = async (
 export const playRecording = async (uri: string) => {
   try {
     const { sound } = await Audio.Sound.createAsync({ uri });
-
-    // Todo: Progress playback tracker bar
-    // sound.setOnPlaybackStatusUpdate((status: AVPlaybackStatusSuccess) => {
-    // });
 
     await sound.playAsync();
   } catch (err) {
