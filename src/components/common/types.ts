@@ -141,6 +141,17 @@ export type DeleteSongPayload = {
   db: SQLiteDatabase;
 };
 
+export type UpdateSongTitleSagaPayload = {
+  title: string;
+  songId: number;
+  db: SQLiteDatabase;
+};
+
+export type UpdateSongTitleStatePayload = {
+  title: string;
+  songId: number;
+};
+
 export type UpdateSelectedTakeIdPayloadDb = {
   songId: number;
   takeId: number;

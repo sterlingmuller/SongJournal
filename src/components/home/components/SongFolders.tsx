@@ -10,6 +10,7 @@ import { Filter, SortBy } from '@src/components/common/enums';
 
 interface Props {
   setToDelete: (value: t.DeleteObject | null) => void;
+  setTitleToEdit: (value: { title: string; songId: number }) => void;
   sortedCategory: SortBy;
   isSortAscending: boolean;
   activeFilters: Filter[];
@@ -20,6 +21,7 @@ interface Props {
 const SongFolders = (props: Props) => {
   const {
     setToDelete,
+    setTitleToEdit,
     sortedCategory,
     isSortAscending,
     activeFilters,
@@ -58,7 +60,7 @@ const SongFolders = (props: Props) => {
       keyExtractor={(item: t.Song) => item.songId.toString()}
       onRowDidOpen={onRowDidOpen}
       renderItem={(data: ListRenderItemInfo<t.Song>) => {
-        return <SongFolder song={data.item} />;
+        return <SongFolder song={data.item} setTitleToEdit={setTitleToEdit} />;
       }}
       renderHiddenItem={(data: ListRenderItemInfo<t.SongItem>) => (
         <DeleteRow

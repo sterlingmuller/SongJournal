@@ -22,6 +22,13 @@ export const deleteSongRequest = (payload: t.DeleteSongPayload) => ({
   payload,
 });
 
+export const updateSongTitleRequest = (
+  payload: t.UpdateSongTitleSagaPayload,
+) => ({
+  type: at.UPDATE_SONG_TITLE_REQUEST,
+  payload,
+});
+
 // Pages
 
 export const fetchPageRequest = (payload: t.FetchPagePayload) => ({

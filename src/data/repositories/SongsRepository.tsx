@@ -7,6 +7,7 @@ import {
   UpdateSelectedTakeIdPayloadDb,
   Takes,
   DeleteSongPayload,
+  UpdateSongTitleSagaPayload,
 } from '@src/components/common/types';
 
 export const fetchSongs = (db: SQLiteDatabase) =>
@@ -82,5 +83,21 @@ export const updateSelectedTakeId = async ({
     );
   } catch (err) {
     console.error('Error updating selectedTakeId', err);
+  }
+};
+
+export const updateSongTitle = async ({
+  db,
+  songId,
+  title,
+}: UpdateSongTitleSagaPayload) => {
+  try {
+    await db.runAsync(
+      'UPDATE Songs SET title = ? WHERE songId = ?',
+      title,
+      songId,
+    );
+  } catch (err) {
+    console.error('Error updating song title', err);
   }
 };
