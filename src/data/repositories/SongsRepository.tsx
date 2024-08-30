@@ -1,14 +1,6 @@
 import { SQLiteDatabase } from 'expo-sqlite';
 
-import {
-  CreateSongPayload,
-  Page,
-  DbSong,
-  UpdateSelectedTakeIdPayloadDb,
-  Takes,
-  DeleteSongPayload,
-  UpdateSongTitleSagaPayload,
-} from '@src/components/common/types';
+import * as t from '@src/components/common/types';
 
 export const fetchSongs = (db: SQLiteDatabase) =>
   db.getAllSync(
@@ -16,12 +8,12 @@ export const fetchSongs = (db: SQLiteDatabase) =>
   );
 
 export const getTakesAndPageBySongId = (db: SQLiteDatabase, songId: number) => {
-  const takes: Takes = db.getAllSync(
+  const takes: t.Takes = db.getAllSync(
     'SELECT * FROM Takes WHERE songId = ?',
     songId,
   );
 
-  const page: Page = db.getFirstSync(
+  const page: t.Page = db.getFirstSync(
     'SELECT * FROM Page WHERE songId = ?',
     songId,
   );
@@ -29,7 +21,7 @@ export const getTakesAndPageBySongId = (db: SQLiteDatabase, songId: number) => {
   return { takes, page };
 };
 
-export const createSong = async ({ db, title }: CreateSongPayload) => {
+export const createSong = async ({ db, title }: t.CreateSongPayload) => {
   try {
     const result = await db.runAsync(
       'INSERT INTO Songs (title, selectedTakeId, totalTakes, completed, hasLyrics) VALUES (?, -1, 0, false, false)',
@@ -58,7 +50,7 @@ export const createSong = async ({ db, title }: CreateSongPayload) => {
   }
 };
 
-export const deleteSong = async ({ db, songId }: DeleteSongPayload) => {
+export const deleteSong = async ({ db, songId }: t.DeleteSongPayload) => {
   const statement = await db.prepareAsync(
     'DELETE FROM Songs WHERE songId = $songId; DELETE FROM Takes WHERE songId = $songId; DELETE FROM Page WHERE songId = $songId;',
   );
@@ -74,7 +66,7 @@ export const updateSelectedTakeId = async ({
   db,
   songId,
   takeId,
-}: UpdateSelectedTakeIdPayloadDb) => {
+}: t.UpdateSelectedTakeIdPayloadDb) => {
   try {
     await db.runAsync(
       'UPDATE Songs SET selectedTakeId = ? WHERE songId = ?',
@@ -90,7 +82,7 @@ export const updateSongTitle = async ({
   db,
   songId,
   title,
-}: UpdateSongTitleSagaPayload) => {
+}: t.UpdateSongTitleSagaPayload) => {
   try {
     await db.runAsync(
       'UPDATE Songs SET title = ? WHERE songId = ?',

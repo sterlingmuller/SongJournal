@@ -92,6 +92,19 @@ const songsSlice = createSlice({
         song.selectedTakeId = takeId;
       }
     },
+    updateTakeTitleSuccess: (
+      state: SongsSliceState,
+      action: PayloadAction<t.UpdateTakeTitleStatePayload>,
+    ) => {
+      const { songId, takeId, title: newTitle } = action.payload;
+      const song = state.items.find((song: t.Song) => song.songId === songId);
+      if (song) {
+        const take = song.takes.find((take: t.Take) => take.takeId === takeId);
+        if (take) {
+          take.title = newTitle;
+        }
+      }
+    },
     updateSongCompletion: (
       state: SongsSliceState,
       action: PayloadAction<t.UpdateSongCompletionStatePayload>,
@@ -126,6 +139,7 @@ export const {
   updateSelectedTakeIdSuccess,
   updateSongCompletion,
   updateSongHasLyrics,
+  updateTakeTitleSuccess,
 } = songsSlice.actions;
 
 export default songsSlice.reducer;

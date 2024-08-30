@@ -71,3 +71,10 @@ export const updateSelectedTakeIdRequest = (
   type: at.UPDATE_SELECTED_TAKE_ID_REQUEST,
   payload,
 });
+
+export const updateTakeTitleRequest = (
+  payload: t.UpdateTakeTitleSagaPayload,
+) => ({
+  type: at.UPDATE_TAKE_TITLE,
+  payload,
+});

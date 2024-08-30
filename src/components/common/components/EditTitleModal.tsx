@@ -9,11 +9,18 @@ import StyledText from '@src/components/common/components/StyledText';
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
 import useNewSongModalStyle from '@src/styles/newSongModal';
 import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
-import { updateSongTitleRequest } from '@src/state/sagas/actionCreators';
+import {
+  updateSongTitleRequest,
+  updateTakeTitleRequest,
+} from '@src/state/sagas/actionCreators';
 
 interface Props {
-  titleToEdit: { title: string; songId: number };
-  setTitleToEdit: (value: { title: string; songId: number }) => void;
+  titleToEdit: { title: string; songId: number; takeId?: number };
+  setTitleToEdit: (value: {
+    title: string;
+    songId: number;
+    takeId?: number;
+  }) => void;
 }
 
 const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
@@ -22,27 +29,32 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
   const { navigate, addListener } =
     useNavigation<NavigationProp<RootStackParamList>>();
   const styles = useNewSongModalStyle();
-  const { title: originalTitle, songId } = titleToEdit;
-  const [updatedSongTitle, setUpdatedSongTitle] = useState<string>('');
+  const { title: originalTitle, songId, takeId } = titleToEdit;
+  const [updatedTitle, setUpdatedTitle] = useState<string>('');
 
-  const disabled: boolean =
-    updatedSongTitle === originalTitle || !updatedSongTitle;
+  const disabled: boolean = updatedTitle === originalTitle || !updatedTitle;
 
   useEffect(() => {
-    setUpdatedSongTitle(originalTitle);
+    setUpdatedTitle(originalTitle);
   }, [titleToEdit]);
 
   const onExitPress = () => {
-    setTitleToEdit({ title: '', songId: -1 });
-    setUpdatedSongTitle('');
+    setTitleToEdit({ title: '', songId: -1, takeId: -1 });
+    setUpdatedTitle('');
   };
 
   const clearInput = () => {
-    setUpdatedSongTitle('');
+    setUpdatedTitle('');
   };
 
   const onSavePress = () => {
-    dispatch(updateSongTitleRequest({ db, title: updatedSongTitle, songId }));
+    if (takeId) {
+      dispatch(
+        updateTakeTitleRequest({ db, title: updatedTitle, songId, takeId }),
+      );
+    } else {
+      dispatch(updateSongTitleRequest({ db, title: updatedTitle, songId }));
+    }
 
     onExitPress();
   };
@@ -61,10 +73,10 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
           <TextInput
             style={styles.input}
             placeholder="Enter a new title"
-            value={updatedSongTitle}
-            onChangeText={(title: string) => setUpdatedSongTitle(title)}
+            value={updatedTitle}
+            onChangeText={(title: string) => setUpdatedTitle(title)}
           />
-          {updatedSongTitle !== '' && (
+          {updatedTitle !== '' && (
             <TouchableOpacity onPress={clearInput} style={styles.clearButton}>
               <StyledText style={styles.clearText}>X</StyledText>
             </TouchableOpacity>

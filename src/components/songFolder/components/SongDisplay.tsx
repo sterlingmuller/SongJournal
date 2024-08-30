@@ -13,10 +13,15 @@ import { Screen } from '@src/components/common/enums';
 interface Props {
   setToDelete: (value: DeleteObject) => void;
   setCurrentTake: (value: Take) => void;
+  setTitleToEdit: (value: {
+    title: string;
+    songId: number;
+    takeId?: number;
+  }) => void;
 }
 
 const SongDisplay = (props: Props) => {
-  const { setToDelete, setCurrentTake } = props;
+  const { setToDelete, setCurrentTake, setTitleToEdit } = props;
   const takes = useAppSelector(selectCurrentSongTakes);
   const styles = useSongScreenStyles();
 
@@ -29,6 +34,7 @@ const SongDisplay = (props: Props) => {
         take={take}
         setToDelete={setToDelete}
         setCurrentTake={setCurrentTake}
+        setTitleToEdit={setTitleToEdit}
       />
     ));
 
