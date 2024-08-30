@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  Modal,
-  TouchableOpacity,
-  TextInput,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { View, Text, TextInput, ScrollView } from 'react-native';
+import Modal from 'react-native-modal';
 
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
 import { Take } from '@src/components/common/types';
@@ -45,31 +39,32 @@ const NotesModal = (props: Props) => {
   const disabled: boolean = newNote === notes;
 
   return (
-    <Modal transparent visible={!!title}>
-      <TouchableOpacity
-        style={styles.modalContainer}
-        activeOpacity={1}
-        onPress={onExitPress}
-      >
-        <KeyboardAvoidingView style={styles.container}>
-          <Text style={styles.title}>{title} Notes</Text>
-          <View style={styles.textbox}>
-            <TextInput
-              style={styles.input}
-              placeholder="Add notes for the current take..."
-              value={newNote}
-              onChangeText={(text: string) => setNewNote(text)}
-              multiline={true}
-              textAlignVertical="top"
-            />
-          </View>
+    <Modal
+      isVisible={!!title}
+      onBackdropPress={onExitPress}
+      avoidKeyboard={true}
+      style={styles.modal}
+    >
+      <View style={styles.container}>
+        <Text style={styles.title}>{title} Notes</Text>
+        <ScrollView style={styles.textbox}>
+          <TextInput
+            style={styles.input}
+            placeholder="Add notes for the current take..."
+            value={newNote}
+            onChangeText={(text: string) => setNewNote(text)}
+            multiline={true}
+            textAlignVertical="top"
+          />
+        </ScrollView>
+        <View style={styles.buttonContainer}>
           <SaveAndCancelButtons
             onPress={onSavePress}
             onExitPress={onExitPress}
             disabled={disabled}
           />
-        </KeyboardAvoidingView>
-      </TouchableOpacity>
+        </View>
+      </View>
     </Modal>
   );
 };
