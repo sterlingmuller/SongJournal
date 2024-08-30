@@ -104,7 +104,7 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
     return (
       <View style={styles.warningContainer}>
         <StyledText style={styles.warningText}>
-          No takes have been recorded
+          No recordings exist for this song
         </StyledText>
       </View>
     );
