@@ -19,6 +19,7 @@ import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
 import { fetchSongsWithTakesRequest } from '@src/state/sagas/actionCreators';
 import HomeDisplay from '@src/components/home/components/HomeDisplay';
 import { Filter, SortBy } from '@src/components/common/enums';
+import EditTitleModal from '@src/components/common/components/EditTitleModal';
 
 const HomeScreen = () => {
   const { setOptions } = useNavigation();
@@ -33,6 +34,10 @@ const HomeScreen = () => {
   const [searchText, setSearchText] = useState(null);
 
   const [isNewSongOpen, setIsNewSongOpen] = useState<boolean>(false);
+  const [titleToEdit, setTitleToEdit] = useState<{
+    title: string;
+    songId: number;
+  }>({ title: '', songId: -1 });
   const [toDelete, setToDelete] = useState<DeleteObject>(EMPTY_DELETE_OBJECT);
 
   useEffect(() => {
@@ -57,6 +62,7 @@ const HomeScreen = () => {
       <View style={{ flex: 1 }}>
         <HomeDisplay
           setToDelete={setToDelete}
+          setTitleToEdit={setTitleToEdit}
           sortedCategory={sortedCategory}
           isSortAscending={isSortAscending}
           activeFilters={activeFilters}
@@ -76,6 +82,10 @@ const HomeScreen = () => {
         <NewSongModal
           isNewSongOpen={isNewSongOpen}
           setIsNewSongOpen={setIsNewSongOpen}
+        />
+        <EditTitleModal
+          titleToEdit={titleToEdit}
+          setTitleToEdit={setTitleToEdit}
         />
         <DeleteModal
           deleteText={DELETE_SONG_TEXT}

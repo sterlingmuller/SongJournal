@@ -25,6 +25,16 @@ const songsSlice = createSlice({
     ) => {
       state.items.push(action.payload);
     },
+    updateSongTitleSuccess: (
+      state: SongsSliceState,
+      action: PayloadAction<t.UpdateSongTitleStatePayload>,
+    ) => {
+      const { songId, title: newTitle } = action.payload;
+      const song = state.items.find((song: t.Song) => song.songId === songId);
+      if (song) {
+        song.title = newTitle;
+      }
+    },
     removeSongSuccess: (
       state: SongsSliceState,
       action: PayloadAction<number>,
@@ -108,6 +118,7 @@ const songsSlice = createSlice({
 export const {
   fetchSongsWithTakesSuccess,
   createSongSuccess,
+  updateSongTitleSuccess,
   removeSongSuccess,
   removeTakeSuccess,
   updateTakeNotesSuccess,

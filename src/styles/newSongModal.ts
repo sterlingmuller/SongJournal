@@ -1,18 +1,17 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
-import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Styles {
   container: ViewStyle;
   textbox: ViewStyle;
+  clearButton: ViewStyle;
   buttons: ViewStyle;
   button: ViewStyle;
   title: TextStyle;
   input: TextStyle;
+  clearText: TextStyle;
 }
 
 const useNewSongModalStyle = () => {
-  const { theme } = useColorTheme();
-
   const newSongModalStyle: Styles = StyleSheet.create({
     container: {
       alignSelf: 'center',
@@ -56,6 +55,13 @@ const useNewSongModalStyle = () => {
       width: 100,
       borderRadius: 10,
     },
+
+    clearButton: {
+      paddingRight: 10,
+      alignSelf: 'center',
+    },
+
+    clearText: { fontWeight: 'bold' },
   });
 
   return newSongModalStyle;

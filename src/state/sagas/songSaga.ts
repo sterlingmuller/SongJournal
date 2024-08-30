@@ -1,14 +1,20 @@
 import { call, put, takeEvery, all } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 
-import { createSong, deleteSong } from '@src/data/repositories/SongsRepository';
+import {
+  createSong,
+  deleteSong,
+  updateSongTitle,
+} from '@src/data/repositories/SongsRepository';
 import {
   CreateSongPayload,
   DeleteSongPayload,
+  UpdateSongTitleSagaPayload,
 } from '@src/components/common/types';
 import {
   createSongSuccess,
   removeSongSuccess,
+  updateSongTitleSuccess,
 } from '@src/state/slice/songsSlice';
 import {
   startLoading,
@@ -31,7 +37,7 @@ function* createSongSaga(action: PayloadAction<CreateSongPayload>) {
   }
 }
 
-function* DeleteSongSaga(action: PayloadAction<DeleteSongPayload>) {
+function* deleteSongSaga(action: PayloadAction<DeleteSongPayload>) {
   yield put(startLoading());
   try {
     yield call(deleteSong, action.payload);
@@ -43,9 +49,26 @@ function* DeleteSongSaga(action: PayloadAction<DeleteSongPayload>) {
   }
 }
 
+function* updateSongTitleSaga(
+  action: PayloadAction<UpdateSongTitleSagaPayload>,
+) {
+  const { songId, title } = action.payload;
+  yield put(startLoading());
+
+  try {
+    yield call(updateSongTitle, action.payload);
+
+    yield put(updateSongTitleSuccess({ songId, title }));
+    yield put(endLoading());
+  } catch (error) {
+    yield put(setError(error));
+  }
+}
+
 export default function* songSaga() {
   yield all([
     takeEvery(at.CREATE_SONG_REQUEST, createSongSaga),
-    takeEvery(at.DELETE_SONG_REQUEST, DeleteSongSaga),
+    takeEvery(at.DELETE_SONG_REQUEST, deleteSongSaga),
+    takeEvery(at.UPDATE_SONG_TITLE_REQUEST, updateSongTitleSaga),
   ]);
 }

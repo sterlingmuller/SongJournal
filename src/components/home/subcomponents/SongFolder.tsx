@@ -31,9 +31,10 @@ import formatDuration from '@src/utils/formatDuration';
 
 interface Props {
   song: Song;
+  setTitleToEdit: (value: { title: string; songId: number }) => void;
 }
 
-const SongFolder = ({ song }: Props) => {
+const SongFolder = ({ song, setTitleToEdit }: Props) => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   const styles = useSongFolderStyles();
   const dispatch = useAppDispatch();
@@ -43,8 +44,6 @@ const SongFolder = ({ song }: Props) => {
 
   const { title, songId, takes, selectedTakeId } = song;
   const [isPressed, setIsPressed] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [newTitle, setNewTitle] = useState<string>(title);
 
   const inputRef = useRef<TextInput | null>(null);
 
@@ -78,8 +77,6 @@ const SongFolder = ({ song }: Props) => {
     [dispatch, songId, db, navigate],
   );
 
-  const handleBlur = useCallback(() => setIsEditing(false), []);
-
   const onTogglePlayback = useCallback(() => {
     if (selectedTake) {
       togglePlayback(selectedTake.uri, songId);
@@ -87,7 +84,7 @@ const SongFolder = ({ song }: Props) => {
   }, [selectedTake, togglePlayback, songId]);
 
   const onDoubleTap: () => void = useDoubleTap(() => {
-    setIsEditing(true);
+    setTitleToEdit({ title: song.title, songId: songId });
     setTimeout(() => inputRef.current?.focus(), 100);
   });
 
@@ -123,17 +120,7 @@ const SongFolder = ({ song }: Props) => {
     >
       <View style={styles.contents}>
         <TouchableOpacity onPress={onDoubleTap}>
-          {isEditing ? (
-            <TextInput
-              ref={inputRef}
-              style={styles.editTitleText}
-              value={newTitle}
-              onChangeText={(text: string) => setNewTitle(text)}
-              onBlur={handleBlur}
-            />
-          ) : (
-            <StyledText style={styles.title}>{title}</StyledText>
-          )}
+          <StyledText style={styles.title}>{title}</StyledText>
         </TouchableOpacity>
         <View style={styles.subtextContainer}>{displaySubtext}</View>
         <View style={styles.iconRow}>
