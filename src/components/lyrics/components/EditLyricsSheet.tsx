@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { KeyboardAvoidingView, Platform, View } from 'react-native';
 import { useSQLiteContext } from 'expo-sqlite';
 import { useSelector } from 'react-redux';
 
@@ -10,6 +10,7 @@ import { selectCurrentSongPage } from '@src/state/selectors/pagesSelector';
 import { updateLyricsRequest } from '@src/state/sagas/actionCreators';
 import TextEditor from '@src/components/common/components/TextEditor';
 import { LyricsOption } from '@src/components/common/enums';
+import { flatten } from 'ramda';
 
 interface Props {
   setSelectedOption: (value: LyricsOption) => void;
@@ -43,7 +44,10 @@ const EditLyricsSheet = ({ setSelectedOption, songId }: Props) => {
   };
 
   return (
-    <>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
+      style={styles.keyboardAvoidingViewContainer}
+    >
       <View style={styles.editTextContainer}>
         <TextEditor initialText={lyrics} setText={setNewLyrics} />
       </View>
@@ -52,7 +56,7 @@ const EditLyricsSheet = ({ setSelectedOption, songId }: Props) => {
         onExitPress={onCancelPress}
         disabled={disabled}
       />
-    </>
+    </KeyboardAvoidingView>
   );
 };
 

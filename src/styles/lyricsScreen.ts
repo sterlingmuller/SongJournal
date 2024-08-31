@@ -1,12 +1,13 @@
 import { StyleSheet, ViewStyle } from 'react-native';
 import { useColorTheme } from '@src/state/context/ThemeContext';
+import { SCREEN_HEIGHT } from '@src/components/common/constants';
 
 interface Styles {
   editTextContainer: ViewStyle;
   lyricsContainer: ViewStyle;
   container: ViewStyle;
   details: ViewStyle;
-  editSheet: ViewStyle;
+  keyboardAvoidingViewContainer: ViewStyle;
 }
 
 const useLyricScreenStyles = () => {
@@ -16,26 +17,30 @@ const useLyricScreenStyles = () => {
     container: {
       flex: 1,
       backgroundColor: theme.primaryBackground,
-      paddingBottom: 15,
+    },
+
+    keyboardAvoidingViewContainer: {
+      // flex: 1,
+      width: '80%',
+      height: SCREEN_HEIGHT * 0.5,
+      alignSelf: 'center',
     },
 
     editTextContainer: {
-      alignSelf: 'center',
       backgroundColor: '#fff',
       borderColor: 'black',
       borderWidth: 1,
-      width: '80%',
-      height: '75%',
+      width: '100%',
+      height: SCREEN_HEIGHT * 0.5,
       borderRadius: 15,
       paddingHorizontal: 20,
       paddingVertical: 10,
+      marginBottom: 20,
     },
 
     lyricsContainer: {
       paddingLeft: 35,
     },
-
-    editSheet: { height: '100%' },
 
     details: {
       flexDirection: 'row',

@@ -17,7 +17,7 @@
       "bundleIdentifier": "com.sterling.silverado.songjournal"
     },
     "android": {
-      "softwareKeyboardLayoutMode": "adjustPan",
+      "softwareKeyboardLayoutMode": "resize",
       "package": "com.sterling.silverado.songjournal",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",

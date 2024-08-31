@@ -1,5 +1,5 @@
 import { SQLiteDatabase } from 'expo-sqlite';
-import { LyricsOption } from '@src/components/common/enums';
+import { LyricsOption, SortBy } from '@src/components/common/enums';
 
 export type FilterOptions = {
   lyrics?: boolean;
@@ -81,7 +81,17 @@ export type Song = {
   page: Page;
   completed: boolean;
   hasLyrics: boolean;
+  artist?: string;
 };
+
+export type UserSettings = {
+  defaultSortType?: SortBy;
+  defaultArtist?: string;
+  isNumbered?: boolean;
+  hideTips?: boolean;
+};
+
+export type Artists = string[];
 
 export interface SongItem extends Song {
   key: string;
@@ -230,6 +240,11 @@ export type UpdateLyricsStatePayload = {
   lyrics: string;
 };
 
+export type UpdateUserSettingsPayload = {
+  userSettingUpdates?: UserSettings;
+  db: SQLiteDatabase;
+};
+
 export type DeleteTakeSuccessPayload = {
   takeId: number;
   songId: number;
@@ -243,5 +258,15 @@ export type DeleteTakeSagaPayload = {
 
 export type DeleteTakeDbPayload = {
   takeId: number;
+  db: SQLiteDatabase;
+};
+
+export type AddArtistDbPayload = {
+  name: string;
+  db: SQLiteDatabase;
+};
+
+export type DeleteArtistDbPayload = {
+  artistId: number;
   db: SQLiteDatabase;
 };
