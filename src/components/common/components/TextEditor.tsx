@@ -5,7 +5,7 @@ import {
   useEditorContent,
 } from '@10play/tentap-editor';
 import { useEffect } from 'react';
-import { KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native';
+import { View } from 'react-native';
 
 interface Props {
   initialText: string;
@@ -32,19 +32,26 @@ const TextEditor = ({ initialText, setText }: Props) => {
   }, [content]);
 
   return (
-    <SafeAreaView style={{ flex: 5 }}>
+    <View style={{ flex: 1 }}>
       <RichText editor={editor} />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{
-          position: 'absolute',
-          width: '100%',
-          bottom: 0,
-        }}
-      >
+      <View style={{ position: 'absolute', bottom: 0 }}>
         <Toolbar editor={editor} />
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+      </View>
+    </View>
+
+    //     <SafeAreaView style={{ flex: 5 }}>
+    //   <RichText editor={editor} />
+    //   <KeyboardAvoidingView
+    //     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    //     style={{
+    //       position: 'absolute',
+    //       width: '100%',
+    //       bottom: 0,
+    //     }}
+    //   >
+    //     <Toolbar editor={editor} />
+    //   </KeyboardAvoidingView>
+    // </SafeAreaView>
   );
 };
 

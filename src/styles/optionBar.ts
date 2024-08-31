@@ -12,7 +12,7 @@ const useOptionBarStyles = () => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      paddingTop: 15,
+      paddingVertical: 15,
       gap: 10,
     },
 

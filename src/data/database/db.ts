@@ -1,13 +1,19 @@
 import { type SQLiteDatabase } from 'expo-sqlite';
 
 const createSongsTable =
-  'CREATE TABLE IF NOT EXISTS Songs (songId INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT UNIQUE, selectedTakeId INTEGER, totalTakes INTEGER, completed BOOLEAN NOT NULL, hasLyrics BOOLEAN NOT NULL, FOREIGN KEY (selectedTakeId) REFERENCES Takes(takeId));';
+  'CREATE TABLE IF NOT EXISTS Songs (songId INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT UNIQUE, selectedTakeId INTEGER, totalTakes INTEGER, completed BOOLEAN NOT NULL, hasLyrics BOOLEAN NOT NULL, artistId INTEGER, FOREIGN KEY (selectedTakeId) REFERENCES Takes(takeId), FOREIGN KEY (artistId) REFERENCES Artists(artistId));';
 
 const createTakesTable =
   'CREATE TABLE IF NOT EXISTS Takes (takeId INTEGER PRIMARY KEY AUTOINCREMENT, songId INTEGER NOT NULL, title TEXT NOT NULL, date TEXT NOT NULL, notes TEXT, uri TEXT, duration INT, FOREIGN KEY (songId) REFERENCES Songs(songId));';
 
 const createPageTable =
   'CREATE TABLE IF NOT EXISTS Page (pageId INTEGER PRIMARY KEY AUTOINCREMENT, songId INTEGER NOT NULL, lyrics TEXT, bpm TEXT, keySignature TEXT, time TEXT, about TEXT, FOREIGN KEY (songId) REFERENCES Songs(songId));';
+
+const createSettingsTable =
+  'CREATE TABLE IF NOT EXISTS Settings (defaultSortType TEXT, defaultArtistId INTEGER, isNumbered BOOLEAN, hideTips BOOLEAN, FOREIGN KEY (defaultArtistId) REFERENCES Artists(artistId));';
+
+const createArtistsTable =
+  'CREATE TABLE IF NOT EXISTS Artists (artistId INTEGER PRIMARY KEY AUTOINCREMENT name TEXT NOT NULL)';
 
 export const migrateDbIfNeeded = async (db: SQLiteDatabase) => {
   const DATABASE_VERSION = 1;
@@ -25,7 +31,9 @@ export const migrateDbIfNeeded = async (db: SQLiteDatabase) => {
       `PRAGMA journal_mode = 'wal';` +
         createSongsTable +
         createTakesTable +
-        createPageTable,
+        createPageTable +
+        createSettingsTable +
+        createArtistsTable,
     );
 
     currentDbVersion = 1;
