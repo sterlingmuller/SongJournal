@@ -5,6 +5,8 @@ import pagesReducer from '@src/state/slice/pagesSlice';
 import asyncReducer from '@src/state/slice/asyncSlice';
 import currentSongReducer from '@src/state/slice/currentSongSlice';
 import playbackReducer from '@src/state/slice/playbackSlice';
+import artistsReducer from '@src/state/slice/artistsSlice';
+import settingsReducer from '@src/state/slice/settingsSlice';
 
 const rootReducer = combineReducers({
   songs: songsReducer,
@@ -12,6 +14,8 @@ const rootReducer = combineReducers({
   async: asyncReducer,
   currentSong: currentSongReducer,
   playback: playbackReducer,
+  artists: artistsReducer,
+  settings: settingsReducer,
 });
 
 export default rootReducer;
