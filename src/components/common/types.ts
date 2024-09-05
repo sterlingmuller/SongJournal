@@ -32,6 +32,8 @@ export type DbSong = {
   totalTakes: number;
   completed: boolean;
   hasLyrics: boolean;
+  isOriginal: boolean;
+  artist: string;
 };
 
 export type Take = {
@@ -81,17 +83,20 @@ export type Song = {
   page: Page;
   completed: boolean;
   hasLyrics: boolean;
-  artist?: string;
+  isOriginal: boolean;
+  artist: string;
 };
 
 export type UserSettings = {
-  defaultSortType?: SortBy;
-  defaultArtist?: string;
-  isNumbered?: boolean;
-  hideTips?: boolean;
+  defaultSortType: SortBy;
+  isAscending: boolean;
+  defaultArtistId: number;
+  isNumbered: boolean;
+  hideTips: boolean;
 };
 
-export type Artists = string[];
+export type Artist = { artistId: number; name: string };
+export type Artists = Artist[];
 
 export interface SongItem extends Song {
   key: string;
@@ -143,6 +148,7 @@ export type UpdateTakeNotesSuccessPayload = {
 
 export type CreateSongPayload = {
   title: string;
+  defaultArtistId: number;
   db: SQLiteDatabase;
 };
 
@@ -268,5 +274,16 @@ export type AddArtistDbPayload = {
 
 export type DeleteArtistDbPayload = {
   artistId: number;
+  db: SQLiteDatabase;
+};
+
+export type UpdateArtistDbPayload = {
+  name: string;
+  artistId: number;
+  db: SQLiteDatabase;
+};
+
+export type UpdateSettingsDbPayload = {
+  newSettings: Partial<UserSettings>;
   db: SQLiteDatabase;
 };

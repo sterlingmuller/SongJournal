@@ -2,6 +2,7 @@ import {
   AddArtistDbPayload,
   Artists,
   DeleteArtistDbPayload,
+  UpdateArtistDbPayload,
 } from '@src/components/common/types';
 import { SQLiteDatabase } from 'expo-sqlite';
 
@@ -18,6 +19,21 @@ export const addArtist = async ({ name, db }: AddArtistDbPayload) => {
     await db.runAsync('INSERT INTO Artists (name) VALUES (?)', [name]);
   } catch (err) {
     console.error('Error adding artist', err);
+  }
+};
+
+export const updateArtist = async ({
+  artistId,
+  name,
+  db,
+}: UpdateArtistDbPayload) => {
+  try {
+    await db.runAsync('UPDATE Artists SET name = ? WHERE artistId = ?', [
+      name,
+      artistId,
+    ]);
+  } catch (err) {
+    console.error('Error updating artist', err);
   }
 };
 
