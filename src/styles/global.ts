@@ -3,6 +3,7 @@ import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface GlobalStyles {
   container: ViewStyle;
+  content: ViewStyle;
   text: TextStyle;
 }
 
@@ -14,7 +15,9 @@ const useGlobalStyles = () => {
       flex: 1,
       backgroundColor: theme.primaryBackground,
     },
-
+    content: {
+      flex: 1,
+    },
     text: {
       color: theme.primaryText,
     },
