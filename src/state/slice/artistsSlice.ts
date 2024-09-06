@@ -13,7 +13,7 @@ const artistSlice = createSlice({
   name: 'artists',
   initialState,
   reducers: {
-    createArtistSuccess: (
+    addArtistSuccess: (
       state: ArtistsSliceState,
       action: PayloadAction<Artist>,
     ) => {
@@ -48,7 +48,7 @@ const artistSlice = createSlice({
 });
 
 export const {
-  createArtistSuccess,
+  addArtistSuccess,
   fetchArtistsSuccess,
   updateArtistSuccess,
   removeArtistSuccess,

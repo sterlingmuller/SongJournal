@@ -32,7 +32,7 @@ function* updateSettingsSaga(action: PayloadAction<UpdateSettingsDbPayload>) {
   yield put(startLoading());
   try {
     yield call(updateUserSettings, action.payload);
-    yield put(updateSettingsSuccess(action.payload.newSettings));
+    yield put(updateSettingsSuccess(action.payload.updatedSettings));
     yield put(endLoading());
   } catch (error) {
     yield put(setError(error));

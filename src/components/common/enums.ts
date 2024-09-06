@@ -42,3 +42,9 @@ export enum LyricsOption {
   SHARE = 'Share',
   NONE = '',
 }
+
+export enum ToggleableSettings {
+  DISPLAY_TIPS = 'displayTips',
+  IS_NUMBERED = 'isNumbered',
+  IS_ASCENDING = 'isAscending',
+}

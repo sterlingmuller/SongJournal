@@ -8,6 +8,7 @@ export interface Theme {
   secondary: string;
   primaryBackground: string;
   secondaryBackground: string;
+  clearBackground: string;
   primaryText: string;
   headerText: string;
   highlight: string;
@@ -20,6 +21,7 @@ const themes: Record<ColorTheme, Theme> = {
     secondary: c.gold,
     primaryBackground: c.cream,
     secondaryBackground: c.lightGray,
+    clearBackground: c.white,
     primaryText: c.black,
     headerText: c.black,
     highlight: c.gray,
@@ -30,6 +32,7 @@ const themes: Record<ColorTheme, Theme> = {
     secondary: c.dimGold,
     primaryBackground: c.lightBlack,
     secondaryBackground: c.charcoal,
+    clearBackground: c.white,
     primaryText: c.dimWhite,
     headerText: c.dimWhite,
     highlight: c.charcoal,
@@ -40,6 +43,7 @@ const themes: Record<ColorTheme, Theme> = {
     secondary: c.dimGold,
     primaryBackground: c.lightBlack,
     secondaryBackground: c.charcoal,
+    clearBackground: c.white,
     primaryText: c.bloodRed,
     headerText: c.dimGold,
     highlight: c.charcoal,
@@ -50,6 +54,7 @@ const themes: Record<ColorTheme, Theme> = {
     secondary: c.mustard,
     primaryBackground: c.greenBean,
     secondaryBackground: c.lightGray,
+    clearBackground: c.white,
     primaryText: c.black,
     headerText: c.black,
     highlight: c.mustard,
@@ -60,6 +65,7 @@ const themes: Record<ColorTheme, Theme> = {
     secondary: c.violet,
     primaryBackground: c.pink,
     secondaryBackground: c.lightGray,
+    clearBackground: c.white,
     primaryText: c.black,
     headerText: c.black,
     highlight: c.sunscreen,
@@ -70,6 +76,7 @@ const themes: Record<ColorTheme, Theme> = {
     secondary: c.sunset,
     primaryBackground: c.sunscreen,
     secondaryBackground: c.sand,
+    clearBackground: c.white,
     primaryText: c.black,
     headerText: c.black,
     highlight: c.sand,

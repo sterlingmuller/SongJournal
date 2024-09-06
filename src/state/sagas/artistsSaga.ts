@@ -7,7 +7,7 @@ import {
   deleteArtist,
 } from '@src/data/repositories/ArtistsRepository';
 import {
-  createArtistSuccess,
+  addArtistSuccess,
   fetchArtistsSuccess,
   updateArtistSuccess,
   removeArtistSuccess,
@@ -42,7 +42,8 @@ function* addArtistSaga(action: PayloadAction<AddArtistDbPayload>) {
   yield put(startLoading());
   try {
     const newArtist = yield call(addArtist, { db, name });
-    yield put(createArtistSuccess(newArtist));
+
+    yield put(addArtistSuccess(newArtist));
     yield put(endLoading());
   } catch (error) {
     yield put(setError(error));

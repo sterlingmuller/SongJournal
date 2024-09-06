@@ -145,6 +145,12 @@ export const TIME_SIGNATURES = [
   { label: '2/2', value: '2/2' },
 ];
 
+export const SORT_SELECT = [
+  { label: SortBy.DATE, value: SortBy.DATE },
+  { label: SortBy.NAME, value: SortBy.NAME },
+  { label: SortBy.LENGTH, value: SortBy.LENGTH },
+];
+
 export const MAX_AUDIO_WAVE_BARS = 24;
 
 export const AUDIO_WAVE_MIDPOINT = 12;

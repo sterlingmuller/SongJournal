@@ -16,7 +16,18 @@ export const fetchArtists = (db: SQLiteDatabase): Artists => {
 
 export const addArtist = async ({ name, db }: AddArtistDbPayload) => {
   try {
-    await db.runAsync('INSERT INTO Artists (name) VALUES (?)', [name]);
+    const result = await db.runAsync('INSERT INTO Artists (name) VALUES (?)', [
+      name,
+    ]);
+
+    const newArtistId = result.lastInsertRowId;
+
+    const newArtist = await db.getFirstAsync(
+      'SELECT * FROM Artists WHERE artistId = ?',
+      [newArtistId],
+    );
+
+    return newArtist;
   } catch (err) {
     console.error('Error adding artist', err);
   }

@@ -20,8 +20,8 @@ const useNewTitleModalStyle = () => {
       width: '80%',
       height: 280,
       borderRadius: 15,
-      gap: 40,
-      paddingTop: 30,
+      gap: 30,
+      paddingTop: 25,
     },
 
     title: {
@@ -69,6 +69,7 @@ const useNewTitleModalStyle = () => {
       fontSize: 12,
       textAlign: 'center',
       marginHorizontal: 20,
+      paddingBottom: 10,
     },
   });
 

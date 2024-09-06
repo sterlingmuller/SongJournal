@@ -1,5 +1,5 @@
 import {
-  UpdateUserSettingsPayload,
+  UpdateSettingsDbPayload,
   UserSettings,
 } from '@src/components/common/types';
 import { SQLiteDatabase } from 'expo-sqlite';
@@ -14,24 +14,22 @@ export const fetchUserSettings = async (db: SQLiteDatabase) => {
       isAscending: Boolean(settings.isAscending),
       defaultArtistId: settings.defaultArtistId,
       isNumbered: Boolean(settings.isNumbered),
-      hideTips: Boolean(settings.hideTips),
+      displayTips: Boolean(settings.displayTips),
     };
   } catch (err) {
     console.error('Error fetching user settings', err);
   }
 };
 
-export const updateUserSettings = async (
-  payload: UpdateUserSettingsPayload,
-) => {
-  const { userSettingUpdates, db } = payload;
+export const updateUserSettings = async (payload: UpdateSettingsDbPayload) => {
+  const { updatedSettings, db } = payload;
 
   try {
-    if (userSettingUpdates && Object.keys(userSettingUpdates).length > 0) {
-      const clauses = Object.keys(userSettingUpdates)
+    if (updatedSettings && Object.keys(updatedSettings).length > 0) {
+      const clauses = Object.keys(updatedSettings)
         .map((key: keyof UserSettings) => `${key} = ?`)
         .join(', ');
-      const params = Object.values(userSettingUpdates);
+      const params = Object.values(updatedSettings);
 
       await db.runAsync(`UPDATE Settings SET ${clauses}`, ...params);
     }

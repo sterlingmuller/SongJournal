@@ -92,7 +92,7 @@ export type UserSettings = {
   isAscending: boolean;
   defaultArtistId: number;
   isNumbered: boolean;
-  hideTips: boolean;
+  displayTips: boolean;
 };
 
 export type Artist = { artistId: number; name: string };
@@ -148,7 +148,6 @@ export type UpdateTakeNotesSuccessPayload = {
 
 export type CreateSongPayload = {
   title: string;
-  defaultArtistId: number;
   db: SQLiteDatabase;
 };
 
@@ -246,11 +245,6 @@ export type UpdateLyricsStatePayload = {
   lyrics: string;
 };
 
-export type UpdateUserSettingsPayload = {
-  userSettingUpdates?: UserSettings;
-  db: SQLiteDatabase;
-};
-
 export type DeleteTakeSuccessPayload = {
   takeId: number;
   songId: number;
@@ -284,6 +278,6 @@ export type UpdateArtistDbPayload = {
 };
 
 export type UpdateSettingsDbPayload = {
-  newSettings: Partial<UserSettings>;
+  updatedSettings: Partial<UserSettings>;
   db: SQLiteDatabase;
 };
