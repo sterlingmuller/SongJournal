@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS Settings (
   isAscending BOOLEAN NOT NULL DEFAULT 1,
   defaultArtistId INTEGER DEFAULT -1,
   isNumbered BOOLEAN NOT NULL DEFAULT 0,
-  hideTips BOOLEAN NOT NULL DEFAULT 0,
+  displayTips BOOLEAN NOT NULL DEFAULT 1,
   FOREIGN KEY (defaultArtistId) REFERENCES Artists(artistId)
 );
 

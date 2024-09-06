@@ -23,9 +23,11 @@ export const getTakesAndPageBySongId = (db: SQLiteDatabase, songId: number) => {
 
 export const createSong = async ({ db, title }: t.CreateSongPayload) => {
   try {
-    const defaultArtistId: number = await db.getFirstAsync(
+    const settings: { defaultArtistId: number } = await db.getFirstAsync(
       'SELECT defaultArtistId FROM Settings',
     );
+
+    const defaultArtistId = settings.defaultArtistId;
 
     const result = await db.runAsync(
       'INSERT INTO Songs (title, artistId, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal) VALUES (?, ?, -1, 0, false, false, true)',

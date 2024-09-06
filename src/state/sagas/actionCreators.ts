@@ -78,3 +78,27 @@ export const updateTakeTitleRequest = (
   type: at.UPDATE_TAKE_TITLE,
   payload,
 });
+
+// Settings
+
+export const updateSettingsRequest = (payload: t.UpdateSettingsDbPayload) => ({
+  type: at.UPDATE_SETTINGS_REQUEST,
+  payload,
+});
+
+// Artists
+
+export const updateArtistRequest = (payload: t.UpdateArtistDbPayload) => ({
+  type: at.UPDATE_ARTIST_REQUEST,
+  payload,
+});
+
+export const addArtistRequest = (payload: t.AddArtistDbPayload) => ({
+  type: at.ADD_ARTIST_REQUEST,
+  payload,
+});
+
+export const deleteArtistRequest = (payload: t.DeleteArtistDbPayload) => ({
+  type: at.DELETE_ARTIST_REQUEST,
+  payload,
+});

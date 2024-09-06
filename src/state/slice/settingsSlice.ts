@@ -7,7 +7,7 @@ const initialState: UserSettings = {
   isAscending: false,
   defaultArtistId: -1,
   isNumbered: false,
-  hideTips: false,
+  displayTips: false,
 };
 
 const settingsSlice = createSlice({
@@ -17,9 +17,7 @@ const settingsSlice = createSlice({
     updateSettingsSuccess: (
       state: UserSettings,
       action: PayloadAction<Partial<UserSettings>>,
-    ) => {
-      state = { ...state, ...action.payload };
-    },
+    ) => (state = { ...state, ...action.payload }),
     fetchSettingsSuccess: (
       state: UserSettings,
       action: PayloadAction<UserSettings>,

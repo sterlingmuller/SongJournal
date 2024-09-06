@@ -20,6 +20,7 @@ const useSettingsStyle = () => {
       gap: 20,
       paddingTop: 15,
       paddingHorizontal: 25,
+      flex: 1,
     },
 
     sectionTitle: {
@@ -34,8 +35,8 @@ const useSettingsStyle = () => {
     },
 
     version: {
-      position: 'absolute',
-      bottom: 25,
+      paddingTop: 30,
+      paddingBottom: 20,
       alignSelf: 'center',
       color: theme.headerText,
     },
