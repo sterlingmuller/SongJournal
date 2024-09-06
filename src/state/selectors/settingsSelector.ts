@@ -6,3 +6,6 @@ export const selectDefaultArtistId = (state: RootState) =>
   state.settings.defaultArtistId;
 
 export const selectIsNumbered = (state: RootState) => state.settings.isNumbered;
+
+export const selectDisplayTips = (state: RootState) =>
+  state.settings.displayTips;

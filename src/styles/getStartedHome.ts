@@ -19,12 +19,11 @@ const useGetStartedHomeStyles = () => {
     container: {
       alignItems: 'center',
       justifyContent: 'center',
-      // height: 580,
       height: 520,
       gap: 20,
     },
     textbox: {
-      width: '85%',
+      width: '80%',
       padding: 18,
       backgroundColor: theme.secondary,
       borderRadius: 10,

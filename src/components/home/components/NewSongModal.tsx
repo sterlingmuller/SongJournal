@@ -7,10 +7,15 @@ import { useSQLiteContext } from 'expo-sqlite';
 import { RootStackParamList } from '@src/components/common/types';
 import StyledText from '@src/components/common/components/StyledText';
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
-import useNewSongModalStyle from '@src/styles/newTitleModal';
-import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
+import useCommonModalStyle from '@src/styles/commonModal';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '@src/utils/hooks/typedReduxHooks';
 import { createSongRequest } from '@src/state/sagas/actionCreators';
 import { Screen } from '@src/components/common/enums';
+import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
+import Gap from '@src/components/common/components/Gap';
 
 interface Props {
   isNewSongOpen: boolean;
@@ -22,7 +27,8 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
   const dispatch = useAppDispatch();
   const { navigate, addListener } =
     useNavigation<NavigationProp<RootStackParamList>>();
-  const styles = useNewSongModalStyle();
+  const styles = useCommonModalStyle();
+  const displayTips = useAppSelector(selectDisplayTips);
 
   const [songTitle, setSongTitle] = useState('');
   const onExitPress = () => {
@@ -64,9 +70,13 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
               onChangeText={(title: string) => setSongTitle(title)}
             />
           </View>
-          <StyledText style={styles.tipText}>
-            Tip: Double Tap the Title of a saved Song or Take to rename
-          </StyledText>
+          {displayTips ? (
+            <StyledText style={styles.tipText}>
+              Tip: Double Tap the Title of a saved Song or Take to rename
+            </StyledText>
+          ) : (
+            <Gap />
+          )}
         </View>
         <SaveAndCancelButtons
           onPress={onSavePress}
