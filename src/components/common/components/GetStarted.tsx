@@ -27,9 +27,9 @@ const GetStarted = ({ screen }: props) => {
   );
 
   const homeTip: string =
-    'Tip: Visit Settings for the options to display Song Counts and disable future tips';
+    'Tip: Visit Settings for the options to number your Songs List and disable future Tips';
   const songTip: string =
-    'Tip: When there are multiple Takes of a Song, Double Tap a Take to set it as the new Selected Take';
+    'Tip: When there are multiple Takes of a Song, Double Tap a Take to set it as the new Starred Take';
 
   const getStartedSongInstructions = (
     <StyledText style={styles.text}>

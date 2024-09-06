@@ -1,5 +1,6 @@
 import { Filter, SortBy } from '@src/components/common/enums';
 import { Song, Songs, Take } from '@src/components/common/types';
+import { useNumberedSongs } from './hooks/useNumberedSongs';
 
 const filterSongs = (songs: Songs, activeFilters: Filter[]) =>
   songs.filter((song: Song) => {
@@ -79,9 +80,11 @@ export const processSongs = (
   searchText: string,
 ): Songs => {
   let processedSongs = filterSongs(songs, activeFilters);
+  const numberSongs = useNumberedSongs();
 
   processedSongs = searchSongs(processedSongs, searchText);
   processedSongs = sortSongs(processedSongs, sortedCategory, isSortAscending);
+  processedSongs = numberSongs(processedSongs, sortedCategory);
 
   return processedSongs;
 };
