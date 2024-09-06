@@ -4,16 +4,14 @@ interface Styles {
   container: ViewStyle;
   textbox: ViewStyle;
   clearButton: ViewStyle;
-  buttons: ViewStyle;
-  button: ViewStyle;
   title: TextStyle;
   input: TextStyle;
   clearText: TextStyle;
   tipText: TextStyle;
 }
 
-const useNewTitleModalStyle = () => {
-  const newTitleModalStyle: Styles = StyleSheet.create({
+const useCommonModalStyle = () => {
+  const commonModalStyle: Styles = StyleSheet.create({
     container: {
       alignSelf: 'center',
       backgroundColor: '#fff',
@@ -47,16 +45,6 @@ const useNewTitleModalStyle = () => {
       marginLeft: 8,
     },
 
-    buttons: {
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
-    },
-
-    button: {
-      width: 100,
-      borderRadius: 10,
-    },
-
     clearButton: {
       paddingRight: 10,
       alignSelf: 'center',
@@ -73,7 +61,7 @@ const useNewTitleModalStyle = () => {
     },
   });
 
-  return newTitleModalStyle;
+  return commonModalStyle;
 };
 
-export default useNewTitleModalStyle;
+export default useCommonModalStyle;

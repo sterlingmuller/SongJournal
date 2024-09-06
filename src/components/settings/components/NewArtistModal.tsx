@@ -5,9 +5,14 @@ import { useSQLiteContext } from 'expo-sqlite';
 
 import StyledText from '@src/components/common/components/StyledText';
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
-import useNewSongModalStyle from '@src/styles/newTitleModal';
-import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
+import useCommonModalStyle from '@src/styles/commonModal';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '@src/utils/hooks/typedReduxHooks';
 import { addArtistRequest } from '@src/state/sagas/actionCreators';
+import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
+import Gap from '@src/components/common/components/Gap';
 
 interface Props {
   isNewArtistOpen: boolean;
@@ -17,7 +22,8 @@ interface Props {
 const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
   const db = useSQLiteContext();
   const dispatch = useAppDispatch();
-  const styles = useNewSongModalStyle();
+  const styles = useCommonModalStyle();
+  const displayTips = useAppSelector(selectDisplayTips);
 
   const [newArtist, setNewArtist] = useState('');
 
@@ -50,10 +56,14 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
               onChangeText={(title: string) => setNewArtist(title)}
             />
           </View>
-          <StyledText style={styles.tipText}>
-            Tip: New songs will be credited to the default artist. A song's
-            artist can be changed on the Lyrics screen.
-          </StyledText>
+          {displayTips ? (
+            <StyledText style={{ ...styles.tipText, paddingBottom: 0 }}>
+              Tip: New songs will be credited to the default artist. A song's
+              artist can be changed on the Lyrics screen.
+            </StyledText>
+          ) : (
+            <Gap />
+          )}
         </View>
         <SaveAndCancelButtons
           onPress={onSavePress}

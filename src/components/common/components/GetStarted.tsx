@@ -6,6 +6,8 @@ import useGetStartedHomeStyles from '@src/styles/getStartedHome';
 import EggIcon from '@src/icons/EggIcon';
 import { Screen } from '@src/components/common/enums';
 import { FRACTION_UNICODE } from '../constants';
+import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
 
 interface props {
   screen: 'Home' | 'Song' | 'MusicPlayer';
@@ -14,6 +16,7 @@ const GetStarted = ({ screen }: props) => {
   const styles = useGetStartedHomeStyles();
   let message: React.ReactElement;
   let tip: string;
+  const displayTips = useAppSelector(selectDisplayTips);
 
   const getStartedHomeInstructions = (
     <StyledText style={styles.text}>
@@ -68,13 +71,11 @@ const GetStarted = ({ screen }: props) => {
       <View style={styles.eggContainer}>
         <EggIcon />
       </View>
-      <View>
-        <View style={styles.textbox}>
-          {message}
-          <View style={styles.arrow} />
-        </View>
+      <View style={styles.textbox}>
+        {message}
+        <View style={styles.arrow} />
       </View>
-      <StyledText style={styles.tipText}>{tip}</StyledText>
+      {displayTips && <StyledText style={styles.tipText}>{tip}</StyledText>}
     </View>
   );
 };

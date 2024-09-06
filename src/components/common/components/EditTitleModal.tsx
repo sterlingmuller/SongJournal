@@ -7,7 +7,7 @@ import { useSQLiteContext } from 'expo-sqlite';
 import { RootStackParamList } from '@src/components/common/types';
 import StyledText from '@src/components/common/components/StyledText';
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
-import useNewTitleModalStyle from '@src/styles/newTitleModal';
+import useCommonModalStyle from '@src/styles/commonModal';
 import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
 import {
   updateSongTitleRequest,
@@ -28,7 +28,7 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
   const dispatch = useAppDispatch();
   const { navigate, addListener } =
     useNavigation<NavigationProp<RootStackParamList>>();
-  const styles = useNewTitleModalStyle();
+  const styles = useCommonModalStyle();
   const { title: originalTitle, songId, takeId } = titleToEdit;
   const [updatedTitle, setUpdatedTitle] = useState<string>('');
 
