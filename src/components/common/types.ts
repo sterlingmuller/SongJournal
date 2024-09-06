@@ -95,6 +95,11 @@ export type UserSettings = {
   displayTips: boolean;
 };
 
+export type Sort = {
+  sortType: SortBy;
+  isAscending: boolean;
+};
+
 export type Artist = { artistId: number; name: string };
 export type Artists = Artist[];
 
