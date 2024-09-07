@@ -4,7 +4,7 @@ import * as t from '@src/components/common/types';
 
 export const fetchSongsWithArtists = (db: SQLiteDatabase) =>
   db.getAllSync(
-    'SELECT songId, title, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal, Artists.name as artist FROM Songs LEFT JOIN Artists ON Songs.artistId = Artists.artistId',
+    'SELECT songId, creationDate, title, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal, Artists.name as artist FROM Songs LEFT JOIN Artists ON Songs.artistId = Artists.artistId',
   );
 
 export const getTakesAndPageBySongId = (db: SQLiteDatabase, songId: number) => {
@@ -28,11 +28,13 @@ export const createSong = async ({ db, title }: t.CreateSongPayload) => {
     );
 
     const defaultArtistId = settings.defaultArtistId;
+    const creationDate = new Date().toISOString();
 
     const result = await db.runAsync(
-      'INSERT INTO Songs (title, artistId, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal) VALUES (?, ?, -1, 0, false, false, true)',
+      'INSERT INTO Songs (title, artistId, creationDate, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal) VALUES (?, ?, ?, -1, 0, false, false, true)',
       title,
       defaultArtistId,
+      creationDate,
     );
     const songId = result.lastInsertRowId;
 
@@ -42,7 +44,7 @@ export const createSong = async ({ db, title }: t.CreateSongPayload) => {
     );
 
     const song: t.DbSong = await db.getFirstAsync(
-      `SELECT songId, title, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal, Artists.name as artist FROM Songs LEFT JOIN Artists ON Songs.artistId = Artists.artistId WHERE Songs.songId = ?`,
+      `SELECT songId, creationDate, title, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal, Artists.name as artist FROM Songs LEFT JOIN Artists ON Songs.artistId = Artists.artistId WHERE Songs.songId = ?`,
       songId,
     );
 

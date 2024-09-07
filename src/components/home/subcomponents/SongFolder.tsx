@@ -88,27 +88,12 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
     setTimeout(() => inputRef.current?.focus(), 100);
   });
 
-  const displaySubtext = useMemo(() => {
-    if (selectedTake?.date) {
-      return (
-        <>
-          <StyledText style={styles.trackSubtext}>
-            {formatDateFromISOString(selectedTake.date)}
-          </StyledText>
-          <StyledText style={styles.trackSubtext}>
-            {formatDuration(selectedTake.duration)}
-          </StyledText>
-        </>
-      );
+  const renderTitle = () => {
+    if (song.orderNumber) {
+      return `${song.orderNumber}. ${title}`;
     }
-    return (
-      <View style={styles.warningContainer}>
-        <StyledText style={styles.warningText}>
-          No recordings exist for this song
-        </StyledText>
-      </View>
-    );
-  }, [selectedTake, styles.warningText]);
+    return title;
+  };
 
   return (
     <TouchableOpacity
@@ -120,9 +105,18 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
     >
       <View style={styles.contents}>
         <TouchableOpacity onPress={onDoubleTap}>
-          <StyledText style={styles.title}>{title}</StyledText>
+          <StyledText style={styles.title}>{renderTitle()}</StyledText>
         </TouchableOpacity>
-        <View style={styles.subtextContainer}>{displaySubtext}</View>
+        <View style={styles.subtextContainer}>
+          <StyledText style={styles.trackSubtext}>
+            {formatDateFromISOString(song.creationDate)}
+          </StyledText>
+          <StyledText style={styles.trackSubtext}>
+            {selectedTake?.uri
+              ? formatDuration(selectedTake.duration)
+              : 'No recordings exist for this song'}
+          </StyledText>
+        </View>
         <View style={styles.iconRow}>
           <TouchableOpacity
             onPress={() => handleOnPressNavigation(Screen.LYRICS)}

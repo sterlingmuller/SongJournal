@@ -27,6 +27,7 @@ export type SelectEntry = { label: string; value: string };
 
 export type DbSong = {
   songId: number;
+  creationDate: Date;
   title: string;
   selectedTakeId: number;
   totalTakes: number;
@@ -85,6 +86,8 @@ export type Song = {
   hasLyrics: boolean;
   isOriginal: boolean;
   artist: string;
+  creationDate: string;
+  orderNumber?: number;
 };
 
 export type UserSettings = {

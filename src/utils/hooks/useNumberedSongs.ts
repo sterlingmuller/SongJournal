@@ -1,32 +1,24 @@
 import { Songs, Song } from '@src/components/common/types';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectIsNumbered } from '@src/state/selectors/settingsSelector';
-import { SortBy } from '@src/components/common/enums';
 
 export const useNumberedSongs = () => {
   const isNumbered = useAppSelector(selectIsNumbered);
 
-  const numberSongs = (songs: Songs, sortedCategory: SortBy) => {
+  const numberSongs = (songs: Songs) => {
     if (isNumbered) {
-      let newNumberedSongs: Songs;
+      const indexMap = new Map(
+        [...songs]
+          .sort((a: Song, b: Song) => a.songId - b.songId)
+          .map((song: Song, index: number) => [song.songId, index + 1]),
+      );
 
-      if (sortedCategory === SortBy.DATE) {
-        const totalSongs = songs.length;
-
-        newNumberedSongs = songs.map((song: Song, index: number) => ({
-          ...song,
-          title: `${totalSongs - index}. ${song.title}`,
-        }));
-      } else {
-        newNumberedSongs = songs.map((song: Song, index: number) => ({
-          ...song,
-          title: `${index + 1}. ${song.title}`,
-        }));
-      }
-      return newNumberedSongs;
-    } else {
-      return songs;
+      return songs.map((song: Song) => ({
+        ...song,
+        orderNumber: indexMap.get(song.songId),
+      }));
     }
+    return songs;
   };
 
   return numberSongs;
