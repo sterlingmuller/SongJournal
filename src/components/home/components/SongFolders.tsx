@@ -5,8 +5,8 @@ import SongFolder from '@src/components/home/subcomponents/SongFolder';
 import DeleteRow from '@src/components/home/subcomponents/DeleteRow';
 import { ListRenderItemInfo } from 'react-native';
 import * as t from '@src/components/common/types';
-import { processSongs } from '@src/utils/songExplorer';
 import { Filter, SortBy } from '@src/components/common/enums';
+import { useProcessSongs } from '@src/utils/hooks/useProcessSongs';
 
 interface Props {
   setToDelete: (value: t.DeleteObject | null) => void;
@@ -29,7 +29,7 @@ const SongFolders = (props: Props) => {
     searchText,
   } = props;
 
-  const songsToDisplay = processSongs(
+  const songsToDisplay = useProcessSongs(
     songs,
     sortedCategory,
     isSortAscending,

@@ -1,8 +1,7 @@
 import { Filter, SortBy } from '@src/components/common/enums';
 import { Song, Songs, Take } from '@src/components/common/types';
-import { useNumberedSongs } from './hooks/useNumberedSongs';
 
-const filterSongs = (songs: Songs, activeFilters: Filter[]) =>
+export const filterSongs = (songs: Songs, activeFilters: Filter[]) =>
   songs.filter((song: Song) => {
     for (const filter of activeFilters) {
       switch (filter) {
@@ -26,33 +25,37 @@ const filterSongs = (songs: Songs, activeFilters: Filter[]) =>
     return true;
   });
 
-const searchSongs = (songs: Songs, searchText: string): Songs => {
-  if (!searchText) {
-    return songs;
-  }
-  return songs.filter((song: Song) =>
+export const searchSongs = (songs: Songs, searchText: string): Songs =>
+  songs.filter((song: Song) =>
     song.title.toLowerCase().includes(searchText.toLowerCase()),
   );
-};
 
-const sortSongs = (
+export const sortSongs = (
   songs: Songs,
   sortedCategory: SortBy,
   isSortAscending: boolean,
-): Songs => {
-  return [...songs].sort((a: Song, b: Song) => {
+): Songs =>
+  [...songs].sort((a: Song, b: Song) => {
     switch (sortedCategory) {
       case SortBy.DATE: {
-        const dateA =
-          a.takes.find((take: Take) => take.takeId === a.selectedTakeId)
-            ?.date || '';
-        const dateB =
-          b.takes.find((take: Take) => take.takeId === b.selectedTakeId)
-            ?.date || '';
         return isSortAscending
-          ? new Date(dateA).getTime() - new Date(dateB).getTime()
-          : new Date(dateB).getTime() - new Date(dateA).getTime();
+          ? new Date(a.creationDate).getTime() -
+              new Date(b.creationDate).getTime()
+          : new Date(b.creationDate).getTime() -
+              new Date(a.creationDate).getTime();
       }
+      case SortBy.LAST_UPDATED: {
+        const dateA =
+          a.takes.length > 0
+            ? new Date(a.takes[a.takes.length - 1].date).getTime()
+            : 0;
+        const dateB =
+          b.takes.length > 0
+            ? new Date(b.takes[b.takes.length - 1].date).getTime()
+            : 0;
+        return isSortAscending ? dateA - dateB : dateB - dateA;
+      }
+
       case SortBy.NAME:
         return isSortAscending
           ? a.title.localeCompare(b.title)
@@ -70,21 +73,3 @@ const sortSongs = (
         return 0;
     }
   });
-};
-
-export const processSongs = (
-  songs: Songs,
-  sortedCategory: SortBy,
-  isSortAscending: boolean,
-  activeFilters: Filter[],
-  searchText: string,
-): Songs => {
-  let processedSongs = filterSongs(songs, activeFilters);
-  const numberSongs = useNumberedSongs();
-
-  processedSongs = searchSongs(processedSongs, searchText);
-  processedSongs = sortSongs(processedSongs, sortedCategory, isSortAscending);
-  processedSongs = numberSongs(processedSongs, sortedCategory);
-
-  return processedSongs;
-};

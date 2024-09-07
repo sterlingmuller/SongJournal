@@ -13,7 +13,6 @@ interface Styles {
   deleteButton: ViewStyle;
   staticPlaybackBar: ViewStyle;
   subtextContainer: ViewStyle;
-  warningContainer: ViewStyle;
   editTitleText: TextStyle;
   warningText: TextStyle;
   trackSubtext: TextStyle;
@@ -103,9 +102,7 @@ const useSongFolderStyles = () => {
       fontStyle: 'italic',
     },
 
-    warningContainer: { height: 40, flexDirection: 'row' },
-
-    subtextContainer: { height: 40 },
+    subtextContainer: { height: 40, flexDirection: 'column' },
   });
 
   return songFolderStyles;

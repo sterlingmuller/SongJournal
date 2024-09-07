@@ -1,7 +1,7 @@
 import { type SQLiteDatabase } from 'expo-sqlite';
 
 const createSongsTable =
-  'CREATE TABLE IF NOT EXISTS Songs (songId INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT UNIQUE, selectedTakeId INTEGER, totalTakes INTEGER, completed BOOLEAN NOT NULL, hasLyrics BOOLEAN NOT NULL, isOriginal BOOLEAN, artistId INTEGER, FOREIGN KEY (selectedTakeId) REFERENCES Takes(takeId), FOREIGN KEY (artistId) REFERENCES Artists(artistId));';
+  'CREATE TABLE IF NOT EXISTS Songs (songId INTEGER PRIMARY KEY AUTOINCREMENT, creationDate STRING NOT NULL, title TEXT UNIQUE, selectedTakeId INTEGER, totalTakes INTEGER, completed BOOLEAN NOT NULL, hasLyrics BOOLEAN NOT NULL, isOriginal BOOLEAN, artistId INTEGER, FOREIGN KEY (selectedTakeId) REFERENCES Takes(takeId), FOREIGN KEY (artistId) REFERENCES Artists(artistId));';
 
 const createTakesTable =
   'CREATE TABLE IF NOT EXISTS Takes (takeId INTEGER PRIMARY KEY AUTOINCREMENT, songId INTEGER NOT NULL, title TEXT NOT NULL, date TEXT NOT NULL, notes TEXT, uri TEXT, duration INT, FOREIGN KEY (songId) REFERENCES Songs(songId));';

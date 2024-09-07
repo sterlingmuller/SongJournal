@@ -18,6 +18,7 @@ export enum ColorTheme {
 
 export enum SortBy {
   DATE = 'Date',
+  LAST_UPDATED = 'Last Updated',
   NAME = 'Name',
   LENGTH = 'Length',
 }
