@@ -56,6 +56,10 @@ export const EMPTY_SONG: t.Song = {
   page: EMPTY_PAGE,
   completed: false,
   hasLyrics: false,
+  isOriginal: true,
+  artist: '',
+  creationDate: '',
+  orderNumber: -1,
 };
 
 export const DELETE_TAKE_TEXT: string =
@@ -147,6 +151,7 @@ export const TIME_SIGNATURES = [
 
 export const SORT_SELECT = [
   { label: SortBy.DATE, value: SortBy.DATE },
+  { label: SortBy.LAST_UPDATED, value: SortBy.LAST_UPDATED },
   { label: SortBy.NAME, value: SortBy.NAME },
   { label: SortBy.LENGTH, value: SortBy.LENGTH },
 ];

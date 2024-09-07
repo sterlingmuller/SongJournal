@@ -25,7 +25,7 @@ const useSortByModalStyles = () => {
       position: 'absolute',
       backgroundColor: theme.secondary,
       width: '100%',
-      height: '42%',
+      height: '45%',
       borderBottomWidth: 1,
       borderBottomColor: c.black,
       bottom: 0,
