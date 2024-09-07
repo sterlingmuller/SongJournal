@@ -13,7 +13,7 @@ const createSettingsTable = `
 CREATE TABLE IF NOT EXISTS Settings (
   id INTEGER PRIMARY KEY CHECK (id = 1),
   defaultSortType TEXT NOT NULL DEFAULT 'Date',
-  isAscending BOOLEAN NOT NULL DEFAULT 1,
+  isAscending BOOLEAN NOT NULL DEFAULT 0,
   defaultArtistId INTEGER DEFAULT -1,
   isNumbered BOOLEAN NOT NULL DEFAULT 0,
   displayTips BOOLEAN NOT NULL DEFAULT 1,
