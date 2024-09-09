@@ -2,17 +2,27 @@ import { useState, useCallback } from 'react';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import { zip } from 'react-native-zip-archive';
+import { useSQLiteContext } from 'expo-sqlite';
+
 import { Page, Song, Take } from '@src/components/common/types';
 import { convertToSnakeCase } from '@src/utils/convertToSnakeCase';
-import { useSQLiteContext } from 'expo-sqlite';
 import { fetchPageBySongId } from '@src/data/repositories/PageRepository';
 import { generatePagePdf } from '@src/utils/generatePagePdf';
+import { useArtistName } from './useArtistName';
 
 // add Error handling on screen - have an error modal
 
 function useFileShare() {
   const [error, setError] = useState<string | null>(null);
   const db = useSQLiteContext();
+  const { getArtistName } = useArtistName();
+
+  const getPdfUri = async (title: string, page: Page, artistId: number) => {
+    const artist = getArtistName(artistId);
+    const pdfUri = await generatePagePdf(title, page, artist);
+
+    return pdfUri;
+  };
 
   const shareSongFolder = useCallback(async (song: Song) => {
     setError(null);
@@ -36,7 +46,7 @@ function useFileShare() {
       }
 
       if (page.lyrics) {
-        const pdfUri = await generatePagePdf(formattedTitle, page);
+        const pdfUri = await getPdfUri(song.title, page, song.artistId);
 
         await FileSystem.copyAsync({
           from: pdfUri,
@@ -84,23 +94,26 @@ function useFileShare() {
     [],
   );
 
-  const shareLyrics = useCallback(async (title: string, page: Page) => {
-    try {
-      const formattedTitle = convertToSnakeCase(title);
-      const fileUri = `${FileSystem.cacheDirectory}${formattedTitle}.pdf`;
-      const pdfUri = await generatePagePdf(title, page);
+  const shareLyrics = useCallback(
+    async (title: string, page: Page, artistId: number) => {
+      try {
+        const formattedTitle = convertToSnakeCase(title);
+        const fileUri = `${FileSystem.cacheDirectory}${formattedTitle}.pdf`;
+        const pdfUri = await getPdfUri(title, page, artistId);
 
-      await FileSystem.copyAsync({
-        from: pdfUri,
-        to: fileUri,
-      });
-      await Sharing.shareAsync(fileUri, { mimeType: 'application/pdf' });
+        await FileSystem.copyAsync({
+          from: pdfUri,
+          to: fileUri,
+        });
+        await Sharing.shareAsync(fileUri, { mimeType: 'application/pdf' });
 
-      FileSystem.deleteAsync(fileUri, { idempotent: true });
-    } catch (err) {
-      setError((err as Error).message);
-    }
-  }, []);
+        FileSystem.deleteAsync(fileUri, { idempotent: true });
+      } catch (err) {
+        setError((err as Error).message);
+      }
+    },
+    [],
+  );
 
   return { shareSongFolder, shareTake, shareLyrics, error };
 }

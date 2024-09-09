@@ -34,6 +34,7 @@ function* fetchPage(action: PayloadAction<FetchPagePayload>) {
 
     if (!pageExists) {
       const page = yield call(fetchPageBySongId, action.payload);
+      console.log('page:', page);
       yield put(fetchPageSuccess({ page, songId: action.payload.songId }));
     }
     yield put(endLoading());

@@ -6,7 +6,10 @@ import useOptionBarStyles from '@src/styles/optionBar';
 import { LYRIC_SCREEN_OPTIONS } from '@src/components/common/constants';
 import useFileShare from '@src/utils/hooks/useFileShare';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
-import { selectCurrentSongTitle } from '@src/state/selectors/songsSelector';
+import {
+  selectCurrentSongArtistId,
+  selectCurrentSongTitle,
+} from '@src/state/selectors/songsSelector';
 import { LyricsOption } from '@src/components/common/enums';
 
 interface Props {
@@ -19,9 +22,10 @@ const OptionsBar = ({ selectedOption, setSelectedOption, page }: Props) => {
   const styles = useOptionBarStyles();
   const { shareLyrics } = useFileShare();
   const songTitle = useAppSelector(selectCurrentSongTitle);
+  const artistId = useAppSelector(selectCurrentSongArtistId);
 
   const shareLyricsSync = async () => {
-    await shareLyrics(songTitle, page);
+    await shareLyrics(songTitle, page, artistId);
     setSelectedOption(LyricsOption.NONE);
   };
 
