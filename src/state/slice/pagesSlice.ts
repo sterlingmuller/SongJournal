@@ -25,7 +25,7 @@ const pagesSlice = createSlice({
       const { page, songId } = action.payload;
       state.items[songId] = page;
     },
-    updateLyrics: (
+    updateLyricsSuccess: (
       state: PagesSliceState,
       action: PayloadAction<UpdateLyricsStatePayload>,
     ) => {
@@ -34,7 +34,7 @@ const pagesSlice = createSlice({
         state.items[songId].lyrics = lyrics;
       }
     },
-    updatePageInfo: (
+    updatePageInfoSuccess: (
       state: PagesSliceState,
       action: PayloadAction<UpdatePageInfoStatePayload>,
     ) => {
@@ -46,7 +46,7 @@ const pagesSlice = createSlice({
   },
 });
 
-export const { fetchPageSuccess, updateLyrics, updatePageInfo } =
+export const { fetchPageSuccess, updateLyricsSuccess, updatePageInfoSuccess } =
   pagesSlice.actions;
 
 export default pagesSlice.reducer;

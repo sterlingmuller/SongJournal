@@ -3,7 +3,7 @@ import {
   FetchPagePayload,
   Page,
   UpdateLyricsPayload,
-  UpdateSongInfoPayload,
+  UpdatePageInfoPayload,
 } from '@src/components/common/types';
 
 export const fetchPageBySongId = async (payload: FetchPagePayload) => {
@@ -30,30 +30,20 @@ export const fetchPageBySongId = async (payload: FetchPagePayload) => {
   }
 };
 
-export const updateSongInfo = async (payload: UpdateSongInfoPayload) => {
-  const { songId, info, completed, db } = payload;
+export const updatePageInfo = async (payload: UpdatePageInfoPayload) => {
+  const { songId, info, db } = payload;
 
   try {
-    if (info && Object.keys(info).length > 0) {
-      const clauses = Object.keys(info)
-        .map((key: keyof Page) => `${key} = ?`)
-        .join(', ');
-      const params = Object.values(info);
+    const clauses = Object.keys(info)
+      .map((key: keyof Page) => `${key} = ?`)
+      .join(', ');
+    const params = Object.values(info);
 
-      await db.runAsync(
-        `UPDATE Page SET ${clauses} WHERE songId = ?`,
-        ...params,
-        songId,
-      );
-    }
-
-    if (completed !== undefined) {
-      await db.runAsync(
-        `UPDATE Songs SET completed = ? WHERE songId = ?`,
-        completed,
-        songId,
-      );
-    }
+    await db.runAsync(
+      `UPDATE Page SET ${clauses} WHERE songId = ?`,
+      ...params,
+      songId,
+    );
   } catch (err) {
     console.error('Error updating page,', err);
   }
