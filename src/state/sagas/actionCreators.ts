@@ -29,6 +29,20 @@ export const updateSongTitleRequest = (
   payload,
 });
 
+export const updateSongArtistRequest = (
+  payload: t.UpdateSongArtistSagaPayload,
+) => ({
+  type: at.UPDATE_SONG_ARTIST_REQUEST,
+  payload,
+});
+
+export const updateSongCompletionRequest = (
+  payload: t.UpdateSongCompletionSagaPayload,
+) => ({
+  type: at.UPDATE_SONG_COMPLETION_REQUEST,
+  payload,
+});
+
 // Pages
 
 export const fetchPageRequest = (payload: t.FetchPagePayload) => ({
@@ -41,7 +55,7 @@ export const updateLyricsRequest = (payload: t.UpdateLyricsPayload) => ({
   payload,
 });
 
-export const UpdateSongInfoRequest = (payload: t.UpdateSongInfoPayload) => ({
+export const UpdatePageInfoRequest = (payload: t.UpdatePageInfoPayload) => ({
   type: at.UPDATE_PAGE_INFO_REQUEST,
   payload,
 });

@@ -33,7 +33,6 @@ const useSongDetailStyles = () => {
       alignItems: 'center',
       justifyContent: 'center',
       gap: 10,
-      paddingBottom: 10,
     },
 
     checkbox: {

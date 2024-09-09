@@ -34,7 +34,7 @@ export type DbSong = {
   completed: boolean;
   hasLyrics: boolean;
   isOriginal: boolean;
-  artist: string;
+  artistId: number;
 };
 
 export type Take = {
@@ -85,7 +85,7 @@ export type Song = {
   completed: boolean;
   hasLyrics: boolean;
   isOriginal: boolean;
-  artist: string;
+  artistId: number;
   creationDate: string;
   orderNumber?: number;
 };
@@ -164,6 +164,18 @@ export type DeleteSongPayload = {
   db: SQLiteDatabase;
 };
 
+export type UpdateSongArtistSagaPayload = {
+  artistId: number;
+  songId: number;
+  db: SQLiteDatabase;
+};
+
+export type UpdateSongCompletionSagaPayload = {
+  completed: boolean;
+  songId: number;
+  db: SQLiteDatabase;
+};
+
 export type UpdateSongTitleSagaPayload = {
   title: string;
   songId: number;
@@ -220,10 +232,9 @@ export type FetchPageSuccessPayload = {
   page: Page;
 };
 
-export type UpdateSongInfoPayload = {
+export type UpdatePageInfoPayload = {
   songId: number;
-  info?: SongInfo;
-  completed?: boolean;
+  info: SongInfo;
   db: SQLiteDatabase;
 };
 
@@ -235,6 +246,11 @@ export type UpdatePageInfoStatePayload = {
 export type UpdateSongCompletionStatePayload = {
   songId: number;
   completed: boolean;
+};
+
+export type UpdateSongArtistStatePayload = {
+  songId: number;
+  artistId: number;
 };
 
 export type UpdateSongHasLyricsStatePayload = {

@@ -105,7 +105,7 @@ const songsSlice = createSlice({
         }
       }
     },
-    updateSongCompletion: (
+    updateSongCompletionSuccess: (
       state: SongsSliceState,
       action: PayloadAction<t.UpdateSongCompletionStatePayload>,
     ) => {
@@ -113,6 +113,16 @@ const songsSlice = createSlice({
       const song = state.items.find((song: t.Song) => song.songId === songId);
       if (song) {
         song.completed = completed;
+      }
+    },
+    updateSongArtistSuccess: (
+      state: SongsSliceState,
+      action: PayloadAction<t.UpdateSongArtistStatePayload>,
+    ) => {
+      const { songId, artistId } = action.payload;
+      const song = state.items.find((song: t.Song) => song.songId === songId);
+      if (song) {
+        song.artistId = artistId;
       }
     },
     updateSongHasLyrics: (
@@ -132,12 +142,13 @@ export const {
   fetchSongsWithTakesSuccess,
   createSongSuccess,
   updateSongTitleSuccess,
+  updateSongArtistSuccess,
   removeSongSuccess,
   removeTakeSuccess,
   updateTakeNotesSuccess,
   createTakeSuccess,
   updateSelectedTakeIdSuccess,
-  updateSongCompletion,
+  updateSongCompletionSuccess,
   updateSongHasLyrics,
   updateTakeTitleSuccess,
 } = songsSlice.actions;

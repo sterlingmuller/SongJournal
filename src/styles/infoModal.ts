@@ -7,10 +7,14 @@ interface Styles {
   container: ViewStyle;
   scrollContainer: ViewStyle;
   buttonContainer: ViewStyle;
+  artistContainer: ViewStyle;
+  artistSelectContainer: ViewStyle;
   title: TextStyle;
   textbox: ViewStyle;
+  artistTextbox: ViewStyle;
   details: ViewStyle;
   input: TextStyle;
+  artistEditText: TextStyle;
 }
 
 const useInfoModalStyle = () => {
@@ -25,7 +29,7 @@ const useInfoModalStyle = () => {
     container: {
       backgroundColor: theme.secondary,
       width: SCREEN_WIDTH * 0.8,
-      height: SCREEN_HEIGHT * 0.6,
+      height: SCREEN_HEIGHT * 0.62,
       borderRadius: 15,
       overflow: 'hidden',
       flexDirection: 'column',
@@ -46,10 +50,37 @@ const useInfoModalStyle = () => {
       borderRadius: 10,
       padding: 8,
       width: '85%',
-      height: SCREEN_HEIGHT * 0.25,
+      height: SCREEN_HEIGHT * 0.2,
       borderWidth: 1,
       borderColor: '#ccc',
       marginLeft: 25,
+    },
+    artistSelectContainer: {
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 10,
+    },
+    artistContainer: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      paddingBottom: 5,
+    },
+    artistTextbox: {
+      backgroundColor: '#f0f0f0',
+      borderRadius: 5,
+      paddingHorizontal: 10,
+      paddingVertical: 8,
+      borderWidth: 1,
+      borderColor: '#ccc',
+      minWidth: 150,
+      alignItems: 'center',
+    },
+    artistEditText: {
+      fontStyle: 'italic',
+      color: theme.primary,
+      fontWeight: 'bold',
     },
     input: {
       flex: 1,

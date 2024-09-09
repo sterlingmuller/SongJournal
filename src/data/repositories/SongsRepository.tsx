@@ -4,7 +4,7 @@ import * as t from '@src/components/common/types';
 
 export const fetchSongsWithArtists = (db: SQLiteDatabase) =>
   db.getAllSync(
-    'SELECT songId, creationDate, title, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal, Artists.name as artist FROM Songs LEFT JOIN Artists ON Songs.artistId = Artists.artistId',
+    'SELECT songId, creationDate, title, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal, artistId FROM Songs',
   );
 
 export const getTakesAndPageBySongId = (db: SQLiteDatabase, songId: number) => {
@@ -44,7 +44,7 @@ export const createSong = async ({ db, title }: t.CreateSongPayload) => {
     );
 
     const song: t.DbSong = await db.getFirstAsync(
-      `SELECT songId, creationDate, title, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal, Artists.name as artist FROM Songs LEFT JOIN Artists ON Songs.artistId = Artists.artistId WHERE Songs.songId = ?`,
+      `SELECT songId, creationDate, title, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal, artistId FROM Songs WHERE Songs.songId = ?`,
       songId,
     );
 
@@ -100,5 +100,37 @@ export const updateSongTitle = async ({
     );
   } catch (err) {
     console.error('Error updating song title', err);
+  }
+};
+
+export const updateSongArtist = async ({
+  db,
+  songId,
+  artistId,
+}: t.UpdateSongArtistSagaPayload) => {
+  try {
+    await db.runAsync(
+      'UPDATE Songs SET artistId = ? WHERE songId = ?',
+      artistId,
+      songId,
+    );
+  } catch (err) {
+    console.error('Error updating song artist', err);
+  }
+};
+
+export const updateSongCompletion = async ({
+  db,
+  songId,
+  completed,
+}: t.UpdateSongCompletionSagaPayload) => {
+  try {
+    await db.runAsync(
+      'UPDATE Songs SET completed = ? WHERE songId = ?',
+      completed,
+      songId,
+    );
+  } catch (err) {
+    console.error('Error updating song completion', err);
   }
 };

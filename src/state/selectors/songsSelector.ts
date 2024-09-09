@@ -43,7 +43,7 @@ export const selectCurrentSongCompletionStatus = createSelector(
   (song: Song) => !!song.completed,
 );
 
-export const selectCurrentSongArtist = createSelector(
+export const selectCurrentSongArtistId = createSelector(
   [selectCurrentSong],
-  (song: Song) => !!song.artist,
+  (song: Song) => song.artistId,
 );

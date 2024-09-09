@@ -5,18 +5,26 @@ import { useSQLiteContext } from 'expo-sqlite';
 
 import CompletionStatus from '@src/components/lyrics/subcomponents/CompletionStatus';
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
-import { SongInfo, UpdateSongInfoPayload } from '@src/components/common/types';
+import { SongInfo } from '@src/components/common/types';
 import { SONG_DETAILS } from '@src/components/common/constants';
 import useInfoModalStyle from '@src/styles/infoModal';
 import {
   useAppDispatch,
   useAppSelector,
 } from '@src/utils/hooks/typedReduxHooks';
-import { UpdateSongInfoRequest } from '@src/state/sagas/actionCreators';
+import {
+  updateSongArtistRequest,
+  updateSongCompletionRequest,
+  UpdatePageInfoRequest,
+} from '@src/state/sagas/actionCreators';
 import SongDetailSelect from '@src/components/lyrics/subcomponents/SongDetailSelect';
 import BpmDetail from '@src/components/lyrics/subcomponents/BpmDetail';
 import { SongDetailKey } from '@src/components/common/enums';
-import { selectCurrentSongCompletionStatus } from '@src/state/selectors/songsSelector';
+import {
+  selectCurrentSongArtistId,
+  selectCurrentSongCompletionStatus,
+} from '@src/state/selectors/songsSelector';
+import AboutArtist from '../subcomponents/AboutArtist';
 
 interface Props {
   isInfoModalOpen: boolean;
@@ -36,11 +44,14 @@ const InfoModal = (props: Props) => {
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
   const completionStatus = useAppSelector(selectCurrentSongCompletionStatus);
+  const currentSongArtistId = useAppSelector(selectCurrentSongArtistId);
 
   const [newInfo, setNewInfo] = useState<SongInfo>(originalInfo);
   const [newCompletionStatus, setNewCompletionStatus] =
     useState<boolean>(completionStatus);
   const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false);
+  const [selectedArtistId, setSelectedArtistId] = useState(currentSongArtistId);
+
   const bpmNum = Number(newInfo.bpm);
 
   const onExitPress = () => {
@@ -63,9 +74,17 @@ const InfoModal = (props: Props) => {
   useEffect(() => {
     setIsSaveButtonEnabled(
       Object.keys(changedInfo).length > 0 ||
-        newCompletionStatus !== completionStatus,
+        newCompletionStatus !== completionStatus ||
+        selectedArtistId !== currentSongArtistId,
     );
-  }, [newInfo, originalInfo, newCompletionStatus, completionStatus]);
+  }, [
+    newInfo,
+    originalInfo,
+    newCompletionStatus,
+    completionStatus,
+    selectedArtistId,
+    currentSongArtistId,
+  ]);
 
   const handleInputChange = (key: keyof SongInfo, value: string | boolean) => {
     setNewInfo({ ...newInfo, [key]: value });
@@ -81,17 +100,25 @@ const InfoModal = (props: Props) => {
       return;
     }
 
-    const updatePayload: UpdateSongInfoPayload = { songId, db };
-
     if (Object.keys(changedInfo).length > 0) {
-      updatePayload.info = changedInfo;
+      dispatch(UpdatePageInfoRequest({ songId, db, info: changedInfo }));
     }
 
     if (newCompletionStatus !== completionStatus) {
-      updatePayload.completed = newCompletionStatus;
+      dispatch(
+        updateSongCompletionRequest({
+          songId,
+          db,
+          completed: newCompletionStatus,
+        }),
+      );
     }
 
-    dispatch(UpdateSongInfoRequest(updatePayload));
+    if (selectedArtistId !== currentSongArtistId) {
+      dispatch(
+        updateSongArtistRequest({ songId, artistId: selectedArtistId, db }),
+      );
+    }
 
     setIsInfoModalOpen(false);
   };
@@ -144,6 +171,10 @@ const InfoModal = (props: Props) => {
               },
             )}
           </View>
+          <AboutArtist
+            selectedArtistId={selectedArtistId}
+            setSelectedArtistId={setSelectedArtistId}
+          />
           <CompletionStatus
             isCompleted={newCompletionStatus}
             handleInputChange={handleCompletionStatusChange}
