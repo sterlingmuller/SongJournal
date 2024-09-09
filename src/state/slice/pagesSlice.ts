@@ -40,7 +40,10 @@ const pagesSlice = createSlice({
     ) => {
       const { songId, info } = action.payload;
       if (state.items[songId]) {
-        state.items[songId].info = info;
+        state.items[songId].info = {
+          ...state.items[songId].info,
+          ...info,
+        };
       }
     },
   },

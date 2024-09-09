@@ -3,11 +3,9 @@ import { TouchableOpacity, View } from 'react-native';
 
 import SettingsWheel from '@src/components/common/components/SettingsWheel';
 import StyledText from '@src/components/common/components/StyledText';
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
-import { selectArtists } from '@src/state/selectors/artistsSelector';
-import { Artist } from '@src/components/common/types';
 import NewArtistModal from '@src/components/settings/components/NewArtistModal';
 import useInfoModalStyle from '@src/styles/infoModal';
+import { useArtistName } from '@src/utils/hooks/useArtistName';
 
 interface Props {
   selectedArtistId: number;
@@ -16,23 +14,10 @@ interface Props {
 
 const AboutArtist = ({ selectedArtistId, setSelectedArtistId }: Props) => {
   const styles = useInfoModalStyle();
-  const artists = useAppSelector(selectArtists);
+  const { getArtistName, artistItems } = useArtistName();
 
   const [isSettingsWheelOpen, setIsSettingsWheelOpen] = useState(false);
   const [isNewArtistOpen, setIsNewArtistOpen] = useState(false);
-
-  const defaultArtistOption = { label: '--', value: -1 };
-
-  const artistItems = [
-    defaultArtistOption,
-    ...artists.map((artist: Artist) => ({
-      label: artist.name,
-      value: artist.artistId,
-    })),
-  ];
-
-  const getArtistName = (id: number) =>
-    artists.find((artist: Artist) => artist.artistId === id)?.name || '--';
 
   const [displayedArtistName, setDisplayedArtistName] = useState(
     getArtistName(selectedArtistId),

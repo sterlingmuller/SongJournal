@@ -57,7 +57,7 @@ export const EMPTY_SONG: t.Song = {
   completed: false,
   hasLyrics: false,
   isOriginal: true,
-  artist: '',
+  artistId: -1,
   creationDate: '',
   orderNumber: -1,
 };

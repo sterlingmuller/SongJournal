@@ -5,14 +5,10 @@ import { useSQLiteContext } from 'expo-sqlite';
 import usePreferencesStyle from '@src/styles/preferences';
 import SettingsWheel from '@src/components/common/components/SettingsWheel';
 import StyledText from '@src/components/common/components/StyledText';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@src/utils/hooks/typedReduxHooks';
+import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
 import { updateSettingsRequest } from '@src/state/sagas/actionCreators';
-import { selectArtists } from '@src/state/selectors/artistsSelector';
-import { Artist } from '@src/components/common/types';
 import NewArtistModal from '../components/NewArtistModal';
+import { useArtistName } from '@src/utils/hooks/useArtistName';
 
 interface Props {
   defaultArtistId: number;
@@ -22,24 +18,11 @@ const DefaultArtistOptions = ({ defaultArtistId }: Props) => {
   const styles = usePreferencesStyle();
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
-  const artists = useAppSelector(selectArtists);
+  const { getArtistName, artistItems } = useArtistName();
 
   const [isSettingsWheelOpen, setIsSettingsWheelOpen] = useState(false);
   const [selectedArtistId, setSelectedArtistId] = useState(defaultArtistId);
   const [isNewArtistOpen, setIsNewArtistOpen] = useState(false);
-
-  const defaultArtistOption = { label: '--', value: -1 };
-
-  const artistItems = [
-    defaultArtistOption,
-    ...artists.map((artist: Artist) => ({
-      label: artist.name,
-      value: artist.artistId,
-    })),
-  ];
-
-  const getArtistName = (id: number) =>
-    artists.find((artist: Artist) => artist.artistId === id)?.name || '--';
 
   const [displayedArtistName, setDisplayedArtistName] = useState(
     getArtistName(defaultArtistId),
