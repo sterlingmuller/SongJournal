@@ -6,6 +6,7 @@ interface Styles {
   version: ViewStyle;
   selectedTheme: ViewStyle;
   themeLabel: ViewStyle;
+  backupButtons: ViewStyle;
   button: ViewStyle;
   sectionTitle: TextStyle;
   title: TextStyle;
@@ -62,8 +63,15 @@ const useSettingsStyle = () => {
       marginLeft: 55,
     },
 
+    backupButtons: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      paddingTop: 20,
+      paddingBottom: 10,
+    },
+
     button: {
-      width: 100,
+      width: '40%',
       borderRadius: 10,
     },
   });
