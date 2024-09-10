@@ -39,7 +39,7 @@ export const migrateDbIfNeeded = async (db: SQLiteDatabase) => {
   }
   if (currentDbVersion === 0) {
     await db.execAsync(
-      `PRAGMA journal_mode = 'wal';` +
+      `PRAGMA journal_mode = 'delete';` +
         createSongsTable +
         createTakesTable +
         createPageTable +

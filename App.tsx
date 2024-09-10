@@ -8,13 +8,14 @@ import { ColorThemeProvider } from '@src/state/context/ThemeContext';
 import { store } from '@src/state/store/index';
 import { migrateDbIfNeeded } from '@src/data/database/db';
 import { AudioProvider } from '@src/state/context/AudioContext';
+import { dbName } from '@src/components/common/constants';
 
 const App = () => (
   <GestureHandlerRootView style={{ flex: 1 }}>
     <ColorThemeProvider>
       <Suspense fallback={null}>
         <SQLiteProvider
-          databaseName="songjournal4.db"
+          databaseName={dbName}
           onInit={migrateDbIfNeeded}
           useSuspense
         >
