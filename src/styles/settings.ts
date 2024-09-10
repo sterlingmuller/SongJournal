@@ -6,6 +6,7 @@ interface Styles {
   version: ViewStyle;
   selectedTheme: ViewStyle;
   themeLabel: ViewStyle;
+  button: ViewStyle;
   sectionTitle: TextStyle;
   title: TextStyle;
   about: TextStyle;
@@ -59,6 +60,11 @@ const useSettingsStyle = () => {
     themeLabel: {
       paddingVertical: 4,
       marginLeft: 55,
+    },
+
+    button: {
+      width: 100,
+      borderRadius: 10,
     },
   });
 
