@@ -1,46 +1,26 @@
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform, View } from 'react-native';
-import { useSQLiteContext } from 'expo-sqlite';
-import { useSelector } from 'react-redux';
 
-import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
-import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
 import useLyricScreenStyles from '@src/styles/lyricsScreen';
-import { selectCurrentSongPage } from '@src/state/selectors/pagesSelector';
-import { updateLyricsRequest } from '@src/state/sagas/actionCreators';
 import TextEditor from '@src/components/common/components/TextEditor';
-import { LyricsOption } from '@src/components/common/enums';
-import { flatten } from 'ramda';
+import useDebounce from '@src/utils/hooks/useDebounce';
 
 interface Props {
-  setSelectedOption: (value: LyricsOption) => void;
-  songId: number;
+  newLyrics: string;
+  setNewLyrics: (value: string) => void;
 }
 
-const EditLyricsSheet = ({ setSelectedOption, songId }: Props) => {
-  const dispatch = useAppDispatch();
-  const db = useSQLiteContext();
-  const { lyrics } = useSelector(selectCurrentSongPage);
+const EditLyricsSheet = ({ newLyrics, setNewLyrics }: Props) => {
   const styles = useLyricScreenStyles();
+  const [localLyrics, setLocalLyrics] = useState(newLyrics);
 
-  const [newLyrics, setNewLyrics] = useState<string>(lyrics);
-
-  const disabled: boolean = newLyrics === lyrics;
-  const onCancelPress = () => {
+  const debouncedLyrics = useDebounce((lyrics: string) => {
     setNewLyrics(lyrics);
-    setSelectedOption(LyricsOption.NONE);
-  };
+  }, 400);
 
-  const onSavePress = () => {
-    dispatch(
-      updateLyricsRequest({
-        songId,
-        lyrics: newLyrics,
-        db,
-      }),
-    );
-
-    if (newLyrics) setSelectedOption(LyricsOption.NONE);
+  const handleLyricsChange = (lyrics: string) => {
+    setLocalLyrics(lyrics);
+    debouncedLyrics(lyrics);
   };
 
   return (
@@ -49,13 +29,8 @@ const EditLyricsSheet = ({ setSelectedOption, songId }: Props) => {
       style={styles.keyboardAvoidingViewContainer}
     >
       <View style={styles.editTextContainer}>
-        <TextEditor initialText={lyrics} setText={setNewLyrics} />
+        <TextEditor initialText={localLyrics} setText={handleLyricsChange} />
       </View>
-      <SaveAndCancelButtons
-        onPress={onSavePress}
-        onExitPress={onCancelPress}
-        disabled={disabled}
-      />
     </KeyboardAvoidingView>
   );
 };
