@@ -16,8 +16,8 @@ const useLyricsHeaderStyles = () => {
     container: {
       display: 'flex',
       flexDirection: 'row',
-      height: 115,
-      paddingTop: 30,
+      paddingTop: 50,
+      paddingBottom: 20,
       alignItems: 'center',
       justifyContent: 'space-between',
       backgroundColor: theme.primary,
