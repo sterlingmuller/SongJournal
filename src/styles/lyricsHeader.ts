@@ -6,6 +6,7 @@ interface Styles {
   title: TextStyle;
   titlePlusArrow: ViewStyle;
   info: ViewStyle;
+  headerIconRow: ViewStyle;
 }
 
 const useLyricsHeaderStyles = () => {
@@ -36,6 +37,12 @@ const useLyricsHeaderStyles = () => {
 
     info: {
       left: 0,
+    },
+
+    headerIconRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 30,
     },
   });
 
