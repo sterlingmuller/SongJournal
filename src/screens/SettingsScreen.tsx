@@ -8,7 +8,7 @@ import useSettingsStyle from '@styles/settings';
 import useGlobalStyles from '@styles/global';
 import StyledText from '@src/components/common/components/StyledText';
 import Preferences from '@src/components/settings/components/Preferences';
-import ImportExport from '@src/components/settings/components/ImportExport';
+import BackupAndRestore from '@src/components/settings/components/BackupAndRestore';
 
 const SettingsScreen = () => {
   const styles = useSettingsStyle();
@@ -20,7 +20,7 @@ const SettingsScreen = () => {
         <BackupAndSync />
         <Preferences />
         <Theme />
-        <ImportExport />
+        <BackupAndRestore />
         <About />
       </View>
       <StyledText style={styles.version}>Version 0.0.0</StyledText>
