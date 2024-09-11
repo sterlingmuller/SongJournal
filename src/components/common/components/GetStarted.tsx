@@ -8,6 +8,9 @@ import { Screen } from '@src/components/common/enums';
 import { FRACTION_UNICODE } from '../constants';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
+import BadEggIcon from '@src/icons/BadEggIcon';
+import CacsusIcon from '@src/icons/CacsusIcon';
+import DeadAdimIcon from '@src/icons/DeadAdimIcon';
 
 interface props {
   screen: 'Home' | 'Song' | 'MusicPlayer';
@@ -69,7 +72,7 @@ const GetStarted = ({ screen }: props) => {
   return (
     <View style={styles.container}>
       <View style={styles.eggContainer}>
-        <EggIcon />
+        <CacsusIcon />
       </View>
       <View style={styles.textbox}>
         {message}

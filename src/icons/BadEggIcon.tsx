@@ -1,7 +1,7 @@
 import React from 'react';
 import Svg, { Path, Ellipse } from 'react-native-svg';
 
-const EggIcon = () => (
+const BadEggIcon = () => (
   <Svg width="140" height="110" viewBox="0 0 178 169" fill="none">
     <Path
       d="M152.396 65.3194C152.396 102.899 122.723 138.506 85.1434 138.506C47.564 138.506 2 110.498 2 72.9188C5.23313 41.4721 60.8267 14.0689 92.2643 2.41864C129.844 2.41864 152.396 27.74 152.396 65.3194Z"
@@ -31,7 +31,9 @@ const EggIcon = () => (
       strokeLinejoin="round"
     />
     <Ellipse cx="112.5" cy="35.0001" rx="7" ry="11" fill="black" />
+    <Path d="M103.294 13.7614L124 25.9186" stroke="black" strokeWidth={6} />
+    <Path d="M144.125 6.50198L133.418 22.2997" stroke="black" strokeWidth={6} />
   </Svg>
 );
 
-export default EggIcon;
+export default BadEggIcon;
