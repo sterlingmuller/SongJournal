@@ -8,7 +8,9 @@ interface Styles {
   themeLabel: ViewStyle;
   backupButtons: ViewStyle;
   button: ViewStyle;
+  conductorsContainer: ViewStyle;
   conductorContainer: ViewStyle;
+  lockedConductorIcon: ViewStyle;
   sectionTitle: TextStyle;
   title: TextStyle;
   about: TextStyle;
@@ -75,9 +77,17 @@ const useSettingsStyle = () => {
       width: '40%',
       borderRadius: 10,
     },
-    conductorContainer: {
+    conductorsContainer: {
       flexDirection: 'row',
       justifyContent: 'space-evenly',
+    },
+    conductorContainer: {
+      paddingHorizontal: 25,
+    },
+    lockedConductorIcon: {
+      position: 'absolute',
+      right: 0,
+      bottom: '35%',
     },
   });
 

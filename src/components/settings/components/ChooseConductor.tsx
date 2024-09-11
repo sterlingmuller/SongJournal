@@ -12,6 +12,7 @@ import { Conductor } from '@src/components/common/enums';
 import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
 import { updateSettingsRequest } from '@src/state/sagas/actionCreators';
 import { useSQLiteContext } from 'expo-sqlite';
+import LockIcon from '@src/icons/LockIcon';
 
 const ChooseComposer = () => {
   const styles = useSettingsStyle();
@@ -26,20 +27,41 @@ const ChooseComposer = () => {
   return (
     <View>
       <StyledText style={styles.sectionTitle}>Choose Your Conductor</StyledText>
-      <View style={styles.conductorContainer}>
-        <TouchableOpacity onPress={() => handleOnPress(Conductor.EGG)}>
+      <View style={styles.conductorsContainer}>
+        <TouchableOpacity
+          onPress={() => handleOnPress(Conductor.EGG)}
+          style={styles.conductorContainer}
+        >
           <EggSelectIcon />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleOnPress(Conductor.BAD_EGG)}>
+        <TouchableOpacity
+          onPress={() => handleOnPress(Conductor.BAD_EGG)}
+          style={styles.conductorContainer}
+        >
           <BadEggSelectIcon />
+          <View style={styles.lockedConductorIcon}>
+            <LockIcon />
+          </View>
         </TouchableOpacity>
       </View>
-      <View style={styles.conductorContainer}>
-        <TouchableOpacity onPress={() => handleOnPress(Conductor.CACSUS)}>
+      <View style={styles.conductorsContainer}>
+        <TouchableOpacity
+          onPress={() => handleOnPress(Conductor.CACSUS)}
+          style={styles.conductorContainer}
+        >
           <CacsusSelectIcon />
+          <View style={styles.lockedConductorIcon}>
+            <LockIcon />
+          </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleOnPress(Conductor.DEAD_ADIM)}>
+        <TouchableOpacity
+          onPress={() => handleOnPress(Conductor.DEAD_ADIM)}
+          style={styles.conductorContainer}
+        >
           <DeadAdimSelectIcon />
+          <View style={styles.lockedConductorIcon}>
+            <LockIcon />
+          </View>
         </TouchableOpacity>
       </View>
     </View>
