@@ -8,6 +8,7 @@ interface Styles {
   themeLabel: ViewStyle;
   backupButtons: ViewStyle;
   button: ViewStyle;
+  composerContainer: ViewStyle;
   sectionTitle: TextStyle;
   title: TextStyle;
   about: TextStyle;
@@ -74,6 +75,7 @@ const useSettingsStyle = () => {
       width: '40%',
       borderRadius: 10,
     },
+    composerContainer: { flexDirection: 'row', justifyContent: 'space-evenly' },
   });
 
   return settingsStyle;
