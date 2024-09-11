@@ -3,11 +3,14 @@ import { View } from 'react-native';
 
 import StyledText from '@src/components/common/components/StyledText';
 import useGetStartedHomeStyles from '@src/styles/getStartedHome';
-import EggIcon from '@src/icons/EggIcon';
-import { Screen } from '@src/components/common/enums';
+import { Conductor, Screen } from '@src/components/common/enums';
 import { FRACTION_UNICODE } from '../constants';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
-import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
+import {
+  selectConductor,
+  selectDisplayTips,
+} from '@src/state/selectors/settingsSelector';
+import EggIcon from '@src/icons/EggIcon';
 import BadEggIcon from '@src/icons/BadEggIcon';
 import CacsusIcon from '@src/icons/CacsusIcon';
 import DeadAdimIcon from '@src/icons/DeadAdimIcon';
@@ -17,9 +20,16 @@ interface props {
 }
 const GetStarted = ({ screen }: props) => {
   const styles = useGetStartedHomeStyles();
+  const conductor = useAppSelector(selectConductor);
+  const displayTips = useAppSelector(selectDisplayTips);
+
   let message: React.ReactElement;
   let tip: string;
-  const displayTips = useAppSelector(selectDisplayTips);
+
+  const homeTip: string =
+    'Tip: Visit Settings for the options to number your Songs List and disable future Tips';
+  const songTip: string =
+    'Tip: When there are multiple Takes of a Song, Double Tap a Take to set it as the new Starred Take';
 
   const getStartedHomeInstructions = (
     <StyledText style={styles.text}>
@@ -31,11 +41,6 @@ const GetStarted = ({ screen }: props) => {
       <StyledText style={styles.boldText}>New Song</StyledText> button below.
     </StyledText>
   );
-
-  const homeTip: string =
-    'Tip: Visit Settings for the options to number your Songs List and disable future Tips';
-  const songTip: string =
-    'Tip: When there are multiple Takes of a Song, Double Tap a Take to set it as the new Starred Take';
 
   const getStartedSongInstructions = (
     <StyledText style={styles.text}>
@@ -69,11 +74,24 @@ const GetStarted = ({ screen }: props) => {
       break;
   }
 
+  const renderConductor = () => {
+    switch (conductor) {
+      case Conductor.EGG:
+        return <EggIcon />;
+      case Conductor.BAD_EGG:
+        return <BadEggIcon />;
+      case Conductor.CACSUS:
+        return <CacsusIcon />;
+      case Conductor.DEAD_ADIM:
+        return <DeadAdimIcon />;
+      default:
+        return <EggIcon />;
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.eggContainer}>
-        <CacsusIcon />
-      </View>
+      <View style={styles.eggContainer}>{renderConductor()}</View>
       <View style={styles.textbox}>
         {message}
         <View style={styles.arrow} />

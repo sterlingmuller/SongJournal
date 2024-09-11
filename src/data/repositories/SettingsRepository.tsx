@@ -15,6 +15,7 @@ export const fetchUserSettings = async (db: SQLiteDatabase) => {
       defaultArtistId: settings.defaultArtistId,
       isNumbered: Boolean(settings.isNumbered),
       displayTips: Boolean(settings.displayTips),
+      conductor: settings.conductor,
     };
   } catch (err) {
     console.error('Error fetching user settings', err);

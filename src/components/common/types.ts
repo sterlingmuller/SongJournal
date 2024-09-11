@@ -1,5 +1,5 @@
 import { SQLiteDatabase } from 'expo-sqlite';
-import { LyricsOption, SortBy } from '@src/components/common/enums';
+import { Conductor, LyricsOption, SortBy } from '@src/components/common/enums';
 
 export type FilterOptions = {
   lyrics?: boolean;
@@ -96,6 +96,7 @@ export type UserSettings = {
   defaultArtistId: number;
   isNumbered: boolean;
   displayTips: boolean;
+  conductor: Conductor;
 };
 
 export type Sort = {

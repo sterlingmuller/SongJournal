@@ -1,3 +1,4 @@
+import { Conductor } from '@src/components/common/enums';
 import { type SQLiteDatabase } from 'expo-sqlite';
 
 const createSongsTable =
@@ -17,6 +18,7 @@ CREATE TABLE IF NOT EXISTS Settings (
   defaultArtistId INTEGER DEFAULT -1,
   isNumbered BOOLEAN NOT NULL DEFAULT 0,
   displayTips BOOLEAN NOT NULL DEFAULT 1,
+  conductor TEXT NOT NULL DEFAULT ${Conductor.EGG},
   FOREIGN KEY (defaultArtistId) REFERENCES Artists(artistId)
 );
 

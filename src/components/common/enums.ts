@@ -49,3 +49,10 @@ export enum ToggleableSettings {
   IS_NUMBERED = 'isNumbered',
   IS_ASCENDING = 'isAscending',
 }
+
+export enum Conductor {
+  EGG = 'EGG',
+  BAD_EGG = 'BAD EGG',
+  CACSUS = 'CACsus',
+  DEAD_ADIM = 'DEAD Adim',
+}
