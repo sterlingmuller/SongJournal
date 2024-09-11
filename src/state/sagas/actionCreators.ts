@@ -5,8 +5,8 @@ import * as at from '@src/state/sagas/actionTypes';
 
 // Startup
 
-export const fetchSongsWithTakesRequest = (db: SQLiteDatabase) => ({
-  type: at.FETCH_SONGS_WITH_TAKES_REQUEST,
+export const fetchStartupDataRequest = (db: SQLiteDatabase) => ({
+  type: at.FETCH_STARTUP_DATA_REQUEST,
   payload: db,
 });
 
@@ -114,5 +114,14 @@ export const addArtistRequest = (payload: t.AddArtistDbPayload) => ({
 
 export const deleteArtistRequest = (payload: t.DeleteArtistDbPayload) => ({
   type: at.DELETE_ARTIST_REQUEST,
+  payload,
+});
+
+// Purchases
+
+export const updatePurchasesRequest = (
+  payload: t.UpdatePurchasesDbPayload,
+) => ({
+  type: at.UPDATE_PURCHASES_REQUEST,
   payload,
 });

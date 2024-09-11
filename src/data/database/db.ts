@@ -26,7 +26,11 @@ INSERT OR IGNORE INTO Settings (id) VALUES (1);
 `;
 
 const createArtistsTable =
-  'CREATE TABLE IF NOT EXISTS Artists (artistId INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL)';
+  'CREATE TABLE IF NOT EXISTS Artists (artistId INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL);';
+
+const createPurchasesTable = `CREATE TABLE IF NOT EXISTS Purchases (id INTEGER PRIMARY KEY CHECK (id = 1), hasBadEgg BOOLEAN NOT NULL DEFAULT 0, hasCacsus BOOLEAN NOT NULL DEFAULT 0, hasDeadAdim BOOLEAN NOT NULL DEFAULT 0, hasPro BOOLEAN NOT NULL DEFAULT 0);
+
+  INSERT OR IGNORE INTO Purchases (id) VALUES (1)`;
 
 export const migrateDbIfNeeded = async (db: SQLiteDatabase) => {
   const DATABASE_VERSION = 1;
@@ -46,7 +50,8 @@ export const migrateDbIfNeeded = async (db: SQLiteDatabase) => {
         createTakesTable +
         createPageTable +
         createSettingsTable +
-        createArtistsTable,
+        createArtistsTable +
+        createPurchasesTable,
     );
 
     currentDbVersion = 1;

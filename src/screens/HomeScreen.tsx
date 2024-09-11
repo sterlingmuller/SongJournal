@@ -19,7 +19,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '@src/utils/hooks/typedReduxHooks';
-import { fetchSongsWithTakesRequest } from '@src/state/sagas/actionCreators';
+import { fetchStartupDataRequest } from '@src/state/sagas/actionCreators';
 import HomeDisplay from '@src/components/home/components/HomeDisplay';
 import { Filter, SortBy } from '@src/components/common/enums';
 import EditTitleModal from '@src/components/common/components/EditTitleModal';
@@ -49,7 +49,7 @@ const HomeScreen = () => {
   const [toDelete, setToDelete] = useState<DeleteObject>(EMPTY_DELETE_OBJECT);
 
   useEffect(() => {
-    dispatch(fetchSongsWithTakesRequest(db));
+    dispatch(fetchStartupDataRequest(db));
   }, [dispatch, db]);
 
   useEffect(() => {

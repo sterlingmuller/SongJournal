@@ -5,6 +5,7 @@ import { SQLiteDatabase } from 'expo-sqlite';
 import { fetchSongsWithArtists } from '@src/data/repositories/SongsRepository';
 import {
   Artists,
+  Purchases,
   Song,
   Songs,
   Take,
@@ -23,8 +24,10 @@ import { fetchUserSettings } from '@src/data/repositories/SettingsRepository';
 import { fetchSettingsSuccess } from '@src/state/slice/settingsSlice';
 import { fetchArtists } from '@src/data/repositories/ArtistsRepository';
 import { fetchArtistsSuccess } from '@src/state/slice/artistsSlice';
+import { fetchPurchases } from '@src/data/repositories/PurchasesRepository';
+import { fetchPurchasesSuccess } from '../slice/purchasesSlice';
 
-function* fetchSongsWithTakesSaga(action: PayloadAction<SQLiteDatabase>) {
+function* fetchStartupDataSaga(action: PayloadAction<SQLiteDatabase>) {
   yield put(startLoading());
   try {
     const songs: Songs = yield call(fetchSongsWithArtists, action.payload);
@@ -34,6 +37,7 @@ function* fetchSongsWithTakesSaga(action: PayloadAction<SQLiteDatabase>) {
       action.payload,
     );
     const artists: Artists = yield call(fetchArtists, action.payload);
+    const purchases: Purchases = yield call(fetchPurchases, action.payload);
 
     const songsWithTakes = songs.map((song: Song) => ({
       ...song,
@@ -43,6 +47,7 @@ function* fetchSongsWithTakesSaga(action: PayloadAction<SQLiteDatabase>) {
     yield put(fetchSongsWithTakesSuccess(songsWithTakes));
     yield put(fetchSettingsSuccess(settings));
     yield put(fetchArtistsSuccess(artists));
+    yield put(fetchPurchasesSuccess(purchases));
 
     yield put(endLoading());
   } catch (error) {
@@ -51,7 +56,5 @@ function* fetchSongsWithTakesSaga(action: PayloadAction<SQLiteDatabase>) {
 }
 
 export default function* startupSaga() {
-  yield all([
-    takeEvery(at.FETCH_SONGS_WITH_TAKES_REQUEST, fetchSongsWithTakesSaga),
-  ]);
+  yield all([takeEvery(at.FETCH_STARTUP_DATA_REQUEST, fetchStartupDataSaga)]);
 }

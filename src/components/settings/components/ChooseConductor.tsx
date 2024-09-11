@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
 import StyledText from '@src/components/common/components/StyledText';
@@ -9,19 +9,31 @@ import BadEggSelectIcon from '@src/icons/BadEggSelectIcon';
 import CacsusSelectIcon from '@src/icons/CacsusSelectIcon';
 import DeadAdimSelectIcon from '@src/icons/DeadAdimSelectIcon';
 import { Conductor } from '@src/components/common/enums';
-import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '@src/utils/hooks/typedReduxHooks';
 import { updateSettingsRequest } from '@src/state/sagas/actionCreators';
 import { useSQLiteContext } from 'expo-sqlite';
 import LockIcon from '@src/icons/LockIcon';
+import { selectPurchases } from '@src/state/selectors/purchasesSelector';
+import PurchaseModal from '@src/components/common/components/PurchaseModal';
 
 const ChooseComposer = () => {
   const styles = useSettingsStyle();
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
+  const { hasBadEgg, hasCacsus, hasDeadAdim } = useAppSelector(selectPurchases);
   const { theme } = useColorTheme();
 
+  const [conductorToPurchase, setConductorToPurchase] =
+    useState<Conductor>(null);
+
   const handleOnPress = (conductor: Conductor) => {
-    dispatch(updateSettingsRequest({ db, updatedSettings: { conductor } }));
+    if (!hasCacsus) {
+      setConductorToPurchase(Conductor.CACSUS);
+    } else
+      dispatch(updateSettingsRequest({ db, updatedSettings: { conductor } }));
   };
 
   return (
@@ -39,9 +51,11 @@ const ChooseComposer = () => {
           style={styles.conductorContainer}
         >
           <BadEggSelectIcon />
-          <View style={styles.lockedConductorIcon}>
-            <LockIcon />
-          </View>
+          {!hasBadEgg && (
+            <View style={styles.lockedConductorIcon}>
+              <LockIcon />
+            </View>
+          )}
         </TouchableOpacity>
       </View>
       <View style={styles.conductorsContainer}>
@@ -50,20 +64,28 @@ const ChooseComposer = () => {
           style={styles.conductorContainer}
         >
           <CacsusSelectIcon />
-          <View style={styles.lockedConductorIcon}>
-            <LockIcon />
-          </View>
+          {!hasCacsus && (
+            <View style={styles.lockedConductorIcon}>
+              <LockIcon />
+            </View>
+          )}
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => handleOnPress(Conductor.DEAD_ADIM)}
           style={styles.conductorContainer}
         >
           <DeadAdimSelectIcon />
-          <View style={styles.lockedConductorIcon}>
-            <LockIcon />
-          </View>
+          {!hasDeadAdim && (
+            <View style={styles.lockedConductorIcon}>
+              <LockIcon />
+            </View>
+          )}
         </TouchableOpacity>
       </View>
+      <PurchaseModal
+        conductorToPurchase={conductorToPurchase}
+        setConductorToPurchase={setConductorToPurchase}
+      />
     </View>
   );
 };
