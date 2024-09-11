@@ -15,12 +15,12 @@ const ChooseComposer = () => {
 
   return (
     <View>
-      <StyledText style={styles.sectionTitle}>Choose Your Composer</StyledText>
-      <View style={styles.composerContainer}>
+      <StyledText style={styles.sectionTitle}>Choose Your Conductor</StyledText>
+      <View style={styles.conductorContainer}>
         <EggSelectIcon />
         <BadEggSelectIcon />
       </View>
-      <View style={styles.composerContainer}>
+      <View style={styles.conductorContainer}>
         <CacsusSelectIcon />
         <DeadAdimSelectIcon />
       </View>
