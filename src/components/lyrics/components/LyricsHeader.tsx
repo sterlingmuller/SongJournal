@@ -8,7 +8,7 @@ import BackIcon from '@src/icons/BackIcon';
 import useLyricsHeaderStyles from '@src/styles/lyricsHeader';
 import { selectCurrentSongTitle } from '@src/state/selectors/songsSelector';
 import CheckIcon from '@src/icons/CheckIcon';
-import TrashIcon from '@src/icons/TrashIcon';
+import CloseIcon from '@src/icons/CloseIcon';
 
 interface Props {
   isInfoModalOpen: boolean;
@@ -39,7 +39,7 @@ const LyricsHeader = (props: Props) => {
             <CheckIcon />
           </TouchableOpacity>
           <TouchableOpacity onPress={handleCancelEdit}>
-            <TrashIcon />
+            <CloseIcon />
           </TouchableOpacity>
         </View>
       );
