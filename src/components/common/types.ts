@@ -107,6 +107,19 @@ export type Sort = {
 export type Artist = { artistId: number; name: string };
 export type Artists = Artist[];
 
+export type Purchases = {
+  hasBadEgg: boolean;
+  hasCacsus: boolean;
+  hasDeadAdim: boolean;
+  hasPro: boolean;
+};
+
+export type hasConductors = {
+  hasBadEgg: boolean;
+  hasCacsus: boolean;
+  hasDeadAdim: boolean;
+};
+
 export interface SongItem extends Song {
   key: string;
 }
@@ -304,5 +317,10 @@ export type UpdateArtistDbPayload = {
 
 export type UpdateSettingsDbPayload = {
   updatedSettings: Partial<UserSettings>;
+  db: SQLiteDatabase;
+};
+
+export type UpdatePurchasesDbPayload = {
+  updatedPurchases: Partial<Purchases>;
   db: SQLiteDatabase;
 };

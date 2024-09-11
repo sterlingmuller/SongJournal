@@ -6,6 +6,7 @@ import songSaga from '@src/state/sagas/songSaga';
 import pageSaga from '@src/state/sagas/pageSaga';
 import artistsSaga from '@src/state/sagas/artistsSaga';
 import settingsSaga from '@src/state/sagas/settingsSaga';
+import purchasesSaga from '@src/state/sagas/purchasesSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -15,5 +16,6 @@ export default function* rootSaga() {
     pageSaga(),
     artistsSaga(),
     settingsSaga(),
+    purchasesSaga(),
   ]);
 }
