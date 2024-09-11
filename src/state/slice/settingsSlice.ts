@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SortBy } from '@src/components/common/enums';
+import { Conductor, SortBy } from '@src/components/common/enums';
 import { UserSettings } from '@src/components/common/types';
 
 const initialState: UserSettings = {
@@ -8,6 +8,7 @@ const initialState: UserSettings = {
   defaultArtistId: -1,
   isNumbered: false,
   displayTips: false,
+  conductor: Conductor.EGG,
 };
 
 const settingsSlice = createSlice({

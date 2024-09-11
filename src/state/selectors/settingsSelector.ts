@@ -13,6 +13,8 @@ export const selectIsNumbered = (state: RootState) => state.settings.isNumbered;
 export const selectDisplayTips = (state: RootState) =>
   state.settings.displayTips;
 
+export const selectConductor = (state: RootState) => state.settings.conductor;
+
 export const selectDefaultSort = createSelector(
   [
     (state: RootState) => state.settings.defaultSortType,
