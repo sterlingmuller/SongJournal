@@ -9,7 +9,7 @@ import useGlobalStyles from '@styles/global';
 import StyledText from '@src/components/common/components/StyledText';
 import Preferences from '@src/components/settings/components/Preferences';
 import BackupAndRestore from '@src/components/settings/components/BackupAndRestore';
-import ChooseComposer from '@src/components/settings/components/ChooseComposer';
+import ChooseConductor from '@src/components/settings/components/ChooseConductor';
 
 const SettingsScreen = () => {
   const styles = useSettingsStyle();
@@ -21,7 +21,7 @@ const SettingsScreen = () => {
         <BackupAndSync />
         <Preferences />
         <Theme />
-        <ChooseComposer />
+        <ChooseConductor />
         <BackupAndRestore />
         <About />
       </View>
