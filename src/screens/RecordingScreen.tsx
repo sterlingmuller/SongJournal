@@ -16,8 +16,6 @@ import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 
 const RecordingScreen = () => {
   const styles = useRecordingStyles();
-
-  const [uri, setUri] = useState<string | null>(null);
   const [duration, setDuration] = useState<number | null>(null);
   const [isRecording, setIsRecording] = useState<boolean>(true);
   const [visibleWave, setVisibleWave] = useState<number[]>([
@@ -77,8 +75,6 @@ const RecordingScreen = () => {
       <RecordingControls
         duration={duration}
         setDuration={setDuration}
-        uri={uri}
-        setUri={setUri}
         isRecording={isRecording}
         setIsRecording={setIsRecording}
         setWave={setVisibleWave}
