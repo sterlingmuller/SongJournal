@@ -8,9 +8,8 @@ import useCommonModalStyle from '@src/styles/commonModal';
 import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
 import { updatePurchasesRequest } from '@src/state/sagas/actionCreators';
 import { Conductor } from '../enums';
-import BadEggSelectIcon from '@src/icons/BadEggSelectIcon';
-import CacsusSelectIcon from '@src/icons/CacsusSelectIcon';
-import DeadAdimSelectIcon from '@src/icons/DeadAdimSelectIcon';
+import { CONDUCTOR_ICONS, PURCHASE_KEYS } from '../constants';
+import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Props {
   conductorToPurchase: Conductor;
@@ -24,24 +23,10 @@ const PurchaseModal = ({
   const db = useSQLiteContext();
   const dispatch = useAppDispatch();
   const styles = useCommonModalStyle();
+  const { theme } = useColorTheme();
 
-  let purchaseColumnToUpdate: string;
-  let conductorIcon: React.ReactElement;
-
-  switch (conductorToPurchase) {
-    case Conductor.BAD_EGG:
-      conductorIcon = <BadEggSelectIcon />;
-      purchaseColumnToUpdate = 'hasBadEgg';
-      break;
-    case Conductor.CACSUS:
-      conductorIcon = <CacsusSelectIcon />;
-      purchaseColumnToUpdate = 'hasCacsus';
-      break;
-    case Conductor.DEAD_ADIM:
-      conductorIcon = <DeadAdimSelectIcon />;
-      purchaseColumnToUpdate = 'hasDeadAdim';
-      break;
-  }
+  const ConductorIcon = CONDUCTOR_ICONS[conductorToPurchase];
+  const purchaseToUpdate = PURCHASE_KEYS[conductorToPurchase];
 
   const onExitPress = () => {
     setConductorToPurchase(null);
@@ -51,7 +36,7 @@ const PurchaseModal = ({
     dispatch(
       updatePurchasesRequest({
         db,
-        updatedPurchases: { [purchaseColumnToUpdate]: true },
+        updatedPurchases: { [purchaseToUpdate]: true },
       }),
     );
 
@@ -68,7 +53,12 @@ const PurchaseModal = ({
         <StyledText style={styles.title}>
           Press below to purchase your Conductor
         </StyledText>
-        {conductorIcon}
+        {ConductorIcon && (
+          <ConductorIcon
+            backgroundColor={theme.conductorBackground}
+            selected={false}
+          />
+        )}
         <Button title="Purchase" onPress={onPurchase} />
       </View>
     </Modal>
