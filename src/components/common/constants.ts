@@ -15,7 +15,12 @@ import {
   SortBy,
   Filter,
   LyricsOption,
+  Conductor,
 } from '@src/components/common/enums';
+import EggSelectIcon from '@src/icons/EggSelectIcon';
+import BadEggSelectIcon from '@src/icons/BadEggSelectIcon';
+import CacsusSelectIcon from '@src/icons/CacsusSelectIcon';
+import DeadAdimSelectIcon from '@src/icons/DeadAdimSelectIcon';
 
 export const dbName = 'songjournal.db';
 export const dbPath = `${documentDirectory}SQLite/${dbName}`;
@@ -44,6 +49,19 @@ export const TABS: t.Tab[] = [
   { name: 'MusicPlayer', icon: MusicPlayerIcon },
   { name: 'Settings', icon: SettingIcon },
 ];
+
+export const CONDUCTOR_ICONS = {
+  [Conductor.EGG]: EggSelectIcon,
+  [Conductor.BAD_EGG]: BadEggSelectIcon,
+  [Conductor.CACSUS]: CacsusSelectIcon,
+  [Conductor.DEAD_ADIM]: DeadAdimSelectIcon,
+};
+
+export const PURCHASE_KEYS = {
+  [Conductor.BAD_EGG]: 'hasBadEgg',
+  [Conductor.CACSUS]: 'hasCacsus',
+  [Conductor.DEAD_ADIM]: 'hasDeadAdim',
+};
 
 export const EMPTY_PAGE: t.Page = {
   lyrics: '',

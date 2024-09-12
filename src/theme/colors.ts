@@ -25,4 +25,5 @@ export enum colors {
   sand = '#FECB75',
   sunscreen = '#FCF5E2',
   sunset = '#FD5C5A',
+  salmon = '#FFB4AA',
 }

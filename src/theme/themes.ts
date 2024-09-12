@@ -12,6 +12,7 @@ export interface Theme {
   primaryText: string;
   headerText: string;
   highlight: string;
+  conductorBackground: string;
 }
 
 const themes: Record<ColorTheme, Theme> = {
@@ -25,6 +26,7 @@ const themes: Record<ColorTheme, Theme> = {
     primaryText: c.black,
     headerText: c.black,
     highlight: c.gray,
+    conductorBackground: c.salmon,
   },
   Dark: {
     primary: c.deepCharcoal,
@@ -36,6 +38,7 @@ const themes: Record<ColorTheme, Theme> = {
     primaryText: c.dimWhite,
     headerText: c.dimWhite,
     highlight: c.charcoal,
+    conductorBackground: c.salmon,
   },
   Metal: {
     primary: c.bloodRed,
@@ -47,6 +50,7 @@ const themes: Record<ColorTheme, Theme> = {
     primaryText: c.bloodRed,
     headerText: c.dimGold,
     highlight: c.charcoal,
+    conductorBackground: c.salmon,
   },
   Psych: {
     primary: c.purple,
@@ -58,6 +62,7 @@ const themes: Record<ColorTheme, Theme> = {
     primaryText: c.black,
     headerText: c.black,
     highlight: c.mustard,
+    conductorBackground: c.salmon,
   },
   Pop: {
     primary: c.neonBlue,
@@ -69,6 +74,7 @@ const themes: Record<ColorTheme, Theme> = {
     primaryText: c.black,
     headerText: c.black,
     highlight: c.sunscreen,
+    conductorBackground: c.salmon,
   },
   Surf: {
     primary: c.oceanBlue,
@@ -80,6 +86,7 @@ const themes: Record<ColorTheme, Theme> = {
     primaryText: c.black,
     headerText: c.black,
     highlight: c.sand,
+    conductorBackground: c.salmon,
   },
 };
 

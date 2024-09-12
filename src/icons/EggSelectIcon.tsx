@@ -1,12 +1,20 @@
 import React from 'react';
-import Svg, { Path, Ellipse } from 'react-native-svg';
+import Svg, { Path, Ellipse, Circle } from 'react-native-svg';
 
-const EggSelectIcon = () => (
+interface Props {
+  backgroundColor: string;
+  selected: boolean;
+}
+
+const EggSelectIcon = ({ backgroundColor, selected }: Props) => (
   <Svg width="120" height="160" viewBox="0 0 261 292" fill="none">
     <Path
       d="M261 130.5C261 202.573 202.573 261 130.5 261C58.4268 261 -8.06113e-05 202.573 -8.06113e-05 130.5C-8.06113e-05 58.4268 58.4268 0 130.5 0C202.573 0 261 58.4268 261 130.5Z"
-      fill="#FFB4AA"
+      fill={backgroundColor}
     />
+    {selected && (
+      <Circle cx="130" cy="130" r="120" stroke="#FFFEFE" strokeWidth="5" />
+    )}
     <Path
       d="M45 252.543L64 274.043L62.5 248.872C56.8441 249.973 51.0229 251.197 45 252.543Z"
       fill="#F0C044"

@@ -1,12 +1,20 @@
 import React from 'react';
-import Svg, { Path } from 'react-native-svg';
+import Svg, { Circle, Path } from 'react-native-svg';
 
-const CacsusSelectIcon = () => (
+interface Props {
+  backgroundColor: string;
+  selected: boolean;
+}
+
+const CacsusSelectIcon = ({ backgroundColor, selected }: Props) => (
   <Svg width="120" height="160" viewBox="0 0 261 293" fill="none">
     <Path
       d="M261 130.5C261 202.573 202.573 261 130.5 261C58.4268 261 -8.06113e-05 202.573 -8.06113e-05 130.5C-8.06113e-05 58.4268 58.4268 -1.52588e-05 130.5 -1.52588e-05C202.573 -1.52588e-05 261 58.4268 261 130.5Z"
-      fill="#FFB4AA"
+      fill={backgroundColor}
     />
+    {selected && (
+      <Circle cx="130" cy="130" r="120" stroke="#FFFEFE" strokeWidth="5" />
+    )}
     <Path
       d="M81.0014 208.24V172.395L64.5479 162.405L65.7232 145.364H192.65L195 162.405L176.196 172.395V208.24H81.0014Z"
       fill="#DAB57D"
