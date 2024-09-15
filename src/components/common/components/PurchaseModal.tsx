@@ -1,15 +1,15 @@
 import React from 'react';
-import { View, Button } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import { useSQLiteContext } from 'expo-sqlite';
 
 import StyledText from '@src/components/common/components/StyledText';
-import useCommonModalStyle from '@src/styles/commonModal';
 import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
 import { updatePurchasesRequest } from '@src/state/sagas/actionCreators';
 import { Conductor } from '../enums';
 import { CONDUCTOR_ICONS, PURCHASE_KEYS } from '../constants';
 import { useColorTheme } from '@src/state/context/ThemeContext';
+import usePurchaseModalStyle from '@src/styles/purchaseModal';
 
 interface Props {
   conductorToPurchase: Conductor;
@@ -22,7 +22,7 @@ const PurchaseModal = ({
 }: Props) => {
   const db = useSQLiteContext();
   const dispatch = useAppDispatch();
-  const styles = useCommonModalStyle();
+  const styles = usePurchaseModalStyle();
   const { theme } = useColorTheme();
 
   const ConductorIcon = CONDUCTOR_ICONS[conductorToPurchase];
@@ -54,12 +54,16 @@ const PurchaseModal = ({
           Press below to purchase your Conductor
         </StyledText>
         {ConductorIcon && (
-          <ConductorIcon
-            backgroundColor={theme.conductorBackground}
-            selected={false}
-          />
+          <View style={styles.conductorContainer}>
+            <ConductorIcon
+              backgroundColor={theme.conductorBackground}
+              selected={false}
+            />
+          </View>
         )}
-        <Button title="Purchase" onPress={onPurchase} />
+        <TouchableOpacity style={styles.button} onPress={onPurchase}>
+          <StyledText style={styles.price}>$ 0.50</StyledText>
+        </TouchableOpacity>
       </View>
     </Modal>
   );
