@@ -15,6 +15,7 @@ import { selectCurrentSongTitle } from '@src/state/selectors/songsSelector';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import HeaderBackButton from '@src/components/common/components/HeaderBackButton';
 import { Screen } from '@src/components/common/enums';
+import SetlistScreen from '@src/screens/SetlistScreen';
 
 const AppNavigator = () => {
   const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -57,6 +58,11 @@ const AppNavigator = () => {
         <RootStack.Screen
           name={Screen.MUSIC_PLAYER}
           component={MusicPlayerScreen}
+          options={{ ...styles }}
+        />
+        <RootStack.Screen
+          name={Screen.SETLIST}
+          component={SetlistScreen}
           options={{ ...styles }}
         />
         <RootStack.Screen

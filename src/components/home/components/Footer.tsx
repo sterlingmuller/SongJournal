@@ -2,7 +2,11 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-import { RootStackParamList, Tab, TabNames } from '@src/components/common/types';
+import {
+  RootStackParamList,
+  Tab,
+  TabNames,
+} from '@src/components/common/types';
 import useHomeFooterStyles from '@src/styles/homeFooter';
 import { TABS } from '@src/components/common/constants';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
@@ -15,7 +19,6 @@ const Footer = () => {
   const handleTabPress = (screenName: TabNames) => {
     clearPlayback();
 
-    // ts error because no playlist screen atm
     navigate(screenName);
   };
 

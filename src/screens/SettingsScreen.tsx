@@ -10,6 +10,7 @@ import StyledText from '@src/components/common/components/StyledText';
 import Preferences from '@src/components/settings/components/Preferences';
 import BackupAndRestore from '@src/components/settings/components/BackupAndRestore';
 import ChooseConductor from '@src/components/settings/components/ChooseConductor';
+import PrivacyPolicy from '@src/components/settings/components/PrivacyPolicy';
 
 const SettingsScreen = () => {
   const styles = useSettingsStyle();
@@ -18,11 +19,12 @@ const SettingsScreen = () => {
   return (
     <ScrollView style={globalStyles.container}>
       <View style={styles.content}>
-        <BackupAndSync />
+        {/* <BackupAndSync /> */}
         <Preferences />
         <Theme />
         <ChooseConductor />
         <BackupAndRestore />
+        <PrivacyPolicy />
         <About />
       </View>
       <StyledText style={styles.version}>Version 0.0.0</StyledText>

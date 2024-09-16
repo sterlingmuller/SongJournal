@@ -43,18 +43,25 @@ const OptionsBar = ({ selectedOption, setSelectedOption, page }: Props) => {
 
   return (
     <View style={styles.options}>
-      {LYRIC_SCREEN_OPTIONS.map((option: LyricsScreenOption) => (
-        <TouchableOpacity
-          key={option.name}
-          style={[
-            styles.iconButton,
-            selectedOption === option.name && styles.selected,
-          ]}
-          onPress={() => handleOptionPress(option.name)}
-        >
-          {<option.icon />}
-        </TouchableOpacity>
-      ))}
+      {LYRIC_SCREEN_OPTIONS.map((option: LyricsScreenOption) => {
+        const inDevelopment =
+          option.name === LyricsOption.CHORDS ||
+          option.name === LyricsOption.METRONOME;
+
+        return (
+          <TouchableOpacity
+            key={option.name}
+            style={[
+              styles.iconButton,
+              selectedOption === option.name && styles.selected,
+            ]}
+            onPress={() => handleOptionPress(option.name)}
+            disabled={inDevelopment}
+          >
+            {<option.icon />}
+          </TouchableOpacity>
+        );
+      })}
     </View>
   );
 };
