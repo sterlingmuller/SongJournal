@@ -6,11 +6,13 @@ interface Styles {
   version: ViewStyle;
   selectedTheme: ViewStyle;
   themeLabel: ViewStyle;
+  disabledLabel: TextStyle;
   backupButtons: ViewStyle;
   button: ViewStyle;
   conductorContainer: ViewStyle;
   conductorRow: ViewStyle;
   lockedConductorIcon: ViewStyle;
+  privacyPolicyContainer: ViewStyle;
   sectionTitle: TextStyle;
   title: TextStyle;
   about: TextStyle;
@@ -29,7 +31,7 @@ const useSettingsStyle = () => {
     },
 
     sectionTitle: {
-      fontSize: 16,
+      fontSize: 20,
       paddingBottom: 5,
       fontWeight: 'bold',
     },
@@ -66,6 +68,13 @@ const useSettingsStyle = () => {
       marginLeft: 55,
     },
 
+    disabledLabel: {
+      paddingVertical: 4,
+      marginLeft: 55,
+      fontStyle: 'italic',
+      color: 'gray',
+    },
+
     backupButtons: {
       flexDirection: 'row',
       justifyContent: 'space-around',
@@ -89,6 +98,12 @@ const useSettingsStyle = () => {
       position: 'absolute',
       right: 0,
       bottom: '35%',
+    },
+
+    privacyPolicyContainer: {
+      flexDirection: 'row',
+      gap: 10,
+      alignItems: 'center',
     },
   });
 

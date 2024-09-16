@@ -13,9 +13,10 @@ export type RootStackParamList = {
   Settings: undefined;
   Recording: { title: string };
   MusicPlayer: undefined;
+  Setlist: undefined;
 };
 
-export type TabNames = 'Playlist' | 'MusicPlayer' | 'Settings';
+export type TabNames = 'Setlist' | 'MusicPlayer' | 'Settings';
 export type Tab = { name: TabNames; icon: React.ComponentType };
 
 export type LyricsScreenOption = {

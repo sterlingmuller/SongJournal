@@ -20,12 +20,23 @@ const ColorThemeOption = ({ label }: Props) => {
     switchTheme(label);
   };
 
+  const inDevelopment =
+    label === ColorTheme.DARK ||
+    label === ColorTheme.METAL ||
+    label === ColorTheme.POP ||
+    label === ColorTheme.PSYCH;
+
   return (
     <TouchableOpacity
+      disabled={inDevelopment}
       onPress={onPress}
       style={isSelected && styles.selectedTheme}
     >
-      <StyledText style={styles.themeLabel}>{label}</StyledText>
+      <StyledText
+        style={!inDevelopment ? styles.themeLabel : styles.disabledLabel}
+      >
+        {label}
+      </StyledText>
     </TouchableOpacity>
   );
 };

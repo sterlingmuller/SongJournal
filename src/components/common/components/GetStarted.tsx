@@ -16,7 +16,7 @@ import CacsusIcon from '@src/icons/CacsusIcon';
 import DeadAdimIcon from '@src/icons/DeadAdimIcon';
 
 interface props {
-  screen: 'Home' | 'Song' | 'MusicPlayer';
+  screen: 'Home' | 'Song' | 'MusicPlayer' | 'Setlist';
 }
 const GetStarted = ({ screen }: props) => {
   const styles = useGetStartedHomeStyles();
@@ -59,6 +59,17 @@ const GetStarted = ({ screen }: props) => {
     </StyledText>
   );
 
+  const setlistPlansMessage = (
+    <StyledText style={styles.text}>
+      Ah! What are <StyledText style={styles.italicText}>you</StyledText> doing
+      here!? The{' '}
+      <StyledText style={styles.boldText}>Setlist Creator</StyledText> is not
+      ready{' '}
+      <StyledText style={styles.boldText}>4{FRACTION_UNICODE}4</StyledText> the
+      world to <StyledText style={styles.boldText}>C</StyledText>
+    </StyledText>
+  );
+
   switch (screen) {
     case Screen.HOME:
       message = getStartedHomeInstructions;
@@ -70,6 +81,10 @@ const GetStarted = ({ screen }: props) => {
       break;
     case Screen.MUSIC_PLAYER:
       message = musicPlayerPlansMessage;
+      tip = '';
+      break;
+    case Screen.SETLIST:
+      message = setlistPlansMessage;
       tip = '';
       break;
   }

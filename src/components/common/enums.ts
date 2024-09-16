@@ -4,16 +4,17 @@ export enum Screen {
   HOME = 'Home',
   LYRICS = 'Lyrics',
   MUSIC_PLAYER = 'MusicPlayer',
+  SETLIST = 'Setlist',
   SETTINGS = 'Settings',
 }
 
 export enum ColorTheme {
   LIGHT = 'Light',
-  DARK = 'Dark',
-  METAL = 'Metal',
-  PSYCH = 'Psych',
-  POP = 'Pop',
+  DARK = 'Dark - In Development',
   SURF = 'Surf',
+  METAL = 'Metal - In Development',
+  PSYCH = 'Psych - In Development',
+  POP = 'Pop - In Development',
 }
 
 export enum SortBy {

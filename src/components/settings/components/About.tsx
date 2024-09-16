@@ -12,14 +12,16 @@ const About = () => {
       <StyledText style={styles.sectionTitle}>About</StyledText>
       <View>
         <StyledText style={styles.about}>
-          This app was made by Sterling Muller. I don’t know what a Terms of
-          Service is so we’re probably fine. I hope you get a lot of good use
-          out of my app, make killer songs, and spread the word to friends.
+          This app was made by Sterling Muller. It is still in development and
+          there are a lot of features I'm excited to add. If you notice any
+          bugs, have any requests, or wish to reach out for whatever reason,
+          send me an email! I hope you get a lot of use out of my app, make
+          killer songs, and spread the word to friends.
         </StyledText>
         <StyledText style={styles.aboutSignature}>Cheers,</StyledText>
         <StyledText style={styles.about}>Sterling</StyledText>
         <StyledText style={styles.aboutSignature}>
-          sterlingmuller93@gmail.com
+          SongJournalApp@gmail.com
         </StyledText>
       </View>
     </View>

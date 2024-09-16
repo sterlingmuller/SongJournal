@@ -45,7 +45,7 @@ export const LYRIC_SCREEN_OPTIONS: t.LyricsScreenOption[] = [
 ];
 
 export const TABS: t.Tab[] = [
-  { name: 'Playlist', icon: PlaylistIcon },
+  { name: 'Setlist', icon: PlaylistIcon },
   { name: 'MusicPlayer', icon: MusicPlayerIcon },
   { name: 'Settings', icon: SettingIcon },
 ];
