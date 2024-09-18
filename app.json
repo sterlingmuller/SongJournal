@@ -18,12 +18,17 @@
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",
+      "windowSoftInputMode": "adjustResize",
       "package": "com.sterling.silverado.songjournal",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": ["RECORD_AUDIO"]
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#00000000",
+      "translucent": true
     },
     "web": {
       "favicon": "./assets/favicon.png"
