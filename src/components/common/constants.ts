@@ -22,8 +22,9 @@ import BadEggSelectIcon from '@src/icons/BadEggSelectIcon';
 import CacsusSelectIcon from '@src/icons/CacsusSelectIcon';
 import DeadAdimSelectIcon from '@src/icons/DeadAdimSelectIcon';
 
-export const dbName = 'songjournal.db';
-export const dbPath = `${documentDirectory}SQLite/${dbName}`;
+export const DB_NAME = 'songjournal.db';
+export const DB_PATH = `${documentDirectory}SQLite/${DB_NAME}`;
+export const AUDIO_DIR = `${documentDirectory}audio/`;
 
 export const SORT_BY_OPTIONS: SortBy[] = Object.values(SortBy);
 
