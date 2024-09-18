@@ -3,7 +3,7 @@ import { Button, View } from 'react-native';
 
 import StyledText from '@src/components/common/components/StyledText';
 import useSettingsStyle from '@src/styles/settings';
-import createAndShareBackup from '@src/utils/createAndShareBackup';
+import { createAndShareBackup } from '@src/utils/createAndShareBackup';
 import { importBackup } from '@src/utils/importBackup';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 

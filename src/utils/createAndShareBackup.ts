@@ -1,32 +1,44 @@
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
+import { zip } from 'react-native-zip-archive';
 import { Alert } from 'react-native';
 
-import { dbPath } from '@src/components/common/constants';
+import { AUDIO_DIR, DB_NAME, DB_PATH } from '@src/components/common/constants';
 
-const createAndShareBackup = async () => {
+export const createAndShareBackup = async () => {
   try {
-    const backupPath = FileSystem.cacheDirectory + 'SongJournal_Backup.db';
+    const backupDir = `${FileSystem.cacheDirectory}backup/`;
+    await FileSystem.makeDirectoryAsync(backupDir, { intermediates: true });
 
     await FileSystem.copyAsync({
-      from: dbPath,
-      to: backupPath,
+      from: DB_PATH,
+      to: `${backupDir}${DB_NAME}`,
     });
 
-    if (await Sharing.isAvailableAsync()) {
-      await Sharing.shareAsync(backupPath, {
-        mimeType: 'application/octet-stream',
-        dialogTitle: 'Share SongJournal Backup',
+    const audioFiles = await FileSystem.readDirectoryAsync(AUDIO_DIR);
+    for (const file of audioFiles) {
+      await FileSystem.copyAsync({
+        from: `${AUDIO_DIR}${file}`,
+        to: `${backupDir}audio/${file}`,
       });
-      Alert.alert('Backup shared!');
-    } else {
-      Alert.alert(
-        'Sharing not available',
-        'Sharing is not available on this device',
-      );
     }
 
-    await FileSystem.deleteAsync(backupPath, { idempotent: true });
+    const zipPath = `${FileSystem.cacheDirectory}songjournal_backup.zip`;
+    await zip(zipPath, backupDir);
+
+    if (await Sharing.isAvailableAsync()) {
+      await Sharing.shareAsync(zipPath);
+    } else {
+      throw new Error('Sharing is not available on this device');
+    }
+
+    await FileSystem.deleteAsync(backupDir, { idempotent: true });
+    await FileSystem.deleteAsync(zipPath, { idempotent: true });
+
+    Alert.alert(
+      'Backup Successful',
+      'Your backup has been created and shared.',
+    );
   } catch (error) {
     console.error('Backup failed:', error);
     Alert.alert(
@@ -35,5 +47,3 @@ const createAndShareBackup = async () => {
     );
   }
 };
-
-export default createAndShareBackup;
