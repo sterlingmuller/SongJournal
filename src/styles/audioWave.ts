@@ -3,6 +3,7 @@ import { SCREEN_WIDTH } from '@src/components/common/constants';
 
 interface Styles {
   waveContainer: ViewStyle;
+  waveContent: ViewStyle;
   bar: ViewStyle;
   dotContainer: ViewStyle;
   dot: ViewStyle;
@@ -12,18 +13,33 @@ interface Styles {
 const useAudioWaveStyles = () => {
   const audioWaveStyles: Styles = StyleSheet.create({
     waveContainer: {
-      alignSelf: 'center',
+      justifyContent: 'center',
+      // flexDirection: 'row',
+      marginLeft: '50%',
+      // height: 200,
+      // marginTop: 100,
+      flex: 1,
+      marginBottom: 200,
+    },
+    waveContent: {
+      justifyContent: 'flex-start',
+      // alignSelf: 'center',
       alignItems: 'center',
       flexDirection: 'row',
-      overflow: 'hidden',
+      // overflow: 'hidden',
+      // width: SCREEN_WIDTH * 0.7,
+    },
+    midpointLine: {
+      position: 'absolute',
       height: 200,
-      width: SCREEN_WIDTH * 0.7,
-      position: 'relative',
-      marginTop: 150,
+      // top: 0,
+      // bottom: 0,
+      width: 4,
+      backgroundColor: 'green',
     },
     bar: {
-      width: 8,
-      marginHorizontal: 2,
+      width: 6,
+      marginHorizontal: 1,
       borderRadius: 3,
     },
     dotContainer: {
@@ -37,14 +53,6 @@ const useAudioWaveStyles = () => {
       height: 4,
       borderRadius: 2,
       backgroundColor: '#3f51b5',
-    },
-    midpointLine: {
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      width: 2,
-      left: '50%',
-      backgroundColor: 'green',
     },
   });
 
