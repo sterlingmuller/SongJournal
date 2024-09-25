@@ -4,7 +4,7 @@
     "slug": "SongJournal",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/SongJournalIcon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -14,6 +14,9 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
+      "infoPlist": {
+        "UIBackgroundModes": ["audio"]
+      },
       "bundleIdentifier": "com.sterling.silverado.songjournal"
     },
     "android": {
@@ -24,7 +27,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["RECORD_AUDIO"]
+      "permissions": ["RECORD_AUDIO", "WAKE_LOCK", "FOREGROUND_SERVICE"]
     },
     "androidStatusBar": {
       "backgroundColor": "#00000000",

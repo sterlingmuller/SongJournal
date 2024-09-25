@@ -77,7 +77,7 @@ const RecordingScreen = () => {
         setDuration={setDuration}
         isRecording={isRecording}
         setIsRecording={setIsRecording}
-        setWave={setVisibleWave}
+        setVisibleWave={setVisibleWave}
         fullWave={fullWave}
         setFullWave={setFullWave}
       />

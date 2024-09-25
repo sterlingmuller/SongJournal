@@ -179,12 +179,29 @@ export const SORT_SELECT = [
 ];
 
 export const MAX_AUDIO_WAVE_BARS = 24;
-
 export const AUDIO_WAVE_MIDPOINT = 12;
-
-export const AUDIO_UPDATES_PER_SECOND = 10;
-
+export const AUDIO_UPDATES_PER_SECOND = 8;
 export const AUDIO_UPDATE_INTERVAL = 1000 / AUDIO_UPDATES_PER_SECOND;
+export const MAX_LEVEL = 50;
+export const SILENCE_THRESHOLD = 0.05;
+export const MINIMUM_WAVE_HEIGHT = 22;
+
+export const HEIGHT_MAPPING: [number, number][] = [
+  [0, 0], // Anything below 22 will be 0
+  [40, 10], // 22-25 will be 10
+  [50, 20], // 22-25 will be 10
+  [60, 25], // 22-25 will be 10
+  [70, 40], // 30-33 will be 30
+  [75, 50], // 30-33 will be 30
+  [80, 60], // 42 and above will be 60
+  [81, 65], // 42 and above will be 60
+  [82, 70], // 42 and above will be 60
+  [83, 75], // 42 and above will be 60
+  [84, 80], // 42 and above will be 60
+  [85, 85], // 42 and above will be 60
+  [86, 90], // 42 and above will be 60
+  [87, 100], // 42 and above will be 60
+];
 
 export const LEADING_DOTS_ARRAY: null[] = new Array(5).fill(null);
 

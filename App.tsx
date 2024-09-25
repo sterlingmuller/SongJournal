@@ -9,7 +9,7 @@ import { ColorThemeProvider } from '@src/state/context/ThemeContext';
 import { store } from '@src/state/store/index';
 import { migrateDbIfNeeded } from '@src/data/database/db';
 import { AudioProvider } from '@src/state/context/AudioContext';
-import { dbName } from '@src/components/common/constants';
+import { DB_NAME } from '@src/components/common/constants';
 
 const App = () => (
   <GestureHandlerRootView style={{ flex: 1 }}>
@@ -17,7 +17,7 @@ const App = () => (
     <ColorThemeProvider>
       <Suspense fallback={null}>
         <SQLiteProvider
-          databaseName={dbName}
+          databaseName={DB_NAME}
           onInit={migrateDbIfNeeded}
           useSuspense
         >

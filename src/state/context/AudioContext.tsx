@@ -70,28 +70,10 @@ export const AudioProvider = ({ children }: Props) => {
     soundRef.current = newSound;
   }, []);
 
-  // useEffect(() => {
-  //   const handlePlaybackStatusUpdate = (
-  //     playbackStatus: AVPlaybackStatusSuccess,
-  //   ) => {
-  //     if (playbackStatus.didJustFinish) {
-  //       clearPlayback();
-  //     }
-  //   };
-
-  //   if (soundRef.current) {
-  //     soundRef.current.setOnPlaybackStatusUpdate(handlePlaybackStatusUpdate);
-  //   }
-
-  //   return () => {
-  //     soundRef.current?.setOnPlaybackStatusUpdate(null);
-  //   };
-  // }, [uri, soundRef.current, clearPlayback]);
-
   const handlePlaybackStatusUpdate = useCallback(
     (playbackStatus: AVPlaybackStatusSuccess) => {
       if (playbackStatus.isLoaded) {
-        const newPosition = playbackStatus.positionMillis / 1000; // Convert to seconds
+        const newPosition = playbackStatus.positionMillis / 1000;
         setCurrentTime(newPosition);
 
         if (playbackStatus.didJustFinish) {
