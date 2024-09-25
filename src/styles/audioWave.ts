@@ -1,5 +1,4 @@
 import { StyleSheet, ViewStyle } from 'react-native';
-import { useColorTheme } from '@src/state/context/ThemeContext';
 import { SCREEN_WIDTH } from '@src/components/common/constants';
 
 interface Styles {
@@ -11,8 +10,6 @@ interface Styles {
 }
 
 const useAudioWaveStyles = () => {
-  const { theme } = useColorTheme();
-
   const audioWaveStyles: Styles = StyleSheet.create({
     waveContainer: {
       alignSelf: 'center',
@@ -46,6 +43,7 @@ const useAudioWaveStyles = () => {
       top: 0,
       bottom: 0,
       width: 2,
+      left: '50%',
       backgroundColor: 'green',
     },
   });

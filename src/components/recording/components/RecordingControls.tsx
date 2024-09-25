@@ -26,7 +26,7 @@ interface Props {
   setDuration: (value: number | ((value: number) => void)) => void;
   isRecording: boolean;
   setIsRecording: (value: boolean) => void;
-  setWave: (value: number[]) => void;
+  setVisibleWave: (value: number[]) => void;
   fullWave: number[];
   setFullWave: (value: number[]) => void;
 }
@@ -37,7 +37,7 @@ const RecordingControls = (props: Props) => {
     setDuration,
     isRecording,
     setIsRecording,
-    setWave,
+    setVisibleWave,
     fullWave,
     setFullWave,
   } = props;
@@ -55,7 +55,7 @@ const RecordingControls = (props: Props) => {
   const [uri, setUri] = useState<string | null>(null);
 
   const handleStartRecording = async () => {
-    await startRecording(setRecording, fullWave, setWave);
+    await startRecording(setRecording, fullWave, setVisibleWave);
     setDuration(0);
 
     timerRef.current = setInterval(() => {

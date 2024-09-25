@@ -3,7 +3,6 @@ import { View } from 'react-native';
 
 import useAudioWaveStyles from '@src/styles/audioWave';
 import WaveBar from '@src/components/recording/subcomponents/WaveBar';
-import { SCREEN_WIDTH } from '@src/components/common/constants';
 
 interface Props {
   isRecording: boolean;
@@ -24,11 +23,7 @@ const AudioWaveDisplay = (props: Props) => {
           isRecording={isRecording}
         />
       ))}
-      {!isRecording && (
-        <View
-          style={[styles.midpointLine, { left: (SCREEN_WIDTH * 0.7) / 2 }]}
-        />
-      )}
+      {!isRecording && <View style={styles.midpointLine} />}
     </View>
   );
 };

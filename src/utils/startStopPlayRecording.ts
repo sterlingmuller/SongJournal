@@ -1,4 +1,7 @@
-import { AUDIO_UPDATE_INTERVAL } from '@src/components/common/constants';
+import {
+  AUDIO_UPDATE_INTERVAL,
+  SILENCE_THRESHOLD,
+} from '@src/components/common/constants';
 import { Audio } from 'expo-av';
 import { RecordingStatus } from 'expo-av/build/Audio';
 
@@ -8,13 +11,15 @@ let audioWaveIntervalId: NodeJS.Timeout;
 
 const updateAudioLevelSum = async (recording: Audio.Recording) => {
   const { metering } = await recording.getStatusAsync();
-  const normalizedLevel = Math.min(Math.max((metering + 160) / 160, 0), 1);
+  const normalizedLevel = (metering + 160) / 160;
 
-  const scaledLevel = normalizedLevel * 50;
+  if (normalizedLevel > SILENCE_THRESHOLD) {
+    const scaledLevel = normalizedLevel * 100;
 
-  if (scaledLevel) {
-    levelSum += scaledLevel;
-    levelCount++;
+    if (scaledLevel) {
+      levelSum += scaledLevel;
+      levelCount++;
+    }
   }
 };
 
@@ -25,10 +30,6 @@ export const startRecording = async (
 ) => {
   try {
     await Audio.requestPermissionsAsync();
-    await Audio.setAudioModeAsync({
-      allowsRecordingIOS: true,
-      playsInSilentModeIOS: true,
-    });
 
     const { recording: newRecording } = await Audio.Recording.createAsync(
       Audio.RecordingOptionsPresets.HIGH_QUALITY,
@@ -43,6 +44,7 @@ export const startRecording = async (
     audioWaveIntervalId = setInterval(() => {
       const averageLevel = Math.round(levelSum / levelCount);
       if (averageLevel > 0) {
+        // console.log('averageLevel:', averageLevel);
         fullWaveRef.push(averageLevel);
         setVisibleWave((prevWave: number[]) => [
           ...prevWave.slice(1),
