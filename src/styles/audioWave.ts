@@ -2,7 +2,12 @@ import { StyleSheet, ViewStyle } from 'react-native';
 import { SCREEN_WIDTH } from '@src/components/common/constants';
 
 interface Styles {
+  container: ViewStyle;
   waveContainer: ViewStyle;
+  maskedView: ViewStyle;
+  maskElementContainer: ViewStyle;
+  playedSection: ViewStyle;
+  unplayedSection: ViewStyle;
   waveContent: ViewStyle;
   bar: ViewStyle;
   dotContainer: ViewStyle;
@@ -12,35 +17,59 @@ interface Styles {
 
 const useAudioWaveStyles = () => {
   const audioWaveStyles: Styles = StyleSheet.create({
-    waveContainer: {
+    container: {
       justifyContent: 'center',
-      // flexDirection: 'row',
-      marginLeft: '50%',
-      // height: 200,
-      // marginTop: 100,
       flex: 1,
       marginBottom: 200,
     },
+    waveContainer: {
+      height: 180,
+      // overflow: 'hidden',
+      width: SCREEN_WIDTH * 0.9,
+      alignSelf: 'center',
+    },
+    maskedView: {
+      flex: 1,
+      flexDirection: 'row',
+      height: '100%',
+    },
+    maskElementContainer: {
+      // flex: 1,
+      flexDirection: 'column',
+      height: '100%',
+      left: '50%',
+    },
+    playedSection: {
+      // flex: 1,
+      zIndex: 1,
+      backgroundColor: '#ff4081',
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      left: 0,
+    },
+    unplayedSection: { flex: 1, backgroundColor: '#3f51b5' },
     waveContent: {
-      justifyContent: 'flex-start',
-      // alignSelf: 'center',
+      justifyContent: 'flex-end',
       alignItems: 'center',
       flexDirection: 'row',
-      // overflow: 'hidden',
-      // width: SCREEN_WIDTH * 0.7,
+    },
+    waveContentReversed: {
+      alignItems: 'flex-start',
+      opacity: 0.3,
     },
     midpointLine: {
       position: 'absolute',
       height: 200,
-      // top: 0,
-      // bottom: 0,
       width: 4,
       backgroundColor: 'green',
+      marginLeft: '50%',
     },
     bar: {
       width: 6,
       marginHorizontal: 1,
       borderRadius: 3,
+      backgroundColor: 'white',
     },
     dotContainer: {
       width: 10,
