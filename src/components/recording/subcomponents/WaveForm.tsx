@@ -1,31 +1,29 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
+
+import useAudioWaveStyles from '@src/styles/audioWave';
 
 interface Props {
   waveForms: number[];
 }
 
 const WaveForms = ({ waveForms }: Props) => {
+  const styles = useAudioWaveStyles();
+
   return (
-    <View style={[styles.container]}>
+    <View style={[styles.waveformContainer]}>
       {waveForms.map((waveHeight: number, index: number) => (
-        <View style={{ flexDirection: 'column', gap: 1 }}>
-          <View style={{ height: '60%', justifyContent: 'flex-end' }}>
+        <View style={styles.waveColumn}>
+          <View style={styles.topWaveContainer}>
             <View
               key={index}
-              style={[styles.stick, { height: `${waveHeight}%` }]}
+              style={[styles.bar, { height: `${waveHeight}%` }]}
             />
           </View>
-          <View
-            style={{
-              height: '40%',
-              justifyContent: 'flex-start',
-              opacity: 0.3,
-            }}
-          >
+          <View style={styles.bottomWaveContainer}>
             <View
               key={index}
-              style={[styles.stick, { height: `${waveHeight}%` }]}
+              style={[styles.bar, { height: `${waveHeight}%` }]}
             />
           </View>
         </View>
@@ -33,17 +31,5 @@ const WaveForms = ({ waveForms }: Props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-  },
-  stick: {
-    backgroundColor: 'white',
-    width: 6,
-    borderRadius: 3,
-    marginHorizontal: 1,
-  },
-});
 
 export default WaveForms;

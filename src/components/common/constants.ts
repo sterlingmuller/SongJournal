@@ -185,6 +185,9 @@ export const AUDIO_UPDATE_INTERVAL = 1000 / AUDIO_UPDATES_PER_SECOND;
 export const MAX_LEVEL = 50;
 export const SILENCE_THRESHOLD = 0.05;
 export const MINIMUM_WAVE_HEIGHT = 22;
+export const WAVE_BAR_WIDTH = 6;
+export const WAVE_BAR_GAP = 2;
+export const PAN_SENSITIVITY = 0.15;
 
 export const HEIGHT_MAPPING: [number, number][] = [
   [0, 0], // Anything below 22 will be 0
@@ -207,4 +210,4 @@ export const LEADING_DOTS_ARRAY: null[] = new Array(5).fill(null);
 
 export const EMPTY_AUDIO_WAVE_ARRAY = new Array(
   MAX_AUDIO_WAVE_BARS - LEADING_DOTS_ARRAY.length,
-).fill(null);
+).fill(0);

@@ -4,11 +4,14 @@ import { SCREEN_WIDTH } from '@src/components/common/constants';
 interface Styles {
   container: ViewStyle;
   waveContainer: ViewStyle;
+  waveColumn: ViewStyle;
+  topWaveContainer: ViewStyle;
+  bottomWaveContainer: ViewStyle;
   maskedView: ViewStyle;
   maskElementContainer: ViewStyle;
   playedSection: ViewStyle;
   unplayedSection: ViewStyle;
-  waveContent: ViewStyle;
+  waveformContainer: ViewStyle;
   bar: ViewStyle;
   dotContainer: ViewStyle;
   dot: ViewStyle;
@@ -19,49 +22,37 @@ const useAudioWaveStyles = () => {
   const audioWaveStyles: Styles = StyleSheet.create({
     container: {
       justifyContent: 'center',
-      flex: 1,
-      marginBottom: 200,
-      display: 'flex',
+      top: 100,
     },
     waveContainer: {
       height: 180,
-      // flex: 1,
-      // backgroundColor: 'yellow',
-      // overflow: 'hidden',
-      // width: SCREEN_WIDTH * 0.9,
-      // alignSelf: 'center',
-      // left: '50%',
+      width: SCREEN_WIDTH * 0.9,
+      alignSelf: 'center',
     },
     maskedView: {
       flex: 1,
-      // flexDirection: 'row',
-      // height: '100%',
     },
     maskElementContainer: {
-      // flex: 1,
-      // left: '50%',
-
-      display: 'flex',
-      justifyContent: 'center',
-      flex: 1,
       left: '50%',
-      // marginBottom: 200,
-      // backgroundColor: 'transparent',
     },
     playedSection: {
-      flex: 1,
-      zIndex: 1,
-      backgroundColor: '#ff4081',
       position: 'absolute',
+      backgroundColor: '#ff4081',
+      zIndex: 1,
       top: 0,
       bottom: 0,
       right: '50%',
     },
     unplayedSection: { flex: 1, backgroundColor: '#3f51b5' },
-    waveContent: {
-      justifyContent: 'flex-end',
-      alignItems: 'center',
+    waveformContainer: {
       flexDirection: 'row',
+    },
+    waveColumn: { flexDirection: 'column', gap: 1 },
+    topWaveContainer: { height: '60%', justifyContent: 'flex-end' },
+    bottomWaveContainer: {
+      height: '40%',
+      justifyContent: 'flex-start',
+      opacity: 0.3,
     },
     waveContentReversed: {
       alignItems: 'flex-start',

@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import {
+  Gesture,
+  GestureDetector,
+  GestureUpdateEvent,
+  PanGestureChangeEventPayload,
+  PanGestureHandlerEventPayload,
+} from 'react-native-gesture-handler';
 
 import useAudioWaveStyles from '@src/styles/audioWave';
 import MaskedView from '@react-native-masked-view/masked-view';
@@ -10,7 +16,12 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { SCREEN_WIDTH } from '@src/components/common/constants';
+import {
+  PAN_SENSITIVITY,
+  SCREEN_WIDTH,
+  WAVE_BAR_GAP,
+  WAVE_BAR_WIDTH,
+} from '@src/components/common/constants';
 import WaveForms from '../subcomponents/WaveForm';
 
 interface Props {
@@ -30,13 +41,11 @@ const AudioWaveDisplay = (props: Props) => {
     80, 78, 75, 79, 77, 76, 77, 77, 30, 30, 30, 30, 30,
   ];
 
-  const PAN_SENSITIVITY = 0.15;
-
   const playing = useSharedValue(false);
   const sliding = useSharedValue(false);
   const panX = useSharedValue(0);
 
-  const waveformWidth = MOCK_FULL_WAVE.length * (6 + 2);
+  const waveformWidth = MOCK_FULL_WAVE.length * (WAVE_BAR_WIDTH + WAVE_BAR_GAP);
   const maxPanX = -waveformWidth;
 
   const findNearestMultiple = (n: number, multiple: number) => {
@@ -58,23 +67,29 @@ const AudioWaveDisplay = (props: Props) => {
   // }, []);
 
   const panGestureHandler = Gesture.Pan()
-    .onStart(() => {
+    .onBegin(() => {
       sliding.value = true;
     })
-    .onUpdate((event) => {
-      const translation = event.translationX * PAN_SENSITIVITY;
-      const nextPanX = panX.value + translation;
+    .onChange(
+      (
+        event: GestureUpdateEvent<
+          PanGestureHandlerEventPayload & PanGestureChangeEventPayload
+        >,
+      ) => {
+        const translation = event.translationX * PAN_SENSITIVITY;
+        const nextPanX = panX.value + translation;
 
-      if (nextPanX > 0) {
-        panX.value = 0;
-      } else if (nextPanX < maxPanX) {
-        panX.value = maxPanX;
-      } else {
-        panX.value = nextPanX;
-      }
-    })
-    .onEnd(() => {
-      panX.value = withTiming(findNearestMultiple(panX.value, 6));
+        if (nextPanX > 0) {
+          panX.value = 0;
+        } else if (nextPanX < maxPanX) {
+          panX.value = maxPanX;
+        } else {
+          panX.value = nextPanX;
+        }
+      },
+    )
+    .onFinalize(() => {
+      panX.value = withTiming(findNearestMultiple(panX.value, WAVE_BAR_WIDTH));
 
       sliding.value = false;
     });
@@ -84,15 +99,16 @@ const AudioWaveDisplay = (props: Props) => {
   });
 
   const playedAnimatedStyle = useAnimatedStyle(() => {
-    // console.log('pan x:', panX.value);
     return {
       width: -panX.value,
     };
   });
 
+  console.log('wave:', wave);
+
   const maskedElement = (
     <Animated.View style={[styles.maskElementContainer, maskAnimatedStyle]}>
-      <WaveForms waveForms={MOCK_FULL_WAVE} />
+      {wave.length && <WaveForms waveForms={MOCK_FULL_WAVE} />}
     </Animated.View>
   );
 
