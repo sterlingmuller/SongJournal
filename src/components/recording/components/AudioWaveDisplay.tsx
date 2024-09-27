@@ -35,7 +35,9 @@ const AudioWaveDisplay = (props: Props) => {
   const playing = useSharedValue(false);
   const sliding = useSharedValue(false);
   const panX = useSharedValue(0);
-  const maxPanX = -(SCREEN_WIDTH * 1.5);
+
+  const waveformWidth = MOCK_FULL_WAVE.length * (6 + 2);
+  const maxPanX = -waveformWidth;
 
   const findNearestMultiple = (n: number, multiple: number) => {
     'worklet';
@@ -82,36 +84,15 @@ const AudioWaveDisplay = (props: Props) => {
   });
 
   const playedAnimatedStyle = useAnimatedStyle(() => {
+    // console.log('pan x:', panX.value);
     return {
       width: -panX.value,
     };
   });
 
-  const topWavesAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      // height: withTiming(playing.value ? 50 : 1),
-      height: 80,
-    };
-  });
-
-  const bottomWavesAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      // height: withTiming(playing.value ? 40 : 1),
-      height: 60,
-    };
-  });
-
   const maskedElement = (
     <Animated.View style={[styles.maskElementContainer, maskAnimatedStyle]}>
-      {/* <Animated.View style={topWavesAnimatedStyle}>
-        <WaveForms waveForms={MOCK_FULL_WAVE} />
-      </Animated.View>
-
-      <Animated.View style={bottomWavesAnimatedStyle}>
-        <WaveForms waveForms={MOCK_FULL_WAVE} reversed />
-      </Animated.View> */}
       <WaveForms waveForms={MOCK_FULL_WAVE} />
-      <WaveForms waveForms={MOCK_FULL_WAVE} reversed />
     </Animated.View>
   );
 
@@ -119,14 +100,12 @@ const AudioWaveDisplay = (props: Props) => {
     <View style={styles.container}>
       <View style={styles.waveContainer}>
         <GestureDetector gesture={panGestureHandler}>
-          {/* <Animated.View style={[{ flex: 1 }, maskAnimatedStyle]}> */}
           <MaskedView style={styles.maskedView} maskElement={maskedElement}>
             <Animated.View
               style={[styles.playedSection, playedAnimatedStyle]}
             />
             <View style={styles.unplayedSection} />
           </MaskedView>
-          {/* </Animated.View> */}
         </GestureDetector>
       </View>
       {!isRecording && <View style={styles.midpointLine} />}

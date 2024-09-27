@@ -3,17 +3,32 @@ import { StyleSheet, View } from 'react-native';
 
 interface Props {
   waveForms: number[];
-  reversed?: boolean;
 }
 
-const WaveForms = ({ waveForms, reversed = false }: Props) => {
+const WaveForms = ({ waveForms }: Props) => {
   return (
-    <View style={[styles.container, reversed && styles.containerReversed]}>
+    <View style={[styles.container]}>
       {waveForms.map((waveHeight: number, index: number) => (
-        <View
-          key={index}
-          style={[styles.stick, { height: `${waveHeight}%` }]}
-        />
+        <View style={{ flexDirection: 'column', gap: 1 }}>
+          <View style={{ height: '60%', justifyContent: 'flex-end' }}>
+            <View
+              key={index}
+              style={[styles.stick, { height: `${waveHeight}%` }]}
+            />
+          </View>
+          <View
+            style={{
+              height: '40%',
+              justifyContent: 'flex-start',
+              opacity: 0.3,
+            }}
+          >
+            <View
+              key={index}
+              style={[styles.stick, { height: `${waveHeight}%` }]}
+            />
+          </View>
+        </View>
       ))}
     </View>
   );
@@ -22,18 +37,12 @@ const WaveForms = ({ waveForms, reversed = false }: Props) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'flex-end',
-    height: '60%',
-  },
-  containerReversed: {
-    alignItems: 'flex-start',
-    opacity: 0.3,
-    height: '40%',
   },
   stick: {
     backgroundColor: 'white',
     width: 6,
-    marginRight: 1,
+    borderRadius: 3,
+    marginHorizontal: 1,
   },
 });
 
