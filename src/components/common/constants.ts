@@ -188,6 +188,7 @@ export const MINIMUM_WAVE_HEIGHT = 22;
 export const WAVE_BAR_WIDTH = 6;
 export const WAVE_BAR_GAP = 2;
 export const PAN_SENSITIVITY = 0.15;
+export const WAVE_CONTAINER_WIDTH = SCREEN_WIDTH * 0.9;
 
 export const HEIGHT_MAPPING: [number, number][] = [
   [0, 0], // Anything below 22 will be 0
@@ -206,7 +207,7 @@ export const HEIGHT_MAPPING: [number, number][] = [
   [87, 100], // 42 and above will be 60
 ];
 
-export const LEADING_DOTS_ARRAY: null[] = new Array(5).fill(null);
+export const LEADING_DOTS_ARRAY: number[] = new Array(5).fill(0);
 
 export const EMPTY_AUDIO_WAVE_ARRAY = new Array(
   MAX_AUDIO_WAVE_BARS - LEADING_DOTS_ARRAY.length,
