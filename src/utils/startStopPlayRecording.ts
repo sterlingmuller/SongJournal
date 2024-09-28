@@ -25,8 +25,8 @@ const updateAudioLevelSum = async (recording: Audio.Recording) => {
 
 export const startRecording = async (
   setRecording: (value: Audio.Recording | null) => void,
-  fullWaveRef: number[],
-  setVisibleWave: (value: number[] | ((value: number[]) => number[])) => void,
+  setWave: (value: number[] | ((value: number[]) => number[])) => void,
+  setDuration: (value: number) => void,
 ) => {
   try {
     await Audio.requestPermissionsAsync();
@@ -38,18 +38,14 @@ export const startRecording = async (
     newRecording.setOnRecordingStatusUpdate((status: RecordingStatus) => {
       if (status.isRecording) {
         updateAudioLevelSum(newRecording);
+        setDuration(Math.floor(status.durationMillis / 1000));
       }
     });
 
     audioWaveIntervalId = setInterval(() => {
       const averageLevel = Math.round(levelSum / levelCount);
       if (averageLevel > 0) {
-        // console.log('averageLevel:', averageLevel);
-        fullWaveRef.push(averageLevel);
-        setVisibleWave((prevWave: number[]) => [
-          ...prevWave.slice(1),
-          averageLevel,
-        ]);
+        setWave((prevWave: number[]) => [...prevWave, averageLevel]);
       }
 
       levelSum = 0;
@@ -85,6 +81,7 @@ export const clearRecording = async (
   setRecording: (value: Audio.Recording | null) => void,
   setRecordingUri: (uri: string | null) => void,
   setDuration: (duration: number) => void,
+  setWave: (wave: number[]) => void,
 ) => {
   if (recording) {
     await recording.stopAndUnloadAsync();
@@ -93,6 +90,7 @@ export const clearRecording = async (
   setRecording(null);
   setRecordingUri(null);
   setDuration(null);
+  setWave([]);
 };
 
 export const playRecording = async (uri: string) => {

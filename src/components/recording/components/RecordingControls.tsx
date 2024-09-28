@@ -26,21 +26,11 @@ interface Props {
   setDuration: (value: number | ((value: number) => void)) => void;
   isRecording: boolean;
   setIsRecording: (value: boolean) => void;
-  setVisibleWave: (value: number[]) => void;
-  fullWave: number[];
-  setFullWave: (value: number[]) => void;
+  setWave: (value: number[]) => void;
 }
 
 const RecordingControls = (props: Props) => {
-  const {
-    duration,
-    setDuration,
-    isRecording,
-    setIsRecording,
-    setVisibleWave,
-    fullWave,
-    setFullWave,
-  } = props;
+  const { duration, setDuration, isRecording, setIsRecording, setWave } = props;
 
   const { goBack } = useNavigation();
   const styles = useRecordingStyles();
@@ -55,7 +45,7 @@ const RecordingControls = (props: Props) => {
   const [uri, setUri] = useState<string | null>(null);
 
   const handleStartRecording = async () => {
-    await startRecording(setRecording, fullWave, setVisibleWave);
+    await startRecording(setRecording, setWave, setDuration);
     setDuration(0);
 
     timerRef.current = setInterval(() => {
@@ -89,8 +79,8 @@ const RecordingControls = (props: Props) => {
       clearInterval(timerRef.current);
     }
 
-    setFullWave([...LEADING_DOTS_ARRAY]);
-    clearRecording(recording, setRecording, setUri, setDuration);
+    setWave([...LEADING_DOTS_ARRAY]);
+    clearRecording(recording, setRecording, setUri, setDuration, setWave);
     setIsRecording(false);
   };
 
