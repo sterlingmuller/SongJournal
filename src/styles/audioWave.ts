@@ -9,6 +9,7 @@ interface Styles {
   bottomWaveContainer: ViewStyle;
   maskedView: ViewStyle;
   maskElementContainer: ViewStyle;
+  maskElementContainerNotRecording: ViewStyle;
   playedSection: ViewStyle;
   unplayedSection: ViewStyle;
   waveformContainer: ViewStyle;
@@ -33,6 +34,10 @@ const useAudioWaveStyles = () => {
       flex: 1,
     },
     maskElementContainer: {
+      flexDirection: 'row',
+      height: '100%',
+    },
+    maskElementContainerNotRecording: {
       left: '50%',
     },
     playedSection: {
