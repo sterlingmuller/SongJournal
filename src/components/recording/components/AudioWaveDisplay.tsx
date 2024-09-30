@@ -37,10 +37,8 @@ const AudioWaveDisplay = (props: Props) => {
   const styles = useAudioWaveStyles();
   const sliding = useSharedValue(false);
   const panX = useSharedValue(0);
-  const prevWaveLength = useRef(wave.length);
   const wasRecording = useRef(false);
   const scrollStarted = useRef(false);
-  const halfContainerWidth = WAVE_CONTAINER_WIDTH / 2;
   const prevIsRecording = useRef(isRecording);
   const prevWave = useRef(wave);
 
@@ -84,21 +82,14 @@ const AudioWaveDisplay = (props: Props) => {
   }, [isPlaying]);
 
   useEffect(() => {
-    if (isRecording && wave.length > prevWaveLength.current) {
-      const currentWaveformWidth =
-        wave.length * (WAVE_BAR_WIDTH + WAVE_BAR_GAP);
-
-      if (currentWaveformWidth > halfContainerWidth && !scrollStarted.current) {
-        scrollStarted.current = true;
-      }
-
-      if (scrollStarted.current) {
-        const overflowWidth = currentWaveformWidth - halfContainerWidth;
-        const newPanX = -overflowWidth;
-        panX.value = withTiming(newPanX, { duration: 100 });
-      }
+    if (isRecording) {
+      const newPanX = Math.max(
+        maxPanX.value,
+        WAVE_CONTAINER_WIDTH - waveformWidth.value,
+      );
+      panX.value = withTiming(newPanX, { duration: 100 });
     }
-    prevWaveLength.current = wave.length;
+
     wasRecording.current = isRecording;
   }, [wave, isRecording]);
 
@@ -150,7 +141,14 @@ const AudioWaveDisplay = (props: Props) => {
   });
 
   const maskedElement = (
-    <Animated.View style={[styles.maskElementContainer, maskAnimatedStyle]}>
+    <Animated.View
+      style={[
+        isRecording
+          ? styles.maskElementContainer
+          : styles.maskElementContainerNotRecording,
+        maskAnimatedStyle,
+      ]}
+    >
       {wave.length > 0 && <WaveForms waveForms={wave} />}
     </Animated.View>
   );
