@@ -10,7 +10,9 @@ import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 
 const RecordingScreen = () => {
   const styles = useRecordingStyles();
-  const [duration, setDuration] = useState<number | null>(null);
+  const [recordingDuration, setRecordingDuration] = useState<number | null>(
+    null,
+  );
   const [isRecording, setIsRecording] = useState<boolean>(true);
   const [wave, setWave] = useState<number[]>([]);
   // const scrollPositionRef = useRef<number>(0);
@@ -63,12 +65,12 @@ const RecordingScreen = () => {
       <AudioWaveDisplay
         isRecording={isRecording}
         wave={wave}
-        isPlaying={isPlaying}
+        recordingDuration={recordingDuration}
       />
-      <Timer duration={duration} />
+      <Timer recordingDuration={recordingDuration} isRecording={isRecording} />
       <RecordingControls
-        duration={duration}
-        setDuration={setDuration}
+        recordingDuration={recordingDuration}
+        setRecordingDuration={setRecordingDuration}
         isRecording={isRecording}
         setIsRecording={setIsRecording}
         setWave={setWave}

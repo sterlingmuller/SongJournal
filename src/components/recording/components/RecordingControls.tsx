@@ -22,15 +22,21 @@ import PlaybackButton from '@src/components/recording/subcomponents/PlaybackButt
 import { LEADING_DOTS_ARRAY } from '@src/components/common/constants';
 
 interface Props {
-  duration: number;
-  setDuration: (value: number | ((value: number) => void)) => void;
+  recordingDuration: number;
+  setRecordingDuration: (value: number | ((value: number) => void)) => void;
   isRecording: boolean;
   setIsRecording: (value: boolean) => void;
   setWave: (value: number[]) => void;
 }
 
 const RecordingControls = (props: Props) => {
-  const { duration, setDuration, isRecording, setIsRecording, setWave } = props;
+  const {
+    recordingDuration,
+    setRecordingDuration,
+    isRecording,
+    setIsRecording,
+    setWave,
+  } = props;
 
   const { goBack } = useNavigation();
   const styles = useRecordingStyles();
@@ -38,19 +44,19 @@ const RecordingControls = (props: Props) => {
   const dispatch = useAppDispatch();
   const route = useRoute<RouteProp<RootStackParamList, 'Recording'>>();
   const songId = useAppSelector(selectCurrentSongId);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
+  // const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const { title } = route.params;
 
   const [uri, setUri] = useState<string | null>(null);
 
   const handleStartRecording = async () => {
-    await startRecording(setRecording, setWave, setDuration);
-    setDuration(0);
+    setRecordingDuration(0);
+    await startRecording(setRecording, setWave, setRecordingDuration);
 
-    timerRef.current = setInterval(() => {
-      setDuration((prevDuration: number) => (prevDuration || 0) + 1);
-    }, 1000);
+    // timerRef.current = setInterval(() => {
+    //   setRecordingDuration((prevDuration: number) => (prevDuration || 0) + 1);
+    // }, 1000);
   };
 
   useEffect(() => {
@@ -58,12 +64,16 @@ const RecordingControls = (props: Props) => {
   }, []);
 
   const handleStopRecording = async () => {
-    const newUri = await stopRecording(recording, setRecording, setDuration);
+    const newUri = await stopRecording(
+      recording,
+      setRecording,
+      setRecordingDuration,
+    );
     setUri(newUri);
 
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
+    // if (timerRef.current) {
+    //   clearInterval(timerRef.current);
+    // }
 
     return newUri;
   };
@@ -75,12 +85,18 @@ const RecordingControls = (props: Props) => {
   };
 
   const onClearPress = () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
+    // if (timerRef.current) {
+    //   clearInterval(timerRef.current);
+    // }
 
-    setWave([...LEADING_DOTS_ARRAY]);
-    clearRecording(recording, setRecording, setUri, setDuration, setWave);
+    setWave([]);
+    clearRecording(
+      recording,
+      setRecording,
+      setUri,
+      setRecordingDuration,
+      setWave,
+    );
     setIsRecording(false);
   };
 
@@ -97,7 +113,7 @@ const RecordingControls = (props: Props) => {
           title,
           date: new Date().toISOString(),
           uri: newUri,
-          duration,
+          duration: recordingDuration,
           db,
         }),
       );
