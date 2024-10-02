@@ -235,6 +235,7 @@ export type SetSelectedTakeIdPayload = {
 export type PlaybackPayload = {
   id: number;
   uri: string;
+  duration: number;
 };
 
 export type FetchPagePayload = {
