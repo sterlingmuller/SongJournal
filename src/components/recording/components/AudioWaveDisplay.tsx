@@ -41,7 +41,6 @@ const AudioWaveDisplay = (props: Props) => {
   const { isRecording, wave } = props;
   const styles = useAudioWaveStyles();
   const sliding = useSharedValue(false);
-  const panX = useSharedValue(0);
   const wasRecording = useRef(false);
   const prevIsRecording = useRef(isRecording);
   const prevWave = useRef(wave);
@@ -49,119 +48,70 @@ const AudioWaveDisplay = (props: Props) => {
     useAppSelector(selectPlaybackInfo);
   const { seekTo } = useAudioPlayer();
 
-  const waveformWidth = useDerivedValue(
-    () => wave.length * WAVE_BAR_TOTAL_WIDTH,
-  );
-  const maxPanX = useDerivedValue(() => -waveformWidth.value);
-
   const findNearestMultiple = (n: number, multiple: number) => {
     'worklet';
     return Math.floor(n / multiple) * multiple;
   };
 
-  // const progress = useSharedValue(0);
+  const progress = useSharedValue(0);
+  const manualPanX = useSharedValue(0);
+  const isPlayingShared = useSharedValue(false);
+  const durationShared = useSharedValue(duration || 1);
+  const isRecordingShared = useSharedValue(isRecording);
 
-  const isPlayingRef = useRef(isPlaying);
-  const isRecordingRef = useRef(isRecording);
-
-  const playbackTimeShared = useSharedValue(0);
-  const durationShared = useSharedValue(1);
-
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    playbackTimeShared.value = playbackTime;
-  }, [playbackTime]);
-
-  useEffect(() => {
-    durationShared.value = duration || 1; // Fallback to 1 if duration is 0
-  }, [duration]);
-
-  const progress = useDerivedValue(() => {
-    return playbackTimeShared.value / durationShared.value;
+  const waveformWidth = useDerivedValue(
+    () => wave.length * WAVE_BAR_TOTAL_WIDTH,
+  );
+  const maxPanX = useDerivedValue(() => -waveformWidth.value);
+  const panX = useDerivedValue(() => {
+    if (isRecordingShared.value) {
+      return manualPanX.value;
+    }
+    return progress.value * maxPanX.value;
   });
 
-  const updateProgress = useCallback(() => {
-    'worklet';
-    const newPanX = maxPanX.value * progress.value;
-
-    console.log('newPanX:', newPanX);
-    panX.value = withTiming(newPanX, { duration: 100 });
-  }, [duration, playbackTime, progress]);
-
-  const startInterval = useCallback(() => {
-    if (intervalRef.current === null) {
-      intervalRef.current = setInterval(() => {
-        runOnUI(updateProgress)();
-      }, 100);
-    }
-  }, []);
-
-  const stopInterval = useCallback(() => {
-    if (intervalRef.current !== null) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-  }, []);
+  useEffect(() => {
+    durationShared.value = duration || 1;
+  }, [duration]);
 
   useEffect(() => {
-    if (isPlaying && !isRecording) {
-      startInterval();
-    } else {
-      stopInterval();
-    }
+    isPlayingShared.value = isPlaying;
+    isRecordingShared.value = isRecording;
+  }, [isPlaying]);
 
-    return () => stopInterval(); // Cleanup on unmount
-  }, [isPlaying, isRecording, startInterval, stopInterval]);
+  useAnimatedReaction(
+    () => isPlayingShared.value,
+    (isPlaying: boolean) => {
+      if (isPlaying && !isRecordingShared.value) {
+        const startProgress = progress.value;
+        const startTime = Date.now();
 
-  // const updateProgress = () => {
-  //   'worklet';
+        const animate = () => {
+          const elapsedTime = (Date.now() - startTime) / 1000;
+          progress.value = startProgress + elapsedTime / durationShared.value;
 
-  //   if (!sliding.value && panX.value > maxPanX.value) {
-  //     panX.value = withTiming(panX.value - WAVE_BAR_TOTAL_WIDTH, {
-  //       duration: 0,
-  //     });
-  //   }
-  // };
+          if (progress.value < 1 && isPlayingShared.value) {
+            requestAnimationFrame(animate);
+          }
+        };
 
-  // useEffect(() => {
-  //   if (isPlaying && !isRecording && !sliding.value) {
-  //     const interval = setInterval(() => updateProgress(), 100);
-  //     return () => clearInterval(interval);
-  //   }
-  // }, [isPlaying, isRecording]);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => updateProgress(), 100);
-  //   return () => clearInterval(interval);
-  // }, []);
-
-  // const updateProgress = useCallback(() => {
-  //   'worklet';
-
-  //   const scrollableWidth = maxPanX.value;
-  //   const progress = playbackTime / duration;
-  //   const newPanX = scrollableWidth * progress;
-
-  //   console.log('newPanX:', newPanX);
-  //   panX.value = withTiming(newPanX, { duration: 0 });
-  // }, [duration, playbackTime, progress]);
-
-  // useEffect(() => {
-  //   if (isPlaying && !isRecording && !sliding.value) {
-  //     updateProgress();
-  //   }
-  // }, [isPlaying, playbackTime, isRecording, sliding, updateProgress]);
+        animate();
+      } else {
+        cancelAnimation(progress);
+      }
+    },
+    [isPlayingShared, durationShared, isRecordingShared],
+  );
 
   const resetWaveformPosition = () => {
-    panX.value = withTiming(0, { duration: 300 });
+    manualPanX.value = withTiming(0, { duration: 300 });
   };
 
   useAnimatedReaction(
     () => waveformWidth.value,
     () => {
       if (isRecording) {
-        panX.value = WAVE_CONTAINER_WIDTH - waveformWidth.value;
+        manualPanX.value = WAVE_CONTAINER_WIDTH - waveformWidth.value;
       }
     },
     [isRecording],

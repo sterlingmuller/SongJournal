@@ -1,5 +1,5 @@
 import { StyleSheet, ViewStyle } from 'react-native';
-import { SCREEN_WIDTH } from '@src/components/common/constants';
+import { SCREEN_WIDTH, WAVE_BAR_WIDTH } from '@src/components/common/constants';
 
 interface Styles {
   container: ViewStyle;
@@ -71,7 +71,7 @@ const useAudioWaveStyles = () => {
       marginLeft: '50%',
     },
     bar: {
-      width: 6,
+      width: WAVE_BAR_WIDTH,
       marginHorizontal: 1,
       borderRadius: 3,
       backgroundColor: 'white',
