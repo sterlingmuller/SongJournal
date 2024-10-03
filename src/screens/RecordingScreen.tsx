@@ -62,11 +62,7 @@ const RecordingScreen = () => {
 
   return (
     <View style={styles.container}>
-      <AudioWaveDisplay
-        isRecording={isRecording}
-        wave={wave}
-        recordingDuration={recordingDuration}
-      />
+      <AudioWaveDisplay isRecording={isRecording} wave={wave} />
       <Timer recordingDuration={recordingDuration} isRecording={isRecording} />
       <RecordingControls
         recordingDuration={recordingDuration}

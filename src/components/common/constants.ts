@@ -187,6 +187,7 @@ export const SILENCE_THRESHOLD = 0.05;
 export const MINIMUM_WAVE_HEIGHT = 22;
 export const WAVE_BAR_WIDTH = 6;
 export const WAVE_BAR_GAP = 2;
+export const WAVE_BAR_TOTAL_WIDTH = WAVE_BAR_WIDTH + WAVE_BAR_GAP;
 export const PAN_SENSITIVITY = 0.15;
 export const WAVE_CONTAINER_WIDTH = SCREEN_WIDTH * 0.9;
 

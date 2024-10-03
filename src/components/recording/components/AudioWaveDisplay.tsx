@@ -11,6 +11,8 @@ import MaskedView from '@react-native-masked-view/masked-view';
 import Animated, {
   cancelAnimation,
   runOnJS,
+  runOnUI,
+  useAnimatedReaction,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
@@ -21,6 +23,7 @@ import useAudioWaveStyles from '@src/styles/audioWave';
 import {
   PAN_SENSITIVITY,
   WAVE_BAR_GAP,
+  WAVE_BAR_TOTAL_WIDTH,
   WAVE_BAR_WIDTH,
   WAVE_CONTAINER_WIDTH,
 } from '@src/components/common/constants';
@@ -40,7 +43,6 @@ const AudioWaveDisplay = (props: Props) => {
   const sliding = useSharedValue(false);
   const panX = useSharedValue(0);
   const wasRecording = useRef(false);
-  // const scrollStarted = useRef(false);
   const prevIsRecording = useRef(isRecording);
   const prevWave = useRef(wave);
   const { isPlaying, playbackTime, duration } =
@@ -48,7 +50,7 @@ const AudioWaveDisplay = (props: Props) => {
   const { seekTo } = useAudioPlayer();
 
   const waveformWidth = useDerivedValue(
-    () => wave.length * (WAVE_BAR_WIDTH + WAVE_BAR_GAP),
+    () => wave.length * WAVE_BAR_TOTAL_WIDTH,
   );
   const maxPanX = useDerivedValue(() => -waveformWidth.value);
 
@@ -57,86 +59,113 @@ const AudioWaveDisplay = (props: Props) => {
     return Math.floor(n / multiple) * multiple;
   };
 
+  // const progress = useSharedValue(0);
+
+  const isPlayingRef = useRef(isPlaying);
+  const isRecordingRef = useRef(isRecording);
+
+  const playbackTimeShared = useSharedValue(0);
+  const durationShared = useSharedValue(1);
+
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    playbackTimeShared.value = playbackTime;
+  }, [playbackTime]);
+
+  useEffect(() => {
+    durationShared.value = duration || 1; // Fallback to 1 if duration is 0
+  }, [duration]);
+
+  const progress = useDerivedValue(() => {
+    return playbackTimeShared.value / durationShared.value;
+  });
+
+  const updateProgress = useCallback(() => {
+    'worklet';
+    const newPanX = maxPanX.value * progress.value;
+
+    console.log('newPanX:', newPanX);
+    panX.value = withTiming(newPanX, { duration: 100 });
+  }, [duration, playbackTime, progress]);
+
+  const startInterval = useCallback(() => {
+    if (intervalRef.current === null) {
+      intervalRef.current = setInterval(() => {
+        runOnUI(updateProgress)();
+      }, 100);
+    }
+  }, []);
+
+  const stopInterval = useCallback(() => {
+    if (intervalRef.current !== null) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isPlaying && !isRecording) {
+      startInterval();
+    } else {
+      stopInterval();
+    }
+
+    return () => stopInterval(); // Cleanup on unmount
+  }, [isPlaying, isRecording, startInterval, stopInterval]);
+
   // const updateProgress = () => {
   //   'worklet';
 
-  //   // if (isPlaying && !sliding.value && panX.value > maxPanX.value) {
-  //   //   // moves 1 bar, every 30 ms
-  //   //   panX.value = withTiming(panX.value - WAVE_BAR_WIDTH, { duration: 30 });
-  //   // }
-
-  //   console.log('playbackTime:', playbackTime);
-  //   console.log('/duration:', duration);
-
-  //   if (isPlaying && !sliding.value && duration > 0) {
-  //     const scrollableWidth = waveformWidth.value - WAVE_CONTAINER_WIDTH;
-  //     const progress = playbackTime / duration;
-  //     const newPanX = -scrollableWidth * progress;
-  //     panX.value = withTiming(Math.max(maxPanX.value, Math.min(0, newPanX)), {
-  //       duration: 100,
+  //   if (!sliding.value && panX.value > maxPanX.value) {
+  //     panX.value = withTiming(panX.value - WAVE_BAR_TOTAL_WIDTH, {
+  //       duration: 0,
   //     });
   //   }
   // };
 
-  const updateProgress = useCallback(() => {
-    'worklet';
-    console.log('playbackTime:', playbackTime);
-    //   console.log('/duration:', duration);
-    if (!isRecording && !sliding.value && duration > 0) {
-      const scrollableWidth = WAVE_CONTAINER_WIDTH;
-      const progress = playbackTime / duration;
-      const newPanX = -scrollableWidth * progress;
-      panX.value = withTiming(Math.max(maxPanX.value, Math.min(0, newPanX)), {
-        duration: 100,
-      });
-    }
-  }, [
-    isRecording,
-    sliding.value,
-    duration,
-    playbackTime,
-    waveformWidth.value,
-    maxPanX.value,
-  ]);
+  // useEffect(() => {
+  //   if (isPlaying && !isRecording && !sliding.value) {
+  //     const interval = setInterval(() => updateProgress(), 100);
+  //     return () => clearInterval(interval);
+  //   }
+  // }, [isPlaying, isRecording]);
 
-  useEffect(() => {
-    if (!isRecording) {
-      updateProgress();
-    }
-  }, [isRecording, playbackTime, updateProgress]);
+  // useEffect(() => {
+  //   const interval = setInterval(() => updateProgress(), 100);
+  //   return () => clearInterval(interval);
+  // }, []);
+
+  // const updateProgress = useCallback(() => {
+  //   'worklet';
+
+  //   const scrollableWidth = maxPanX.value;
+  //   const progress = playbackTime / duration;
+  //   const newPanX = scrollableWidth * progress;
+
+  //   console.log('newPanX:', newPanX);
+  //   panX.value = withTiming(newPanX, { duration: 0 });
+  // }, [duration, playbackTime, progress]);
+
+  // useEffect(() => {
+  //   if (isPlaying && !isRecording && !sliding.value) {
+  //     updateProgress();
+  //   }
+  // }, [isPlaying, playbackTime, isRecording, sliding, updateProgress]);
 
   const resetWaveformPosition = () => {
     panX.value = withTiming(0, { duration: 300 });
-    // scrollStarted.current = false;
   };
 
-  // useEffect(() => {
-  //   let animationFrame: number;
-  //   const animate = () => {
-  //     runOnJS(updateProgress)();
-  //     animationFrame = requestAnimationFrame(animate);
-  //   };
-
-  //   if (isPlaying) {
-  //     animationFrame = requestAnimationFrame(animate);
-  //   }
-
-  //   return () => {
-  //     if (animationFrame) cancelAnimationFrame(animationFrame);
-  //   };
-  // }, [isPlaying]);
-
-  useEffect(() => {
-    if (isRecording) {
-      const newPanX = Math.max(
-        maxPanX.value,
-        WAVE_CONTAINER_WIDTH - waveformWidth.value,
-      );
-      panX.value = withTiming(newPanX, { duration: 100 });
-    }
-
-    wasRecording.current = isRecording;
-  }, [wave, isRecording]);
+  useAnimatedReaction(
+    () => waveformWidth.value,
+    () => {
+      if (isRecording) {
+        panX.value = WAVE_CONTAINER_WIDTH - waveformWidth.value;
+      }
+    },
+    [isRecording],
+  );
 
   useEffect(() => {
     if (!isRecording && prevIsRecording.current) {
@@ -158,19 +187,16 @@ const AudioWaveDisplay = (props: Props) => {
       ) => {
         if (!isRecording) {
           const translation = event.translationX * PAN_SENSITIVITY;
-          panX.value = Math.max(
-            maxPanX.value,
-            Math.min(0, panX.value + translation),
-          );
+          const nextPanX = panX.value + translation;
+
+          panX.value = Math.max(maxPanX.value, Math.min(0, nextPanX));
         }
       },
     )
     .onFinalize(() => {
-      // panX.value = withTiming(findNearestMultiple(panX.value, WAVE_BAR_WIDTH));
-      // sliding.value = false;
       if (!isRecording) {
         panX.value = withTiming(
-          findNearestMultiple(panX.value, WAVE_BAR_WIDTH),
+          findNearestMultiple(panX.value, WAVE_BAR_TOTAL_WIDTH),
         );
         sliding.value = false;
 
