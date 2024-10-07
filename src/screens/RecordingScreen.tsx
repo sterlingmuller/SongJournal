@@ -5,8 +5,6 @@ import useRecordingStyles from '@styles/recording';
 import Timer from '@src/components/recording/components/Timer';
 import RecordingControls from '@src/components/recording/components/RecordingControls';
 import AudioWaveDisplay from '@src/components/recording/components/AudioWaveDisplay';
-import { selectIsPlaying } from '@src/state/selectors/playbackSelector';
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 
 const RecordingScreen = () => {
   const styles = useRecordingStyles();
@@ -17,7 +15,6 @@ const RecordingScreen = () => {
   const [wave, setWave] = useState<number[]>([]);
   // const scrollPositionRef = useRef<number>(0);
 
-  const isPlaying = useAppSelector(selectIsPlaying);
   // const intervalId: NodeJS.Timeout | null = null;
 
   // useEffect(() => {

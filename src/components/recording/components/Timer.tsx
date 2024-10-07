@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View } from 'react-native';
 
 import StyledText from '@src/components/common/components/StyledText';
@@ -6,7 +6,6 @@ import formatDuration from '@src/utils/formatDuration';
 import useRecordingStyles from '@src/styles/recording';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectPlaybackInfo } from '@src/state/selectors/playbackSelector';
-
 interface Props {
   recordingDuration: number;
   isRecording: boolean;
@@ -14,22 +13,63 @@ interface Props {
 
 const Timer = ({ recordingDuration, isRecording }: Props) => {
   const styles = useRecordingStyles();
-  const { playbackTime, duration, isPlaying } =
-    useAppSelector(selectPlaybackInfo);
+  const { duration, isPlaying } = useAppSelector(selectPlaybackInfo);
 
-  const displayTime = () => {
-    if (isRecording) {
-      return formatDuration(recordingDuration || 0);
-    } else if (isPlaying || playbackTime > 0) {
-      return formatDuration(playbackTime);
+  const [displayTime, setDisplayTime] = useState(0);
+  const startTimeRef = useRef(0);
+  const animationFrameRef = useRef(0);
+  const finalTimeRef = useRef(0);
+
+  useEffect(() => {
+    if (isRecording || isPlaying) {
+      startTimeRef.current = Date.now() - displayTime * 1000;
+
+      const updateTimer = () => {
+        let newTime: number;
+        if (isRecording) {
+          newTime = recordingDuration;
+        } else {
+          newTime = (Date.now() - startTimeRef.current) / 1000;
+          if (duration) {
+            newTime = Math.min(newTime, duration);
+          }
+        }
+
+        setDisplayTime(newTime);
+        finalTimeRef.current = newTime;
+
+        animationFrameRef.current = requestAnimationFrame(updateTimer);
+      };
+
+      updateTimer();
     } else {
-      return formatDuration(duration || 0);
+      cancelAnimationFrame(animationFrameRef.current);
+      if (!isRecording && finalTimeRef.current > 0) {
+        setDisplayTime(finalTimeRef.current);
+      }
     }
-  };
+
+    return () => cancelAnimationFrame(animationFrameRef.current);
+  }, [isRecording, isPlaying, recordingDuration, duration]);
+
+  useEffect(() => {
+    if (!isPlaying && !isRecording) {
+      setDisplayTime(0);
+      finalTimeRef.current = 0;
+    }
+  }, [duration]);
+
+  useEffect(() => {
+    if (isRecording) {
+      setDisplayTime(recordingDuration);
+    }
+  }, [isRecording, recordingDuration]);
 
   return (
     <View style={styles.timerContainer}>
-      <StyledText style={styles.timer}>{displayTime()}</StyledText>
+      <StyledText style={styles.timer}>
+        {formatDuration(displayTime)}
+      </StyledText>
     </View>
   );
 };
