@@ -58,6 +58,9 @@ const AudioWaveDisplay = (props: Props) => {
   const isPlayingShared = useSharedValue(false);
   const durationShared = useSharedValue(duration || 1);
   const isRecordingShared = useSharedValue(isRecording);
+  const hasReachedEnd = useSharedValue(false);
+
+  const PLAYBACK_START_DELAY = 100;
 
   const waveformWidth = useDerivedValue(
     () => wave.length * WAVE_BAR_TOTAL_WIDTH,
@@ -72,12 +75,14 @@ const AudioWaveDisplay = (props: Props) => {
 
   useEffect(() => {
     durationShared.value = duration || 1;
-  }, [duration]);
-
-  useEffect(() => {
     isPlayingShared.value = isPlaying;
     isRecordingShared.value = isRecording;
-  }, [isPlaying]);
+
+    if (isPlaying && hasReachedEnd.value) {
+      progress.value = 0;
+      hasReachedEnd.value = false;
+    }
+  }, [duration, isPlaying, isRecording]);
 
   useAnimatedReaction(
     () => isPlayingShared.value,
@@ -87,8 +92,23 @@ const AudioWaveDisplay = (props: Props) => {
         const startTime = Date.now();
 
         const animate = () => {
-          const elapsedTime = (Date.now() - startTime) / 1000;
-          progress.value = startProgress + elapsedTime / durationShared.value;
+          const elapsedTime = Date.now() - startTime;
+
+          if (elapsedTime < PLAYBACK_START_DELAY) {
+            requestAnimationFrame(animate);
+            return;
+          }
+
+          const adjustedElapsedTime =
+            (elapsedTime - PLAYBACK_START_DELAY) / 1000;
+          progress.value =
+            startProgress + adjustedElapsedTime / durationShared.value;
+
+          if (progress.value >= 1) {
+            progress.value = 1;
+            hasReachedEnd.value = true;
+            return;
+          }
 
           if (progress.value < 1 && isPlayingShared.value) {
             requestAnimationFrame(animate);
