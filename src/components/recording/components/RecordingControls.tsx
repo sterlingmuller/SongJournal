@@ -29,13 +29,7 @@ interface Props {
 }
 
 const RecordingControls = (props: Props) => {
-  const {
-    recordingDuration,
-    setRecordingDuration,
-    isRecording,
-    setIsRecording,
-    setWave,
-  } = props;
+  const { setRecordingDuration, isRecording, setIsRecording, setWave } = props;
 
   const { goBack } = useNavigation();
   const styles = useRecordingStyles();
@@ -78,11 +72,7 @@ const RecordingControls = (props: Props) => {
   }, []);
 
   const handleStopRecording = async () => {
-    const newUri = await stopRecording(
-      recording,
-      setRecording,
-      setRecordingDuration,
-    );
+    const newUri = await stopRecording(recording);
     setUri(newUri);
 
     return newUri;
@@ -110,6 +100,8 @@ const RecordingControls = (props: Props) => {
       newUri = await handleStopRecording();
     }
 
+    const duration = Math.floor(recording._finalDurationMillis / 1000);
+
     if (newUri) {
       dispatch(
         createTakeRequest({
@@ -117,11 +109,13 @@ const RecordingControls = (props: Props) => {
           title,
           date: new Date().toISOString(),
           uri: newUri,
-          duration: recordingDuration,
+          duration,
           db,
         }),
       );
     }
+
+    setRecording(null);
 
     goBack();
   };

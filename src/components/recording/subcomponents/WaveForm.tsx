@@ -13,7 +13,7 @@ const WaveForms = ({ waveForms }: Props) => {
   return (
     <View style={[styles.waveformContainer]}>
       {waveForms.map((waveHeight: number, index: number) => (
-        <View style={styles.waveColumn}>
+        <View style={styles.waveColumn} key={index}>
           <View style={styles.topWaveContainer}>
             <View
               key={index}
