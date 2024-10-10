@@ -41,6 +41,7 @@ export const startRecording = async (
     });
 
     audioWaveIntervalId = setInterval(() => {
+      console.log('hi');
       const averageLevel = Math.round(levelSum / levelCount);
       if (averageLevel > 0) {
         setWave((prevWave: number[]) => [...prevWave, averageLevel]);
@@ -58,13 +59,13 @@ export const startRecording = async (
 
 export const stopRecording = async (
   recording: Audio.Recording,
-  // setRecording: (value: Audio.Recording | null) => void,
+  setRecording: (value: Audio.Recording | null) => void,
 ) => {
   if (!recording) return;
   clearInterval(audioWaveIntervalId);
   const uri = recording.getURI();
   await recording.stopAndUnloadAsync();
-  // setRecording(null);
+  setRecording(null);
 
   return uri;
 };
@@ -75,10 +76,11 @@ export const clearRecording = async (
   setRecordingUri: (uri: string | null) => void,
 ) => {
   if (recording) {
+    clearInterval(audioWaveIntervalId);
     await recording.stopAndUnloadAsync();
+    setRecording(null);
   }
-  clearInterval(audioWaveIntervalId);
-  setRecording(null);
+
   setRecordingUri(null);
 };
 

@@ -72,7 +72,7 @@ const RecordingControls = (props: Props) => {
   }, []);
 
   const handleStopRecording = async () => {
-    const newUri = await stopRecording(recording);
+    const newUri = await stopRecording(recording, setRecording);
     setUri(newUri);
 
     return newUri;
@@ -91,7 +91,7 @@ const RecordingControls = (props: Props) => {
     setWave([]);
     clearRecording(recording, setRecording, setUri);
     setIsRecording(false);
-    setRecordingDuration(0);
+    setRecordingDuration(null);
   };
 
   const onSavePress = async () => {

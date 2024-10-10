@@ -15,7 +15,7 @@ const Timer = ({ recordingDuration, isRecording }: Props) => {
   const styles = useRecordingStyles();
   const { duration, isPlaying } = useAppSelector(selectPlaybackInfo);
 
-  const [displayTime, setDisplayTime] = useState(0);
+  const [displayTime, setDisplayTime] = useState(null);
   const startTimeRef = useRef(0);
   const animationFrameRef = useRef(0);
   const finalTimeRef = useRef(0);
@@ -52,12 +52,13 @@ const Timer = ({ recordingDuration, isRecording }: Props) => {
     return () => cancelAnimationFrame(animationFrameRef.current);
   }, [isRecording, isPlaying, recordingDuration, duration]);
 
+  // This nulls display correctly on clear however, for some reason the displayTime now isn't updating while playing
   useEffect(() => {
-    if (!isPlaying && !isRecording) {
-      setDisplayTime(0);
+    if (!isPlaying && !isRecording && !recordingDuration) {
+      setDisplayTime(null);
       finalTimeRef.current = 0;
     }
-  }, [duration]);
+  }, [recordingDuration]);
 
   useEffect(() => {
     if (isRecording) {
