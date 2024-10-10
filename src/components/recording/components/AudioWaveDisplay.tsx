@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { View } from 'react-native';
 import {
   Gesture,
@@ -11,7 +11,6 @@ import MaskedView from '@react-native-masked-view/masked-view';
 import Animated, {
   cancelAnimation,
   runOnJS,
-  runOnUI,
   useAnimatedReaction,
   useAnimatedStyle,
   useDerivedValue,
@@ -22,9 +21,7 @@ import Animated, {
 import useAudioWaveStyles from '@src/styles/audioWave';
 import {
   PAN_SENSITIVITY,
-  WAVE_BAR_GAP,
   WAVE_BAR_TOTAL_WIDTH,
-  WAVE_BAR_WIDTH,
   WAVE_CONTAINER_WIDTH,
 } from '@src/components/common/constants';
 import WaveForms from '@src/components/recording/subcomponents/WaveForm';
@@ -41,7 +38,6 @@ const AudioWaveDisplay = (props: Props) => {
   const { isRecording, wave } = props;
   const styles = useAudioWaveStyles();
   const sliding = useSharedValue(false);
-  const wasRecording = useRef(false);
   const prevIsRecording = useRef(isRecording);
   const prevWave = useRef(wave);
   const { isPlaying, playbackTime, duration } =
@@ -83,6 +79,13 @@ const AudioWaveDisplay = (props: Props) => {
       hasReachedEnd.value = false;
     }
   }, [duration, isPlaying, isRecording]);
+
+  useEffect(() => {
+    if (wave.length === 0) {
+      progress.value = 0;
+      manualPanX.value = 0;
+    }
+  }, [wave]);
 
   useAnimatedReaction(
     () => isPlayingShared.value,
@@ -219,7 +222,7 @@ const AudioWaveDisplay = (props: Props) => {
           </MaskedView>
         </GestureDetector>
       </View>
-      {!isRecording && <View style={styles.midpointLine} />}
+      {!isRecording && wave.length > 0 && <View style={styles.midpointLine} />}
     </View>
   );
 };
