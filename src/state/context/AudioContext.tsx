@@ -57,9 +57,9 @@ export const AudioProvider = ({ children }: Props) => {
 
   const clearPlayback = useCallback(async () => {
     if (soundRef.current) {
-      await unloadSound();
-      dispatch(stopPlayback());
       setCurrentTime(0);
+      dispatch(stopPlayback());
+      await unloadSound();
     }
   }, [dispatch, unloadSound]);
 
