@@ -13,46 +13,56 @@ interface Props {
 
 const Timer = ({ recordingDuration, isRecording }: Props) => {
   const styles = useRecordingStyles();
-  const { duration, isPlaying } = useAppSelector(selectPlaybackInfo);
+  const { duration, isPlaying, playbackTime } =
+    useAppSelector(selectPlaybackInfo);
 
   const [displayTime, setDisplayTime] = useState(null);
   const startTimeRef = useRef(0);
   const animationFrameRef = useRef(0);
   const finalTimeRef = useRef(0);
 
+  // Timer works for now but there is a delay going from 0 to 1
+  // improve this in the future to use the useTimer hook so we're getting playbackTime from
+  // the timer, not recording status => state => component
+
+  // useEffect(() => {
+  //   if (isRecording || isPlaying) {
+  //     startTimeRef.current = Date.now() - displayTime * 1000;
+
+  //     const updateTimer = () => {
+  //       let newTime: number;
+  //       if (isRecording) {
+  //         newTime = recordingDuration;
+  //       } else {
+  //         newTime = (Date.now() - startTimeRef.current) / 1000;
+  //         if (duration) {
+  //           newTime = Math.min(newTime, duration);
+  //         }
+  //       }
+
+  //       setDisplayTime(newTime);
+  //       finalTimeRef.current = newTime;
+
+  //       animationFrameRef.current = requestAnimationFrame(updateTimer);
+  //     };
+
+  //     updateTimer();
+  //   } else {
+  //     cancelAnimationFrame(animationFrameRef.current);
+  //     if (!isRecording && finalTimeRef.current > 0) {
+  //       setDisplayTime(finalTimeRef.current);
+  //     }
+  //   }
+
+  //   return () => cancelAnimationFrame(animationFrameRef.current);
+  // }, [isRecording, isPlaying, recordingDuration, duration]);
+
   useEffect(() => {
-    if (isRecording || isPlaying) {
-      startTimeRef.current = Date.now() - displayTime * 1000;
-
-      const updateTimer = () => {
-        let newTime: number;
-        if (isRecording) {
-          newTime = recordingDuration;
-        } else {
-          newTime = (Date.now() - startTimeRef.current) / 1000;
-          if (duration) {
-            newTime = Math.min(newTime, duration);
-          }
-        }
-
-        setDisplayTime(newTime);
-        finalTimeRef.current = newTime;
-
-        animationFrameRef.current = requestAnimationFrame(updateTimer);
-      };
-
-      updateTimer();
-    } else {
-      cancelAnimationFrame(animationFrameRef.current);
-      if (!isRecording && finalTimeRef.current > 0) {
-        setDisplayTime(finalTimeRef.current);
-      }
+    if (isPlaying) {
+      setDisplayTime(playbackTime);
     }
+  }, [isPlaying, playbackTime]);
 
-    return () => cancelAnimationFrame(animationFrameRef.current);
-  }, [isRecording, isPlaying, recordingDuration, duration]);
-
-  // This nulls display correctly on clear however, for some reason the displayTime now isn't updating while playing
   useEffect(() => {
     if (!isPlaying && !isRecording && !recordingDuration) {
       setDisplayTime(null);

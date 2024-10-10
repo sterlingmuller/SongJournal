@@ -72,6 +72,10 @@ const RecordingControls = (props: Props) => {
   }, []);
 
   const handleStopRecording = async () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
     const newUri = await stopRecording(recording, setRecording);
     setUri(newUri);
 

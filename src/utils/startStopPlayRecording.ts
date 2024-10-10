@@ -41,7 +41,6 @@ export const startRecording = async (
     });
 
     audioWaveIntervalId = setInterval(() => {
-      console.log('hi');
       const averageLevel = Math.round(levelSum / levelCount);
       if (averageLevel > 0) {
         setWave((prevWave: number[]) => [...prevWave, averageLevel]);
