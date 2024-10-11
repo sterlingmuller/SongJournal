@@ -180,7 +180,7 @@ export const SORT_SELECT = [
 
 export const MAX_AUDIO_WAVE_BARS = 24;
 export const AUDIO_WAVE_MIDPOINT = 12;
-export const AUDIO_UPDATES_PER_SECOND = 8;
+export const AUDIO_UPDATES_PER_SECOND = 6;
 export const AUDIO_UPDATE_INTERVAL = 1000 / AUDIO_UPDATES_PER_SECOND;
 export const MAX_LEVEL = 50;
 export const SILENCE_THRESHOLD = 0.05;

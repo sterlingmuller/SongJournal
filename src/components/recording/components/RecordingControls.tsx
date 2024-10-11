@@ -19,27 +19,24 @@ import { createTakeRequest } from '@src/state/sagas/actionCreators';
 import { RootStackParamList } from '@src/components/common/types';
 import { selectCurrentSongId } from '@src/state/selectors/songsSelector';
 import PlaybackButton from '@src/components/recording/subcomponents/PlaybackButton';
-import { LEADING_DOTS_ARRAY } from '@src/components/common/constants';
 
 interface Props {
-  duration: number;
-  setDuration: (value: number | ((value: number) => void)) => void;
+  recordingDuration: number;
+  setRecordingDuration: (value: number | ((value: number) => void)) => void;
   isRecording: boolean;
   setIsRecording: (value: boolean) => void;
-  setVisibleWave: (value: number[]) => void;
-  fullWave: number[];
-  setFullWave: (value: number[]) => void;
+  setWave: (value: number[]) => void;
+  // dispatchRecordingWave: (value: number[]) => void;
+  setRecordingWave: (value: number[]) => void;
 }
 
 const RecordingControls = (props: Props) => {
   const {
-    duration,
-    setDuration,
+    setRecordingDuration,
     isRecording,
     setIsRecording,
-    setVisibleWave,
-    fullWave,
-    setFullWave,
+    setWave,
+    setRecordingWave,
   } = props;
 
   const { goBack } = useNavigation();
@@ -48,32 +45,49 @@ const RecordingControls = (props: Props) => {
   const dispatch = useAppDispatch();
   const route = useRoute<RouteProp<RootStackParamList, 'Recording'>>();
   const songId = useAppSelector(selectCurrentSongId);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const { title } = route.params;
 
   const [uri, setUri] = useState<string | null>(null);
 
-  const handleStartRecording = async () => {
-    await startRecording(setRecording, fullWave, setVisibleWave);
-    setDuration(0);
+  const recordingStartTimeRef = useRef(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const fullWaveRef = useRef<number[]>([]);
 
-    timerRef.current = setInterval(() => {
-      setDuration((prevDuration: number) => (prevDuration || 0) + 1);
-    }, 1000);
+  const updateDuration = () => {
+    if (recordingStartTimeRef.current) {
+      const currentDuration = Math.floor(
+        (Date.now() - recordingStartTimeRef.current) / 1000,
+      );
+      setRecordingDuration(currentDuration);
+    }
+  };
+
+  const handleStartRecording = async () => {
+    setRecordingDuration(0);
+    recordingStartTimeRef.current = Date.now();
+    await startRecording(setRecording, fullWaveRef, setRecordingWave);
+    setIsRecording(true);
+    intervalRef.current = setInterval(updateDuration, 1000);
   };
 
   useEffect(() => {
     handleStartRecording();
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
   }, []);
 
   const handleStopRecording = async () => {
-    const newUri = await stopRecording(recording, setRecording, setDuration);
-    setUri(newUri);
-
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
     }
+
+    setWave(fullWaveRef.current);
+    const newUri = await stopRecording(recording, setRecording);
+    setUri(newUri);
 
     return newUri;
   };
@@ -85,13 +99,14 @@ const RecordingControls = (props: Props) => {
   };
 
   const onClearPress = () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
     }
-
-    setFullWave([...LEADING_DOTS_ARRAY]);
-    clearRecording(recording, setRecording, setUri, setDuration);
+    // need to figure out how to clear new wave
+    // setWave([]);
+    clearRecording(recording, setRecording, setUri);
     setIsRecording(false);
+    setRecordingDuration(null);
   };
 
   const onSavePress = async () => {
@@ -99,6 +114,8 @@ const RecordingControls = (props: Props) => {
     if (isRecording) {
       newUri = await handleStopRecording();
     }
+
+    const duration = Math.floor(recording._finalDurationMillis / 1000);
 
     if (newUri) {
       dispatch(
@@ -112,6 +129,8 @@ const RecordingControls = (props: Props) => {
         }),
       );
     }
+
+    setRecording(null);
 
     goBack();
   };
