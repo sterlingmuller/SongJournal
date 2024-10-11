@@ -10,6 +10,8 @@ interface Props {
 const WaveForms = ({ waveForms }: Props) => {
   const styles = useAudioWaveStyles();
 
+  console.log('waveforms:', waveForms);
+
   return (
     <View style={[styles.waveformContainer]}>
       {waveForms.map((waveHeight: number, index: number) => (
