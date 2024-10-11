@@ -1,18 +1,8 @@
 import { StyleSheet, ViewStyle } from 'react-native';
-import { SCREEN_WIDTH, WAVE_BAR_WIDTH } from '@src/components/common/constants';
+import { SCREEN_WIDTH } from '@src/components/common/constants';
 
 interface Styles {
-  container: ViewStyle;
   waveContainer: ViewStyle;
-  waveColumn: ViewStyle;
-  topWaveContainer: ViewStyle;
-  bottomWaveContainer: ViewStyle;
-  maskedView: ViewStyle;
-  maskElementContainer: ViewStyle;
-  maskElementContainerNotRecording: ViewStyle;
-  playedSection: ViewStyle;
-  unplayedSection: ViewStyle;
-  waveformContainer: ViewStyle;
   bar: ViewStyle;
   dotContainer: ViewStyle;
   dot: ViewStyle;
@@ -21,60 +11,20 @@ interface Styles {
 
 const useAudioWaveStyles = () => {
   const audioWaveStyles: Styles = StyleSheet.create({
-    container: {
-      justifyContent: 'center',
-      top: 100,
-    },
     waveContainer: {
-      height: 180,
-      width: SCREEN_WIDTH * 0.9,
       alignSelf: 'center',
-    },
-    maskedView: {
-      flex: 1,
-    },
-    maskElementContainer: {
+      alignItems: 'center',
       flexDirection: 'row',
-      height: '100%',
-    },
-    maskElementContainerNotRecording: {
-      left: '50%',
-    },
-    playedSection: {
-      position: 'absolute',
-      backgroundColor: '#ff4081',
-      zIndex: 1,
-      top: 0,
-      bottom: 0,
-      right: '50%',
-    },
-    unplayedSection: { flex: 1, backgroundColor: '#3f51b5' },
-    waveformContainer: {
-      flexDirection: 'row',
-    },
-    waveColumn: { flexDirection: 'column', gap: 1 },
-    topWaveContainer: { height: '60%', justifyContent: 'flex-end' },
-    bottomWaveContainer: {
-      height: '40%',
-      justifyContent: 'flex-start',
-      opacity: 0.3,
-    },
-    waveContentReversed: {
-      alignItems: 'flex-start',
-      opacity: 0.3,
-    },
-    midpointLine: {
-      position: 'absolute',
+      overflow: 'hidden',
       height: 200,
-      width: 4,
-      backgroundColor: 'green',
-      marginLeft: '50%',
+      width: SCREEN_WIDTH * 0.7,
+      position: 'relative',
+      marginTop: 150,
     },
     bar: {
-      width: WAVE_BAR_WIDTH,
-      marginHorizontal: 1,
+      width: 8,
+      marginHorizontal: 2,
       borderRadius: 3,
-      backgroundColor: 'white',
     },
     dotContainer: {
       width: 10,
@@ -87,6 +37,14 @@ const useAudioWaveStyles = () => {
       height: 4,
       borderRadius: 2,
       backgroundColor: '#3f51b5',
+    },
+    midpointLine: {
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      width: 2,
+      left: '50%',
+      backgroundColor: 'green',
     },
   });
 
