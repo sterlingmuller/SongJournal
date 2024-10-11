@@ -25,7 +25,11 @@ import {
 } from '@src/state/slice/playbackSlice';
 
 interface AudioContextType {
-  togglePlayback: (uri: string, id: number) => Promise<void>;
+  togglePlayback: (
+    uri: string,
+    id: number,
+    storedDuration?: number,
+  ) => Promise<void>;
   clearPlayback: () => Promise<void>;
   seekTo: (position: number) => Promise<void>;
   currentTime: number;
@@ -100,7 +104,7 @@ export const AudioProvider = ({ children }: Props) => {
   }, []);
 
   const togglePlayback = useCallback(
-    async (newUri: string, id: number) => {
+    async (newUri: string, id: number, storedDuration?: number) => {
       if (soundRef.current) {
         if (uri === newUri) {
           if (isPlaying) {
@@ -112,12 +116,12 @@ export const AudioProvider = ({ children }: Props) => {
           }
         } else {
           await clearPlayback();
-          const duration = await loadSound(newUri);
+          const duration = await loadSound(newUri, storedDuration);
           dispatch(startPlayback({ uri: newUri, id, duration }));
           await soundRef.current.playAsync();
         }
       } else {
-        const duration = await loadSound(newUri);
+        const duration = await loadSound(newUri, storedDuration);
         dispatch(startPlayback({ uri: newUri, id, duration }));
         await soundRef.current.playAsync();
       }

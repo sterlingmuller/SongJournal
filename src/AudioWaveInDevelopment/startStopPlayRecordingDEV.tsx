@@ -4,6 +4,7 @@ import {
 } from '@src/components/common/constants';
 import { Audio } from 'expo-av';
 import { RecordingStatus } from 'expo-av/build/Audio';
+import { MutableRefObject } from 'react';
 
 let levelSum = 0;
 let levelCount = 0;
@@ -25,8 +26,8 @@ const updateAudioLevelSum = async (recording: Audio.Recording) => {
 
 export const startRecording = async (
   setRecording: (value: Audio.Recording | null) => void,
-  fullWaveRef: number[],
-  setVisibleWave: (value: number[] | ((value: number[]) => number[])) => void,
+  fullWaveRef: MutableRefObject<number[]>,
+  setRecordingWave: (value: number[] | ((value: number[]) => number[])) => void,
 ) => {
   try {
     await Audio.requestPermissionsAsync();
@@ -43,10 +44,13 @@ export const startRecording = async (
 
     audioWaveIntervalId = setInterval(() => {
       const averageLevel = Math.round(levelSum / levelCount);
+      // if (averageLevel > 0) {
+      //   fullWaveRef.current.push(averageLevel);
+      //   dispatchRecordingWave(averageLevel);
+      // }
       if (averageLevel > 0) {
-        // console.log('averageLevel:', averageLevel);
-        fullWaveRef.push(averageLevel);
-        setVisibleWave((prevWave: number[]) => [
+        fullWaveRef.current.push(averageLevel);
+        setRecordingWave((prevWave: number[]) => [
           ...prevWave.slice(1),
           averageLevel,
         ]);
@@ -65,17 +69,12 @@ export const startRecording = async (
 export const stopRecording = async (
   recording: Audio.Recording,
   setRecording: (value: Audio.Recording | null) => void,
-  setDuration: (duration: number) => void,
 ) => {
   if (!recording) return;
-
-  setRecording(null);
   clearInterval(audioWaveIntervalId);
-  await recording.stopAndUnloadAsync();
   const uri = recording.getURI();
-
-  const duration = Math.floor(recording._finalDurationMillis / 1000);
-  setDuration(duration);
+  await recording.stopAndUnloadAsync();
+  setRecording(null);
 
   return uri;
 };
@@ -84,15 +83,14 @@ export const clearRecording = async (
   recording: Audio.Recording | null,
   setRecording: (value: Audio.Recording | null) => void,
   setRecordingUri: (uri: string | null) => void,
-  setDuration: (duration: number) => void,
 ) => {
   if (recording) {
+    clearInterval(audioWaveIntervalId);
     await recording.stopAndUnloadAsync();
+    setRecording(null);
   }
-  clearInterval(audioWaveIntervalId);
-  setRecording(null);
+
   setRecordingUri(null);
-  setDuration(null);
 };
 
 export const playRecording = async (uri: string) => {
