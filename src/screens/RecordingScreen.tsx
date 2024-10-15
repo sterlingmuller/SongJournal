@@ -1,11 +1,10 @@
-import React, { useReducer, useState } from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 
 import useRecordingStyles from '@styles/recording';
 import Timer from '@src/components/recording/components/Timer';
 import RecordingControls from '@src/components/recording/components/RecordingControls';
 import AudioWaveDisplay from '@src/components/recording/components/AudioWaveDisplay';
-import { EMPTY_AUDIO_WAVE_ARRAY } from '@src/components/common/constants';
 
 const RecordingScreen = () => {
   const styles = useRecordingStyles();
@@ -14,16 +13,8 @@ const RecordingScreen = () => {
   );
   const [isRecording, setIsRecording] = useState<boolean>(true);
   const [wave, setWave] = useState<number[]>([]);
-  const [recordingWave, setRecordingWave] = useState<number[]>([
-    ...EMPTY_AUDIO_WAVE_ARRAY,
-  ]);
 
-  // const [recordingWave, dispatchRecordingWave] = useReducer(
-  //   (prevWave: number[], newElement: number) => {
-  //     return [...prevWave.slice(1), newElement];
-  //   },
-  //   [],
-  // );
+  const [recordingWave, setRecordingWave] = useState<number[]>([]);
 
   return (
     <View style={styles.container}>

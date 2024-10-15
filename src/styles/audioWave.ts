@@ -74,7 +74,7 @@ const useAudioWaveStyles = () => {
       width: WAVE_BAR_WIDTH,
       marginHorizontal: 1,
       borderRadius: 3,
-      backgroundColor: 'white',
+      backgroundColor: 'blue',
     },
     dotContainer: {
       width: 10,
@@ -83,8 +83,9 @@ const useAudioWaveStyles = () => {
       alignItems: 'center',
     },
     dot: {
-      width: 4,
-      height: 4,
+      width: WAVE_BAR_WIDTH,
+      marginHorizontal: 1,
+      height: 100,
       borderRadius: 2,
       backgroundColor: '#3f51b5',
     },
