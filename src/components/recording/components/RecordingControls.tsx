@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { Audio } from 'expo-av';
@@ -19,6 +19,10 @@ import { createTakeRequest } from '@src/state/sagas/actionCreators';
 import { RootStackParamList } from '@src/components/common/types';
 import { selectCurrentSongId } from '@src/state/selectors/songsSelector';
 import PlaybackButton from '@src/components/recording/subcomponents/PlaybackButton';
+import {
+  SCREEN_WIDTH,
+  WAVE_BAR_TOTAL_WIDTH,
+} from '@src/components/common/constants';
 
 interface Props {
   recordingDuration: number;
@@ -53,6 +57,9 @@ const RecordingControls = (props: Props) => {
   const recordingStartTimeRef = useRef(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const fullWaveRef = useRef<number[]>([]);
+  const maxBars = useMemo(() => {
+    return Math.floor((SCREEN_WIDTH * 0.9) / WAVE_BAR_TOTAL_WIDTH);
+  }, []);
 
   const updateDuration = () => {
     if (recordingStartTimeRef.current) {
@@ -66,7 +73,7 @@ const RecordingControls = (props: Props) => {
   const handleStartRecording = async () => {
     setRecordingDuration(0);
     recordingStartTimeRef.current = Date.now();
-    await startRecording(setRecording, fullWaveRef, setRecordingWave);
+    await startRecording(setRecording, fullWaveRef, setRecordingWave, maxBars);
     setIsRecording(true);
     intervalRef.current = setInterval(updateDuration, 1000);
   };
@@ -103,8 +110,11 @@ const RecordingControls = (props: Props) => {
       clearInterval(intervalRef.current);
     }
     // need to figure out how to clear new wave
-    // setWave([]);
-    clearRecording(recording, setRecording, setUri);
+    setWave([]);
+    fullWaveRef.current = [];
+
+    clearRecording(recording, setRecording, setUri, setRecordingWave);
+    // setRecordingWave([]);
     setIsRecording(false);
     setRecordingDuration(null);
   };

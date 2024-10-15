@@ -178,7 +178,7 @@ export const SORT_SELECT = [
   { label: SortBy.LENGTH, value: SortBy.LENGTH },
 ];
 
-export const MAX_AUDIO_WAVE_BARS = 24;
+export const MAX_AUDIO_WAVE_BARS = 40;
 export const AUDIO_WAVE_MIDPOINT = 12;
 export const AUDIO_UPDATES_PER_SECOND = 6;
 export const AUDIO_UPDATE_INTERVAL = 1000 / AUDIO_UPDATES_PER_SECOND;
@@ -207,9 +207,3 @@ export const HEIGHT_MAPPING: [number, number][] = [
   [86, 90], // 42 and above will be 60
   [87, 100], // 42 and above will be 60
 ];
-
-export const LEADING_DOTS_ARRAY: number[] = new Array(5).fill(0);
-
-export const EMPTY_AUDIO_WAVE_ARRAY = new Array(
-  MAX_AUDIO_WAVE_BARS - LEADING_DOTS_ARRAY.length,
-).fill(0);

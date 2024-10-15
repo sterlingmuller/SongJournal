@@ -28,6 +28,7 @@ export const startRecording = async (
   setRecording: (value: Audio.Recording | null) => void,
   fullWaveRef: MutableRefObject<number[]>,
   setRecordingWave: (value: number[] | ((value: number[]) => number[])) => void,
+  maxBars: number,
 ) => {
   try {
     await Audio.requestPermissionsAsync();
@@ -44,16 +45,15 @@ export const startRecording = async (
 
     audioWaveIntervalId = setInterval(() => {
       const averageLevel = Math.round(levelSum / levelCount);
-      // if (averageLevel > 0) {
-      //   fullWaveRef.current.push(averageLevel);
-      //   dispatchRecordingWave(averageLevel);
-      // }
       if (averageLevel > 0) {
         fullWaveRef.current.push(averageLevel);
-        setRecordingWave((prevWave: number[]) => [
-          ...prevWave.slice(1),
-          averageLevel,
-        ]);
+        setRecordingWave((prevWave: number[]) => {
+          const newWave = [...prevWave, averageLevel];
+          if (newWave.length > maxBars) {
+            return newWave.slice(-maxBars);
+          }
+          return newWave;
+        });
       }
 
       levelSum = 0;
@@ -83,6 +83,7 @@ export const clearRecording = async (
   recording: Audio.Recording | null,
   setRecording: (value: Audio.Recording | null) => void,
   setRecordingUri: (uri: string | null) => void,
+  setRecordingWave: (value: number[] | ((value: number[]) => number[])) => void,
 ) => {
   if (recording) {
     clearInterval(audioWaveIntervalId);
@@ -90,6 +91,7 @@ export const clearRecording = async (
     setRecording(null);
   }
 
+  setRecordingWave([]);
   setRecordingUri(null);
 };
 

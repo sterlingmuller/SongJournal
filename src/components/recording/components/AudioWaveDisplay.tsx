@@ -1,16 +1,16 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { View } from 'react-native';
-import {
-  Gesture,
-  GestureDetector,
-  GestureUpdateEvent,
-  PanGestureChangeEventPayload,
-  PanGestureHandlerEventPayload,
-} from 'react-native-gesture-handler';
+// import {
+//   Gesture,
+//   GestureDetector,
+//   GestureUpdateEvent,
+//   PanGestureChangeEventPayload,
+//   PanGestureHandlerEventPayload,
+// } from 'react-native-gesture-handler';
 import MaskedView from '@react-native-masked-view/masked-view';
 import Animated, {
   cancelAnimation,
-  runOnJS,
+  // runOnJS,
   useAnimatedReaction,
   useAnimatedStyle,
   useDerivedValue,
@@ -20,14 +20,15 @@ import Animated, {
 
 import useAudioWaveStyles from '@src/styles/audioWave';
 import {
-  PAN_SENSITIVITY,
+  // PAN_SENSITIVITY,
   WAVE_BAR_TOTAL_WIDTH,
   WAVE_CONTAINER_WIDTH,
 } from '@src/components/common/constants';
 import WaveForms from '@src/components/recording/subcomponents/WaveForm';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectPlaybackInfo } from '@src/state/selectors/playbackSelector';
-import { useAudioPlayer } from '@src/state/context/AudioContext';
+import RecordingWave from '../subcomponents/RecordingWave';
+// import { useAudioPlayer } from '@src/state/context/AudioContext';
 
 interface Props {
   isRecording: boolean;
@@ -35,22 +36,19 @@ interface Props {
   recordingWave: number[];
 }
 
-// let's try doing a window for playback, backlog update will be full thing with seek
-
 const AudioWaveDisplay = (props: Props) => {
   const { isRecording, wave, recordingWave } = props;
   const styles = useAudioWaveStyles();
-  const sliding = useSharedValue(false);
+  // const sliding = useSharedValue(false);
   const prevIsRecording = useRef(isRecording);
   const prevWave = useRef(wave);
-  const { isPlaying, playbackTime, duration } =
-    useAppSelector(selectPlaybackInfo);
-  const { seekTo } = useAudioPlayer();
+  const { isPlaying, duration } = useAppSelector(selectPlaybackInfo);
+  // const { seekTo } = useAudioPlayer();
 
-  const findNearestMultiple = (n: number, multiple: number) => {
-    'worklet';
-    return Math.floor(n / multiple) * multiple;
-  };
+  // const findNearestMultiple = (n: number, multiple: number) => {
+  //   'worklet';
+  //   return Math.floor(n / multiple) * multiple;
+  // };
 
   const progress = useSharedValue(0);
   const manualPanX = useSharedValue(0);
@@ -61,28 +59,18 @@ const AudioWaveDisplay = (props: Props) => {
 
   const PLAYBACK_START_DELAY = 100;
 
-  const waveformWidth = useMemo(() => {
-    return isRecording
+  const waveformWidth = useDerivedValue(() =>
+    isRecording
       ? recordingWave.length * WAVE_BAR_TOTAL_WIDTH
-      : wave.length * WAVE_BAR_TOTAL_WIDTH;
-  }, [isRecording, wave, recordingWave]);
+      : wave.length * WAVE_BAR_TOTAL_WIDTH,
+  );
 
-  // const maxPanX = useMemo(() => {
-  //   return -waveformWidth;
-  // }, [waveformWidth]);
-
-  // const waveformWidth = useDerivedValue(() =>
-  //   isRecording
-  //     ? recordingWave.length * WAVE_BAR_TOTAL_WIDTH
-  //     : wave.length * WAVE_BAR_TOTAL_WIDTH,
-  // );
-  // const maxPanX = useDerivedValue(() => -waveformWidth);
   const panX = useDerivedValue(() => {
     if (isRecordingShared.value) {
       return manualPanX.value;
     }
-    // return progress.value * maxPanX.value;
-    return progress.value * -waveformWidth;
+
+    return progress.value * -waveformWidth.value;
   });
 
   useEffect(() => {
@@ -147,10 +135,10 @@ const AudioWaveDisplay = (props: Props) => {
   };
 
   useAnimatedReaction(
-    () => waveformWidth,
+    () => waveformWidth.value,
     () => {
       if (isRecording) {
-        manualPanX.value = WAVE_CONTAINER_WIDTH - waveformWidth;
+        manualPanX.value = WAVE_CONTAINER_WIDTH - waveformWidth.value;
       }
     },
     [isRecording],
@@ -180,7 +168,7 @@ const AudioWaveDisplay = (props: Props) => {
   //         const translation = event.translationX * PAN_SENSITIVITY;
   //         const nextPanX = panX.value + translation;
 
-  //         panX.value = Math.max(maxPanX.value, Math.min(0, nextPanX));
+  //         panX.value = Math.max(-waveformWidth.value, Math.min(0, nextPanX));
   //       }
   //     },
   //   )
@@ -197,6 +185,8 @@ const AudioWaveDisplay = (props: Props) => {
   //       runOnJS(seekTo)(newTime);
   //     }
   //   });
+
+  console.log('wave:', wave);
 
   useEffect(() => {
     if (wave.length === 0 && prevWave.current.length > 0) {
@@ -237,7 +227,7 @@ const AudioWaveDisplay = (props: Props) => {
       <View style={styles.waveContainer}>
         {/* <GestureDetector gesture={panGestureHandler}> */}
         {isRecording ? (
-          memoizedWaveForms
+          <RecordingWave recordingWave={recordingWave} />
         ) : (
           <MaskedView style={styles.maskedView} maskElement={maskedElement}>
             <Animated.View
