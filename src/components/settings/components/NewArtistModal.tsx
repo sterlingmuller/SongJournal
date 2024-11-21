@@ -13,6 +13,7 @@ import {
 import { addArtistRequest } from '@src/state/sagas/actionCreators';
 import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
 import Gap from '@src/components/common/components/Gap';
+import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Props {
   isNewArtistOpen: boolean;
@@ -24,6 +25,7 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
   const dispatch = useAppDispatch();
   const styles = useCommonModalStyle();
   const displayTips = useAppSelector(selectDisplayTips);
+  const { theme } = useColorTheme();
 
   const [newArtist, setNewArtist] = useState('');
 
@@ -52,6 +54,7 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
             <TextInput
               style={styles.input}
               placeholder="Cobra Strike Alpha Deluxe"
+              placeholderTextColor={theme.secondaryText}
               value={newArtist}
               onChangeText={(title: string) => setNewArtist(title)}
             />

@@ -9,6 +9,7 @@ import { EMPTY_TAKE } from '@src/components/common/constants';
 import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
 import { useSQLiteContext } from 'expo-sqlite';
 import { updateTakeNotesRequest } from '@src/state/sagas/actionCreators';
+import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Props {
   setCurrentTake: (value: Take) => void;
@@ -20,6 +21,7 @@ const NotesModal = (props: Props) => {
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
   const styles = useTakeNotesModalStyles();
+  const { theme } = useColorTheme();
 
   const { notes, title, takeId, songId } = currentTake;
   const [newNote, setNewNote] = useState<string>(notes);
@@ -51,6 +53,7 @@ const NotesModal = (props: Props) => {
           <TextInput
             style={styles.input}
             placeholder="Add notes for the current take..."
+            placeholderTextColor={theme.secondaryText}
             value={newNote}
             onChangeText={(text: string) => setNewNote(text)}
             multiline={true}

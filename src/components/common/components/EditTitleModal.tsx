@@ -13,6 +13,7 @@ import {
   updateSongTitleRequest,
   updateTakeTitleRequest,
 } from '@src/state/sagas/actionCreators';
+import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Props {
   titleToEdit: { title: string; songId: number; takeId?: number };
@@ -26,9 +27,11 @@ interface Props {
 const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
   const db = useSQLiteContext();
   const dispatch = useAppDispatch();
+  const styles = useCommonModalStyle();
+  const { theme } = useColorTheme();
+
   const { navigate, addListener } =
     useNavigation<NavigationProp<RootStackParamList>>();
-  const styles = useCommonModalStyle();
   const { title: originalTitle, songId, takeId } = titleToEdit;
   const [updatedTitle, setUpdatedTitle] = useState<string>('');
 
@@ -74,6 +77,7 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
           <TextInput
             style={styles.input}
             placeholder="Enter a new title"
+            placeholderTextColor={theme.secondaryText}
             value={updatedTitle}
             onChangeText={(title: string) => setUpdatedTitle(title)}
           />

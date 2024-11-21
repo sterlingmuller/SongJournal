@@ -1,3 +1,4 @@
+import { useColorTheme } from '@src/state/context/ThemeContext';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 interface Styles {
@@ -11,6 +12,8 @@ interface Styles {
 }
 
 const useCommonModalStyle = () => {
+  const { theme } = useColorTheme();
+
   const commonModalStyle: Styles = StyleSheet.create({
     container: {
       alignSelf: 'center',
@@ -29,7 +32,7 @@ const useCommonModalStyle = () => {
 
     textbox: {
       flexDirection: 'row',
-      backgroundColor: '#f0f0f0',
+      backgroundColor: theme.secondaryBackground,
       borderRadius: 10,
       padding: 6,
       width: '75%',

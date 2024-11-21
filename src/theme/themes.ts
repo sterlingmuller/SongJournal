@@ -1,4 +1,3 @@
-import { ColorTheme } from '@src/components/common/enums';
 import { colors as c } from '@src/theme/colors';
 import { getColorWithOpacity } from '@src/utils/getColorWithOpacity';
 
@@ -10,12 +9,15 @@ export interface Theme {
   secondaryBackground: string;
   clearBackground: string;
   primaryText: string;
+  secondaryText: string;
   headerText: string;
   highlight: string;
   conductorBackground: string;
 }
 
-const themes: Record<ColorTheme, Theme> = {
+type ThemeKey = 'Light' | 'Dark' | 'Metal' | 'Psych' | 'Pop' | 'Surf';
+
+const themes: Record<ThemeKey, Theme> = {
   Light: {
     primary: c.coral,
     mutedPrimary: getColorWithOpacity(c.coral, 60),
@@ -24,6 +26,7 @@ const themes: Record<ColorTheme, Theme> = {
     secondaryBackground: c.lightGray,
     clearBackground: c.white,
     primaryText: c.black,
+    secondaryText: c.darkGray,
     headerText: c.black,
     highlight: c.gray,
     conductorBackground: c.salmon,
@@ -36,6 +39,7 @@ const themes: Record<ColorTheme, Theme> = {
     secondaryBackground: c.charcoal,
     clearBackground: c.white,
     primaryText: c.dimWhite,
+    secondaryText: c.darkGray,
     headerText: c.dimWhite,
     highlight: c.charcoal,
     conductorBackground: c.salmon,
@@ -48,6 +52,7 @@ const themes: Record<ColorTheme, Theme> = {
     secondaryBackground: c.charcoal,
     clearBackground: c.white,
     primaryText: c.bloodRed,
+    secondaryText: c.darkGray,
     headerText: c.dimGold,
     highlight: c.charcoal,
     conductorBackground: c.salmon,
@@ -60,6 +65,7 @@ const themes: Record<ColorTheme, Theme> = {
     secondaryBackground: c.lightGray,
     clearBackground: c.white,
     primaryText: c.black,
+    secondaryText: c.darkGray,
     headerText: c.black,
     highlight: c.mustard,
     conductorBackground: c.salmon,
@@ -72,6 +78,7 @@ const themes: Record<ColorTheme, Theme> = {
     secondaryBackground: c.lightGray,
     clearBackground: c.white,
     primaryText: c.black,
+    secondaryText: c.darkGray,
     headerText: c.black,
     highlight: c.sunscreen,
     conductorBackground: c.salmon,
@@ -84,6 +91,7 @@ const themes: Record<ColorTheme, Theme> = {
     secondaryBackground: c.sand,
     clearBackground: c.white,
     primaryText: c.black,
+    secondaryText: c.darkGray,
     headerText: c.black,
     highlight: c.sand,
     conductorBackground: c.salmon,
