@@ -7,7 +7,7 @@ export enum colors {
   dimGold = '#DAB64C',
   lightGray = '#F0F0F0',
   gray = '#c5c2b7',
-  darkGray = '#B8B5AC',
+  darkGray = '#535353',
   lightBlack = '#181818',
   black = '#111',
   charcoal = '#444444',

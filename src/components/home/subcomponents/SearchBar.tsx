@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import useSearchBarStyle from '@src/styles/search';
 import useDebounce from '@src/utils/hooks/useDebounce';
+import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Props {
   searchText: string;
@@ -12,6 +13,7 @@ interface Props {
 
 const SearchBar = ({ searchText, setSearchText }: Props) => {
   const styles = useSearchBarStyle();
+  const { theme } = useColorTheme();
   const [localSearchText, setLocalSearchText] = useState(searchText);
 
   useEffect(() => {
@@ -32,6 +34,7 @@ const SearchBar = ({ searchText, setSearchText }: Props) => {
       <TextInput
         style={styles.input}
         placeholder="Search songs..."
+        placeholderTextColor={theme.secondaryText}
         value={localSearchText}
         onChangeText={handleTextChange}
       />
