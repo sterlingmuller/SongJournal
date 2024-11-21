@@ -25,6 +25,7 @@ import {
   selectCurrentSongCompletionStatus,
 } from '@src/state/selectors/songsSelector';
 import AboutArtist from '../subcomponents/AboutArtist';
+import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Props {
   isInfoModalOpen: boolean;
@@ -45,6 +46,7 @@ const InfoModal = (props: Props) => {
   const db = useSQLiteContext();
   const completionStatus = useAppSelector(selectCurrentSongCompletionStatus);
   const currentSongArtistId = useAppSelector(selectCurrentSongArtistId);
+  const { theme } = useColorTheme();
 
   const [newInfo, setNewInfo] = useState<SongInfo>(originalInfo);
   const [newCompletionStatus, setNewCompletionStatus] =
@@ -137,6 +139,7 @@ const InfoModal = (props: Props) => {
             <TextInput
               style={styles.input}
               placeholder="Add details for the song..."
+              placeholderTextColor={theme.secondaryText}
               value={newInfo.about}
               onChangeText={(newAbout: string) =>
                 handleInputChange('about', newAbout)
