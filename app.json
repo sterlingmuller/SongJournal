@@ -2,7 +2,7 @@
   "expo": {
     "name": "SongJournal",
     "slug": "SongJournal",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/Icon.png",
     "userInterfaceStyle": "light",
@@ -43,7 +43,7 @@
       }
     },
     "owner": "sterlo",
-    "runtimeVersion": "1.0.0",
+    "runtimeVersion": "1.0.1",
     "updates": {
       "url": "https://u.expo.dev/782ab462-3c4f-4302-ae95-e24dfe286e87"
     }
