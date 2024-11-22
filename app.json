@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Song Journal",
-    "slug": "Song Journal",
+    "name": "SongJournal",
+    "slug": "SongJournal",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/Icon.png",
