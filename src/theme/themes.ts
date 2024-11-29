@@ -13,6 +13,7 @@ export interface Theme {
   headerText: string;
   highlight: string;
   conductorBackground: string;
+  settingsEmphasis: string;
 }
 
 type ThemeKey = 'Light' | 'Dark' | 'Metal' | 'Psych' | 'Pop' | 'Surf';
@@ -30,6 +31,7 @@ const themes: Record<ThemeKey, Theme> = {
     headerText: c.black,
     highlight: c.gray,
     conductorBackground: c.salmon,
+    settingsEmphasis: c.teal,
   },
   Dark: {
     primary: c.deepCharcoal,
@@ -43,6 +45,7 @@ const themes: Record<ThemeKey, Theme> = {
     headerText: c.dimWhite,
     highlight: c.charcoal,
     conductorBackground: c.salmon,
+    settingsEmphasis: c.teal,
   },
   Metal: {
     primary: c.bloodRed,
@@ -56,6 +59,7 @@ const themes: Record<ThemeKey, Theme> = {
     headerText: c.dimGold,
     highlight: c.charcoal,
     conductorBackground: c.salmon,
+    settingsEmphasis: c.teal,
   },
   Psych: {
     primary: c.purple,
@@ -69,6 +73,7 @@ const themes: Record<ThemeKey, Theme> = {
     headerText: c.black,
     highlight: c.mustard,
     conductorBackground: c.salmon,
+    settingsEmphasis: c.teal,
   },
   Pop: {
     primary: c.neonBlue,
@@ -82,6 +87,7 @@ const themes: Record<ThemeKey, Theme> = {
     headerText: c.black,
     highlight: c.sunscreen,
     conductorBackground: c.salmon,
+    settingsEmphasis: c.teal,
   },
   Surf: {
     primary: c.oceanBlue,
@@ -95,6 +101,7 @@ const themes: Record<ThemeKey, Theme> = {
     headerText: c.black,
     highlight: c.sand,
     conductorBackground: c.salmon,
+    settingsEmphasis: c.teal,
   },
 };
 
