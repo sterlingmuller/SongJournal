@@ -27,7 +27,7 @@ const BackupAndRestore = () => {
             <Button
               title="Export Backup"
               onPress={onExportPress}
-              color="teal"
+              color={theme.settingsEmphasis}
             />
           </View>
           <View style={styles.button}>

@@ -46,7 +46,9 @@ const ChooseComposer = () => {
     const isPurchased =
       conductor === Conductor.EGG || purchases[PURCHASE_KEYS[conductor]];
     const isSelected = selectedConductor === conductor;
-    const iconBackgroundColor = isSelected ? 'teal' : theme.conductorBackground;
+    const iconBackgroundColor = isSelected
+      ? theme.settingsEmphasis
+      : theme.conductorBackground;
 
     return (
       <TouchableOpacity
