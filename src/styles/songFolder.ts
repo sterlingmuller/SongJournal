@@ -7,6 +7,7 @@ interface Styles {
   rowPressed: ViewStyle;
   contents: ViewStyle;
   title: TextStyle;
+  titleContainer: ViewStyle;
   iconRow: ViewStyle;
   playIcon: ViewStyle;
   deleteRow: ViewStyle;
@@ -45,6 +46,10 @@ const useSongFolderStyles = () => {
       fontSize: 24,
       color: theme.primaryText,
       fontWeight: 'bold',
+    },
+
+    titleContainer: {
+      alignSelf: 'flex-start',
     },
 
     iconRow: {
