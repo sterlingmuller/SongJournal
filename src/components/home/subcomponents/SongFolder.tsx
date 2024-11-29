@@ -104,7 +104,12 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
       onPress={() => handleOnPressNavigation(Screen.SONG)}
     >
       <View style={styles.contents}>
-        <TouchableOpacity onPress={onDoubleTap}>
+        <TouchableOpacity
+          onPress={onDoubleTap}
+          testID="Song_Folder-Title"
+          style={styles.titleContainer}
+          hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+        >
           <StyledText style={styles.title}>{renderTitle()}</StyledText>
         </TouchableOpacity>
         <View style={styles.subtextContainer}>
@@ -121,10 +126,14 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
           <TouchableOpacity
             onPress={() => handleOnPressNavigation(Screen.LYRICS)}
             style={{ paddingBottom: 4 }}
+            hitSlop={{ top: 10, bottom: 20, left: 10, right: 10 }}
           >
             <PageIcon />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleShare}>
+          <TouchableOpacity
+            onPress={handleShare}
+            hitSlop={{ top: 10, bottom: 20, left: 10, right: 10 }}
+          >
             <ShareIcon />
           </TouchableOpacity>
           {selectedTake &&
@@ -138,7 +147,11 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
         </View>
       </View>
       {selectedTake && (
-        <TouchableOpacity style={styles.playIcon} onPress={onTogglePlayback}>
+        <TouchableOpacity
+          style={styles.playIcon}
+          onPress={onTogglePlayback}
+          hitSlop={{ top: 30, bottom: 10, left: 20, right: 30 }}
+        >
           {isCurrentSongPlaying ? <PauseIcon /> : <PlayIcon />}
         </TouchableOpacity>
       )}
