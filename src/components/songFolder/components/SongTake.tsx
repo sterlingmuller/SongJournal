@@ -80,7 +80,10 @@ const SongTake = (props: Props) => {
     <TouchableOpacity style={styles.container} onPress={onDoubleTap}>
       <View style={styles.contents}>
         <View style={styles.titleRow}>
-          <TouchableOpacity onPress={onTitleDoubleTap}>
+          <TouchableOpacity
+            onPress={onTitleDoubleTap}
+            hitSlop={{ top: 20, bottom: 20, left: 20, right: 30 }}
+          >
             <StyledText style={styles.title}>{title}</StyledText>
           </TouchableOpacity>
           {isStarred && <StarIcon />}
@@ -96,16 +99,18 @@ const SongTake = (props: Props) => {
             onPress={() => {
               setCurrentTake(take);
             }}
+            hitSlop={20}
           >
             <NotesIcon />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleShare}>
+          <TouchableOpacity onPress={handleShare} hitSlop={20}>
             <ShareIcon />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
               setToDelete({ type: 'take', songId, takeId, title });
             }}
+            hitSlop={20}
           >
             <TrashIcon />
           </TouchableOpacity>
@@ -119,6 +124,7 @@ const SongTake = (props: Props) => {
       <TouchableOpacity
         style={styles.playIcon}
         onPress={() => togglePlayback(take.uri, take.takeId)}
+        hitSlop={{ left: 40, top: 30, right: 20, bottom: 20 }}
       >
         {isCurrentTakePlaying ? <PauseIcon /> : <PlayIcon />}
       </TouchableOpacity>
