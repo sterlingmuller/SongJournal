@@ -45,7 +45,7 @@ const useSongTakeStyles = () => {
     iconRow: {
       paddingTop: 5,
       flexDirection: 'row',
-      gap: 16,
+      gap: 18,
     },
 
     playIcon: {
