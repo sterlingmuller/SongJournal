@@ -16,9 +16,9 @@ import CacsusIcon from '@src/icons/CacsusIcon';
 import DeadAdimIcon from '@src/icons/DeadAdimIcon';
 
 interface props {
-  screen: 'Home' | 'Song' | 'MusicPlayer' | 'Setlist';
+  screen: 'Home' | 'Song' | 'MusicPlayer' | 'Setlist' | 'ConnectionSuccess';
 }
-const GetStarted = ({ screen }: props) => {
+const ComposerMessage = ({ screen }: props) => {
   const styles = useGetStartedHomeStyles();
   const conductor = useAppSelector(selectConductor);
   const displayTips = useAppSelector(selectDisplayTips);
@@ -70,6 +70,14 @@ const GetStarted = ({ screen }: props) => {
     </StyledText>
   );
 
+  const dropboxConnectedMessage = (
+    <StyledText style={styles.text}>
+      Oh score! You are now connected to your{' '}
+      <StyledText style={styles.boldText}>Dropbox</StyledText> account. Press
+      below to enable auto-syncing.
+    </StyledText>
+  );
+
   switch (screen) {
     case Screen.HOME:
       message = getStartedHomeInstructions;
@@ -85,6 +93,10 @@ const GetStarted = ({ screen }: props) => {
       break;
     case Screen.SETLIST:
       message = setlistPlansMessage;
+      tip = '';
+      break;
+    case Screen.CONNECTION_SUCCESS:
+      message = dropboxConnectedMessage;
       tip = '';
       break;
   }
@@ -116,4 +128,4 @@ const GetStarted = ({ screen }: props) => {
   );
 };
 
-export default GetStarted;
+export default ComposerMessage;

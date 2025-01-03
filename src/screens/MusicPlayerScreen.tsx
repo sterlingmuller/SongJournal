@@ -1,8 +1,10 @@
 import React from 'react';
 
-import GetStarted from '@src/components/common/components/GetStarted';
+import ComposerMessage from '@src/components/common/components/ComposerMessage';
 import { Screen } from '@src/components/common/enums';
 
-const MusicPlayerScreen = () => <GetStarted screen={Screen.MUSIC_PLAYER} />;
+const MusicPlayerScreen = () => (
+  <ComposerMessage screen={Screen.MUSIC_PLAYER} />
+);
 
 export default MusicPlayerScreen;

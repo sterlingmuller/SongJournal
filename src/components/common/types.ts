@@ -14,6 +14,7 @@ export type RootStackParamList = {
   Recording: { title: string };
   MusicPlayer: undefined;
   Setlist: undefined;
+  ConnectionSuccess: undefined;
 };
 
 export type TabNames = 'Setlist' | 'MusicPlayer' | 'Settings';

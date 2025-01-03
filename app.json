@@ -2,6 +2,7 @@
   "expo": {
     "name": "SongJournal",
     "slug": "SongJournal",
+    "scheme": "songjournal",
     "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/Icon.png",
@@ -11,7 +12,16 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "plugins": [["@react-native-google-signin/google-signin"]],
+    "plugins": [
+      ["@react-native-google-signin/google-signin"],
+      [
+        "expo-secure-store",
+        {
+          "configureAndroidBackup": true
+        }
+      ],
+      "react-native-cloud-storage"
+    ],
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
