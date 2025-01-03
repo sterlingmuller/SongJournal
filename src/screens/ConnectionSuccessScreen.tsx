@@ -3,6 +3,8 @@ import React from 'react';
 import ComposerMessage from '@src/components/common/components/ComposerMessage';
 import { Screen } from '@src/components/common/enums';
 
-const SetlistScreen = () => <ComposerMessage screen={Screen.SETLIST} />;
+const ConnectionSuccessScreen = () => (
+  <ComposerMessage screen={Screen.CONNECTION_SUCCESS} />
+);
 
-export default SetlistScreen;
+export default ConnectionSuccessScreen;

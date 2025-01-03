@@ -19,7 +19,7 @@ const SettingsScreen = () => {
   return (
     <ScrollView style={globalStyles.container}>
       <View style={styles.content}>
-        {/* <BackupAndSync /> */}
+        <BackupAndSync />
         <Preferences />
         <Theme />
         <ChooseConductor />

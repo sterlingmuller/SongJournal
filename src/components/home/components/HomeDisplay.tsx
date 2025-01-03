@@ -4,7 +4,7 @@ import SongFolders from '@src/components/home/components/SongFolders';
 import { DeleteObject } from '@src/components/common/types';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectSongs } from '@src/state/selectors/songsSelector';
-import GetStarted from '@src/components/common/components/GetStarted';
+import ComposerMessage from '@src/components/common/components/ComposerMessage';
 import { Filter, Screen, SortBy } from '@src/components/common/enums';
 
 interface Props {
@@ -41,7 +41,7 @@ const HomeDisplay = (props: Props) => {
     );
   }
 
-  return <GetStarted screen={Screen.HOME} />;
+  return <ComposerMessage screen={Screen.HOME} />;
 };
 
 export default HomeDisplay;

@@ -6,7 +6,7 @@ import useSongScreenStyles from '@src/styles/songScreen';
 import { DeleteObject, Take } from '@src/components/common/types';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectCurrentSongTakes } from '@src/state/selectors/songsSelector';
-import GetStarted from '@src/components/common/components/GetStarted';
+import ComposerMessage from '@src/components/common/components/ComposerMessage';
 import SongTake from '@src/components/songFolder/components/SongTake';
 import { Screen } from '@src/components/common/enums';
 
@@ -46,7 +46,7 @@ const SongDisplay = (props: Props) => {
     );
   }
 
-  return <GetStarted screen={Screen.SONG} />;
+  return <ComposerMessage screen={Screen.SONG} />;
 };
 
 export default SongDisplay;

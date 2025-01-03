@@ -6,6 +6,7 @@ export enum Screen {
   MUSIC_PLAYER = 'MusicPlayer',
   SETLIST = 'Setlist',
   SETTINGS = 'Settings',
+  CONNECTION_SUCCESS = 'ConnectionSuccess',
 }
 
 export enum ColorTheme {
