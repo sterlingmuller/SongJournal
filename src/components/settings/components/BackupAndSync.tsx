@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { Button, View } from 'react-native';
 
 import useSettingsStyle from '@src/styles/settings';
 import StyledText from '@src/components/common/components/StyledText';
-import { configureGoogleSignIn } from '@src/utils/googleSignInConfig';
 import DropboxAuth from '@src/components/settings/components/DropboxAuth';
+import { uploadFileToDropbox } from '@src/data/utils/uploadToDropbox';
+import { DropboxUploadTest } from './DropBoxUploadTest';
 
 const BackupAndSync = () => {
   const styles = useSettingsStyle();
@@ -21,6 +22,7 @@ const BackupAndSync = () => {
       ) : (
         <DropboxAuth />
       )}
+      <DropboxUploadTest />
     </View>
   );
 };
