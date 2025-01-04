@@ -48,6 +48,8 @@ function useFileShare() {
       if (page.lyrics) {
         const pdfUri = await getPdfUri(song.title, page, song.artistId);
 
+        console.log('pdfUri', pdfUri);
+
         await FileSystem.copyAsync({
           from: pdfUri,
           to: `${fileUri}/${formattedTitle}.pdf`,

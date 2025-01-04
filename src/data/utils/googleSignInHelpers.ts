@@ -1,6 +1,6 @@
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
-import { storeRefreshToken } from '@src/utils/tokenStorage';
+import { storeRefreshToken } from '@src/data/utils/tokenStorage';
 
 export const signInWithGoogle = async () => {
   try {

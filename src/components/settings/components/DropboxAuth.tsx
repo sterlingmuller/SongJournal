@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 import { Button } from 'react-native';
-import { storeAccessToken } from '@src/utils/tokenStorage';
-import { generateChallange } from '@src/utils/pkceVerifier';
+import { storeAccessToken } from '@src/data/utils/tokenStorage';
+import { generateChallange } from '@src/data/utils/pkceVerifier';
 
 const exchangeCodeForToken = async (code: string, codeVerifier: string) => {
   const tokenEndpoint = 'https://api.dropboxapi.com/oauth2/token';
