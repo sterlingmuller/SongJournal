@@ -186,7 +186,7 @@ const AudioWaveDisplay = (props: Props) => {
   //     }
   //   });
 
-  console.log('wave:', wave);
+  // console.log('wave:', wave);
 
   useEffect(() => {
     if (wave.length === 0 && prevWave.current.length > 0) {
