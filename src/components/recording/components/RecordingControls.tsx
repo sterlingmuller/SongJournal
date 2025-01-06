@@ -93,7 +93,7 @@ const RecordingControls = (props: Props) => {
     }
 
     setWave(fullWaveRef.current);
-    const newUri = await stopRecording(recording, setRecording);
+    const newUri = await stopRecording(recording);
     setUri(newUri);
 
     return newUri;

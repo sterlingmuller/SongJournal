@@ -66,15 +66,11 @@ export const startRecording = async (
   }
 };
 
-export const stopRecording = async (
-  recording: Audio.Recording,
-  setRecording: (value: Audio.Recording | null) => void,
-) => {
+export const stopRecording = async (recording: Audio.Recording) => {
   if (!recording) return;
   clearInterval(audioWaveIntervalId);
   const uri = recording.getURI();
   await recording.stopAndUnloadAsync();
-  setRecording(null);
 
   return uri;
 };
