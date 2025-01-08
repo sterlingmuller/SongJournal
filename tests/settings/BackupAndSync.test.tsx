@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react-native';
 
-import BackupAndSync from '@src/components/settings/components/BackupAndSync';
+import BackupAndSync from '@src/components/settings/components/CloudStorage';
 import StyledText from '@src/components/common/components/StyledText';
 import { ReactNode } from 'react';
 

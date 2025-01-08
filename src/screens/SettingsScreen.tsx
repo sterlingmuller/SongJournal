@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 
-import BackupAndSync from '@src/components/settings/components/BackupAndSync';
+import CloudStorage from '@src/components/settings/components/CloudStorage';
 import Theme from '@src/components/settings/components/Theme';
 import About from '@src/components/settings/components/About';
 import useSettingsStyle from '@styles/settings';
@@ -19,7 +19,7 @@ const SettingsScreen = () => {
   return (
     <ScrollView style={globalStyles.container}>
       <View style={styles.content}>
-        <BackupAndSync />
+        <CloudStorage />
         <Preferences />
         <Theme />
         <ChooseConductor />

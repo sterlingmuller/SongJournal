@@ -69,7 +69,6 @@ export const uploadFileToDropbox = async (
 
 export const backupSong = async (
   songTitle: string,
-  // lyricsHtml: Buffer,
   lyricsPdf: Buffer,
   takes: { [key: string]: Buffer },
   selectedSong: Buffer,
@@ -79,7 +78,6 @@ export const backupSong = async (
   await createDropboxFolder(`${basePath}/Lyrics`);
   await createDropboxFolder(`${basePath}/Takes`);
 
-  // await uploadFileToDropbox(`${basePath}/Lyrics/lyrics.html`, lyricsHtml);
   await uploadFileToDropbox(`${basePath}/Lyrics/lyrics.pdf`, lyricsPdf);
 
   for (const [takeName, takeContent] of Object.entries(takes)) {

@@ -3,6 +3,10 @@ import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 import { Button } from 'react-native';
 import { storeAccessToken } from '@src/data/utils/tokenStorage';
 import { generateChallange } from '@src/data/utils/pkceVerifier';
+import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
+import { updateSettingsRequest } from '@src/state/sagas/actionCreators';
+import { useSQLiteContext } from 'expo-sqlite';
+import { CloudConnection } from '@src/components/common/enums';
 
 const exchangeCodeForToken = async (code: string, codeVerifier: string) => {
   const tokenEndpoint = 'https://api.dropboxapi.com/oauth2/token';
@@ -33,6 +37,7 @@ const exchangeCodeForToken = async (code: string, codeVerifier: string) => {
     const data = await response.json();
     if (response.ok) {
       storeAccessToken(data.access_token);
+      return response.ok;
     } else {
       console.error('Error exchanging code for token:', data);
     }
@@ -42,6 +47,8 @@ const exchangeCodeForToken = async (code: string, codeVerifier: string) => {
 };
 
 const DropboxAuth = () => {
+  const dispatch = useAppDispatch();
+  const db = useSQLiteContext();
   const [codeVerifier, setCodeVerifier] = useState('');
   const [request, response, promptAsync] = useAuthRequest(
     {
@@ -61,8 +68,18 @@ const DropboxAuth = () => {
   useEffect(() => {
     if (response?.type === 'success') {
       const authCode = response.params.code;
-      console.log('response:', response);
-      exchangeCodeForToken(authCode, codeVerifier);
+      const isConnectionSuccessful = exchangeCodeForToken(
+        authCode,
+        codeVerifier,
+      );
+      if (isConnectionSuccessful) {
+        dispatch(
+          updateSettingsRequest({
+            db,
+            updatedSettings: { cloudConnection: CloudConnection.DROPBOX },
+          }),
+        );
+      }
     }
   }, [response]);
 
