@@ -1,4 +1,4 @@
-import { Conductor } from '@src/components/common/enums';
+import { CloudConnection, Conductor } from '@src/components/common/enums';
 import { type SQLiteDatabase } from 'expo-sqlite';
 
 const createSongsTable =
@@ -19,6 +19,10 @@ CREATE TABLE IF NOT EXISTS Settings (
   isNumbered BOOLEAN NOT NULL DEFAULT 0,
   displayTips BOOLEAN NOT NULL DEFAULT 1,
   conductor TEXT NOT NULL DEFAULT ${Conductor.EGG},
+  cloudConnection TEXT NOT NULL DEFAULT ${CloudConnection.NONE},
+  isAutoSyncEnabled BOOLEAN NOT NULL DEFAULT 0,
+  isStarredTakeConditionEnabled BOOLEAN NOT NULL DEFAULT 0,
+  isCompletedSongConditionEnabled BOOLEAN NOT NULL DEFAULT 0,
   FOREIGN KEY (defaultArtistId) REFERENCES Artists(artistId)
 );
 

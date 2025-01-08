@@ -58,3 +58,10 @@ export enum Conductor {
   CACSUS = 'CACsus',
   DEAD_ADIM = 'DEAD Adim',
 }
+
+export enum CloudConnection {
+  GOOGLE_DRIVE = 'Google Drive',
+  DROPBOX = 'Dropbox',
+  ICLOUD = 'iCloud',
+  NONE = 'None',
+}

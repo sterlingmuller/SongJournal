@@ -69,17 +69,17 @@ export const uploadFileToDropbox = async (
 
 export const backupSong = async (
   songTitle: string,
-  lyricsHtml: Buffer,
+  // lyricsHtml: Buffer,
   lyricsPdf: Buffer,
   takes: { [key: string]: Buffer },
   selectedSong: Buffer,
 ) => {
-  const basePath = `SongJournalApp/${songTitle}`;
+  const basePath = `${songTitle}`;
   await createDropboxFolder(basePath);
   await createDropboxFolder(`${basePath}/Lyrics`);
   await createDropboxFolder(`${basePath}/Takes`);
 
-  await uploadFileToDropbox(`${basePath}/Lyrics/lyrics.html`, lyricsHtml);
+  // await uploadFileToDropbox(`${basePath}/Lyrics/lyrics.html`, lyricsHtml);
   await uploadFileToDropbox(`${basePath}/Lyrics/lyrics.pdf`, lyricsPdf);
 
   for (const [takeName, takeContent] of Object.entries(takes)) {
