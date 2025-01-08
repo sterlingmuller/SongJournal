@@ -21,6 +21,8 @@ function useFileShare() {
     const artist = getArtistName(artistId);
     const pdfUri = await generatePagePdf(title, page, artist);
 
+    console.log('pdfUri', pdfUri);
+
     return pdfUri;
   };
 
@@ -101,6 +103,8 @@ function useFileShare() {
       try {
         const formattedTitle = convertToSnakeCase(title);
         const fileUri = `${FileSystem.cacheDirectory}${formattedTitle}.pdf`;
+
+        console.log('fileUri', fileUri);
         const pdfUri = await getPdfUri(title, page, artistId);
 
         await FileSystem.copyAsync({

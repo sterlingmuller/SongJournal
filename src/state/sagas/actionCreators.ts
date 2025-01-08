@@ -100,6 +100,20 @@ export const updateSettingsRequest = (payload: t.UpdateSettingsDbPayload) => ({
   payload,
 });
 
+export const updateCloudConnectionRequest = (
+  payload: t.UpdateSettingsDbPayload,
+) => ({
+  type: at.UPDATE_CLOUD_CONNECTION_REQUEST,
+  payload,
+});
+
+export const updateSyncSettingsRequest = (
+  payload: t.UpdateSettingsDbPayload,
+) => ({
+  type: at.UPDATE_SYNC_SETTINGS_REQUEST,
+  payload,
+});
+
 // Artists
 
 export const updateArtistRequest = (payload: t.UpdateArtistDbPayload) => ({

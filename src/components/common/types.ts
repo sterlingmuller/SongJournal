@@ -1,5 +1,10 @@
 import { SQLiteDatabase } from 'expo-sqlite';
-import { Conductor, LyricsOption, SortBy } from '@src/components/common/enums';
+import {
+  CloudConnection,
+  Conductor,
+  LyricsOption,
+  SortBy,
+} from '@src/components/common/enums';
 
 export type FilterOptions = {
   lyrics?: boolean;
@@ -92,14 +97,21 @@ export type Song = {
   orderNumber?: number;
 };
 
-export type UserSettings = {
+export type SyncSettings = {
+  isAutoSyncEnabled: boolean;
+  isStarredTakeConditionEnabled: boolean;
+  isCompletedSongConditionEnabled: boolean;
+};
+
+export interface UserSettings extends SyncSettings {
   defaultSortType: SortBy;
   isAscending: boolean;
   defaultArtistId: number;
   isNumbered: boolean;
   displayTips: boolean;
   conductor: Conductor;
-};
+  cloudConnection: CloudConnection;
+}
 
 export type Sort = {
   sortType: SortBy;

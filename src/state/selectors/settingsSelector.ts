@@ -15,6 +15,16 @@ export const selectDisplayTips = (state: RootState) =>
 
 export const selectConductor = (state: RootState) => state.settings.conductor;
 
+export const selectCloudConnection = (state: RootState) =>
+  state.settings.cloudConnection;
+
+export const selectSyncSettings = (state: RootState) => ({
+  isAutoSyncEnabled: state.settings.isAutoSyncEnabled,
+  isStarredTakeConditionEnabled: state.settings.isStarredTakeConditionEnabled,
+  isCompletedSongConditionEnabled:
+    state.settings.isCompletedSongConditionEnabled,
+});
+
 export const selectDefaultSort = createSelector(
   [
     (state: RootState) => state.settings.defaultSortType,
