@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 
 import SettingsScreen from '@src/screens/SettingsScreen';
 import StyledText from '@src/components/common/components/StyledText';
-import BackupAndSync from '@src/components/settings/components/BackupAndSync';
+import BackupAndSync from '@src/components/settings/components/CloudStorage';
 import About from '@src/components/settings/components/About';
 
 jest.mock('@styles/settings', () => {

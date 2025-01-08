@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, View } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import { Buffer } from 'buffer';
@@ -7,11 +7,13 @@ import useSettingsStyle from '@src/styles/settings';
 import StyledText from '@src/components/common/components/StyledText';
 import DropboxAuth from '@src/components/settings/components/DropboxAuth';
 import { backupSong } from '@src/data/utils/uploadToDropbox';
-import { DropboxUploadTest } from './DropBoxUploadTest';
+import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { selectCloudConnection } from '@src/state/selectors/settingsSelector';
+import { CloudConnection } from '@src/components/common/enums';
 
-const BackupAndSync = () => {
+const CloudStorage = () => {
   const styles = useSettingsStyle();
-  const [isConnected, setIsConnected] = useState(false);
+  const cloudConnection = useAppSelector(selectCloudConnection);
 
   const audioFileStarred =
     'file:///data/user/0/com.sterling.silverado.songjournal/cache/Audio/recording-9f471474-6472-4b3f-bf2a-05d2a2d738e8.m4a';
@@ -31,48 +33,34 @@ const BackupAndSync = () => {
   };
 
   const handleBackup = async () => {
-    console.log('hi');
     const pdfContent = await generateFileContent(lyricsFile);
     const takeOne = await generateFileContent(audioFileStarred);
     const takeTwo = await generateFileContent(audioFileTwo);
 
-    console.log('woof');
-
-    // const lyricsHtml = Buffer.from('<html>Lyrics</html>', 'utf-8');
-    const lyricsPdf = Buffer.from(pdfContent, 'base64'); // Replace with actual PDF content
+    const lyricsPdf = Buffer.from(pdfContent, 'base64');
     const takes = {
-      'take2.mp3': Buffer.from(takeTwo, 'base64'), // Replace with actual take content
+      'take2.mp3': Buffer.from(takeTwo, 'base64'),
     };
-    const selectedSong = Buffer.from(takeOne, 'base64'); // Replace with actual song content
+    const selectedSong = Buffer.from(takeOne, 'base64');
 
-    console.log('hrm');
-
-    await backupSong(
-      'Song Folder Example',
-      // lyricsHtml,
-      lyricsPdf,
-      takes,
-      selectedSong,
-    );
-
-    console.log('done');
+    await backupSong('Song Folder Example', lyricsPdf, takes, selectedSong);
   };
 
   return (
     <View>
-      <StyledText style={styles.sectionTitle}>Back up & Sync</StyledText>
-      {isConnected ? (
+      <StyledText style={styles.sectionTitle}>Cloud Storage</StyledText>
+      {cloudConnection !== CloudConnection.NONE ? (
         <StyledText>
-          Backing up to
-          <StyledText> sterlingmuller93@gmail.com</StyledText>
+          You are connected to your
+          <StyledText> {cloudConnection} </StyledText>
+          account.
         </StyledText>
       ) : (
         <DropboxAuth />
       )}
       <Button title="Backup Song" onPress={handleBackup} color="red" />
-      {/* <DropboxUploadTest /> */}
     </View>
   );
 };
 
-export default BackupAndSync;
+export default CloudStorage;
