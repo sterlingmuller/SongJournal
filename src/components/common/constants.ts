@@ -1,5 +1,5 @@
 import { Dimensions } from 'react-native';
-import { documentDirectory } from 'expo-file-system';
+import { documentDirectory, cacheDirectory } from 'expo-file-system';
 
 import EditIcon from '@src/icons/EditIcon';
 import ChordsIcon from '@src/icons/ChordsIcon';
@@ -24,7 +24,9 @@ import DeadAdimSelectIcon from '@src/icons/DeadAdimSelectIcon';
 
 export const DB_NAME = 'songjournal.db';
 export const DB_PATH = `${documentDirectory}SQLite/${DB_NAME}`;
-export const AUDIO_DIR = `${documentDirectory}audio/`;
+export const AUDIO_DIR = `${cacheDirectory}Audio/`;
+export const BACKUP_DIR = `${cacheDirectory}Backup/`;
+export const EXTRACT_DIR = `${cacheDirectory}Extract/`;
 
 export const SORT_BY_OPTIONS: SortBy[] = Object.values(SortBy);
 

@@ -1,7 +1,9 @@
 import React from 'react';
-import { Button, View } from 'react-native';
+import { Button, TouchableOpacity, View } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import { Buffer } from 'buffer';
+import { createBackup } from '@src/utils/createAndShareBackup';
+import { uploadFileToDropbox } from '@src/data/utils/uploadToDropbox';
 
 import useSettingsStyle from '@src/styles/settings';
 import StyledText from '@src/components/common/components/StyledText';
@@ -10,6 +12,7 @@ import { backupSong } from '@src/data/utils/uploadToDropbox';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectCloudConnection } from '@src/state/selectors/settingsSelector';
 import { CloudConnection } from '@src/components/common/enums';
+import SettingIcon from '@src/icons/SettingIcon';
 
 const CloudStorage = () => {
   const styles = useSettingsStyle();
@@ -46,6 +49,19 @@ const CloudStorage = () => {
     await backupSong('Song Folder Example', lyricsPdf, takes, selectedSong);
   };
 
+  const handleAppBackup = async () => {
+    const zipPath = await createBackup();
+
+    const zipContent = await FileSystem.readAsStringAsync(zipPath, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+
+    const zipBuffer = Buffer.from(zipContent, 'base64');
+    await uploadFileToDropbox('songjournal_backup.zip', zipBuffer);
+
+    await FileSystem.deleteAsync(zipPath, { idempotent: true });
+  };
+
   return (
     <View>
       <StyledText style={styles.sectionTitle}>Cloud Storage</StyledText>
@@ -58,7 +74,13 @@ const CloudStorage = () => {
       ) : (
         <DropboxAuth />
       )}
+      <TouchableOpacity onPress={() => {}}>
+        <SettingIcon />
+        <StyledText>Sync Settings</StyledText>
+      </TouchableOpacity>
       <Button title="Backup Song" onPress={handleBackup} color="red" />
+      <Button title="Disconnect" onPress={() => {}} color="blue" />
+      <Button title="Sync App Backup" onPress={handleAppBackup} color="green" />
     </View>
   );
 };

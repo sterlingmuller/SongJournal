@@ -1,4 +1,9 @@
-import { AUDIO_DIR, DB_NAME, DB_PATH } from '@src/components/common/constants';
+import {
+  AUDIO_DIR,
+  DB_NAME,
+  DB_PATH,
+  EXTRACT_DIR,
+} from '@src/components/common/constants';
 import * as FileSystem from 'expo-file-system';
 import * as SQLite from 'expo-sqlite';
 import { Alert } from 'react-native';
@@ -12,34 +17,33 @@ export const importBackup = async () => {
     });
 
     if (result.canceled === false) {
-      const extractDir = FileSystem.cacheDirectory + 'extract/';
       const backupUri = result.assets[0].uri;
 
-      await FileSystem.makeDirectoryAsync(extractDir, { intermediates: true });
-      await unzip(backupUri, extractDir);
+      await FileSystem.makeDirectoryAsync(EXTRACT_DIR, { intermediates: true });
+      await unzip(backupUri, EXTRACT_DIR);
 
       const db = SQLite.openDatabaseSync(DB_NAME);
       await db.closeAsync();
 
       await FileSystem.deleteAsync(DB_PATH, { idempotent: true });
       await FileSystem.copyAsync({
-        from: extractDir + DB_NAME,
+        from: EXTRACT_DIR + DB_NAME,
         to: DB_PATH,
       });
 
       await FileSystem.deleteAsync(AUDIO_DIR, { idempotent: true });
       await FileSystem.makeDirectoryAsync(AUDIO_DIR, { intermediates: true });
       const restoredAudioFiles = await FileSystem.readDirectoryAsync(
-        `${extractDir}audio/`,
+        `${EXTRACT_DIR}Audio/`,
       );
       for (const file of restoredAudioFiles) {
         await FileSystem.copyAsync({
-          from: `${extractDir}audio/${file}`,
+          from: `${EXTRACT_DIR}Audio/${file}`,
           to: `${AUDIO_DIR}${file}`,
         });
       }
 
-      await FileSystem.deleteAsync(extractDir, { idempotent: true });
+      await FileSystem.deleteAsync(EXTRACT_DIR, { idempotent: true });
       SQLite.openDatabaseSync(DB_NAME);
 
       Alert.alert(
