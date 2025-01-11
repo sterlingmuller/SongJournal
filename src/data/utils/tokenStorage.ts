@@ -36,7 +36,6 @@ export const storeAccessToken = async (
 
 export const getAccessToken = async () => {
   try {
-    console.log('c');
     const accessTokenData = await SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
     if (accessTokenData) {
       const { token } = JSON.parse(accessTokenData) as AccessTokenData;
