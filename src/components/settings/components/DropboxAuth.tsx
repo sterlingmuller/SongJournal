@@ -41,14 +41,16 @@ const exchangeCodeForToken = async (code: string, codeVerifier: string) => {
 
     const data = await response.json();
     if (response.ok) {
-      storeAccessToken(data.access_token, data.expires_in);
-      storeRefreshToken(data.refresh_token);
-      return response.ok;
+      await storeAccessToken(data.access_token, data.expires_in);
+      await storeRefreshToken(data.refresh_token);
+      return true;
     } else {
       console.error('Error exchanging code for token:', data);
+      return false;
     }
   } catch (error) {
     console.error('Network error:', error);
+    return false;
   }
 };
 
