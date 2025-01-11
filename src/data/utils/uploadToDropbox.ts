@@ -1,7 +1,22 @@
-import { getAccessToken } from '@src/data/utils/tokenStorage';
+import {
+  getAccessToken,
+  getAccessTokenExpiry,
+} from '@src/data/utils/tokenStorage';
+import { refreshAccessToken } from '@src/data/utils/authService';
+
+const getValidAccessToken = async () => {
+  const expiry = await getAccessTokenExpiry();
+
+  if (expiry && Date.now() > expiry) {
+    return await getAccessToken();
+  } else {
+    return await refreshAccessToken();
+  }
+};
 
 const createDropboxFolder = async (folderPath: string) => {
-  const accessToken = await getAccessToken();
+  const accessToken = await getValidAccessToken();
+
   try {
     const response = await fetch(
       'https://api.dropboxapi.com/2/files/create_folder_v2',
@@ -28,7 +43,7 @@ export const uploadFileToDropbox = async (
   filePath: string,
   fileContent: Buffer,
 ) => {
-  const accessToken = await getAccessToken();
+  const accessToken = await getValidAccessToken();
 
   try {
     const response = await fetch(

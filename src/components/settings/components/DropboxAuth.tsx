@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 import { Button } from 'react-native';
-import { storeAccessToken } from '@src/data/utils/tokenStorage';
+import {
+  storeAccessToken,
+  storeRefreshToken,
+} from '@src/data/utils/tokenStorage';
 import { generateChallange } from '@src/data/utils/pkceVerifier';
 import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
 import { updateSettingsRequest } from '@src/state/sagas/actionCreators';
@@ -20,6 +23,8 @@ const exchangeCodeForToken = async (code: string, codeVerifier: string) => {
   const params = new URLSearchParams();
   params.append('code', code);
   params.append('grant_type', 'authorization_code');
+  // params.append('client_id', process.env.DROPBOX_CLIENT_ID);
+  // params.append('client_secret', process.env.DROPBOX_CLIENT_SECRET);
   params.append('client_id', clientId);
   params.append('client_secret', clientSecret);
   params.append('redirect_uri', redirectUri);
@@ -36,7 +41,8 @@ const exchangeCodeForToken = async (code: string, codeVerifier: string) => {
 
     const data = await response.json();
     if (response.ok) {
-      storeAccessToken(data.access_token);
+      storeAccessToken(data.access_token, data.expires_in);
+      storeRefreshToken(data.refresh_token);
       return response.ok;
     } else {
       console.error('Error exchanging code for token:', data);
@@ -87,7 +93,7 @@ const DropboxAuth = () => {
     const { codeVerifier, codeChallenge } = await generateChallange();
     setCodeVerifier(codeVerifier);
 
-    const authUrl = `${request.url}&code_challenge=${codeChallenge}&code_challenge_method=S256`;
+    const authUrl = `${request.url}&code_challenge=${codeChallenge}&code_challenge_method=S256&token_access_type=offline`;
 
     promptAsync({
       url: authUrl,
