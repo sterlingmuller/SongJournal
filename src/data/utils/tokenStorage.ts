@@ -3,6 +3,11 @@ import * as SecureStore from 'expo-secure-store';
 const REFRESH_TOKEN_KEY = 'refresh_token';
 const ACCESS_TOKEN_KEY = 'access_token';
 
+interface AccessTokenData {
+  token: string;
+  expiry: number;
+}
+
 export const storeRefreshToken = async (refreshToken: string) => {
   try {
     await SecureStore.setItemAsync(REFRESH_TOKEN_KEY, refreshToken);
@@ -11,9 +16,19 @@ export const storeRefreshToken = async (refreshToken: string) => {
   }
 };
 
-export const storeAccessToken = async (accessToken: string) => {
+export const storeAccessToken = async (
+  accessToken: string,
+  expiresIn: number,
+) => {
   try {
-    await SecureStore.setItemAsync(ACCESS_TOKEN_KEY, accessToken);
+    const accessTokenData: AccessTokenData = {
+      token: accessToken,
+      expiry: Date.now() + expiresIn * 1000,
+    };
+    await SecureStore.setItemAsync(
+      ACCESS_TOKEN_KEY,
+      JSON.stringify(accessTokenData),
+    );
   } catch (error) {
     console.error('Failed to store access token', error);
   }
@@ -21,9 +36,28 @@ export const storeAccessToken = async (accessToken: string) => {
 
 export const getAccessToken = async () => {
   try {
-    return await SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
+    console.log('c');
+    const accessTokenData = await SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
+    if (accessTokenData) {
+      const { token } = JSON.parse(accessTokenData) as AccessTokenData;
+      return token;
+    }
+    return null;
   } catch (error) {
     console.error('Failed to get access token', error);
+  }
+};
+
+export const getAccessTokenExpiry = async () => {
+  try {
+    const accessTokenData = await SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
+    if (accessTokenData) {
+      const { expiry } = JSON.parse(accessTokenData) as AccessTokenData;
+      return expiry;
+    }
+    return null;
+  } catch (error) {
+    console.error('Failed to get access token expiry', error);
   }
 };
 
@@ -40,5 +74,14 @@ export const clearRefreshToken = async () => {
     await SecureStore.deleteItemAsync(REFRESH_TOKEN_KEY);
   } catch (error) {
     console.error('Failed to clear refresh token', error);
+  }
+};
+
+export const clearTokens = async () => {
+  try {
+    await SecureStore.deleteItemAsync(ACCESS_TOKEN_KEY);
+    await SecureStore.deleteItemAsync(REFRESH_TOKEN_KEY);
+  } catch (error) {
+    console.error('Error clearing tokens:', error);
   }
 };

@@ -1,9 +1,16 @@
 import React from 'react';
-import { Button, TouchableOpacity, View } from 'react-native';
+import { Button, TouchableOpacity, View, Alert } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import { Buffer } from 'buffer';
+
 import { createBackup } from '@src/utils/createAndShareBackup';
 import { uploadFileToDropbox } from '@src/data/utils/uploadToDropbox';
+import {
+  clearTokens,
+  getAccessToken,
+  getAccessTokenExpiry,
+  getRefreshToken,
+} from '@src/data/utils/tokenStorage';
 
 import useSettingsStyle from '@src/styles/settings';
 import StyledText from '@src/components/common/components/StyledText';
@@ -62,6 +69,14 @@ const CloudStorage = () => {
     await FileSystem.deleteAsync(zipPath, { idempotent: true });
   };
 
+  const handleDisconnect = async () => {
+    await clearTokens();
+    Alert.alert(
+      'Disconnected',
+      'You have been disconnected from the cloud service.',
+    );
+  };
+
   return (
     <View>
       <StyledText style={styles.sectionTitle}>Cloud Storage</StyledText>
@@ -79,7 +94,7 @@ const CloudStorage = () => {
         <StyledText>Sync Settings</StyledText>
       </TouchableOpacity>
       <Button title="Backup Song" onPress={handleBackup} color="red" />
-      <Button title="Disconnect" onPress={() => {}} color="blue" />
+      <Button title="Disconnect" onPress={handleDisconnect} color="blue" />
       <Button title="Sync App Backup" onPress={handleAppBackup} color="green" />
     </View>
   );

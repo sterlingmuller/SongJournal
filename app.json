@@ -51,7 +51,9 @@
     "extra": {
       "eas": {
         "projectId": "782ab462-3c4f-4302-ae95-e24dfe286e87"
-      }
+      },
+      "dropboxClientId": "process.env.DROPBOX_CLIENT_ID",
+      "googleClientId": "${GOOGLE_CLIENT_ID}"
     },
     "owner": "sterlo",
     "runtimeVersion": "1.0.1",
