@@ -5,6 +5,7 @@ import {
   UpdateLyricsPayload,
   UpdatePageInfoPayload,
 } from '@src/components/common/types';
+import { SQLiteDatabase } from 'expo-sqlite';
 
 export const fetchPageBySongId = async (payload: FetchPagePayload) => {
   const { db, songId } = payload;
@@ -27,6 +28,33 @@ export const fetchPageBySongId = async (payload: FetchPagePayload) => {
     return page;
   } catch (err) {
     console.error('Error fetching page', err);
+  }
+};
+
+export const fetchPages = async (db: SQLiteDatabase) => {
+  try {
+    const dbPages: DbPage[] = await db.getAllAsync(
+      'SELECT * FROM Page WHERE lyrics IS NOT NULL AND TRIM(lyrics) != ""',
+    );
+
+    const pages = Object.fromEntries(
+      dbPages.map((dbPage: DbPage) => [
+        dbPage.songId,
+        {
+          lyrics: dbPage.lyrics,
+          info: {
+            bpm: dbPage.bpm,
+            keySignature: dbPage.keySignature,
+            time: dbPage.time,
+            about: dbPage.about,
+          },
+        },
+      ]),
+    );
+
+    return pages;
+  } catch (err) {
+    console.error('Error fetching pages', err);
   }
 };
 
