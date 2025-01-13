@@ -72,9 +72,7 @@ export const uploadFileToDropbox = async (
     } catch {
       data = responseText;
     }
-    if (response.ok) {
-      console.log('File uploaded:', data);
-    } else {
+    if (!response.ok) {
       console.error('Error uploading file:', data);
     }
   } catch (error) {
@@ -84,20 +82,30 @@ export const uploadFileToDropbox = async (
 
 export const backupSong = async (
   songTitle: string,
-  lyricsPdf: Buffer,
-  takes: { [key: string]: Buffer },
-  selectedSong: Buffer,
+  lyricsPdf?: Buffer,
+  selectedSong?: Buffer,
+  takes?: { title: string; takeBuffer: Buffer }[],
 ) => {
+  console.log('takes', takes);
   const basePath = `${songTitle}`;
   await createDropboxFolder(basePath);
-  await createDropboxFolder(`${basePath}/Lyrics`);
-  await createDropboxFolder(`${basePath}/Takes`);
 
-  await uploadFileToDropbox(`${basePath}/Lyrics/lyrics.pdf`, lyricsPdf);
-
-  for (const [takeName, takeContent] of Object.entries(takes)) {
-    await uploadFileToDropbox(`${basePath}/Takes/${takeName}`, takeContent);
+  if (lyricsPdf) {
+    await uploadFileToDropbox(`${basePath}/${songTitle} Lyrics.pdf`, lyricsPdf);
   }
 
-  await uploadFileToDropbox(`${basePath}/selected_song.mp3`, selectedSong);
+  if (selectedSong) {
+    await uploadFileToDropbox(`${basePath}/${songTitle}.mp3`, selectedSong);
+  }
+
+  if (takes.length > 0) {
+    await createDropboxFolder(`${basePath}/Takes`);
+
+    for (const take of takes) {
+      await uploadFileToDropbox(
+        `${basePath}/Takes/${take.title}`,
+        take.takeBuffer,
+      );
+    }
+  }
 };

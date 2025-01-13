@@ -71,6 +71,7 @@ export type DbPage = {
   keySignature: string;
   time: string;
   about: string;
+  songId: number;
 };
 
 export type Page = {
