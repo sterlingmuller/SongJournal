@@ -62,7 +62,7 @@ const startUploadSession = async (fileContent: Buffer, accessToken: string) => {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        'Dropbox-API-Arg': JSON.stringify({ close: false }),
+        'Dropbox-API-Arg': JSON.stringify({ close: true }),
         'Content-Type': 'application/octet-stream',
       },
       body: fileContent,
@@ -129,54 +129,15 @@ const finishUploadSessionBatch = async (
   return data;
 };
 
-const checkUploadSessionBatchStatus = async (
-  jobId: string,
-  accessToken: string,
-) => {
-  try {
-    const response = await fetch(
-      'https://api.dropboxapi.com/2/files/upload_session/finish_batch/check',
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ async_job_id: jobId }),
-      },
-    );
-
-    const data = await response.json();
-    if (!response.ok) {
-      console.error('Error checking upload session batch status:', data);
-    } else {
-      console.log('Upload session batch status:', data);
-      if (data['.tag'] === 'complete') {
-        data.entries.forEach((entry: any, index: number) => {
-          if (entry['.tag'] === 'failure') {
-            console.error(`Entry ${index} failed:`, entry.failure);
-          }
-        });
-      }
-    }
-    return data;
-  } catch (error) {
-    console.error('Network error:', error);
-  }
-};
-
 export const uploadFilesInBatch = async (
   files: { path: string; content: Buffer }[],
   accessToken: string,
 ) => {
   const entries = [];
 
-  console.log('uploading files in batch:', files);
-
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
     const sessionId = await startUploadSession(file.content, accessToken);
-    console.log('sessionId:', sessionId);
     const isLastFile = i === files.length - 1;
 
     await appendToUploadSession(
@@ -186,8 +147,6 @@ export const uploadFilesInBatch = async (
       0,
       isLastFile,
     );
-
-    console.log('file path:', file.path);
 
     entries.push({
       cursor: { session_id: sessionId, offset: file.content.length },
@@ -200,10 +159,5 @@ export const uploadFilesInBatch = async (
     });
   }
 
-  // everythings looking good but think we're having issues here
-  // getting not_closed failure
-  const result = await finishUploadSessionBatch(entries, accessToken);
-  if (result['.tag'] === 'async_job_id') {
-    await checkUploadSessionBatchStatus(result.async_job_id, accessToken);
-  }
+  await finishUploadSessionBatch(entries, accessToken);
 };
