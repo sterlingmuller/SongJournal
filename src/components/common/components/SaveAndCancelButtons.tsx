@@ -10,6 +10,8 @@ interface Props {
   primaryLabel?: string;
   secondaryLabel?: string;
   buttonsStyle?;
+  primaryColor?: string;
+  secondaryColor?: string;
 }
 
 const SaveAndCancelButtons = (props: Props) => {
@@ -20,6 +22,8 @@ const SaveAndCancelButtons = (props: Props) => {
     primaryLabel = 'Save',
     secondaryLabel = 'Cancel',
     buttonsStyle,
+    primaryColor = '#81C2F1',
+    secondaryColor = '#D6D6D6',
   } = props;
   const styles = useSaveAndCancelButtonsStyle();
 
@@ -29,12 +33,16 @@ const SaveAndCancelButtons = (props: Props) => {
         <Button
           title={primaryLabel}
           onPress={onPress}
-          color="#81C2F1"
+          color={primaryColor}
           disabled={disabled}
         />
       </View>
       <View style={styles.button}>
-        <Button title={secondaryLabel} color="#D6D6D6" onPress={onExitPress} />
+        <Button
+          title={secondaryLabel}
+          color={secondaryColor}
+          onPress={onExitPress}
+        />
       </View>
     </View>
   );

@@ -14,6 +14,8 @@ export interface Theme {
   highlight: string;
   conductorBackground: string;
   settingsEmphasis: string;
+  error: string;
+  hyperlink: string;
 }
 
 type ThemeKey = 'Light' | 'Dark' | 'Metal' | 'Psych' | 'Pop' | 'Surf';
@@ -32,6 +34,8 @@ const themes: Record<ThemeKey, Theme> = {
     highlight: c.gray,
     conductorBackground: c.salmon,
     settingsEmphasis: c.teal,
+    error: c.sunset,
+    hyperlink: c.blue,
   },
   Dark: {
     primary: c.deepCharcoal,
@@ -46,6 +50,8 @@ const themes: Record<ThemeKey, Theme> = {
     highlight: c.charcoal,
     conductorBackground: c.salmon,
     settingsEmphasis: c.teal,
+    error: c.maroon,
+    hyperlink: c.blue,
   },
   Metal: {
     primary: c.bloodRed,
@@ -60,6 +66,7 @@ const themes: Record<ThemeKey, Theme> = {
     highlight: c.charcoal,
     conductorBackground: c.salmon,
     settingsEmphasis: c.teal,
+    hyperlink: c.blue,
   },
   Psych: {
     primary: c.purple,
@@ -74,6 +81,8 @@ const themes: Record<ThemeKey, Theme> = {
     highlight: c.mustard,
     conductorBackground: c.salmon,
     settingsEmphasis: c.teal,
+    error: c.maroon,
+    hyperlink: c.blue,
   },
   Pop: {
     primary: c.neonBlue,
@@ -88,6 +97,8 @@ const themes: Record<ThemeKey, Theme> = {
     highlight: c.sunscreen,
     conductorBackground: c.salmon,
     settingsEmphasis: c.teal,
+    error: c.maroon,
+    hyperlink: c.blue,
   },
   Surf: {
     primary: c.oceanBlue,
@@ -102,6 +113,8 @@ const themes: Record<ThemeKey, Theme> = {
     highlight: c.sand,
     conductorBackground: c.salmon,
     settingsEmphasis: c.teal,
+    error: c.maroon,
+    hyperlink: c.blue,
   },
 };
 
