@@ -7,7 +7,6 @@ import { createBackup } from '@src/utils/createAndShareBackup';
 import { uploadFileToDropbox } from '@src/data/utils/uploadToDropbox';
 import { clearTokens } from '@src/data/utils/tokenStorage';
 
-import useSettingsStyle from '@src/styles/settings';
 import StyledText from '@src/components/common/components/StyledText';
 import DropboxAuth from '@src/components/settings/components/DropboxAuth';
 import {
@@ -20,9 +19,15 @@ import { CloudConnection } from '@src/components/common/enums';
 import SettingIcon from '@src/icons/SettingIcon';
 import { useSQLiteContext } from 'expo-sqlite';
 import useDropboxSongFolderGenerator from '@src/data/utils/useDropboxFileGenerator';
+import useCloudStorageStyle from '@src/styles/cloudStorage';
+import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
+import { useColorTheme } from '@src/state/context/ThemeContext';
+import SettingsToggle from '../subcomponents/SettingsToggle';
+import Separator from '@src/components/common/components/Separator';
 
 const CloudStorage = () => {
-  const styles = useSettingsStyle();
+  const { theme } = useColorTheme();
+  const styles = useCloudStorageStyle();
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
   const cloudConnection = useAppSelector(selectCloudConnection);
@@ -72,13 +77,53 @@ const CloudStorage = () => {
       ) : (
         <DropboxAuth />
       )}
-      <TouchableOpacity onPress={() => {}}>
-        <SettingIcon />
-        <StyledText>Sync Settings</StyledText>
-      </TouchableOpacity>
-      <Button title="Backup Song" onPress={handleBackup} color="red" />
-      <Button title="Disconnect" onPress={handleDisconnect} color="blue" />
-      <Button title="Sync App Backup" onPress={handleAppBackup} color="green" />
+      {/* <Button title="Backup Song" onPress={handleBackup} color="red" /> */}
+      <StyledText>
+        Tip: Sync Backup will upload a zip file of all your app files and data
+        to your cloud storage. This file can be imported to restore your data in
+        case of data loss.
+      </StyledText>
+      <View style={{ ...styles.buttons }}>
+        <View style={styles.button}>
+          <Button
+            title={'Sync Backup'}
+            onPress={handleAppBackup}
+            color={theme.settingsEmphasis}
+          />
+        </View>
+        <View style={styles.button}>
+          <Button
+            title={'Disconnect'}
+            color={theme.error}
+            onPress={handleDisconnect}
+          />
+        </View>
+      </View>
+      <StyledText style={styles.sectionTitle}>Sync Settings</StyledText>
+      <StyledText>
+        Tip: Enabling Auto Sync will immediately upload the Lyrics and Starred
+        Take for each Song. New Songs will be uploaded when created. You can
+        enable additional sync settings below, before enabling auto sync.
+      </StyledText>
+      <View style={styles.togglesContainer}>
+        <SettingsToggle
+          label="Sync unstarred Takes"
+          isActive={false}
+          onToggle={() => {}}
+        />
+        <Separator />
+        <SettingsToggle
+          label="Sync only Completed Songs"
+          isActive={false}
+          onToggle={() => {}}
+        />
+        <Separator />
+        <SettingsToggle
+          label="Auto Sync"
+          isActive={false}
+          onToggle={() => {}}
+        />
+      </View>
     </View>
   );
 };
