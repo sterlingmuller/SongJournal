@@ -20,38 +20,28 @@ export const uploadFileToDropbox = async (
 ) => {
   const accessToken = await getValidAccessToken();
 
-  try {
-    const response = await fetch(
-      'https://content.dropboxapi.com/2/files/upload',
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Dropbox-API-Arg': JSON.stringify({
-            path: `/${filePath}`,
-            mode: 'add',
-            autorename: true,
-            mute: false,
-            strict_conflict: false,
-          }),
-          'Content-Type': 'application/octet-stream',
-        },
-        body: fileContent,
+  const response = await fetch(
+    'https://content.dropboxapi.com/2/files/upload',
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Dropbox-API-Arg': JSON.stringify({
+          path: `/${filePath}`,
+          mode: 'add',
+          autorename: true,
+          mute: false,
+          strict_conflict: false,
+        }),
+        'Content-Type': 'application/octet-stream',
       },
-    );
+      body: fileContent,
+    },
+  );
 
-    const responseText = await response.text();
-    let data;
-    try {
-      data = JSON.parse(responseText);
-    } catch {
-      data = responseText;
-    }
-    if (!response.ok) {
-      console.error('Error uploading file:', data);
-    }
-  } catch (error) {
-    console.error('Network error:', error);
+  const data = await response.json();
+  if (!response.ok) {
+    console.error('Error uploading file:', data);
   }
 };
 
@@ -104,7 +94,6 @@ const finishUploadSessionBatch = async (
   }[],
   accessToken: string,
 ) => {
-  console.log('entries:', JSON.stringify(entries));
   const response = await fetch(
     'https://api.dropboxapi.com/2/files/upload_session/finish_batch_v2',
     {
@@ -121,12 +110,7 @@ const finishUploadSessionBatch = async (
 
   if (!response.ok) {
     console.error('Error finishing upload session batch:', data);
-  } else {
-    console.log('Successfully finished upload session batch:', data);
-
-    console.log('first failure:', data.entries[0].failure);
   }
-  return data;
 };
 
 export const uploadFilesInBatch = async (
