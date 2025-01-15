@@ -50,6 +50,9 @@ export enum ToggleableSettings {
   DISPLAY_TIPS = 'displayTips',
   IS_NUMBERED = 'isNumbered',
   IS_ASCENDING = 'isAscending',
+  IS_STARRED_TAKE_CONDITION_ENABLED = 'isStarredTakeConditionEnabled',
+  IS_COMPLETED_SONG_CONDITION_ENABLED = 'isCompletedSongConditionEnabled',
+  IS_AUTO_SYNC_ENABLED = 'isAutoSyncEnabled',
 }
 
 export enum Conductor {

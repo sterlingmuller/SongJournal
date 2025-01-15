@@ -6,16 +6,25 @@ import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import {
   selectCloudConnection,
   selectDisplayTips,
+  selectSyncSettings,
 } from '@src/state/selectors/settingsSelector';
 import useDropboxSongFolderGenerator from '@src/data/utils/useDropboxFileGenerator';
 import useCloudStorageStyle from '@src/styles/cloudStorage';
 import SettingsToggle from '../subcomponents/SettingsToggle';
 import Separator from '@src/components/common/components/Separator';
+import { useToggleSetting } from '@src/utils/hooks/useToggleSettings';
+import { ToggleableSettings } from '@src/components/common/enums';
 
 const AutoSyncSettings = () => {
   const styles = useCloudStorageStyle();
   const displayTips = useAppSelector(selectDisplayTips);
   const cloudConnection = useAppSelector(selectCloudConnection);
+  const {
+    isStarredTakeConditionEnabled,
+    isCompletedSongConditionEnabled,
+    isAutoSyncEnabled,
+  } = useAppSelector(selectSyncSettings);
+  const toggleSetting = useToggleSetting();
   const triggerBackup = useDropboxSongFolderGenerator();
 
   const handleBackup = () => {
@@ -28,20 +37,28 @@ const AutoSyncSettings = () => {
       <View style={styles.togglesContainer}>
         <SettingsToggle
           label="Sync unstarred Takes"
-          isActive={false}
-          onToggle={() => {}}
+          isActive={isStarredTakeConditionEnabled}
+          onToggle={() =>
+            toggleSetting(ToggleableSettings.IS_STARRED_TAKE_CONDITION_ENABLED)
+          }
         />
         <Separator />
         <SettingsToggle
           label="Sync only Completed Songs"
-          isActive={false}
-          onToggle={() => {}}
+          isActive={isCompletedSongConditionEnabled}
+          onToggle={() =>
+            toggleSetting(
+              ToggleableSettings.IS_COMPLETED_SONG_CONDITION_ENABLED,
+            )
+          }
         />
         <Separator />
         <SettingsToggle
           label="Auto Sync"
-          isActive={false}
-          onToggle={() => {}}
+          isActive={isAutoSyncEnabled}
+          onToggle={() =>
+            toggleSetting(ToggleableSettings.IS_AUTO_SYNC_ENABLED)
+          }
         />
       </View>
       {displayTips && (
