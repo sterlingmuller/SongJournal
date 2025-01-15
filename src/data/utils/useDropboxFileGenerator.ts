@@ -13,10 +13,13 @@ import { fetchPages } from '../repositories/PageRepository';
 import { useSQLiteContext } from 'expo-sqlite';
 import { useArtistName } from '@src/utils/hooks/useArtistName';
 import { generatePagePdf } from '@src/utils/generatePagePdf';
+import { selectSyncFilters } from '@src/state/selectors/settingsSelector';
 
 const useDropboxSongFolderGenerator = () => {
   const db = useSQLiteContext();
   const songs = useAppSelector(selectSongs);
+  const { isStarredTakeConditionEnabled, isCompletedSongConditionEnabled } =
+    useAppSelector(selectSyncFilters);
   const [pages, setPages] = useState<SongToPageMap>({});
   const [trigger, setTrigger] = useState(false);
 
@@ -114,19 +117,20 @@ const useDropboxSongFolderGenerator = () => {
       lyricsBuffer = Buffer.from(pdfContent, 'base64');
     }
 
-    if (selectedTakeId && takes) {
+    if (selectedTakeId > -1 && takes) {
       const selectedTake = takes.find(
         (take: Take) => take.takeId === selectedTakeId,
       );
-      if (selectedTake) {
-        const selectedTakeContent = await FileSystem.readAsStringAsync(
-          selectedTake.uri,
-          {
-            encoding: FileSystem.EncodingType.Base64,
-          },
-        );
-        selectedTakeBuffer = Buffer.from(selectedTakeContent, 'base64');
 
+      const selectedTakeContent = await FileSystem.readAsStringAsync(
+        selectedTake.uri,
+        {
+          encoding: FileSystem.EncodingType.Base64,
+        },
+      );
+      selectedTakeBuffer = Buffer.from(selectedTakeContent, 'base64');
+
+      if (isStarredTakeConditionEnabled) {
         takesBuffers = await Promise.all(
           takes
             .filter(({ takeId }: Take) => takeId !== selectedTakeId)
@@ -153,6 +157,13 @@ const useDropboxSongFolderGenerator = () => {
       const filesToUpload = [];
 
       for (const song of songs) {
+        if (
+          (isCompletedSongConditionEnabled && !song.completed) ||
+          (!pages[song.songId] && song.selectedTakeId === -1)
+        ) {
+          continue;
+        }
+
         await createDropboxFolder(`/${song.title}`);
 
         const page = pages[song.songId];
@@ -183,7 +194,6 @@ const useDropboxSongFolderGenerator = () => {
           }
         }
       }
-
       await uploadFilesInBatch(filesToUpload, accessToken);
       setTrigger(false);
     };

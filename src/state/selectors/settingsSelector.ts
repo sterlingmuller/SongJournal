@@ -5,6 +5,12 @@ import { RootState } from '@src/state/store';
 
 export const selectUserSettings = (state: RootState) => state.settings;
 
+export const selectSyncFilters = (state: RootState) => ({
+  isStarredTakeConditionEnabled: state.settings.isStarredTakeConditionEnabled,
+  isCompletedSongConditionEnabled:
+    state.settings.isCompletedSongConditionEnabled,
+});
+
 export const selectDefaultArtistId = (state: RootState) =>
   state.settings.defaultArtistId;
 
@@ -17,13 +23,6 @@ export const selectConductor = (state: RootState) => state.settings.conductor;
 
 export const selectCloudConnection = (state: RootState) =>
   state.settings.cloudConnection;
-
-export const selectSyncSettings = (state: RootState) => ({
-  isAutoSyncEnabled: state.settings.isAutoSyncEnabled,
-  isStarredTakeConditionEnabled: state.settings.isStarredTakeConditionEnabled,
-  isCompletedSongConditionEnabled:
-    state.settings.isCompletedSongConditionEnabled,
-});
 
 export const selectDefaultSort = createSelector(
   [

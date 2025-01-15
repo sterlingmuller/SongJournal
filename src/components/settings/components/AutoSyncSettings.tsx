@@ -1,13 +1,9 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Button, View } from 'react-native';
 
 import StyledText from '@src/components/common/components/StyledText';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
-import {
-  selectCloudConnection,
-  selectDisplayTips,
-  selectSyncSettings,
-} from '@src/state/selectors/settingsSelector';
+import { selectUserSettings } from '@src/state/selectors/settingsSelector';
 import useDropboxSongFolderGenerator from '@src/data/utils/useDropboxFileGenerator';
 import useCloudStorageStyle from '@src/styles/cloudStorage';
 import SettingsToggle from '../subcomponents/SettingsToggle';
@@ -17,13 +13,12 @@ import { ToggleableSettings } from '@src/components/common/enums';
 
 const AutoSyncSettings = () => {
   const styles = useCloudStorageStyle();
-  const displayTips = useAppSelector(selectDisplayTips);
-  const cloudConnection = useAppSelector(selectCloudConnection);
   const {
     isStarredTakeConditionEnabled,
     isCompletedSongConditionEnabled,
     isAutoSyncEnabled,
-  } = useAppSelector(selectSyncSettings);
+    displayTips,
+  } = useAppSelector(selectUserSettings);
   const toggleSetting = useToggleSetting();
   const triggerBackup = useDropboxSongFolderGenerator();
 
@@ -36,7 +31,7 @@ const AutoSyncSettings = () => {
       <StyledText style={styles.sectionTitle}>Auto Sync Settings</StyledText>
       <View style={styles.togglesContainer}>
         <SettingsToggle
-          label="Sync unstarred Takes"
+          label="Sync Unstarred Takes"
           isActive={isStarredTakeConditionEnabled}
           onToggle={() =>
             toggleSetting(ToggleableSettings.IS_STARRED_TAKE_CONDITION_ENABLED)
@@ -68,6 +63,7 @@ const AutoSyncSettings = () => {
           You can customize Sync Filters above, before enabling Auto Sync.
         </StyledText>
       )}
+      <Button title="test Dropbox" onPress={handleBackup} />
     </View>
   );
 };

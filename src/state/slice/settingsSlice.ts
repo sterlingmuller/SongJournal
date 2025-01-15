@@ -4,7 +4,7 @@ import {
   Conductor,
   SortBy,
 } from '@src/components/common/enums';
-import { SyncSettings, UserSettings } from '@src/components/common/types';
+import { UserSettings } from '@src/components/common/types';
 
 const initialState: UserSettings = {
   defaultSortType: SortBy.DATE,
@@ -32,16 +32,6 @@ const settingsSlice = createSlice({
       action: PayloadAction<CloudConnection>,
     ) => {
       state.cloudConnection = action.payload;
-    },
-    updateSyncSettingsSuccess: (
-      state: UserSettings,
-      action: PayloadAction<SyncSettings>,
-    ) => {
-      state.isAutoSyncEnabled = action.payload.isAutoSyncEnabled;
-      state.isCompletedSongConditionEnabled =
-        action.payload.isCompletedSongConditionEnabled;
-      state.isStarredTakeConditionEnabled =
-        action.payload.isStarredTakeConditionEnabled;
     },
     fetchSettingsSuccess: (
       state: UserSettings,
