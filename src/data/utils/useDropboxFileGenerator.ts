@@ -194,7 +194,11 @@ const useDropboxSongFolderGenerator = () => {
           }
         }
       }
-      await uploadFilesInBatch(filesToUpload, accessToken);
+
+      if (filesToUpload.length > 0) {
+        await uploadFilesInBatch(filesToUpload, accessToken);
+      }
+
       setTrigger(false);
     };
 
