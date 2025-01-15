@@ -11,15 +11,21 @@ import Preferences from '@src/components/settings/components/Preferences';
 import BackupAndRestore from '@src/components/settings/components/BackupAndRestore';
 import ChooseConductor from '@src/components/settings/components/ChooseConductor';
 import PrivacyPolicy from '@src/components/settings/components/PrivacyPolicy';
+import AutoSyncSettings from '@src/components/settings/components/AutoSyncSettings';
+import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { selectCloudConnection } from '@src/state/selectors/settingsSelector';
+import { CloudConnection } from '@src/components/common/enums';
 
 const SettingsScreen = () => {
   const styles = useSettingsStyle();
   const globalStyles = useGlobalStyles();
+  const cloudConnection = useAppSelector(selectCloudConnection);
 
   return (
     <ScrollView style={globalStyles.container}>
       <View style={styles.content}>
-        <CloudStorage />
+        <CloudStorage cloudConnection={cloudConnection} />
+        {cloudConnection !== CloudConnection.NONE && <AutoSyncSettings />}
         <Preferences />
         <Theme />
         <ChooseConductor />

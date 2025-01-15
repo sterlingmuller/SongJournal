@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Button, TouchableOpacity, View, Alert } from 'react-native';
+import React from 'react';
+import { Button, View, Alert } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import { Buffer } from 'buffer';
 
@@ -14,29 +14,22 @@ import {
   useAppSelector,
 } from '@src/utils/hooks/typedReduxHooks';
 import { updateSettingsRequest } from '@src/state/sagas/actionCreators';
-import { selectCloudConnection } from '@src/state/selectors/settingsSelector';
 import { CloudConnection } from '@src/components/common/enums';
-import SettingIcon from '@src/icons/SettingIcon';
 import { useSQLiteContext } from 'expo-sqlite';
-import useDropboxSongFolderGenerator from '@src/data/utils/useDropboxFileGenerator';
 import useCloudStorageStyle from '@src/styles/cloudStorage';
-import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
 import { useColorTheme } from '@src/state/context/ThemeContext';
-import SettingsToggle from '../subcomponents/SettingsToggle';
-import Separator from '@src/components/common/components/Separator';
+import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
 
-const CloudStorage = () => {
+interface Props {
+  cloudConnection: CloudConnection;
+}
+
+const CloudStorage = ({ cloudConnection }: Props) => {
   const { theme } = useColorTheme();
   const styles = useCloudStorageStyle();
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
-  const cloudConnection = useAppSelector(selectCloudConnection);
-
-  const triggerBackup = useDropboxSongFolderGenerator();
-
-  const handleBackup = () => {
-    triggerBackup();
-  };
+  const displayTips = useAppSelector(selectDisplayTips);
 
   const handleAppBackup = async () => {
     const zipPath = await createBackup();
@@ -69,61 +62,39 @@ const CloudStorage = () => {
     <View>
       <StyledText style={styles.sectionTitle}>Cloud Storage</StyledText>
       {cloudConnection !== CloudConnection.NONE ? (
-        <StyledText>
-          You are connected to your
-          <StyledText> {cloudConnection} </StyledText>
-          account.
-        </StyledText>
+        <View>
+          <StyledText>
+            You are connected to your
+            <StyledText> {cloudConnection} </StyledText>
+            account. You may adjust settings and enable Auto Syncing below.
+          </StyledText>
+          <View style={{ ...styles.buttons }}>
+            <View style={styles.button}>
+              <Button
+                title={'Sync Backup'}
+                onPress={handleAppBackup}
+                color={theme.settingsEmphasis}
+              />
+            </View>
+            <View style={styles.button}>
+              <Button
+                title={'Disconnect'}
+                color={theme.error}
+                onPress={handleDisconnect}
+              />
+            </View>
+          </View>
+          {displayTips && (
+            <StyledText style={styles.tipText}>
+              Tip: Sync Backup will upload a zip file of all your app files and
+              data to your cloud storage. This file can be imported below to
+              restore your data in case of data loss.
+            </StyledText>
+          )}
+        </View>
       ) : (
         <DropboxAuth />
       )}
-      {/* <Button title="Backup Song" onPress={handleBackup} color="red" /> */}
-      <StyledText>
-        Tip: Sync Backup will upload a zip file of all your app files and data
-        to your cloud storage. This file can be imported to restore your data in
-        case of data loss.
-      </StyledText>
-      <View style={{ ...styles.buttons }}>
-        <View style={styles.button}>
-          <Button
-            title={'Sync Backup'}
-            onPress={handleAppBackup}
-            color={theme.settingsEmphasis}
-          />
-        </View>
-        <View style={styles.button}>
-          <Button
-            title={'Disconnect'}
-            color={theme.error}
-            onPress={handleDisconnect}
-          />
-        </View>
-      </View>
-      <StyledText style={styles.sectionTitle}>Sync Settings</StyledText>
-      <StyledText>
-        Tip: Enabling Auto Sync will immediately upload the Lyrics and Starred
-        Take for each Song. New Songs will be uploaded when created. You can
-        enable additional sync settings below, before enabling auto sync.
-      </StyledText>
-      <View style={styles.togglesContainer}>
-        <SettingsToggle
-          label="Sync unstarred Takes"
-          isActive={false}
-          onToggle={() => {}}
-        />
-        <Separator />
-        <SettingsToggle
-          label="Sync only Completed Songs"
-          isActive={false}
-          onToggle={() => {}}
-        />
-        <Separator />
-        <SettingsToggle
-          label="Auto Sync"
-          isActive={false}
-          onToggle={() => {}}
-        />
-      </View>
     </View>
   );
 };

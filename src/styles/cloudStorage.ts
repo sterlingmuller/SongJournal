@@ -6,6 +6,7 @@ interface Styles {
   togglesContainer: ViewStyle;
   buttons: ViewStyle;
   button: ViewStyle;
+  tipText: TextStyle;
   sectionTitle: TextStyle;
   title: TextStyle;
   syncSettingsText: TextStyle;
@@ -29,6 +30,14 @@ const useCloudStorageStyle = () => {
       marginVertical: 15,
     },
 
+    tipText: {
+      fontStyle: 'italic',
+      fontWeight: '500',
+      color: theme.primary,
+      fontSize: 12,
+      textAlign: 'center',
+    },
+
     sectionTitle: {
       fontSize: 20,
       paddingBottom: 5,
@@ -50,6 +59,8 @@ const useCloudStorageStyle = () => {
     buttons: {
       flexDirection: 'row',
       justifyContent: 'space-evenly',
+      paddingTop: 20,
+      paddingBottom: 10,
     },
 
     button: {
