@@ -45,7 +45,7 @@ const ComposerMessage = ({ screen }: props) => {
   const getStartedSongInstructions = (
     <StyledText style={styles.text}>
       Press the <StyledText style={styles.boldText}>Record</StyledText> button
-      below to record your first take!
+      below to record your first Take!
     </StyledText>
   );
 

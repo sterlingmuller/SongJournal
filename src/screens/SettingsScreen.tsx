@@ -27,8 +27,8 @@ const SettingsScreen = () => {
         <CloudStorage cloudConnection={cloudConnection} />
         {cloudConnection !== CloudConnection.NONE && <AutoSyncSettings />}
         <Preferences />
-        <Theme />
         <ChooseConductor />
+        <Theme />
         <BackupAndRestore />
         <PrivacyPolicy />
         <About />
