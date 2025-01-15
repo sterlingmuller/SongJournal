@@ -17,9 +17,13 @@ export const fetchUserSettings = async (db: SQLiteDatabase) => {
       displayTips: Boolean(settings.displayTips),
       conductor: settings.conductor,
       cloudConnection: settings.cloudConnection,
-      isAutoSyncEnabled: settings.isAutoSyncEnabled,
-      isStarredTakeConditionEnabled: settings.isStarredTakeConditionEnabled,
-      isCompletedSongConditionEnabled: settings.isCompletedSongConditionEnabled,
+      isAutoSyncEnabled: Boolean(settings.isAutoSyncEnabled),
+      isStarredTakeConditionEnabled: Boolean(
+        settings.isStarredTakeConditionEnabled,
+      ),
+      isCompletedSongConditionEnabled: Boolean(
+        settings.isCompletedSongConditionEnabled,
+      ),
     };
   } catch (err) {
     console.error('Error fetching user settings', err);
