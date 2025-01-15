@@ -111,11 +111,6 @@ export const EMPTY_TAKE: t.Take = {
 export const SCREEN_WIDTH: number = Dimensions.get('window').width;
 export const SCREEN_HEIGHT: number = Dimensions.get('window').height;
 
-// export const documentsDirectory = documentDirectory + 'SongJournal/';
-
-export const getStartedSongInstructions =
-  'Press the RECORD button below to record your first take!';
-
 export const MONTHS = [
   'January',
   'February',

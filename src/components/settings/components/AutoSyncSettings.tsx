@@ -48,8 +48,7 @@ const AutoSyncSettings = () => {
         <StyledText style={styles.tipText}>
           Warning: Enabling Auto Sync will immediately upload the Lyrics and
           Starred Take for each Song. New Songs will be uploaded when created.
-          You can enable additional sync filters above, before enabling auto
-          sync.
+          You can customize Sync Filters above, before enabling Auto Sync.
         </StyledText>
       )}
     </View>
