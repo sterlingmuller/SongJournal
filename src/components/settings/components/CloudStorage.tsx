@@ -19,6 +19,7 @@ import { useSQLiteContext } from 'expo-sqlite';
 import useCloudStorageStyle from '@src/styles/cloudStorage';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
+import { useNetworkStatus } from '@src/state/context/NetworkContext';
 
 interface Props {
   cloudConnection: CloudConnection;
@@ -30,6 +31,8 @@ const CloudStorage = ({ cloudConnection }: Props) => {
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
   const displayTips = useAppSelector(selectDisplayTips);
+
+  const { isOnline, setIsOnline } = useNetworkStatus();
 
   const handleAppBackup = async () => {
     const zipPath = await createBackup();
@@ -61,6 +64,14 @@ const CloudStorage = ({ cloudConnection }: Props) => {
   return (
     <View>
       <StyledText style={styles.sectionTitle}>Cloud Storage</StyledText>
+      <StyledText
+        style={styles.sectionTitle}
+      >{`Is Online: ${isOnline}`}</StyledText>
+      <Button
+        title={'Toggle isOnline'}
+        onPress={() => setIsOnline(!isOnline)}
+        color={theme.settingsEmphasis}
+      />
       {cloudConnection !== CloudConnection.NONE ? (
         <View>
           <StyledText>

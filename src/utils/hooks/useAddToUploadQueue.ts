@@ -18,6 +18,8 @@ const useAddToUploadQueue = () => {
     const newQueue = [...uploadQueue, ...files];
 
     await SecureStore.setItemAsync(UPLOAD_QUEUE_KEY, JSON.stringify(newQueue));
+
+    console.log('new queue:', newQueue);
   }, []);
 
   return { addToUploadQueue };

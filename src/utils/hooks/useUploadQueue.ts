@@ -27,6 +27,7 @@ const useUploadQueue = () => {
   }, [loadUploadQueue]);
 
   const processUploadQueue = useCallback(async () => {
+    console.log('uploadQueue:', uploadQueue);
     if (uploadQueue.length > 0) {
       const accessToken = await getValidAccessToken();
       await uploadFilesInBatch(uploadQueue, accessToken);
