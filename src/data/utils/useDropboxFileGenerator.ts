@@ -15,8 +15,8 @@ import { useArtistName } from '@src/utils/hooks/useArtistName';
 import { generatePagePdf } from '@src/utils/generatePagePdf';
 import { selectSyncFilters } from '@src/state/selectors/settingsSelector';
 import useAddToUploadQueue from '@src/utils/hooks/useAddToUploadQueue';
-import useDebounce from '@src/utils/hooks/useDebounce';
-import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
+import { useNetworkStatus } from '@src/state/context/NetworkContext';
+import { createDropboxFolder } from '@src/utils/createDropBoxFolder';
 
 const useDropboxSongFolderGenerator = () => {
   const db = useSQLiteContext();
@@ -25,25 +25,9 @@ const useDropboxSongFolderGenerator = () => {
     useAppSelector(selectSyncFilters);
   const [pages, setPages] = useState<SongToPageMap>({});
   const [trigger, setTrigger] = useState(false);
-  const [isOnline, setIsOnline] = useState<boolean>(true);
+  const { isOnline } = useNetworkStatus();
 
   const { addToUploadQueue } = useAddToUploadQueue();
-
-  useEffect(() => {
-    const handleNetworkChange = useDebounce((state: NetInfoState) => {
-      console.log('Network state changed:', state);
-      setIsOnline(state.isConnected);
-    }, 500);
-
-    const unsubscribe = NetInfo.addEventListener(handleNetworkChange);
-
-    // Check initial network status
-    NetInfo.fetch().then(handleNetworkChange);
-
-    return () => {
-      unsubscribe();
-    };
-  }, [useDebounce]);
 
   const { getArtistName } = useArtistName();
 
@@ -54,65 +38,65 @@ const useDropboxSongFolderGenerator = () => {
     return pdfUri;
   };
 
-  const doesFolderExists = async (folderPath: string, accessToken: string) => {
-    try {
-      const response = await fetch(
-        'https://api.dropboxapi.com/2/files/get_metadata',
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ path: folderPath }),
-        },
-      );
+  // const doesFolderExists = async (folderPath: string, accessToken: string) => {
+  //   try {
+  //     const response = await fetch(
+  //       'https://api.dropboxapi.com/2/files/get_metadata',
+  //       {
+  //         method: 'POST',
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({ path: folderPath }),
+  //       },
+  //     );
 
-      if (response.ok) {
-        return true;
-      } else {
-        const data = await response.json();
-        if (data.error_summary.includes('path/not_found')) {
-          return false;
-        } else {
-          console.error('Error checking folder existence:', data);
-          return false;
-        }
-      }
-    } catch (error) {
-      console.error('Network error:', error);
-      return false;
-    }
-  };
+  //     if (response.ok) {
+  //       return true;
+  //     } else {
+  //       const data = await response.json();
+  //       if (data.error_summary.includes('path/not_found')) {
+  //         return false;
+  //       } else {
+  //         console.error('Error checking folder existence:', data);
+  //         return false;
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error('Network error:', error);
+  //     return false;
+  //   }
+  // };
 
-  const createDropboxFolder = async (folderPath: string) => {
-    const accessToken = await getValidAccessToken();
+  // const createDropboxFolder = async (folderPath: string) => {
+  //   const accessToken = await getValidAccessToken();
 
-    if (await doesFolderExists(folderPath, accessToken)) {
-      return;
-    }
+  //   if (await doesFolderExists(folderPath, accessToken)) {
+  //     return;
+  //   }
 
-    try {
-      const response = await fetch(
-        'https://api.dropboxapi.com/2/files/create_folder_v2',
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ path: folderPath, autorename: false }),
-        },
-      );
+  //   try {
+  //     const response = await fetch(
+  //       'https://api.dropboxapi.com/2/files/create_folder_v2',
+  //       {
+  //         method: 'POST',
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({ path: folderPath, autorename: false }),
+  //       },
+  //     );
 
-      if (!response.ok) {
-        const data = await response.json();
-        console.error('Error creating folder:', data);
-      }
-    } catch (error) {
-      console.error('Network error:', error);
-    }
-  };
+  //     if (!response.ok) {
+  //       const data = await response.json();
+  //       console.error('Error creating folder:', data);
+  //     }
+  //   } catch (error) {
+  //     console.error('Network error:', error);
+  //   }
+  // };
 
   useEffect(() => {
     const fetchPagesData = async () => {
@@ -122,6 +106,10 @@ const useDropboxSongFolderGenerator = () => {
 
     fetchPagesData();
   }, [db]);
+
+  // Maybe add an array of folders to generate and push to the array as we iterate. That way we don't need to iterate twice
+
+  // Might want to break down this logic to a few more hooks / helpers. All Sync related hooks and helpers should be moved to one folder
 
   const generateSongBuffers = async (song: Song, page: Page) => {
     const { title, selectedTakeId, takes, completed } = song;
@@ -185,7 +173,13 @@ const useDropboxSongFolderGenerator = () => {
           continue;
         }
 
-        await createDropboxFolder(`/${song.title}`);
+        // move the dropbox folder creator to a helper function
+        // iterate over songs if online, calling this for each song title
+        // this helper also needs to be used in the processQueue function so that folders are created before queues are uploaded
+
+        // separate issue to look into, to large of file size for secureStore
+
+        // await createDropboxFolder(`/${song.title}`);
 
         const page = pages[song.songId];
         const { title, lyricsBuffer, selectedTakeBuffer, takesBuffers } =
@@ -206,7 +200,8 @@ const useDropboxSongFolderGenerator = () => {
         }
 
         if (takesBuffers.length > 0) {
-          await createDropboxFolder(`/${song.title}/Takes`);
+          // add some logic to create take folder
+          // await createDropboxFolder(`/${song.title}/Takes`);
           for (const take of takesBuffers) {
             filesToUpload.push({
               path: `/${title}/Takes/${take.title}.mp3`,
@@ -219,6 +214,11 @@ const useDropboxSongFolderGenerator = () => {
       if (filesToUpload.length > 0) {
         if (isOnline) {
           const accessToken = await getValidAccessToken();
+
+          for (const song of songs) {
+            await createDropboxFolder(song.title);
+          }
+
           await uploadFilesInBatch(filesToUpload, accessToken);
         } else {
           addToUploadQueue(filesToUpload);

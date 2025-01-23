@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, View } from 'react-native';
 
 import StyledText from '@src/components/common/components/StyledText';
