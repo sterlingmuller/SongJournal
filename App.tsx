@@ -10,28 +10,36 @@ import { store } from '@src/state/store/index';
 import { migrateDbIfNeeded } from '@src/data/database/db';
 import { AudioProvider } from '@src/state/context/AudioContext';
 import { DB_NAME } from '@src/components/common/constants';
+import useUploadQueue from '@src/utils/hooks/useUploadQueue';
+import useNetworkStatus from '@src/utils/hooks/useNetworkStatus';
 
-// android oAuth: 667587402306-uc2610nddbofn6d4jmmqdctk6sjn2tfr.apps.googleusercontent.com
+const App = () => {
+  const { processUploadQueue } = useUploadQueue();
+  useNetworkStatus(processUploadQueue);
 
-const App = () => (
-  <GestureHandlerRootView style={{ flex: 1 }}>
-    <StatusBar translucent backgroundColor="transparent" />
-    <ColorThemeProvider>
-      <Suspense fallback={null}>
-        <SQLiteProvider
-          databaseName={DB_NAME}
-          onInit={migrateDbIfNeeded}
-          useSuspense
-        >
-          <Provider store={store}>
-            <AudioProvider>
-              <AppNavigator />
-            </AudioProvider>
-          </Provider>
-        </SQLiteProvider>
-      </Suspense>
-    </ColorThemeProvider>
-  </GestureHandlerRootView>
-);
+  // if online and there are files in the queue, process them
+  // I don't think we need to pass isOnline around, we can just check status wherever needed
+
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <StatusBar translucent backgroundColor="transparent" />
+      <ColorThemeProvider>
+        <Suspense fallback={null}>
+          <SQLiteProvider
+            databaseName={DB_NAME}
+            onInit={migrateDbIfNeeded}
+            useSuspense
+          >
+            <Provider store={store}>
+              <AudioProvider>
+                <AppNavigator />
+              </AudioProvider>
+            </Provider>
+          </SQLiteProvider>
+        </Suspense>
+      </ColorThemeProvider>
+    </GestureHandlerRootView>
+  );
+};
 
 export default App;

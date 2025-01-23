@@ -14,6 +14,9 @@ import { useSQLiteContext } from 'expo-sqlite';
 import { useArtistName } from '@src/utils/hooks/useArtistName';
 import { generatePagePdf } from '@src/utils/generatePagePdf';
 import { selectSyncFilters } from '@src/state/selectors/settingsSelector';
+import useAddToUploadQueue from '@src/utils/hooks/useAddToUploadQueue';
+import useDebounce from '@src/utils/hooks/useDebounce';
+import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 
 const useDropboxSongFolderGenerator = () => {
   const db = useSQLiteContext();
@@ -22,6 +25,25 @@ const useDropboxSongFolderGenerator = () => {
     useAppSelector(selectSyncFilters);
   const [pages, setPages] = useState<SongToPageMap>({});
   const [trigger, setTrigger] = useState(false);
+  const [isOnline, setIsOnline] = useState<boolean>(true);
+
+  const { addToUploadQueue } = useAddToUploadQueue();
+
+  useEffect(() => {
+    const handleNetworkChange = useDebounce((state: NetInfoState) => {
+      console.log('Network state changed:', state);
+      setIsOnline(state.isConnected);
+    }, 500);
+
+    const unsubscribe = NetInfo.addEventListener(handleNetworkChange);
+
+    // Check initial network status
+    NetInfo.fetch().then(handleNetworkChange);
+
+    return () => {
+      unsubscribe();
+    };
+  }, [useDebounce]);
 
   const { getArtistName } = useArtistName();
 
@@ -153,7 +175,6 @@ const useDropboxSongFolderGenerator = () => {
     if (!trigger) return;
 
     const performBackup = async () => {
-      const accessToken = await getValidAccessToken();
       const filesToUpload = [];
 
       for (const song of songs) {
@@ -196,7 +217,12 @@ const useDropboxSongFolderGenerator = () => {
       }
 
       if (filesToUpload.length > 0) {
-        await uploadFilesInBatch(filesToUpload, accessToken);
+        if (isOnline) {
+          const accessToken = await getValidAccessToken();
+          await uploadFilesInBatch(filesToUpload, accessToken);
+        } else {
+          addToUploadQueue(filesToUpload);
+        }
       }
 
       setTrigger(false);
