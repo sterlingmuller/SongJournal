@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, View } from 'react-native';
 
 import StyledText from '@src/components/common/components/StyledText';
@@ -10,8 +10,10 @@ import SettingsToggle from '../subcomponents/SettingsToggle';
 import Separator from '@src/components/common/components/Separator';
 import { useToggleSetting } from '@src/utils/hooks/useToggleSettings';
 import { ToggleableSettings } from '@src/components/common/enums';
+import { useColorTheme } from '@src/state/context/ThemeContext';
 
 const AutoSyncSettings = () => {
+  const { theme } = useColorTheme();
   const styles = useCloudStorageStyle();
   const {
     isStarredTakeConditionEnabled,
@@ -21,6 +23,12 @@ const AutoSyncSettings = () => {
   } = useAppSelector(selectUserSettings);
   const toggleSetting = useToggleSetting();
   const triggerBackup = useDropboxSongFolderGenerator();
+
+  // useEffect(() => {
+  //   if (isAutoSyncEnabled) {
+  //     triggerBackup();
+  //   }
+  // }, [triggerBackup, isAutoSyncEnabled]);
 
   const handleBackup = () => {
     triggerBackup();
@@ -48,6 +56,13 @@ const AutoSyncSettings = () => {
           }
         />
         <Separator />
+        <View style={styles.buttons}>
+          <Button
+            title="One-Time Sync"
+            onPress={handleBackup}
+            color={theme.settingsEmphasis}
+          />
+        </View>
         <SettingsToggle
           label="Auto Sync"
           isActive={isAutoSyncEnabled}
