@@ -119,6 +119,8 @@ export const uploadFilesInBatch = async (
 ) => {
   const entries = [];
 
+  console.log('files:', files);
+
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
     const sessionId = await startUploadSession(file.content, accessToken);

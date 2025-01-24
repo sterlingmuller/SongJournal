@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import * as SecureStore from 'expo-secure-store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   getValidAccessToken,
   uploadFilesInBatch,
@@ -16,7 +16,8 @@ const useUploadQueue = () => {
   const [uploadQueue, setUploadQueue] = useState<FileToUpload[]>([]);
 
   const loadUploadQueue = useCallback(async () => {
-    const storedQueue = await SecureStore.getItemAsync(UPLOAD_QUEUE_KEY);
+    const storedQueue = await AsyncStorage.getItem(UPLOAD_QUEUE_KEY);
+
     if (storedQueue) {
       setUploadQueue(JSON.parse(storedQueue));
     }
@@ -30,9 +31,11 @@ const useUploadQueue = () => {
     console.log('uploadQueue:', uploadQueue);
     if (uploadQueue.length > 0) {
       const accessToken = await getValidAccessToken();
+      console.log('got access token');
       await uploadFilesInBatch(uploadQueue, accessToken);
+      console.log('after upload');
       setUploadQueue([]);
-      await SecureStore.deleteItemAsync(UPLOAD_QUEUE_KEY);
+      await AsyncStorage.removeItem(UPLOAD_QUEUE_KEY);
     }
   }, [uploadQueue]);
 
