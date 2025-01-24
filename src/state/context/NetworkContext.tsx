@@ -31,21 +31,21 @@ export const NetworkProvider = ({ children }: Props) => {
   const { processUploadQueue } = useUploadQueue();
   const cloudConnection = useAppSelector(selectCloudConnection);
 
-  // comment out lines 35-57 to test without going offline
-  const handleNetworkChange = useDebounce((networkState: NetInfoState) => {
-    console.log('Network state changed:', networkState);
-    setIsOnline(networkState.isConnected);
-  }, 500);
+  // comment out lines 35-48 to test without going offline
+  // const handleNetworkChange = useDebounce((networkState: NetInfoState) => {
+  //   console.log('Network state changed:', networkState);
+  //   setIsOnline(networkState.isConnected);
+  // }, 500);
 
-  useEffect(() => {
-    console.log('Subscribing to network changes...');
-    const unsubscribe = NetInfo.addEventListener(handleNetworkChange);
+  // useEffect(() => {
+  //   console.log('Subscribing to network changes...');
+  //   const unsubscribe = NetInfo.addEventListener(handleNetworkChange);
 
-    return () => {
-      console.log('Unsubscribing from network changes...');
-      unsubscribe();
-    };
-  }, [handleNetworkChange]);
+  //   return () => {
+  //     console.log('Unsubscribing from network changes...');
+  //     unsubscribe();
+  //   };
+  // }, [handleNetworkChange]);
 
   useEffect(() => {
     if (isOnline && cloudConnection !== CloudConnection.NONE) {
