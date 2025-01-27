@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import useDebounce from '@src/utils/hooks/useDebounce';
-import useUploadQueue from '@src/utils/hooks/useUploadQueue';
+import useUploadQueue from '@dropbox/hooks/useUploadQueue';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectCloudConnection } from '../selectors/settingsSelector';
 import { CloudConnection } from '@src/components/common/enums';
