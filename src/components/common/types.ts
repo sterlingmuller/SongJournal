@@ -72,11 +72,13 @@ export type DbPage = {
   time: string;
   about: string;
   songId: number;
+  revisionId: string;
 };
 
 export type Page = {
   lyrics: string;
   info: SongInfo;
+  revisionId?: string;
 };
 
 export type SongToPageMap = {
@@ -100,7 +102,7 @@ export type Song = {
 
 export type SyncSettings = {
   isAutoSyncEnabled: boolean;
-  isStarredTakeConditionEnabled: boolean;
+  isUnstarredTakeConditionEnabled: boolean;
   isCompletedSongConditionEnabled: boolean;
 };
 

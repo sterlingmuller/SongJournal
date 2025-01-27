@@ -6,16 +6,19 @@ import { RootState } from '@src/state/store';
 export const selectUserSettings = (state: RootState) => state.settings;
 
 export const selectSyncFilters = createSelector(
-  (state: RootState) => state.settings.isStarredTakeConditionEnabled,
+  (state: RootState) => state.settings.isUnstarredTakeConditionEnabled,
   (state: RootState) => state.settings.isCompletedSongConditionEnabled,
   (
-    isStarredTakeConditionEnabled: boolean,
+    isUnstarredTakeConditionEnabled: boolean,
     isCompletedSongConditionEnabled: boolean,
   ) => ({
-    isStarredTakeConditionEnabled,
+    isUnstarredTakeConditionEnabled,
     isCompletedSongConditionEnabled,
   }),
 );
+
+export const selectIsAutoSyncEnabled = (state: RootState) =>
+  state.settings.isAutoSyncEnabled;
 
 export const selectDefaultArtistId = (state: RootState) =>
   state.settings.defaultArtistId;

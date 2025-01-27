@@ -23,7 +23,11 @@ export const fetchPageBySongId = async (payload: FetchPagePayload) => {
       about: dbPage.about,
     };
 
-    const page: Page = { lyrics: dbPage.lyrics, info: songInfo };
+    const page: Page = {
+      lyrics: dbPage.lyrics,
+      info: songInfo,
+      revisionId: dbPage.revisionId,
+    };
 
     return page;
   } catch (err) {

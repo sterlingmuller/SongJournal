@@ -23,6 +23,9 @@ import {
   SCREEN_WIDTH,
   WAVE_BAR_TOTAL_WIDTH,
 } from '@src/components/common/constants';
+import { selectIsAutoSyncEnabled } from '@src/state/selectors/settingsSelector';
+import { generateTakeBuffer } from '@src/services/cloudStorage/dropbox/helpers/generateBuffer';
+import useDropboxFileGenerator from '@src/services/cloudStorage/dropbox/hooks/useDropboxFileGenerator';
 
 interface Props {
   recordingDuration: number;
@@ -47,10 +50,12 @@ const RecordingControls = (props: Props) => {
   const styles = useRecordingStyles();
   const db = useSQLiteContext();
   const dispatch = useAppDispatch();
+  const isAutoSyncEnabled = useAppSelector(selectIsAutoSyncEnabled);
   const route = useRoute<RouteProp<RootStackParamList, 'Recording'>>();
   const songId = useAppSelector(selectCurrentSongId);
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const { title } = route.params;
+  const { generateAndUploadFile } = useDropboxFileGenerator();
 
   const [uri, setUri] = useState<string | null>(null);
 
@@ -138,6 +143,12 @@ const RecordingControls = (props: Props) => {
           db,
         }),
       );
+
+      // if autoSync enabled && sync takes enabled or if autoSync and take is starred take
+      if (isAutoSyncEnabled) {
+        // the type is off for this.
+        generateAndUploadFile();
+      }
     }
 
     setRecording(null);

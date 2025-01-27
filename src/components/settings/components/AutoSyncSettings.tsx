@@ -4,7 +4,7 @@ import { Button, View } from 'react-native';
 import StyledText from '@src/components/common/components/StyledText';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectUserSettings } from '@src/state/selectors/settingsSelector';
-import useDropboxSongFolderGenerator from '@dropbox/hooks/useDropboxFileGenerator';
+import useDropboxBatchFileGenerator from '@dropbox/hooks/useDropboxBatchFileGenerator';
 import useCloudStorageStyle from '@src/styles/cloudStorage';
 import SettingsToggle from '../subcomponents/SettingsToggle';
 import Separator from '@src/components/common/components/Separator';
@@ -16,13 +16,13 @@ const AutoSyncSettings = () => {
   const { theme } = useColorTheme();
   const styles = useCloudStorageStyle();
   const {
-    isStarredTakeConditionEnabled,
+    isUnstarredTakeConditionEnabled,
     isCompletedSongConditionEnabled,
     isAutoSyncEnabled,
     displayTips,
   } = useAppSelector(selectUserSettings);
   const toggleSetting = useToggleSetting();
-  const triggerBackup = useDropboxSongFolderGenerator();
+  const triggerBackup = useDropboxBatchFileGenerator();
 
   // useEffect(() => {
   //   if (isAutoSyncEnabled) {
@@ -40,7 +40,7 @@ const AutoSyncSettings = () => {
       <View style={styles.togglesContainer}>
         <SettingsToggle
           label="Sync Unstarred Takes"
-          isActive={isStarredTakeConditionEnabled}
+          isActive={isUnstarredTakeConditionEnabled}
           onToggle={() =>
             toggleSetting(ToggleableSettings.IS_STARRED_TAKE_CONDITION_ENABLED)
           }
