@@ -15,7 +15,7 @@ const initialState: UserSettings = {
   conductor: Conductor.EGG,
   cloudConnection: CloudConnection.NONE,
   isAutoSyncEnabled: false,
-  isStarredTakeConditionEnabled: false,
+  isUnstarredTakeConditionEnabled: false,
   isCompletedSongConditionEnabled: false,
 };
 

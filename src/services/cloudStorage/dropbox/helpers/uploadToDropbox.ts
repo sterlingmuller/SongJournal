@@ -53,11 +53,12 @@ export const uploadFilesInBatch = async (
 };
 
 export const uploadFileToDropbox = async (
-  filePath: string,
-  fileContent: Buffer,
+  file: {
+    path: string;
+    content: Buffer;
+  },
+  accessToken: string,
 ) => {
-  const accessToken = await getValidAccessToken();
-
   const response = await fetch(
     'https://content.dropboxapi.com/2/files/upload',
     {
@@ -65,7 +66,7 @@ export const uploadFileToDropbox = async (
       headers: {
         Authorization: `Bearer ${accessToken}`,
         'Dropbox-API-Arg': JSON.stringify({
-          path: `/${filePath}`,
+          path: `/${file.path}`,
           mode: 'overwrite',
           autorename: false,
           mute: false,
@@ -73,7 +74,7 @@ export const uploadFileToDropbox = async (
         }),
         'Content-Type': 'application/octet-stream',
       },
-      body: fileContent,
+      body: file.content,
     },
   );
 

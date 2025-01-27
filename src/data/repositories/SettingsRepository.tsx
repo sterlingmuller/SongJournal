@@ -18,8 +18,8 @@ export const fetchUserSettings = async (db: SQLiteDatabase) => {
       conductor: settings.conductor,
       cloudConnection: settings.cloudConnection,
       isAutoSyncEnabled: Boolean(settings.isAutoSyncEnabled),
-      isStarredTakeConditionEnabled: Boolean(
-        settings.isStarredTakeConditionEnabled,
+      isUnstarredTakeConditionEnabled: Boolean(
+        settings.isUnstarredTakeConditionEnabled,
       ),
       isCompletedSongConditionEnabled: Boolean(
         settings.isCompletedSongConditionEnabled,

@@ -5,10 +5,10 @@ const createSongsTable =
   'CREATE TABLE IF NOT EXISTS Songs (songId INTEGER PRIMARY KEY AUTOINCREMENT, creationDate STRING NOT NULL, title TEXT UNIQUE, selectedTakeId INTEGER, totalTakes INTEGER, completed BOOLEAN NOT NULL, hasLyrics BOOLEAN NOT NULL, isOriginal BOOLEAN, artistId INTEGER, FOREIGN KEY (selectedTakeId) REFERENCES Takes(takeId), FOREIGN KEY (artistId) REFERENCES Artists(artistId));';
 
 const createTakesTable =
-  'CREATE TABLE IF NOT EXISTS Takes (takeId INTEGER PRIMARY KEY AUTOINCREMENT, songId INTEGER NOT NULL, title TEXT NOT NULL, date TEXT NOT NULL, notes TEXT, uri TEXT, duration INT, FOREIGN KEY (songId) REFERENCES Songs(songId));';
+  'CREATE TABLE IF NOT EXISTS Takes (takeId INTEGER PRIMARY KEY AUTOINCREMENT, songId INTEGER NOT NULL, title TEXT NOT NULL, date TEXT NOT NULL, notes TEXT, uri TEXT, duration INT, revisionId TEXT, FOREIGN KEY (songId) REFERENCES Songs(songId));';
 
 const createPageTable =
-  'CREATE TABLE IF NOT EXISTS Page (pageId INTEGER PRIMARY KEY AUTOINCREMENT, songId INTEGER NOT NULL, lyrics TEXT, bpm TEXT, keySignature TEXT, time TEXT, about TEXT, FOREIGN KEY (songId) REFERENCES Songs(songId));';
+  'CREATE TABLE IF NOT EXISTS Page (pageId INTEGER PRIMARY KEY AUTOINCREMENT, songId INTEGER NOT NULL, lyrics TEXT, bpm TEXT, keySignature TEXT, time TEXT, about TEXT, revisionId TEXT, FOREIGN KEY (songId) REFERENCES Songs(songId));';
 
 const createSettingsTable = `
 CREATE TABLE IF NOT EXISTS Settings (
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Settings (
   conductor TEXT NOT NULL DEFAULT ${Conductor.EGG},
   cloudConnection TEXT NOT NULL DEFAULT ${CloudConnection.NONE},
   isAutoSyncEnabled BOOLEAN NOT NULL DEFAULT 0,
-  isStarredTakeConditionEnabled BOOLEAN NOT NULL DEFAULT 0,
+  isUnstarredTakeConditionEnabled BOOLEAN NOT NULL DEFAULT 0,
   isCompletedSongConditionEnabled BOOLEAN NOT NULL DEFAULT 0,
   FOREIGN KEY (defaultArtistId) REFERENCES Artists(artistId)
 );
