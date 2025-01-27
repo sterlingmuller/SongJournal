@@ -28,8 +28,8 @@ export const uploadFileToDropbox = async (
         Authorization: `Bearer ${accessToken}`,
         'Dropbox-API-Arg': JSON.stringify({
           path: `/${filePath}`,
-          mode: 'add',
-          autorename: true,
+          mode: 'overwrite',
+          autorename: false,
           mute: false,
           strict_conflict: false,
         }),
@@ -119,8 +119,6 @@ export const uploadFilesInBatch = async (
 ) => {
   const entries = [];
 
-  console.log('files:', files);
-
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
     const sessionId = await startUploadSession(file.content, accessToken);
@@ -138,8 +136,8 @@ export const uploadFilesInBatch = async (
       cursor: { session_id: sessionId, offset: file.content.length },
       commit: {
         path: `${file.path}`,
-        mode: 'add',
-        autorename: true,
+        mode: 'overwrite',
+        autorename: false,
         mute: false,
       },
     });
