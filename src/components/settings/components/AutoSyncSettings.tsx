@@ -4,7 +4,7 @@ import { Button, View } from 'react-native';
 import StyledText from '@src/components/common/components/StyledText';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectUserSettings } from '@src/state/selectors/settingsSelector';
-import useDropboxSongFolderGenerator from '@src/data/utils/useDropboxFileGenerator';
+import useDropboxSongFolderGenerator from '@dropbox/hooks/useDropboxFileGenerator';
 import useCloudStorageStyle from '@src/styles/cloudStorage';
 import SettingsToggle from '../subcomponents/SettingsToggle';
 import Separator from '@src/components/common/components/Separator';
@@ -78,7 +78,6 @@ const AutoSyncSettings = () => {
           You can customize Sync Filters above, before enabling Auto Sync.
         </StyledText>
       )}
-      <Button title="test Dropbox" onPress={handleBackup} />
     </View>
   );
 };

@@ -10,6 +10,7 @@ module.exports = function (api) {
           alias: {
             '@src': './src/',
             '@styles': './src/styles',
+            '@dropbox': './src/services/cloudStorage/dropbox',
           },
         },
       ],

@@ -5,18 +5,18 @@ import { Buffer } from 'buffer';
 import {
   getValidAccessToken,
   uploadFilesInBatch,
-} from '@src/data/utils/uploadToDropbox';
+} from '@dropbox/helpers/uploadToDropbox';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectSongs } from '@src/state/selectors/songsSelector';
 import { Page, Song, SongToPageMap, Take } from '@src/components/common/types';
-import { fetchPages } from '../repositories/PageRepository';
+import { fetchPages } from '../../../../data/repositories/PageRepository';
 import { useSQLiteContext } from 'expo-sqlite';
 import { useArtistName } from '@src/utils/hooks/useArtistName';
 import { generatePagePdf } from '@src/utils/generatePagePdf';
 import { selectSyncFilters } from '@src/state/selectors/settingsSelector';
 import useAddToUploadQueue from '@src/utils/hooks/useAddToUploadQueue';
 import { useNetworkStatus } from '@src/state/context/NetworkContext';
-import { createDropboxFolder } from '@src/utils/createDropBoxFolder';
+import { createDropboxFolder } from '@src/services/cloudStorage/dropbox/helpers/createDropBoxFolder';
 
 const useDropboxSongFolderGenerator = () => {
   const db = useSQLiteContext();

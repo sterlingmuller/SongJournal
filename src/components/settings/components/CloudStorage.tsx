@@ -4,7 +4,7 @@ import * as FileSystem from 'expo-file-system';
 import { Buffer } from 'buffer';
 
 import { createBackup } from '@src/utils/createAndShareBackup';
-import { uploadFileToDropbox } from '@src/data/utils/uploadToDropbox';
+import { uploadFileToDropbox } from '@dropbox/helpers/uploadToDropbox';
 import { clearTokens } from '@src/data/utils/tokenStorage';
 
 import StyledText from '@src/components/common/components/StyledText';
