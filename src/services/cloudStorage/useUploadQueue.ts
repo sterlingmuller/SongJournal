@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   getValidAccessToken,
   uploadFilesInBatch,
-} from '@src/data/utils/uploadToDropbox';
+} from '@dropbox/helpers/uploadToDropbox';
 
 const UPLOAD_QUEUE_KEY = 'UPLOAD_QUEUE';
 
@@ -28,12 +28,9 @@ const useUploadQueue = () => {
   }, [loadUploadQueue]);
 
   const processUploadQueue = useCallback(async () => {
-    console.log('uploadQueue:', uploadQueue);
     if (uploadQueue.length > 0) {
       const accessToken = await getValidAccessToken();
-      console.log('got access token');
       await uploadFilesInBatch(uploadQueue, accessToken);
-      console.log('after upload');
       setUploadQueue([]);
       await AsyncStorage.removeItem(UPLOAD_QUEUE_KEY);
     }

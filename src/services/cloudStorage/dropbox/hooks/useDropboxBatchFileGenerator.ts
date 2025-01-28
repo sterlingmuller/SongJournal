@@ -17,7 +17,7 @@ import { selectSyncFilters } from '@src/state/selectors/settingsSelector';
 import useAddToUploadQueue from '@src/services/cloudStorage/useAddToUploadQueue';
 import { useNetworkStatus } from '@src/state/context/NetworkContext';
 import { createDropboxFolder } from '@src/services/cloudStorage/dropbox/helpers/createDropBoxFolder';
-import { generateTakeBuffer } from '../helpers/generateBuffer';
+import { generateBuffer } from '@dropbox/helpers/generateBuffer';
 
 const useDropboxBatchFileGenerator = () => {
   const db = useSQLiteContext();
@@ -53,7 +53,7 @@ const useDropboxBatchFileGenerator = () => {
   // Might want to break down this logic to a few more hooks / helpers. All Sync related hooks and helpers should be moved to one folder
 
   const generateSongBuffers = async (song: Song, page: Page) => {
-    const { title, selectedTakeId, takes, completed } = song;
+    const { title, selectedTakeId, takes } = song;
 
     let lyricsBuffer: Buffer | undefined;
     let selectedTakeBuffer: Buffer | undefined;
@@ -73,14 +73,14 @@ const useDropboxBatchFileGenerator = () => {
         (take: Take) => take.takeId === selectedTakeId,
       );
 
-      selectedTakeBuffer = await generateTakeBuffer(selectedTake.uri);
+      selectedTakeBuffer = await generateBuffer(selectedTake.uri);
 
       if (isUnstarredTakeConditionEnabled) {
         takesBuffers = await Promise.all(
           takes
             .filter(({ takeId }: Take) => takeId !== selectedTakeId)
             .map(async ({ title, uri }: Take) => {
-              const takeBuffer = await generateTakeBuffer(uri);
+              const takeBuffer = await generateBuffer(uri);
 
               return { title, takeBuffer };
             }),
@@ -96,7 +96,6 @@ const useDropboxBatchFileGenerator = () => {
 
     const performBackup = async () => {
       const filesToUpload = [];
-
       for (const song of songs) {
         if (
           (isCompletedSongConditionEnabled && !song.completed) ||
@@ -126,7 +125,7 @@ const useDropboxBatchFileGenerator = () => {
 
         if (selectedTakeBuffer) {
           filesToUpload.push({
-            path: `/${title}/${title}.mp3`,
+            path: `/${title}/${title}.m4a`,
             content: selectedTakeBuffer,
           });
         }

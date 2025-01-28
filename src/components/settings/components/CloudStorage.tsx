@@ -1,12 +1,7 @@
 import React from 'react';
 import { Button, View, Alert } from 'react-native';
-import * as FileSystem from 'expo-file-system';
-import { Buffer } from 'buffer';
 
-import { createBackup } from '@src/utils/createAndShareBackup';
-import { uploadFileToDropbox } from '@dropbox/helpers/uploadToDropbox';
 import { clearTokens } from '@src/data/utils/tokenStorage';
-
 import StyledText from '@src/components/common/components/StyledText';
 import DropboxAuth from '@src/components/settings/components/DropboxAuth';
 import {
@@ -20,6 +15,7 @@ import useCloudStorageStyle from '@src/styles/cloudStorage';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
 import { useNetworkStatus } from '@src/state/context/NetworkContext';
+import useDropboxFileGenerator from '@src/services/cloudStorage/dropbox/hooks/useDropboxFileGenerator';
 
 interface Props {
   cloudConnection: CloudConnection;
@@ -33,18 +29,10 @@ const CloudStorage = ({ cloudConnection }: Props) => {
   const displayTips = useAppSelector(selectDisplayTips);
 
   const { isOnline, setIsOnline } = useNetworkStatus();
+  const { generateAndUploadZipBuffer } = useDropboxFileGenerator();
 
   const handleAppBackup = async () => {
-    const zipPath = await createBackup();
-
-    const zipContent = await FileSystem.readAsStringAsync(zipPath, {
-      encoding: FileSystem.EncodingType.Base64,
-    });
-
-    const zipBuffer = Buffer.from(zipContent, 'base64');
-    await uploadFileToDropbox('songjournal_backup.zip', zipBuffer);
-
-    await FileSystem.deleteAsync(zipPath, { idempotent: true });
+    generateAndUploadZipBuffer();
   };
 
   const handleDisconnect = async () => {

@@ -2,7 +2,9 @@ import { SQLiteDatabase } from 'expo-sqlite';
 
 import * as t from '@src/components/common/types';
 
-export const createTake = async (takePayload: t.TakePayload) => {
+export const createTake = async (
+  takePayload: t.TakePayload,
+): Promise<t.Take> => {
   const { songId, title, date, uri, duration, db } = takePayload;
 
   try {
@@ -30,6 +32,7 @@ export const createTake = async (takePayload: t.TakePayload) => {
     return take;
   } catch (err) {
     console.error('Error inserting take', err);
+    throw err;
   }
 };
 

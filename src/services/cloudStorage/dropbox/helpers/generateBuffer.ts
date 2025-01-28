@@ -1,17 +1,14 @@
 import * as FileSystem from 'expo-file-system';
 import { Buffer } from 'buffer';
-import { Page } from '@src/components/common/types';
-import { generatePagePdf } from '@src/utils/generatePagePdf';
-import { useArtistName } from '@src/utils/hooks/useArtistName';
 
 export const generateBuffer = async (uri: string) => {
-  const selectedTakeContent = await FileSystem.readAsStringAsync(uri, {
+  const content = await FileSystem.readAsStringAsync(uri, {
     encoding: FileSystem.EncodingType.Base64,
   });
 
-  const takeBuffer = Buffer.from(selectedTakeContent, 'base64');
+  const buffer = Buffer.from(content, 'base64');
 
-  return takeBuffer;
+  return buffer;
 };
 
 // export const generateLyricsBuffer = async (

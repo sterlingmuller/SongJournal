@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { Audio } from 'expo-av';
-import { useSQLiteContext } from 'expo-sqlite';
 
 import useRecordingStyles from '@src/styles/recording';
 import RecordButton from '@src/components/common/components/RecordButton';
@@ -11,11 +10,7 @@ import {
   startRecording,
   stopRecording,
 } from '@src/utils/startStopPlayRecording';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@src/utils/hooks/typedReduxHooks';
-import { createTakeRequest } from '@src/state/sagas/actionCreators';
+import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { RootStackParamList } from '@src/components/common/types';
 import { selectCurrentSongId } from '@src/state/selectors/songsSelector';
 import PlaybackButton from '@src/components/recording/subcomponents/PlaybackButton';
@@ -23,9 +18,7 @@ import {
   SCREEN_WIDTH,
   WAVE_BAR_TOTAL_WIDTH,
 } from '@src/components/common/constants';
-import { selectIsAutoSyncEnabled } from '@src/state/selectors/settingsSelector';
-import { generateTakeBuffer } from '@src/services/cloudStorage/dropbox/helpers/generateBuffer';
-import useDropboxFileGenerator from '@src/services/cloudStorage/dropbox/hooks/useDropboxFileGenerator';
+import useTakeGenerator from '@src/utils/hooks/useTakeGenerator';
 
 interface Props {
   recordingDuration: number;
@@ -48,14 +41,11 @@ const RecordingControls = (props: Props) => {
 
   const { goBack } = useNavigation();
   const styles = useRecordingStyles();
-  const db = useSQLiteContext();
-  const dispatch = useAppDispatch();
-  const isAutoSyncEnabled = useAppSelector(selectIsAutoSyncEnabled);
   const route = useRoute<RouteProp<RootStackParamList, 'Recording'>>();
   const songId = useAppSelector(selectCurrentSongId);
+  const generateTake = useTakeGenerator();
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const { title } = route.params;
-  const { generateAndUploadFile } = useDropboxFileGenerator();
 
   const [uri, setUri] = useState<string | null>(null);
 
@@ -133,26 +123,10 @@ const RecordingControls = (props: Props) => {
     const duration = Math.floor(recording._finalDurationMillis / 1000);
 
     if (newUri) {
-      dispatch(
-        createTakeRequest({
-          songId,
-          title,
-          date: new Date().toISOString(),
-          uri: newUri,
-          duration,
-          db,
-        }),
-      );
-
-      // if autoSync enabled && sync takes enabled or if autoSync and take is starred take
-      if (isAutoSyncEnabled) {
-        // the type is off for this.
-        generateAndUploadFile();
-      }
+      generateTake(newUri, title, duration);
     }
 
     setRecording(null);
-
     goBack();
   };
 

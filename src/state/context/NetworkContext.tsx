@@ -9,7 +9,10 @@ import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import useDebounce from '@src/utils/hooks/useDebounce';
 import useUploadQueue from '@dropbox/hooks/useUploadQueue';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
-import { selectCloudConnection } from '../selectors/settingsSelector';
+import {
+  selectCloudConnection,
+  selectIsAutoSyncEnabled,
+} from '../selectors/settingsSelector';
 import { CloudConnection } from '@src/components/common/enums';
 
 interface NetworkContextProps {
@@ -30,6 +33,7 @@ export const NetworkProvider = ({ children }: Props) => {
   const [isOnline, setIsOnline] = useState<boolean>(false);
   const { processUploadQueue } = useUploadQueue();
   const cloudConnection = useAppSelector(selectCloudConnection);
+  const isAutoSyncEnabled = useAppSelector(selectIsAutoSyncEnabled);
 
   // comment out lines 35-48 to test without going offline
   // const handleNetworkChange = useDebounce((networkState: NetInfoState) => {
@@ -49,7 +53,11 @@ export const NetworkProvider = ({ children }: Props) => {
 
   useEffect(() => {
     // and if auto sync is enabled!
-    if (isOnline && cloudConnection !== CloudConnection.NONE) {
+    if (
+      isOnline &&
+      cloudConnection !== CloudConnection.NONE &&
+      isAutoSyncEnabled
+    ) {
       console.log('calling processUploadQueue');
       processUploadQueue();
     } else {
