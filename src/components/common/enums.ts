@@ -9,6 +9,13 @@ export enum Screen {
   CONNECTION_SUCCESS = 'ConnectionSuccess',
 }
 
+export enum RequestStatus {
+  SUCCESS = 'Success',
+  FAILURE = 'Failure',
+  LOADING = 'Loading',
+  IDLE = 'Idle',
+}
+
 export enum ColorTheme {
   LIGHT = 'Light',
   DARK = 'Dark - In Development',

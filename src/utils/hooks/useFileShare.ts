@@ -12,7 +12,7 @@ import { useArtistName } from './useArtistName';
 
 // add Error handling on screen - have an error modal
 
-function useFileShare() {
+const useFileShare = () => {
   const [error, setError] = useState<string | null>(null);
   const db = useSQLiteContext();
   const { getArtistName } = useArtistName();
@@ -116,6 +116,6 @@ function useFileShare() {
   );
 
   return { shareSongFolder, shareTake, shareLyrics, error };
-}
+};
 
 export default useFileShare;
