@@ -10,21 +10,3 @@ export const generateBuffer = async (uri: string) => {
 
   return buffer;
 };
-
-// export const generateLyricsBuffer = async (
-//   page: Page,
-//   songTitle: string,
-//   artistId: number,
-// ) => {
-//   const { getArtistName } = useArtistName();
-
-//   const artist = getArtistName(artistId);
-//   const pdfUri = await generatePagePdf(songTitle, page, artist);
-
-//   const pdfContent = await FileSystem.readAsStringAsync(pdfUri, {
-//     encoding: FileSystem.EncodingType.Base64,
-//   });
-//   const lyricsBuffer = Buffer.from(pdfContent, 'base64');
-
-//   return lyricsBuffer;
-// };

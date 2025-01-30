@@ -50,22 +50,7 @@ export const fetchPageRequest = (payload: t.FetchPagePayload) => ({
   payload,
 });
 
-export const updateLyricsRequest = (payload: t.UpdateLyricsPayload) => ({
-  type: at.UPDATE_LYRICS_REQUEST,
-  payload,
-});
-
-export const UpdatePageInfoRequest = (payload: t.UpdatePageInfoPayload) => ({
-  type: at.UPDATE_PAGE_INFO_REQUEST,
-  payload,
-});
-
 // Takes
-
-export const createTakeRequest = (payload: t.TakePayload) => ({
-  type: at.CREATE_TAKE_REQUEST,
-  payload,
-});
 
 export const updateTakeNotesRequest = (
   payload: t.UpdateTakeNotesSagaPayload,

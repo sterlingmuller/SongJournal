@@ -2,13 +2,11 @@ import { call, put, takeEvery, all } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 
 import {
-  createTake,
   updateTakeNotes,
   deleteTake,
   updateTakeTitle,
 } from '@src/data/repositories/TakeRepository';
 import {
-  TakePayload,
   UpdateTakeNotesSagaPayload,
   DeleteTakeSagaPayload,
   UpdateSelectedTakeIdPayloadDb,
@@ -17,7 +15,6 @@ import {
 import {
   removeTakeSuccess,
   updateTakeNotesSuccess,
-  createTakeSuccess,
   updateSelectedTakeIdSuccess,
   updateTakeTitleSuccess,
 } from '@src/state/slice/songsSlice';
@@ -58,18 +55,6 @@ function* updateTakeNotesSaga(
   }
 }
 
-function* createTakeSaga(action: PayloadAction<TakePayload>) {
-  yield put(startLoading());
-  try {
-    const newTake = yield call(createTake, action.payload);
-
-    yield put(createTakeSuccess(newTake));
-    yield put(endLoading());
-  } catch (error) {
-    yield put(setError(error));
-  }
-}
-
 function* updateSelectedTakeIdSaga(
   action: PayloadAction<UpdateSelectedTakeIdPayloadDb>,
 ) {
@@ -104,7 +89,6 @@ export default function* songSaga() {
   yield all([
     takeEvery(at.DELETE_TAKE_REQUEST, deleteTakeSaga),
     takeEvery(at.UPDATE_TAKE_NOTES_REQUEST, updateTakeNotesSaga),
-    takeEvery(at.CREATE_TAKE_REQUEST, createTakeSaga),
     takeEvery(at.UPDATE_SELECTED_TAKE_ID_REQUEST, updateSelectedTakeIdSaga),
     takeEvery(at.UPDATE_TAKE_TITLE, updateTakeTitleSaga),
   ]);

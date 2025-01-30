@@ -15,7 +15,6 @@ import {
 import {
   updateSongArtistRequest,
   updateSongCompletionRequest,
-  UpdatePageInfoRequest,
 } from '@src/state/sagas/actionCreators';
 import SongDetailSelect from '@src/components/lyrics/subcomponents/SongDetailSelect';
 import BpmDetail from '@src/components/lyrics/subcomponents/BpmDetail';
@@ -24,8 +23,9 @@ import {
   selectCurrentSongArtistId,
   selectCurrentSongCompletionStatus,
 } from '@src/state/selectors/songsSelector';
-import AboutArtist from '../subcomponents/AboutArtist';
+import AboutArtist from '@src/components/lyrics/subcomponents/AboutArtist';
 import { useColorTheme } from '@src/state/context/ThemeContext';
+import useLyricsSheetGenerator from '@src/utils/hooks/useLyricsSheetGenerator';
 
 interface Props {
   isInfoModalOpen: boolean;
@@ -47,6 +47,7 @@ const InfoModal = (props: Props) => {
   const completionStatus = useAppSelector(selectCurrentSongCompletionStatus);
   const currentSongArtistId = useAppSelector(selectCurrentSongArtistId);
   const { theme } = useColorTheme();
+  const { updateInfo } = useLyricsSheetGenerator();
 
   const [newInfo, setNewInfo] = useState<SongInfo>(originalInfo);
   const [newCompletionStatus, setNewCompletionStatus] =
@@ -102,8 +103,11 @@ const InfoModal = (props: Props) => {
       return;
     }
 
-    if (Object.keys(changedInfo).length > 0) {
-      dispatch(UpdatePageInfoRequest({ songId, db, info: changedInfo }));
+    if (
+      Object.keys(changedInfo).length > 0 ||
+      selectedArtistId !== currentSongArtistId
+    ) {
+      updateInfo(changedInfo, selectedArtistId);
     }
 
     if (newCompletionStatus !== completionStatus) {
