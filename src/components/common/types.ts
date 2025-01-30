@@ -65,15 +65,11 @@ export type SongUpdates = SongInfo & {
   completed: boolean;
 };
 
-export type DbPage = {
+export interface DbPage extends SongInfo {
   lyrics: string;
-  bpm: string;
-  keySignature: string;
-  time: string;
-  about: string;
+  revisionId?: string;
   songId: number;
-  revisionId: string;
-};
+}
 
 export type Page = {
   lyrics: string;
@@ -91,7 +87,7 @@ export type Song = {
   selectedTakeId: number;
   totalTakes: number;
   takes: Takes;
-  page: Page;
+  page: DbPage;
   completed: boolean;
   hasLyrics: boolean;
   isOriginal: boolean;

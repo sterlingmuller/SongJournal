@@ -5,10 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import LyricsHeader from '@src/components/lyrics/components/LyricsHeader';
 import InfoModal from '@src/components/lyrics/components/InfoModal';
 import LyricsSheet from '@src/components/lyrics/components/LyricsSheet';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@src/utils/hooks/typedReduxHooks';
+import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectCurrentSongId } from '@src/state/selectors/songsSelector';
 import { selectCurrentSongPage } from '@src/state/selectors/pagesSelector';
 import LoadingIndicator from '@src/components/common/components/LoadingIndicator';
@@ -16,15 +13,13 @@ import useLyricScreenStyles from '@styles/lyricsScreen';
 import OptionsBar from '@src/components/lyrics/subcomponents/OptionsBar';
 import EditLyricsSheet from '@src/components/lyrics/components/EditLyricsSheet';
 import { LyricsOption } from '@src/components/common/enums';
-import { useSQLiteContext } from 'expo-sqlite';
-import { updateLyricsRequest } from '@src/state/sagas/actionCreators';
+import useLyricsSheetGenerator from '@src/utils/hooks/useLyricsSheetGenerator';
 
 const LyricsScreen = () => {
   const styles = useLyricScreenStyles();
   const page = useAppSelector(selectCurrentSongPage);
   const songId = useAppSelector(selectCurrentSongId);
-  const dispatch = useAppDispatch();
-  const db = useSQLiteContext();
+  const { updateLyrics } = useLyricsSheetGenerator();
 
   const [selectedOption, setSelectedOption] = useState<LyricsOption>(
     LyricsOption.NONE,
@@ -44,7 +39,8 @@ const LyricsScreen = () => {
   }, [page]);
 
   const handleSaveLyrics = () => {
-    dispatch(updateLyricsRequest({ songId, lyrics: newLyrics, db }));
+    updateLyrics(newLyrics);
+
     setSelectedOption(LyricsOption.NONE);
   };
 
