@@ -11,7 +11,7 @@ import {
 } from '@src/state/selectors/settingsSelector';
 import useDropboxFileGenerator from '@src/services/cloudStorage/dropbox/hooks/useDropboxFileGenerator';
 import { CloudFileType } from '@src/components/common/enums';
-import { createTakeRequest } from '@src/state/thunk/createTakeRequest';
+import { createTakeRequest } from '@src/state/thunk/takeThunk';
 import { createTakeSuccess } from '@src/state/slice/songsSlice';
 
 export const useTakeGenerator = () => {
