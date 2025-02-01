@@ -55,19 +55,19 @@ function* updateTakeNotesSaga(
   }
 }
 
-function* updateSelectedTakeIdSaga(
-  action: PayloadAction<UpdateSelectedTakeIdPayloadDb>,
-) {
-  yield put(startLoading());
-  try {
-    yield call(updateSelectedTakeId, action.payload);
+// function* updateSelectedTakeIdSaga(
+//   action: PayloadAction<UpdateSelectedTakeIdPayloadDb>,
+// ) {
+//   yield put(startLoading());
+//   try {
+//     yield call(updateSelectedTakeId, action.payload);
 
-    yield put(updateSelectedTakeIdSuccess(action.payload));
-    yield put(endLoading());
-  } catch (error) {
-    yield put(setError(error));
-  }
-}
+//     yield put(updateSelectedTakeIdSuccess(action.payload));
+//     yield put(endLoading());
+//   } catch (error) {
+//     yield put(setError(error));
+//   }
+// }
 
 function* updateTakeTitleSaga(
   action: PayloadAction<UpdateTakeTitleSagaPayload>,
@@ -89,7 +89,7 @@ export default function* songSaga() {
   yield all([
     takeEvery(at.DELETE_TAKE_REQUEST, deleteTakeSaga),
     takeEvery(at.UPDATE_TAKE_NOTES_REQUEST, updateTakeNotesSaga),
-    takeEvery(at.UPDATE_SELECTED_TAKE_ID_REQUEST, updateSelectedTakeIdSaga),
+    // takeEvery(at.UPDATE_SELECTED_TAKE_ID_REQUEST, updateSelectedTakeIdSaga),
     takeEvery(at.UPDATE_TAKE_TITLE, updateTakeTitleSaga),
   ]);
 }

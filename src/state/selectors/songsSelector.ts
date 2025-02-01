@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { EMPTY_SONG } from '@src/components/common/constants';
-import { Song, Songs } from '@src/components/common/types';
+import { Song, Songs, Take, Takes } from '@src/components/common/types';
 import { RootState } from '@src/state/store';
 
 export const selectSongs = (state: RootState) => state.songs.items;
@@ -46,4 +46,20 @@ export const selectCurrentSongCompletionStatus = createSelector(
 export const selectCurrentSongArtistId = createSelector(
   [selectCurrentSong],
   (song: Song) => song.artistId,
+);
+
+export const selectCurrentTakeUri = createSelector(
+  [selectCurrentSongTakes, selectCurrentSongSelectedTakeId],
+  (takes: Takes, selectedTakeId: number) => {
+    const selectedTake: Take = takes.find(
+      (take: Take) => take.takeId === selectedTakeId,
+    );
+
+    return selectedTake
+      ? {
+          currentTakeUri: selectedTake.uri,
+          currentTakeTitle: selectedTake.title,
+        }
+      : null;
+  },
 );
