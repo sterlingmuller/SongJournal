@@ -55,7 +55,9 @@ const SongTake = (props: Props) => {
   const inputRef = useRef<TextInput | null>(null);
 
   const onDoubleTap: () => void = useDoubleTap(async () => {
-    updateAndUploadStarredTake(takeId, songId, uri, title);
+    if (takeId !== selectedTakeId) {
+      updateAndUploadStarredTake(takeId, songId, uri, title);
+    }
   });
 
   const onTitleDoubleTap: () => void = useDoubleTap(() => {
