@@ -11,15 +11,16 @@ import {
 } from '@src/state/selectors/settingsSelector';
 import useDropboxFileGenerator from '@src/services/cloudStorage/dropbox/hooks/useDropboxFileGenerator';
 import {
-  updateSelectedTakeIdSuccess,
   updateSongTitleSuccess,
+  updateTakeTitleSuccess,
 } from '@src/state/slice/songsSlice';
 import { updateSongTitleRequest } from '@src/state/thunk/songThunk';
+import { updateTakeTitleRequest } from '@src/state/thunk/takeThunk';
 
-export const useRenameSongUpdateAndUpload = () => {
+export const useRenameUpdateAndUpload = () => {
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
-  const { generateSongRename } = useDropboxFileGenerator();
+  const { generateSongRename, generateTakeRename } = useDropboxFileGenerator();
   const isAutoSyncEnabled = useAppSelector(selectIsAutoSyncEnabled);
   const { isUnstarredTakeConditionEnabled } = useAppSelector(selectSyncFilters);
 
@@ -41,11 +42,37 @@ export const useRenameSongUpdateAndUpload = () => {
         }
       }
     } catch (err) {
+      console.error('Error updating or uploading renamed song:', err);
+    }
+  };
+
+  const updateAndUploadTakeRename = async (
+    songTitle: string,
+    originalTakeTitle: string,
+    newTakeTitle: string,
+    songId: number,
+    takeId: number,
+  ) => {
+    try {
+      const resultAction = await dispatch(
+        updateTakeTitleRequest({ db, title: newTakeTitle, songId, takeId }),
+      );
+
+      if (updateTakeTitleRequest.fulfilled.match(resultAction)) {
+        dispatch(
+          updateTakeTitleSuccess({ songId, title: newTakeTitle, takeId }),
+        );
+
+        if (isAutoSyncEnabled && isUnstarredTakeConditionEnabled) {
+          generateTakeRename(originalTakeTitle, newTakeTitle, songTitle);
+        }
+      }
+    } catch (err) {
       console.error('Error updating or uploading renamed take:', err);
     }
   };
 
-  return { updateAndUploadSongRename };
+  return { updateAndUploadSongRename, updateAndUploadTakeRename };
 };
 
-export default useRenameSongUpdateAndUpload;
+export default useRenameUpdateAndUpload;

@@ -8,13 +8,19 @@ import StyledText from '@src/components/common/components/StyledText';
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
 import useCommonModalStyle from '@src/styles/commonModal';
 import { useColorTheme } from '@src/state/context/ThemeContext';
-import useRenameSongUpdateAndUpload from '@src/utils/hooks/useRenameUpdateAndUpload';
+import useRenameUpdateAndUpload from '@src/utils/hooks/useRenameUpdateAndUpload';
 
 interface Props {
-  titleToEdit: { title: string; songId: number; takeId?: number };
-  setTitleToEdit: (value: {
-    title: string;
+  titleToEdit: {
+    songTitle: string;
     songId: number;
+    takeTitle?: string;
+    takeId?: number;
+  };
+  setTitleToEdit: (value: {
+    songTitle: string;
+    songId: number;
+    takeTitle?: string;
     takeId?: number;
   }) => void;
 }
@@ -22,22 +28,32 @@ interface Props {
 const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
   const styles = useCommonModalStyle();
   const { theme } = useColorTheme();
-  const { updateAndUploadSongRename } = useRenameSongUpdateAndUpload();
+  const { updateAndUploadSongRename, updateAndUploadTakeRename } =
+    useRenameUpdateAndUpload();
 
   const { navigate, addListener } =
     useNavigation<NavigationProp<RootStackParamList>>();
-  const { title: originalTitle, songId, takeId } = titleToEdit;
+  const {
+    songTitle: originalSongTitle,
+    songId,
+    takeTitle: originalTakeTitle,
+    takeId,
+  } = titleToEdit;
   const [updatedTitle, setUpdatedTitle] = useState<string>('');
 
-  const disabled: boolean = updatedTitle === originalTitle || !updatedTitle;
+  const disabled: boolean = takeId
+    ? updatedTitle === originalSongTitle || !updatedTitle
+    : updatedTitle === originalTakeTitle || !updatedTitle;
   const modalTitle = takeId ? 'Edit Take Title' : 'Edit Song Title';
 
   useEffect(() => {
-    setUpdatedTitle(originalTitle);
+    takeId
+      ? setUpdatedTitle(originalTakeTitle)
+      : setUpdatedTitle(originalSongTitle);
   }, [titleToEdit]);
 
   const onExitPress = () => {
-    setTitleToEdit({ title: '', songId: -1, takeId: -1 });
+    setTitleToEdit({ songTitle: '', takeTitle: '', songId: -1, takeId: -1 });
     setUpdatedTitle('');
   };
 
@@ -47,10 +63,15 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
 
   const onSavePress = () => {
     if (takeId) {
-      // dropbox this
-      // dispatch(updateTakeTitleRequest({ title: updatedTitle, songId, takeId }));
+      updateAndUploadTakeRename(
+        originalSongTitle,
+        originalTakeTitle,
+        updatedTitle,
+        songId,
+        takeId,
+      );
     } else {
-      updateAndUploadSongRename(originalTitle, updatedTitle, songId);
+      updateAndUploadSongRename(originalSongTitle, updatedTitle, songId);
     }
 
     onExitPress();
@@ -60,7 +81,7 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
 
   return (
     <Modal
-      isVisible={!!originalTitle}
+      isVisible={!!originalSongTitle}
       avoidKeyboard
       onBackdropPress={onExitPress}
     >

@@ -39,10 +39,11 @@ const SongScreen = () => {
   const [isPermissionsNeededModalOpen, setIsPermissionsNeededModalOpen] =
     useState<boolean>(false);
   const [titleToEdit, setTitleToEdit] = useState<{
-    title: string;
+    songTitle: string;
     songId: number;
+    takeTitle?: string;
     takeId?: number;
-  }>({ title: '', songId: -1, takeId: -1 });
+  }>({ songTitle: '', takeTitle: '', songId: -1, takeId: -1 });
 
   const onRecordPress = () => {
     const recording = () => {

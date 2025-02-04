@@ -43,9 +43,9 @@ const HomeScreen = () => {
   const [searchText, setSearchText] = useState(null);
   const [isNewSongOpen, setIsNewSongOpen] = useState<boolean>(false);
   const [titleToEdit, setTitleToEdit] = useState<{
-    title: string;
+    songTitle: string;
     songId: number;
-  }>({ title: '', songId: -1 });
+  }>({ songTitle: '', songId: -1 });
   const [toDelete, setToDelete] = useState<DeleteObject>(EMPTY_DELETE_OBJECT);
 
   useEffect(() => {
