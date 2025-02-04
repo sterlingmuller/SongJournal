@@ -2,18 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Modal from 'react-native-modal';
-import { useSQLiteContext } from 'expo-sqlite';
 
 import { RootStackParamList } from '@src/components/common/types';
 import StyledText from '@src/components/common/components/StyledText';
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
 import useCommonModalStyle from '@src/styles/commonModal';
-import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
-import {
-  updateSongTitleRequest,
-  updateTakeTitleRequest,
-} from '@src/state/sagas/actionCreators';
 import { useColorTheme } from '@src/state/context/ThemeContext';
+import useRenameSongUpdateAndUpload from '@src/utils/hooks/useRenameUpdateAndUpload';
 
 interface Props {
   titleToEdit: { title: string; songId: number; takeId?: number };
@@ -25,10 +20,9 @@ interface Props {
 }
 
 const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
-  const db = useSQLiteContext();
-  const dispatch = useAppDispatch();
   const styles = useCommonModalStyle();
   const { theme } = useColorTheme();
+  const { updateAndUploadSongRename } = useRenameSongUpdateAndUpload();
 
   const { navigate, addListener } =
     useNavigation<NavigationProp<RootStackParamList>>();
@@ -53,11 +47,10 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
 
   const onSavePress = () => {
     if (takeId) {
-      dispatch(
-        updateTakeTitleRequest({ db, title: updatedTitle, songId, takeId }),
-      );
+      // dropbox this
+      // dispatch(updateTakeTitleRequest({ title: updatedTitle, songId, takeId }));
     } else {
-      dispatch(updateSongTitleRequest({ db, title: updatedTitle, songId }));
+      updateAndUploadSongRename(originalTitle, updatedTitle, songId);
     }
 
     onExitPress();

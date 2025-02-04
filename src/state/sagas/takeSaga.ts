@@ -69,27 +69,27 @@ function* updateTakeNotesSaga(
 //   }
 // }
 
-function* updateTakeTitleSaga(
-  action: PayloadAction<UpdateTakeTitleSagaPayload>,
-) {
-  const { takeId, title, songId, db } = action.payload;
-  yield put(startLoading());
+// function* updateTakeTitleSaga(
+//   action: PayloadAction<UpdateTakeTitleSagaPayload>,
+// ) {
+//   const { takeId, title, songId, db } = action.payload;
+//   yield put(startLoading());
 
-  try {
-    yield call(updateTakeTitle, { takeId, title, db });
+//   try {
+//     yield call(updateTakeTitle, { takeId, title, db });
 
-    yield put(updateTakeTitleSuccess({ songId, takeId, title }));
-    yield put(endLoading());
-  } catch (error) {
-    yield put(setError(error));
-  }
-}
+//     yield put(updateTakeTitleSuccess({ songId, takeId, title }));
+//     yield put(endLoading());
+//   } catch (error) {
+//     yield put(setError(error));
+//   }
+// }
 
 export default function* songSaga() {
   yield all([
     takeEvery(at.DELETE_TAKE_REQUEST, deleteTakeSaga),
     takeEvery(at.UPDATE_TAKE_NOTES_REQUEST, updateTakeNotesSaga),
     // takeEvery(at.UPDATE_SELECTED_TAKE_ID_REQUEST, updateSelectedTakeIdSaga),
-    takeEvery(at.UPDATE_TAKE_TITLE, updateTakeTitleSaga),
+    // takeEvery(at.UPDATE_TAKE_TITLE, updateTakeTitleSaga),
   ]);
 }

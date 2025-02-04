@@ -1,4 +1,4 @@
-import { getValidAccessToken } from '@dropbox/helpers/uploadToDropbox';
+import { getValidAccessToken } from '@dropbox/helpers/dropboxFileRequests';
 
 const doesFolderExists = async (folderPath: string, accessToken: string) => {
   try {

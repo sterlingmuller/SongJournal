@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   getValidAccessToken,
   uploadFilesInBatch,
-} from '@dropbox/helpers/uploadToDropbox';
+} from '@src/services/cloudStorage/dropbox/helpers/dropboxFileRequests';
 
 const UPLOAD_QUEUE_KEY = 'UPLOAD_QUEUE';
 

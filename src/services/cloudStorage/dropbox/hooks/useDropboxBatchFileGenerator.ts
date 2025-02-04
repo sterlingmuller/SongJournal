@@ -5,7 +5,7 @@ import { Buffer } from 'buffer';
 import {
   getValidAccessToken,
   uploadFilesInBatch,
-} from '@dropbox/helpers/uploadToDropbox';
+} from '@src/services/cloudStorage/dropbox/helpers/dropboxFileRequests';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectSongs } from '@src/state/selectors/songsSelector';
 import { Page, Song, SongToPageMap, Take } from '@src/components/common/types';

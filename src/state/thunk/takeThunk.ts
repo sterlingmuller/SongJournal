@@ -3,9 +3,13 @@ import { RequestStatus } from '@src/components/common/enums';
 import {
   TakePayload,
   UpdateSelectedTakeIdPayloadDb,
+  UpdateTakeTitleSagaPayload,
 } from '@src/components/common/types';
 import { updateSelectedTakeId } from '@src/data/repositories/SongsRepository';
-import { createTake } from '@src/data/repositories/TakeRepository';
+import {
+  createTake,
+  updateTakeTitle,
+} from '@src/data/repositories/TakeRepository';
 
 export const createTakeRequest = createAsyncThunk(
   'takes/createTake',
@@ -30,6 +34,20 @@ export const updateSelectedTakeRequest = createAsyncThunk(
   ) => {
     try {
       await updateSelectedTakeId(payload);
+    } catch (error) {
+      return rejectWithValue(RequestStatus.FAILURE);
+    }
+  },
+);
+
+export const updateTakeTitleRequest = createAsyncThunk(
+  'takes/updateTakeTitle',
+  async (
+    payload: UpdateTakeTitleSagaPayload,
+    { rejectWithValue }: { rejectWithValue: (value: RequestStatus) => void },
+  ) => {
+    try {
+      await updateTakeTitle(payload);
     } catch (error) {
       return rejectWithValue(RequestStatus.FAILURE);
     }

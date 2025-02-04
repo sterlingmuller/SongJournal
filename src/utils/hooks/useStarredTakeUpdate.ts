@@ -18,23 +18,25 @@ import { updateSelectedTakeRequest } from '@src/state/thunk/takeThunk';
 import { updateSelectedTakeIdSuccess } from '@src/state/slice/songsSlice';
 
 export const useStarredTakeUpdateAndUpload = () => {
-  const dispatch = useAppDispatch();
-  const db = useSQLiteContext();
-  const { generateAndUploadFile, deleteFile } = useDropboxFileGenerator();
-  const isAutoSyncEnabled = useAppSelector(selectIsAutoSyncEnabled);
-  const { isUnstarredTakeConditionEnabled } = useAppSelector(selectSyncFilters);
-  const song = useAppSelector(selectCurrentSong);
-  const { currentTakeUri, currentTakeTitle } =
-    useAppSelector(selectCurrentTakeUri);
-
-  const { title: songTitle } = song;
-
   const updateAndUploadStarredTake = async (
     newStarredTakeId: number,
     songId: number,
     newUri: string,
     newStarredTakeTitle: string,
   ) => {
+    const { currentTakeUri, currentTakeTitle } =
+      useAppSelector(selectCurrentTakeUri);
+    const dispatch = useAppDispatch();
+    const db = useSQLiteContext();
+    const { generateAndUploadFile, generateFileDeletion } =
+      useDropboxFileGenerator();
+    const isAutoSyncEnabled = useAppSelector(selectIsAutoSyncEnabled);
+    const { isUnstarredTakeConditionEnabled } =
+      useAppSelector(selectSyncFilters);
+    const song = useAppSelector(selectCurrentSong);
+
+    const { title: songTitle } = song;
+
     try {
       const resultAction = await dispatch(
         updateSelectedTakeRequest({ takeId: newStarredTakeId, songId, db }),
@@ -46,13 +48,10 @@ export const useStarredTakeUpdateAndUpload = () => {
         );
 
         if (isAutoSyncEnabled) {
-          // it is currently updating the old starred take to be in the takes folder, but it is not replacing the opriginal starred take with the new one in the root folder
-          // additionally, need to make a seperate request to delete the take from the take folder when added to the root
-
           generateAndUploadFile(songTitle, newUri, CloudFileType.STARRED_TAKE);
 
           if (isUnstarredTakeConditionEnabled) {
-            deleteFile(songTitle, newStarredTakeTitle);
+            generateFileDeletion(songTitle, newStarredTakeTitle);
             generateAndUploadFile(
               songTitle,
               currentTakeUri,
@@ -62,8 +61,8 @@ export const useStarredTakeUpdateAndUpload = () => {
           }
         }
       }
-    } catch {
-      console.error('failure');
+    } catch (err) {
+      console.error('Error updating or uploading starred take:', err);
     }
   };
 
