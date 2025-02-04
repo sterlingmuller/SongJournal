@@ -10,12 +10,7 @@ import { DeleteObject, Take } from '@src/components/common/types';
 import StarIcon from '@src/icons/StarIcon';
 import useDoubleTap from '@src/utils/hooks/useDoubleTap';
 import useSongTakeStyles from '@src/styles/songTake';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@src/utils/hooks/typedReduxHooks';
-// import { updateSelectedTakeIdRequest } from '@src/state/sagas/actionCreators';
-import { updateSelectedTakeRequest } from '@src/state/thunk/takeThunk';
+import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import PauseIcon from '@src/icons/PauseIcon';
 import {
   selectIsPlaying,
@@ -31,13 +26,6 @@ import { useAudioPlayer } from '@src/state/context/AudioContext';
 import PlaybackBar from '@src/components/home/subcomponents/PlaybackBar';
 import formatDuration from '@src/utils/formatDuration';
 import StyledText from '@src/components/common/components/StyledText';
-import { updateSelectedTakeIdSuccess } from '@src/state/slice/songsSlice';
-import {
-  selectIsAutoSyncEnabled,
-  selectSyncFilters,
-} from '@src/state/selectors/settingsSelector';
-import useDropboxFileGenerator from '@src/services/cloudStorage/dropbox/hooks/useDropboxFileGenerator';
-import { CloudFileType } from '@src/components/common/enums';
 import useStarredTakeUpdateAndUpload from '@src/utils/hooks/ustStarredTakeUpdate';
 
 interface Props {
@@ -55,48 +43,19 @@ const SongTake = (props: Props) => {
   const { take, setToDelete, setCurrentTake, setTitleToEdit } = props;
   const { takeId, songId, title, uri, duration } = take;
   const styles = useSongTakeStyles();
-  const dispatch = useAppDispatch();
-  const db = useSQLiteContext();
   const { shareTake } = useFileShare();
   const { togglePlayback } = useAudioPlayer();
-  const { generateAndUploadFile } = useDropboxFileGenerator();
   const updateAndUploadStarredTake = useStarredTakeUpdateAndUpload();
 
   const selectedPlayingId = useAppSelector(selectPlayingId);
   const isPlaying = useAppSelector(selectIsPlaying);
   const selectedTakeId = useAppSelector(selectCurrentSongSelectedTakeId);
   const songTitle = useAppSelector(selectCurrentSongTitle);
-  const isAutoSyncEnabled = useAppSelector(selectIsAutoSyncEnabled);
-  const { isUnstarredTakeConditionEnabled } = useAppSelector(selectSyncFilters);
 
   const inputRef = useRef<TextInput | null>(null);
 
   const onDoubleTap: () => void = useDoubleTap(async () => {
-    updateAndUploadStarredTake(takeId, songId, uri);
-    // try {
-    //   const resultAction = await dispatch(
-    //     updateSelectedTakeRequest({ takeId, songId, db }),
-    //   );
-    //   if (updateSelectedTakeRequest.fulfilled.match(resultAction)) {
-    //     dispatch(updateSelectedTakeIdSuccess({ songId, takeId }));
-    //     if (isAutoSyncEnabled) {
-    //       // generate starred take file
-    //       generateAndUploadFile(songTitle, uri, CloudFileType.STARRED_TAKE);
-    //       // replace old starred take with take if take sync is enabled
-    //       if (isUnstarredTakeConditionEnabled) {
-    //         // use a ref to store the old uri / take title
-    //         generateAndUploadFile(
-    //           songTitle,
-    //           uri,
-    //           CloudFileType.TAKE,
-    //           'take title',
-    //         );
-    //       }
-    //     }
-    //   }
-    // } catch {
-    //   console.error('failure');
-    // }
+    updateAndUploadStarredTake(takeId, songId, uri, title);
   });
 
   const onTitleDoubleTap: () => void = useDoubleTap(() => {

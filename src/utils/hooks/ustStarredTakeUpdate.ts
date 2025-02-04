@@ -20,7 +20,7 @@ import { updateSelectedTakeIdSuccess } from '@src/state/slice/songsSlice';
 export const useStarredTakeUpdateAndUpload = () => {
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
-  const { generateAndUploadFile } = useDropboxFileGenerator();
+  const { generateAndUploadFile, deleteFile } = useDropboxFileGenerator();
   const isAutoSyncEnabled = useAppSelector(selectIsAutoSyncEnabled);
   const { isUnstarredTakeConditionEnabled } = useAppSelector(selectSyncFilters);
   const song = useAppSelector(selectCurrentSong);
@@ -33,6 +33,7 @@ export const useStarredTakeUpdateAndUpload = () => {
     newStarredTakeId: number,
     songId: number,
     newUri: string,
+    newStarredTakeTitle: string,
   ) => {
     try {
       const resultAction = await dispatch(
@@ -44,10 +45,6 @@ export const useStarredTakeUpdateAndUpload = () => {
           updateSelectedTakeIdSuccess({ songId, takeId: newStarredTakeId }),
         );
 
-        console.log(
-          `current take ${currentTakeTitle}, new takeId ${newStarredTakeId}`,
-        );
-
         if (isAutoSyncEnabled) {
           // it is currently updating the old starred take to be in the takes folder, but it is not replacing the opriginal starred take with the new one in the root folder
           // additionally, need to make a seperate request to delete the take from the take folder when added to the root
@@ -55,6 +52,7 @@ export const useStarredTakeUpdateAndUpload = () => {
           generateAndUploadFile(songTitle, newUri, CloudFileType.STARRED_TAKE);
 
           if (isUnstarredTakeConditionEnabled) {
+            deleteFile(songTitle, newStarredTakeTitle);
             generateAndUploadFile(
               songTitle,
               currentTakeUri,
