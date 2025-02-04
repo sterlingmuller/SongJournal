@@ -14,8 +14,9 @@ interface Props {
   setToDelete: (value: DeleteObject) => void;
   setCurrentTake: (value: Take) => void;
   setTitleToEdit: (value: {
-    title: string;
+    songTitle: string;
     songId: number;
+    takeTitle?: string;
     takeId?: number;
   }) => void;
 }

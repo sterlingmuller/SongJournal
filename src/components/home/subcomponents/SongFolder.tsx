@@ -31,7 +31,7 @@ import formatDuration from '@src/utils/formatDuration';
 
 interface Props {
   song: Song;
-  setTitleToEdit: (value: { title: string; songId: number }) => void;
+  setTitleToEdit: (value: { songTitle: string; songId: number }) => void;
 }
 
 const SongFolder = ({ song, setTitleToEdit }: Props) => {
@@ -84,7 +84,7 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
   }, [selectedTake, togglePlayback, songId]);
 
   const onDoubleTap: () => void = useDoubleTap(() => {
-    setTitleToEdit({ title: song.title, songId: songId });
+    setTitleToEdit({ songTitle: song.title, songId: songId });
     setTimeout(() => inputRef.current?.focus(), 100);
   });
 

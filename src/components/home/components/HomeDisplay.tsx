@@ -9,7 +9,7 @@ import { Filter, Screen, SortBy } from '@src/components/common/enums';
 
 interface Props {
   setToDelete: (value: DeleteObject | null) => void;
-  setTitleToEdit: (value: { title: string; songId: number }) => void;
+  setTitleToEdit: (value: { songTitle: string; songId: number }) => void;
   sortedCategory: SortBy;
   isSortAscending: boolean;
   activeFilters: Filter[];
