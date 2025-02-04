@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import { View, TouchableOpacity, TextInput } from 'react-native';
-import { useSQLiteContext } from 'expo-sqlite';
 
 import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
@@ -26,7 +25,7 @@ import { useAudioPlayer } from '@src/state/context/AudioContext';
 import PlaybackBar from '@src/components/home/subcomponents/PlaybackBar';
 import formatDuration from '@src/utils/formatDuration';
 import StyledText from '@src/components/common/components/StyledText';
-import useStarredTakeUpdateAndUpload from '@src/utils/hooks/ustStarredTakeUpdate';
+import useStarredTakeUpdateAndUpload from '@src/utils/hooks/useStarredTakeUpdate';
 
 interface Props {
   take: Take;

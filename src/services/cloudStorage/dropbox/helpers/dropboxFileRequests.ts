@@ -93,27 +93,39 @@ export const deleteFileFromDropbox = async (
   accessToken: string,
 ) => {
   try {
-    const response = await fetch(
-      'https://api.dropboxapi.com/2/files/delete_v2',
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          path,
-        }),
+    await fetch('https://api.dropboxapi.com/2/files/delete_v2', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
       },
-    );
-
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(`Error deleting file: ${data.error_summary}`);
-    } else {
-      console.log('File deleted successfully:', data);
-    }
+      body: JSON.stringify({
+        path,
+      }),
+    });
   } catch (error) {
-    console.error('Exception caught:', error);
+    console.error('Error deleting file:', error);
+  }
+};
+
+export const renameFileOnDropbox = async (
+  currentPath: string,
+  newPath: string,
+  accessToken: string,
+) => {
+  try {
+    await fetch('https://api.dropboxapi.com/2/files/move_v2', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from_path: currentPath,
+        to_path: newPath,
+      }),
+    });
+  } catch (error) {
+    console.error('Error renaming file:', error);
   }
 };

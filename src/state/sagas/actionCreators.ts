@@ -22,13 +22,6 @@ export const deleteSongRequest = (payload: t.DeleteSongPayload) => ({
   payload,
 });
 
-export const updateSongTitleRequest = (
-  payload: t.UpdateSongTitleSagaPayload,
-) => ({
-  type: at.UPDATE_SONG_TITLE_REQUEST,
-  payload,
-});
-
 export const updateSongArtistRequest = (
   payload: t.UpdateSongArtistSagaPayload,
 ) => ({
@@ -68,13 +61,6 @@ export const updateSelectedTakeIdRequest = (
   payload: t.UpdateSelectedTakeIdPayloadDb,
 ) => ({
   type: at.UPDATE_SELECTED_TAKE_ID_REQUEST,
-  payload,
-});
-
-export const updateTakeTitleRequest = (
-  payload: t.UpdateTakeTitleSagaPayload,
-) => ({
-  type: at.UPDATE_TAKE_TITLE,
   payload,
 });
 

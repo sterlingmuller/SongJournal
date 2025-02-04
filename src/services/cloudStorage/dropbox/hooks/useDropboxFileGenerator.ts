@@ -4,8 +4,9 @@ import { Buffer } from 'buffer';
 import {
   deleteFileFromDropbox,
   getValidAccessToken,
+  renameFileOnDropbox,
   uploadFileToDropbox,
-} from '@dropbox/helpers/uploadToDropbox';
+} from '@src/services/cloudStorage/dropbox/helpers/dropboxFileRequests';
 import useAddToUploadQueue from '@src/services/cloudStorage/useAddToUploadQueue';
 import { useNetworkStatus } from '@src/state/context/NetworkContext';
 import { createDropboxFolder } from '@src/services/cloudStorage/dropbox/helpers/createDropBoxFolder';
@@ -97,7 +98,7 @@ const useDropboxFileGenerator = () => {
     }
   };
 
-  const deleteFile = async (songTitle: string, takeTitle: string) => {
+  const generateFileDeletion = async (songTitle: string, takeTitle: string) => {
     if (isOnline) {
       const path = `/${songTitle}/Takes/${takeTitle}.m4a`;
       const accessToken = await getValidAccessToken();
@@ -106,7 +107,45 @@ const useDropboxFileGenerator = () => {
     }
   };
 
-  return { generateAndUploadFile, generateAndUploadZipBuffer, deleteFile };
+  const generateSongRename = async (
+    currentSongTitle: string,
+    newSongTitle: string,
+  ) => {
+    if (isOnline) {
+      const currentFolderPath = `/${currentSongTitle}`;
+      const newFolderPath = `/${newSongTitle}`;
+      const accessToken = await getValidAccessToken();
+
+      await renameFileOnDropbox(currentFolderPath, newFolderPath, accessToken);
+
+      const currentPath = `${newFolderPath}/${currentSongTitle}.m4a`;
+      const newPath = `/${newSongTitle}/${newSongTitle}.m4a`;
+
+      await renameFileOnDropbox(currentPath, newPath, accessToken);
+    }
+  };
+
+  const generateTakeRename = async (
+    currentTakeTitle: string,
+    newTakeTitle: string,
+    songTitle: string,
+  ) => {
+    if (isOnline) {
+      const currentPath = `/${songTitle}/Takes/${currentTakeTitle}.m4a`;
+      const newPath = `/${songTitle}/Takes/${newTakeTitle}.m4a`;
+      const accessToken = await getValidAccessToken();
+
+      await renameFileOnDropbox(currentPath, newPath, accessToken);
+    }
+  };
+
+  return {
+    generateAndUploadFile,
+    generateAndUploadZipBuffer,
+    generateFileDeletion,
+    generateSongRename,
+    generateTakeRename,
+  };
 };
 
 export default useDropboxFileGenerator;
