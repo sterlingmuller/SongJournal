@@ -135,7 +135,7 @@ const useDropboxBatchFileGenerator = () => {
           // await createDropboxFolder(`/${song.title}/Takes`);
           for (const take of takesBuffers) {
             filesToUpload.push({
-              path: `/${title}/Takes/${take.title}.mp3`,
+              path: `/${title}/Takes/${take.title}.m4a`,
               content: take.takeBuffer,
             });
           }

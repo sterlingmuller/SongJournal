@@ -2,6 +2,7 @@ import * as FileSystem from 'expo-file-system';
 import { Buffer } from 'buffer';
 
 import {
+  deleteFileFromDropbox,
   getValidAccessToken,
   uploadFileToDropbox,
 } from '@dropbox/helpers/uploadToDropbox';
@@ -24,7 +25,7 @@ const useDropboxFileGenerator = () => {
   const generateAndUploadZipBuffer = async () => {
     const localZipPath = await createBackup();
 
-    const path = 'songjournal_backup.zip';
+    const path = '/songjournal_backup.zip';
     const content = await generateBuffer(localZipPath);
 
     const fileToUpload = {
@@ -61,19 +62,19 @@ const useDropboxFileGenerator = () => {
       switch (cloudFileType) {
         case CloudFileType.TAKE:
           {
-            path = `${songTitle}/Takes/${takeTitle}.m4a`;
+            path = `/${songTitle}/Takes/${takeTitle}.m4a`;
             content = await generateBuffer(uri);
           }
           break;
         case CloudFileType.STARRED_TAKE:
           {
-            path = `${songTitle}/${songTitle}.m4a`;
+            path = `/${songTitle}/${songTitle}.m4a`;
             content = await generateBuffer(uri);
           }
           break;
         case CloudFileType.PAGE:
           {
-            path = `${songTitle}/Lyrics.pdf`;
+            path = `/${songTitle}/Lyrics.pdf`;
             content = await generateBuffer(uri);
           }
           break;
@@ -83,8 +84,6 @@ const useDropboxFileGenerator = () => {
         path,
         content,
       };
-
-      console.log('fileToUpload:', fileToUpload);
 
       if (isOnline) {
         const accessToken = await getValidAccessToken();
@@ -98,7 +97,16 @@ const useDropboxFileGenerator = () => {
     }
   };
 
-  return { generateAndUploadFile, generateAndUploadZipBuffer };
+  const deleteFile = async (songTitle: string, takeTitle: string) => {
+    if (isOnline) {
+      const path = `/${songTitle}/Takes/${takeTitle}.m4a`;
+      const accessToken = await getValidAccessToken();
+
+      await deleteFileFromDropbox(path, accessToken);
+    }
+  };
+
+  return { generateAndUploadFile, generateAndUploadZipBuffer, deleteFile };
 };
 
 export default useDropboxFileGenerator;

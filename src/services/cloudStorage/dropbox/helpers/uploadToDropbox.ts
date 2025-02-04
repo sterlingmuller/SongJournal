@@ -41,7 +41,7 @@ export const uploadFilesInBatch = async (
     entries.push({
       cursor: { session_id: sessionId, offset: file.content.length },
       commit: {
-        path: `${file.path}`,
+        path: file.path,
         mode: 'overwrite',
         autorename: false,
         mute: false,
@@ -66,7 +66,7 @@ export const uploadFileToDropbox = async (
       headers: {
         Authorization: `Bearer ${accessToken}`,
         'Dropbox-API-Arg': JSON.stringify({
-          path: `/${file.path}`,
+          path: file.path,
           mode: 'overwrite',
           autorename: false,
           mute: false,
@@ -85,5 +85,35 @@ export const uploadFileToDropbox = async (
     const { rev: revisionId } = data;
 
     // await updateFileOnDb(filePath, revisionId)
+  }
+};
+
+export const deleteFileFromDropbox = async (
+  path: string,
+  accessToken: string,
+) => {
+  try {
+    const response = await fetch(
+      'https://api.dropboxapi.com/2/files/delete_v2',
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          path,
+        }),
+      },
+    );
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(`Error deleting file: ${data.error_summary}`);
+    } else {
+      console.log('File deleted successfully:', data);
+    }
+  } catch (error) {
+    console.error('Exception caught:', error);
   }
 };
