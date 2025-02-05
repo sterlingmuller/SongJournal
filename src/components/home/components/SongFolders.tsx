@@ -10,7 +10,12 @@ import { useProcessSongs } from '@src/utils/hooks/useProcessSongs';
 
 interface Props {
   setToDelete: (value: t.DeleteObject | null) => void;
-  setTitleToEdit: (value: { songTitle: string; songId: number }) => void;
+  setTitleToEdit: (value: {
+    songTitle: string;
+    songId: number;
+    artistId?: number;
+    hasLyrics?: boolean;
+  }) => void;
   sortedCategory: SortBy;
   isSortAscending: boolean;
   activeFilters: Filter[];

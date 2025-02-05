@@ -1,9 +1,6 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {
-  getValidAccessToken,
-  uploadFilesInBatch,
-} from '@src/services/cloudStorage/dropbox/helpers/dropboxFileRequests';
+import { uploadFilesInBatch } from '@src/services/cloudStorage/dropbox/helpers/dropboxFileRequests';
 
 const UPLOAD_QUEUE_KEY = 'UPLOAD_QUEUE';
 
@@ -13,29 +10,23 @@ interface FileToUpload {
 }
 
 const useUploadQueue = () => {
-  const [uploadQueue, setUploadQueue] = useState<FileToUpload[]>([]);
-
-  const loadUploadQueue = useCallback(async () => {
+  const loadUploadQueue = async () => {
     const storedQueue = await AsyncStorage.getItem(UPLOAD_QUEUE_KEY);
 
     if (storedQueue) {
-      setUploadQueue(JSON.parse(storedQueue));
+      return JSON.parse(storedQueue);
     }
-  }, []);
-
-  useEffect(() => {
-    loadUploadQueue();
-  }, [loadUploadQueue]);
+    return [];
+  };
 
   const processUploadQueue = useCallback(async () => {
-    if (uploadQueue.length > 0) {
-      const accessToken = await getValidAccessToken();
+    const uploadQueue = await loadUploadQueue();
 
-      await uploadFilesInBatch(uploadQueue, accessToken);
-      setUploadQueue([]);
+    if (uploadQueue.length > 0) {
+      await uploadFilesInBatch(uploadQueue);
       await AsyncStorage.removeItem(UPLOAD_QUEUE_KEY);
     }
-  }, [uploadQueue]);
+  }, []);
 
   return { processUploadQueue };
 };

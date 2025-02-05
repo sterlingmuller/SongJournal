@@ -31,7 +31,12 @@ import formatDuration from '@src/utils/formatDuration';
 
 interface Props {
   song: Song;
-  setTitleToEdit: (value: { songTitle: string; songId: number }) => void;
+  setTitleToEdit: (value: {
+    songTitle: string;
+    songId: number;
+    artistId?: number;
+    hasLyrics?: boolean;
+  }) => void;
 }
 
 const SongFolder = ({ song, setTitleToEdit }: Props) => {
@@ -42,7 +47,7 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
   const { shareSongFolder } = useFileShare();
   const { togglePlayback, clearPlayback } = useAudioPlayer();
 
-  const { title, songId, takes, selectedTakeId } = song;
+  const { title, songId, takes, selectedTakeId, artistId, hasLyrics } = song;
   const [isPressed, setIsPressed] = useState(false);
 
   const inputRef = useRef<TextInput | null>(null);
@@ -84,7 +89,7 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
   }, [selectedTake, togglePlayback, songId]);
 
   const onDoubleTap: () => void = useDoubleTap(() => {
-    setTitleToEdit({ songTitle: song.title, songId: songId });
+    setTitleToEdit({ songTitle: title, songId: songId, artistId, hasLyrics });
     setTimeout(() => inputRef.current?.focus(), 100);
   });
 

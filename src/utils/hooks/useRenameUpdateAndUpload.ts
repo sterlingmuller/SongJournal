@@ -4,7 +4,6 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '@src/utils/hooks/typedReduxHooks';
-import { selectCurrentSong } from '@src/state/selectors/songsSelector';
 import {
   selectIsAutoSyncEnabled,
   selectSyncFilters,
@@ -16,6 +15,10 @@ import {
 } from '@src/state/slice/songsSlice';
 import { updateSongTitleRequest } from '@src/state/thunk/songThunk';
 import { updateTakeTitleRequest } from '@src/state/thunk/takeThunk';
+import { generatePagePdf } from '@src/utils/generatePagePdf';
+import { CloudFileType } from '@src/components/common/enums';
+import { fetchPageBySongId } from '@src/data/repositories/PageRepository';
+import { useArtistName } from '@src/utils/hooks/useArtistName';
 
 export const useRenameUpdateAndUpload = () => {
   const dispatch = useAppDispatch();
@@ -23,11 +26,15 @@ export const useRenameUpdateAndUpload = () => {
   const { generateSongRename, generateTakeRename } = useDropboxFileGenerator();
   const isAutoSyncEnabled = useAppSelector(selectIsAutoSyncEnabled);
   const { isUnstarredTakeConditionEnabled } = useAppSelector(selectSyncFilters);
+  const { generateAndUploadFile } = useDropboxFileGenerator();
+  const { getArtistName } = useArtistName();
 
   const updateAndUploadSongRename = async (
     originalTitle: string,
     newTitle: string,
     songId: number,
+    artistId: number,
+    hasLyrics: boolean,
   ) => {
     try {
       const resultAction = await dispatch(
@@ -38,7 +45,16 @@ export const useRenameUpdateAndUpload = () => {
         dispatch(updateSongTitleSuccess({ songId, title: newTitle }));
 
         if (isAutoSyncEnabled) {
-          generateSongRename(originalTitle, newTitle);
+          await generateSongRename(originalTitle, newTitle);
+
+          if (hasLyrics) {
+            const page = await fetchPageBySongId({ songId, db });
+            const artist = getArtistName(artistId);
+
+            const pdfUri = await generatePagePdf(newTitle, page, artist);
+
+            generateAndUploadFile(newTitle, pdfUri, CloudFileType.PAGE);
+          }
         }
       }
     } catch (err) {
