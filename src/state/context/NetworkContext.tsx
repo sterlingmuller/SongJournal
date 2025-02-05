@@ -52,7 +52,6 @@ export const NetworkProvider = ({ children }: Props) => {
   // }, [handleNetworkChange]);
 
   useEffect(() => {
-    // and if auto sync is enabled!
     if (
       isOnline &&
       cloudConnection !== CloudConnection.NONE &&

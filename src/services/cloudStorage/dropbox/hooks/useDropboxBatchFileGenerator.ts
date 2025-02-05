@@ -56,8 +56,9 @@ const useDropboxBatchFileGenerator = () => {
     const { title, selectedTakeId, takes } = song;
 
     let lyricsBuffer: Buffer | undefined;
-    let selectedTakeBuffer: Buffer | undefined;
-    let takesBuffers: { title: string; takeBuffer: Buffer }[] = [];
+    let selectedTakeBuffer: Buffer<ArrayBufferLike> | undefined;
+    let takesBuffers: { title: string; takeBuffer: Buffer<ArrayBufferLike> }[] =
+      [];
 
     if (page) {
       const pdfUri = await generatePdf(title, page, song.artistId);
@@ -144,13 +145,11 @@ const useDropboxBatchFileGenerator = () => {
 
       if (filesToUpload.length > 0) {
         if (isOnline) {
-          const accessToken = await getValidAccessToken();
-
           for (const song of songs) {
             await createDropboxFolder(song.title);
           }
 
-          await uploadFilesInBatch(filesToUpload, accessToken);
+          await uploadFilesInBatch(filesToUpload);
         } else {
           addToUploadQueue(filesToUpload);
         }

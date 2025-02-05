@@ -1,12 +1,13 @@
-import * as FileSystem from 'expo-file-system';
+import { File } from 'expo-file-system/next';
 import { Buffer } from 'buffer';
 
 export const generateBuffer = async (uri: string) => {
-  const content = await FileSystem.readAsStringAsync(uri, {
-    encoding: FileSystem.EncodingType.Base64,
-  });
+  const fileObj = new File(uri);
 
-  const buffer = Buffer.from(content, 'base64');
+  const fileHandle = fileObj.open();
+  const fileBytes = fileHandle.readBytes(fileHandle.size);
+
+  const buffer = Buffer.from(fileBytes);
 
   return buffer;
 };

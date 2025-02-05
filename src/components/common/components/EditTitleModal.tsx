@@ -16,12 +16,16 @@ interface Props {
     songId: number;
     takeTitle?: string;
     takeId?: number;
+    artistId?: number;
+    hasLyrics?: boolean;
   };
   setTitleToEdit: (value: {
     songTitle: string;
     songId: number;
     takeTitle?: string;
     takeId?: number;
+    artistId?: number;
+    hasLyrics?: boolean;
   }) => void;
 }
 
@@ -38,6 +42,8 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
     songId,
     takeTitle: originalTakeTitle,
     takeId,
+    artistId,
+    hasLyrics,
   } = titleToEdit;
   const [updatedTitle, setUpdatedTitle] = useState<string>('');
 
@@ -71,7 +77,13 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
         takeId,
       );
     } else {
-      updateAndUploadSongRename(originalSongTitle, updatedTitle, songId);
+      updateAndUploadSongRename(
+        originalSongTitle,
+        updatedTitle,
+        songId,
+        artistId,
+        hasLyrics,
+      );
     }
 
     onExitPress();

@@ -118,6 +118,17 @@ export const useLyricsSheetGenerator = () => {
     }
   };
 
+  const updateLyricsTitle = async () => {
+    const { artistId, title, page } = song;
+
+    if (isAutoSyncEnabled) {
+      const pdfUri = await generatePdf(title, page, artistId);
+
+      // may need to add revisionId in the future
+      generateAndUploadFile(title, pdfUri, CloudFileType.PAGE);
+    }
+  };
+
   return { updateLyrics, updateInfo };
 };
 
