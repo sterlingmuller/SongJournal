@@ -6,6 +6,7 @@ const UPLOAD_QUEUE_KEY = 'UPLOAD_QUEUE';
 interface FileToUpload {
   path: string;
   uri: string;
+  songTitle: string;
 }
 
 const useAddToUploadQueue = () => {

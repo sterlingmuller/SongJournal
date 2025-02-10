@@ -73,7 +73,7 @@ const useDropboxFileGenerator = () => {
 
         await uploadFileToDropbox(path, contentBuffer, accessToken);
       } else {
-        addToUploadQueue({ path, uri });
+        addToUploadQueue({ path, uri, songTitle });
       }
     }
   };
