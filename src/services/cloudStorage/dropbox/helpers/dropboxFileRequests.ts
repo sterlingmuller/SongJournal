@@ -81,8 +81,7 @@ export const uploadFileToDropbox = async (
   if (!response.ok) {
     console.error('Error uploading file:', data);
   } else {
-    const { rev: revisionId } = data;
-
+    // const { rev: revisionId } = data;
     // await updateFileOnDb(filePath, revisionId)
   }
 };

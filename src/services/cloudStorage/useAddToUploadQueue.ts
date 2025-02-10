@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const UPLOAD_QUEUE_KEY = 'UPLOAD_QUEUE';
+import { UPLOAD_QUEUE_KEY } from '@src/components/common/constants';
 
 interface FileToUpload {
   path: string;

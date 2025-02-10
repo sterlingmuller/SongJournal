@@ -14,7 +14,7 @@ import { useSQLiteContext } from 'expo-sqlite';
 import useCloudStorageStyle from '@src/styles/cloudStorage';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
-import { useNetworkStatus } from '@src/state/context/NetworkContext';
+// import { useNetworkStatus } from '@src/state/context/NetworkContext';
 import useDropboxFileGenerator from '@src/services/cloudStorage/dropbox/hooks/useDropboxFileGenerator';
 
 interface Props {
@@ -27,9 +27,10 @@ const CloudStorage = ({ cloudConnection }: Props) => {
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
   const displayTips = useAppSelector(selectDisplayTips);
-
-  const { isOnline, setIsOnline } = useNetworkStatus();
   const { generateAndUploadZipBuffer } = useDropboxFileGenerator();
+
+  // online toggle for use in development testing
+  // const { isOnline, setIsOnline } = useNetworkStatus();
 
   const handleAppBackup = async () => {
     generateAndUploadZipBuffer();
@@ -52,19 +53,19 @@ const CloudStorage = ({ cloudConnection }: Props) => {
   return (
     <View>
       <StyledText style={styles.sectionTitle}>Cloud Storage</StyledText>
-      <StyledText
+      {/* <StyledText
         style={styles.sectionTitle}
       >{`Is Online: ${isOnline}`}</StyledText>
       <Button
         title={'Toggle isOnline'}
         onPress={() => setIsOnline(!isOnline)}
         color={theme.settingsEmphasis}
-      />
+      /> */}
       {cloudConnection !== CloudConnection.NONE ? (
         <View>
           <StyledText>
             You are connected to your
-            <StyledText> {cloudConnection} </StyledText>
+            <StyledText style={styles.boldText}> {cloudConnection} </StyledText>
             account. You may adjust settings and enable Auto Syncing below.
           </StyledText>
           <View style={{ ...styles.buttons }}>
@@ -85,9 +86,13 @@ const CloudStorage = ({ cloudConnection }: Props) => {
           </View>
           {displayTips && (
             <StyledText style={styles.tipText}>
-              Tip: Sync Backup will upload a zip file of all your app files and
-              data to your cloud storage. This file can be imported below to
-              restore your data in case of data loss.
+              Tip:{' '}
+              <StyledText style={[styles.tipText, styles.boldText]}>
+                Sync Backup
+              </StyledText>{' '}
+              will upload a zip file of all your app files and data to your
+              cloud storage. This file can be imported below to restore your
+              data.
             </StyledText>
           )}
         </View>

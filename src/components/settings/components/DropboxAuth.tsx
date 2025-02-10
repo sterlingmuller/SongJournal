@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
-import { Button } from 'react-native';
+import { Button, View } from 'react-native';
 import {
   storeAccessToken,
   storeRefreshToken,
@@ -10,6 +10,8 @@ import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
 import { updateSettingsRequest } from '@src/state/sagas/actionCreators';
 import { useSQLiteContext } from 'expo-sqlite';
 import { CloudConnection } from '@src/components/common/enums';
+import useCloudStorageStyle from '@src/styles/cloudStorage';
+import { useColorTheme } from '@src/state/context/ThemeContext';
 
 const exchangeCodeForToken = async (code: string, codeVerifier: string) => {
   const tokenEndpoint = 'https://api.dropboxapi.com/oauth2/token';
@@ -55,6 +57,8 @@ const exchangeCodeForToken = async (code: string, codeVerifier: string) => {
 };
 
 const DropboxAuth = () => {
+  const styles = useCloudStorageStyle();
+  const { theme } = useColorTheme();
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
   const [codeVerifier, setCodeVerifier] = useState('');
@@ -103,11 +107,14 @@ const DropboxAuth = () => {
   };
 
   return (
-    <Button
-      disabled={!request}
-      title="Connect to Dropbox"
-      onPress={handlePress}
-    />
+    <View style={styles.connectButton}>
+      <Button
+        disabled={!request}
+        title="Connect to Dropbox"
+        onPress={handlePress}
+        color={theme.settingsEmphasis}
+      />
+    </View>
   );
 };
 

@@ -6,10 +6,12 @@ interface Styles {
   togglesContainer: ViewStyle;
   buttons: ViewStyle;
   button: ViewStyle;
+  connectButton: ViewStyle;
   tipText: TextStyle;
   sectionTitle: TextStyle;
   title: TextStyle;
   syncSettingsText: TextStyle;
+  boldText: TextStyle;
 }
 
 const useCloudStorageStyle = () => {
@@ -66,6 +68,16 @@ const useCloudStorageStyle = () => {
     button: {
       width: 140,
       borderRadius: 10,
+    },
+
+    connectButton: {
+      width: '60%',
+      alignSelf: 'center',
+      paddingVertical: 10,
+    },
+
+    boldText: {
+      fontWeight: 'bold',
     },
   });
 

@@ -28,6 +28,10 @@ export const AUDIO_DIR = `${cacheDirectory}Audio/`;
 export const BACKUP_DIR = `${cacheDirectory}Backup/`;
 export const EXTRACT_DIR = `${cacheDirectory}Extract/`;
 
+export const EXPORT_ZIP_PATH = '/songjournal_backup.zip';
+
+export const UPLOAD_QUEUE_KEY = 'UPLOAD_QUEUE';
+
 export const SORT_BY_OPTIONS: SortBy[] = Object.values(SortBy);
 
 export const FILTER_OPTIONS: Filter[] = Object.values(Filter);
