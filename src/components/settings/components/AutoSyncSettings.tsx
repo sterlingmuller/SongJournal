@@ -4,13 +4,13 @@ import { Button, View } from 'react-native';
 import StyledText from '@src/components/common/components/StyledText';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectUserSettings } from '@src/state/selectors/settingsSelector';
-import useDropboxBatchFileGenerator from '@dropbox/hooks/useDropboxBatchFileGenerator';
 import useCloudStorageStyle from '@src/styles/cloudStorage';
 import SettingsToggle from '../subcomponents/SettingsToggle';
 import Separator from '@src/components/common/components/Separator';
 import { useToggleSetting } from '@src/utils/hooks/useToggleSettings';
 import { ToggleableSettings } from '@src/components/common/enums';
 import { useColorTheme } from '@src/state/context/ThemeContext';
+import useOneTimeSync from '@src/services/cloudStorage/dropbox/hooks/useOneTimeSync';
 
 const AutoSyncSettings = () => {
   const { theme } = useColorTheme();
@@ -22,13 +22,7 @@ const AutoSyncSettings = () => {
     displayTips,
   } = useAppSelector(selectUserSettings);
   const toggleSetting = useToggleSetting();
-  const triggerBackup = useDropboxBatchFileGenerator();
-
-  // useEffect(() => {
-  //   if (isAutoSyncEnabled) {
-  //     triggerBackup();
-  //   }
-  // }, [triggerBackup, isAutoSyncEnabled]);
+  const triggerBackup = useOneTimeSync();
 
   const handleBackup = () => {
     triggerBackup();

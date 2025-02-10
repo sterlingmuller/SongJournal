@@ -19,31 +19,6 @@ export const startUploadSession = async (
   return data.session_id;
 };
 
-// export const startUploadSessionsBatch = async (
-//   numSessions: number,
-//   accessToken: string,
-// ) => {
-//   const response = await fetch(
-//     'https://api.dropboxapi.com/2/files/upload_session/start_batch',
-//     {
-//       method: 'POST',
-//       headers: {
-//         Authorization: `Bearer ${accessToken}`,
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({ num_sessions: numSessions }),
-//     },
-//   );
-
-//   if (!response.ok) {
-//     const errorData = await response.json();
-//     console.error('Start batch failed:', errorData);
-//   }
-
-//   const data = await response.json();
-//   return data.session_ids;
-// };
-
 export const appendToUploadSession = async (
   sessionId: string,
   fileContent: Buffer,

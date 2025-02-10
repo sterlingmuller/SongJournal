@@ -15,6 +15,7 @@ import { createBackup } from '@src/utils/createAndShareBackup';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectSyncFilters } from '@src/state/selectors/settingsSelector';
 import { selectCurrentSongCompletionStatus } from '@src/state/selectors/songsSelector';
+import { EXPORT_ZIP_PATH } from '@src/components/common/constants';
 
 const useDropboxFileGenerator = () => {
   const { isOnline } = useNetworkStatus();
@@ -24,14 +25,12 @@ const useDropboxFileGenerator = () => {
 
   const generateAndUploadZipBuffer = async () => {
     const localZipPath = await createBackup();
-
-    const path = '/songjournal_backup.zip';
     const bufferContent = await generateBuffer(localZipPath);
 
     if (isOnline) {
       const accessToken = await getValidAccessToken();
 
-      await uploadFileToDropbox(path, bufferContent, accessToken);
+      await uploadFileToDropbox(EXPORT_ZIP_PATH, bufferContent, accessToken);
 
       await FileSystem.deleteAsync(localZipPath, { idempotent: true });
     } else {

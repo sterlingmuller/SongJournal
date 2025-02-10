@@ -1,16 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import * as FileSystem from 'expo-file-system';
 import { Buffer } from 'buffer';
+import { useSQLiteContext } from 'expo-sqlite';
 
-import {
-  getValidAccessToken,
-  uploadFilesInBatch,
-} from '@src/services/cloudStorage/dropbox/helpers/dropboxFileRequests';
+import { uploadFilesInBatch } from '@src/services/cloudStorage/dropbox/helpers/dropboxFileRequests';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectSongs } from '@src/state/selectors/songsSelector';
 import { Page, Song, SongToPageMap, Take } from '@src/components/common/types';
-import { fetchPages } from '../../../../data/repositories/PageRepository';
-import { useSQLiteContext } from 'expo-sqlite';
+import { fetchPages } from '@src/data/repositories/PageRepository';
 import { useArtistName } from '@src/utils/hooks/useArtistName';
 import { generatePagePdf } from '@src/utils/generatePagePdf';
 import { selectSyncFilters } from '@src/state/selectors/settingsSelector';
@@ -19,7 +16,7 @@ import { useNetworkStatus } from '@src/state/context/NetworkContext';
 import { createDropboxFolder } from '@src/services/cloudStorage/dropbox/helpers/createDropBoxFolder';
 import { generateBuffer } from '@dropbox/helpers/generateBuffer';
 
-const useDropboxBatchFileGenerator = () => {
+const useOneTimeSync = () => {
   const db = useSQLiteContext();
   const songs = useAppSelector(selectSongs);
   const { isUnstarredTakeConditionEnabled, isCompletedSongConditionEnabled } =
@@ -27,9 +24,7 @@ const useDropboxBatchFileGenerator = () => {
   const [pages, setPages] = useState<SongToPageMap>({});
   const [trigger, setTrigger] = useState(false);
   const { isOnline } = useNetworkStatus();
-
   const { addToUploadQueue } = useAddToUploadQueue();
-
   const { getArtistName } = useArtistName();
 
   const generatePdf = async (title: string, page: Page, artistId: number) => {
@@ -47,10 +42,6 @@ const useDropboxBatchFileGenerator = () => {
 
     fetchPagesData();
   }, [db]);
-
-  // Maybe add an array of folders to generate and push to the array as we iterate. That way we don't need to iterate twice
-
-  // Might want to break down this logic to a few more hooks / helpers. All Sync related hooks and helpers should be moved to one folder
 
   const generateSongBuffers = async (song: Song, page: Page) => {
     const { title, selectedTakeId, takes } = song;
@@ -105,14 +96,6 @@ const useDropboxBatchFileGenerator = () => {
           continue;
         }
 
-        // move the dropbox folder creator to a helper function
-        // iterate over songs if online, calling this for each song title
-        // this helper also needs to be used in the processQueue function so that folders are created before queues are uploaded
-
-        // separate issue to look into, to large of file size for secureStore
-
-        // await createDropboxFolder(`/${song.title}`);
-
         const page = pages[song.songId];
         const { title, lyricsBuffer, selectedTakeBuffer, takesBuffers } =
           await generateSongBuffers(song, page);
@@ -132,8 +115,6 @@ const useDropboxBatchFileGenerator = () => {
         }
 
         if (takesBuffers.length > 0) {
-          // add some logic to create take folder
-          // await createDropboxFolder(`/${song.title}/Takes`);
           for (const take of takesBuffers) {
             filesToUpload.push({
               path: `/${title}/Takes/${take.title}.m4a`,
@@ -168,4 +149,4 @@ const useDropboxBatchFileGenerator = () => {
   return triggerBackup;
 };
 
-export default useDropboxBatchFileGenerator;
+export default useOneTimeSync;
