@@ -5,7 +5,7 @@ const UPLOAD_QUEUE_KEY = 'UPLOAD_QUEUE';
 
 interface FileToUpload {
   path: string;
-  content: Buffer;
+  uri: string;
 }
 
 const useAddToUploadQueue = () => {
@@ -15,13 +15,10 @@ const useAddToUploadQueue = () => {
       const filesArray = Array.isArray(files) ? files : [files];
 
       const uploadQueue = storedQueue ? JSON.parse(storedQueue) : [];
-      console.log('files array:', filesArray);
 
       const newQueue: FileToUpload[] = [...uploadQueue, ...filesArray];
 
       await AsyncStorage.setItem(UPLOAD_QUEUE_KEY, JSON.stringify(newQueue));
-
-      console.log('new queue:', newQueue);
     },
     [],
   );

@@ -6,7 +6,7 @@ const UPLOAD_QUEUE_KEY = 'UPLOAD_QUEUE';
 
 interface FileToUpload {
   path: string;
-  content: Buffer;
+  uri: string;
 }
 
 const useUploadQueue = () => {
@@ -20,7 +20,7 @@ const useUploadQueue = () => {
   };
 
   const processUploadQueue = useCallback(async () => {
-    const uploadQueue = await loadUploadQueue();
+    const uploadQueue: FileToUpload[] = await loadUploadQueue();
 
     if (uploadQueue.length > 0) {
       await uploadFilesInBatch(uploadQueue);

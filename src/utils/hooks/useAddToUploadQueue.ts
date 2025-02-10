@@ -18,8 +18,6 @@ const useAddToUploadQueue = () => {
       const newQueue: FileToUpload[] = [...uploadQueue, ...filesArray];
 
       await AsyncStorage.setItem(UPLOAD_QUEUE_KEY, JSON.stringify(newQueue));
-
-      console.log('new queue:', newQueue);
     },
     [],
   );

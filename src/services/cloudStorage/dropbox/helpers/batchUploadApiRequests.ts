@@ -38,32 +38,10 @@ export const startUploadSession = async (
 //   if (!response.ok) {
 //     const errorData = await response.json();
 //     console.error('Start batch failed:', errorData);
-//     throw new Error('Start batch failed');
 //   }
 
 //   const data = await response.json();
-//   return data.session_ids; // Array of session IDs
-// };
-
-// export const startBatchSession = async (
-//   fileContent: Buffer,
-//   accessToken: string,
-// ) => {
-//   const response = await fetch(
-//     'https://content.dropboxapi.com/2/files/upload_session/start_batch',
-//     {
-//       method: 'POST',
-//       headers: {
-//         Authorization: `Bearer ${accessToken}`,
-//         'Dropbox-API-Arg': JSON.stringify({ close: true }),
-//         'Content-Type': 'application/json',
-//       },
-//       body: fileContent,
-//     },
-//   );
-
-//   const data = await response.json();
-//   return data.session_id;
+//   return data.session_ids;
 // };
 
 export const appendToUploadSession = async (
@@ -71,9 +49,8 @@ export const appendToUploadSession = async (
   fileContent: Buffer,
   accessToken: string,
   offset: number,
-  // close: boolean,
 ) => {
-  const response = await fetch(
+  await fetch(
     'https://content.dropboxapi.com/2/files/upload_session/append_v2',
     {
       method: 'POST',
@@ -81,15 +58,13 @@ export const appendToUploadSession = async (
         Authorization: `Bearer ${accessToken}`,
         'Dropbox-API-Arg': JSON.stringify({
           cursor: { session_id: sessionId, offset },
-          close: true,
+          close: false,
         }),
         'Content-Type': 'application/octet-stream',
       },
       body: fileContent,
     },
   );
-
-  console.log('append response:', response);
 };
 
 export const finishUploadSessionBatch = async (
@@ -99,7 +74,6 @@ export const finishUploadSessionBatch = async (
   }[],
   accessToken: string,
 ) => {
-  console.log('entries:', entries);
   const response = await fetch(
     'https://api.dropboxapi.com/2/files/upload_session/finish_batch_v2',
     {
@@ -111,11 +85,9 @@ export const finishUploadSessionBatch = async (
       body: JSON.stringify({ entries }),
     },
   );
-  console.log('response:', response);
-  const data = await response.json();
 
   if (!response.ok) {
-    console.error('Error finishing upload session batch:', data);
+    console.error('Error finishing upload session batch');
   } else {
     // iterate over entries, upload rev to db
   }
