@@ -1,5 +1,4 @@
 import * as FileSystem from 'expo-file-system';
-import { Buffer } from 'buffer';
 
 import {
   deleteFileFromDropbox,
@@ -27,17 +26,12 @@ const useDropboxFileGenerator = () => {
     const localZipPath = await createBackup();
 
     const path = '/songjournal_backup.zip';
-    const content = await generateBuffer(localZipPath);
-
-    const fileToUpload = {
-      path,
-      content,
-    };
+    const bufferContent = await generateBuffer(localZipPath);
 
     if (isOnline) {
       const accessToken = await getValidAccessToken();
 
-      await uploadFileToDropbox(fileToUpload, accessToken);
+      await uploadFileToDropbox(path, bufferContent, accessToken);
 
       await FileSystem.deleteAsync(localZipPath, { idempotent: true });
     } else {
@@ -58,42 +52,28 @@ const useDropboxFileGenerator = () => {
       !isCompletedSongConditionEnabled
     ) {
       let path: string;
-      let content: Buffer;
 
       switch (cloudFileType) {
         case CloudFileType.TAKE:
-          {
-            path = `/${songTitle}/Takes/${takeTitle}.m4a`;
-            content = await generateBuffer(uri);
-          }
+          path = `/${songTitle}/Takes/${takeTitle}.m4a`;
           break;
         case CloudFileType.STARRED_TAKE:
-          {
-            path = `/${songTitle}/${songTitle}.m4a`;
-            content = await generateBuffer(uri);
-          }
+          path = `/${songTitle}/${songTitle}.m4a`;
           break;
         case CloudFileType.PAGE:
-          {
-            path = `/${songTitle}/Lyrics.pdf`;
-            content = await generateBuffer(uri);
-          }
+          path = `/${songTitle}/Lyrics.pdf`;
           break;
       }
 
-      const fileToUpload = {
-        path,
-        content,
-      };
-
       if (isOnline) {
         const accessToken = await getValidAccessToken();
+        const contentBuffer = await generateBuffer(uri);
 
         await createDropboxFolder(songTitle);
 
-        await uploadFileToDropbox(fileToUpload, accessToken);
+        await uploadFileToDropbox(path, contentBuffer, accessToken);
       } else {
-        addToUploadQueue(fileToUpload);
+        addToUploadQueue({ path, uri });
       }
     }
   };
