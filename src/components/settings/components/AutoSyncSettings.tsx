@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Button, View } from 'react-native';
 
 import StyledText from '@src/components/common/components/StyledText';
@@ -22,11 +22,11 @@ const AutoSyncSettings = () => {
     displayTips,
   } = useAppSelector(selectUserSettings);
   const toggleSetting = useToggleSetting();
-  const triggerBackup = useOneTimeSync();
+  const performBackup = useOneTimeSync();
 
-  const handleBackup = () => {
-    triggerBackup();
-  };
+  const handleBackup = useCallback(async () => {
+    performBackup();
+  }, [performBackup]);
 
   return (
     <View>

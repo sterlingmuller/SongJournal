@@ -14,7 +14,7 @@ import { useSQLiteContext } from 'expo-sqlite';
 import useCloudStorageStyle from '@src/styles/cloudStorage';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
-// import { useNetworkStatus } from '@src/state/context/NetworkContext';
+import { useNetworkStatus } from '@src/state/context/NetworkContext';
 import useDropboxFileGenerator from '@src/services/cloudStorage/dropbox/hooks/useDropboxFileGenerator';
 
 interface Props {
@@ -30,7 +30,7 @@ const CloudStorage = ({ cloudConnection }: Props) => {
   const { generateAndUploadZipBuffer } = useDropboxFileGenerator();
 
   // online toggle for use in development testing
-  // const { isOnline, setIsOnline } = useNetworkStatus();
+  const { isOnline, setIsOnline } = useNetworkStatus();
 
   const handleAppBackup = async () => {
     generateAndUploadZipBuffer();
@@ -53,14 +53,14 @@ const CloudStorage = ({ cloudConnection }: Props) => {
   return (
     <View>
       <StyledText style={styles.sectionTitle}>Cloud Storage</StyledText>
-      {/* <StyledText
+      <StyledText
         style={styles.sectionTitle}
       >{`Is Online: ${isOnline}`}</StyledText>
       <Button
         title={'Toggle isOnline'}
         onPress={() => setIsOnline(!isOnline)}
         color={theme.settingsEmphasis}
-      /> */}
+      />
       {cloudConnection !== CloudConnection.NONE ? (
         <View>
           <StyledText>
