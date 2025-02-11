@@ -4,7 +4,7 @@ import { useSQLiteContext } from 'expo-sqlite';
 import { uploadFilesInBatch } from '@src/services/cloudStorage/dropbox/helpers/dropboxFileRequests';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectSongs } from '@src/state/selectors/songsSelector';
-import { Page, Take } from '@src/components/common/types';
+import { FileToUpload, Page, Take } from '@src/components/common/types';
 import { fetchPages } from '@src/data/repositories/PageRepository';
 import { useArtistName } from '@src/utils/hooks/useArtistName';
 import { generatePagePdf } from '@src/utils/generatePagePdf';
@@ -29,7 +29,7 @@ const useOneTimeSync = () => {
   };
 
   const generateFilesToUpload = async () => {
-    const filesToUpload = [];
+    const filesToUpload: FileToUpload[] = [];
     const pages = await fetchPages(db);
 
     for (const song of songs) {
@@ -50,7 +50,6 @@ const useOneTimeSync = () => {
         filesToUpload.push({
           path: `/${title}/Lyrics.pdf`,
           uri: pdfUri,
-          songTitle: title,
         });
       }
 
@@ -62,7 +61,6 @@ const useOneTimeSync = () => {
         filesToUpload.push({
           path: `/${title}/${title}.m4a`,
           uri: selectedTake.uri,
-          songTitle: title,
         });
 
         if (isUnstarredTakeConditionEnabled) {
@@ -71,7 +69,6 @@ const useOneTimeSync = () => {
               filesToUpload.push({
                 path: `/${title}/Takes/${take.title}.m4a`,
                 uri: take.uri,
-                songTitle: title,
               });
             }
           }
@@ -83,7 +80,7 @@ const useOneTimeSync = () => {
   };
 
   const performBackup = useCallback(async () => {
-    const filesToUpload = await generateFilesToUpload();
+    const filesToUpload: FileToUpload[] = await generateFilesToUpload();
 
     if (filesToUpload.length > 0) {
       if (isOnline) {

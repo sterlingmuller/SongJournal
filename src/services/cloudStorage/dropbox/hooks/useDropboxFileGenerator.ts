@@ -8,7 +8,6 @@ import {
 } from '@src/services/cloudStorage/dropbox/helpers/dropboxFileRequests';
 import useAddToUploadQueue from '@src/services/cloudStorage/useAddToUploadQueue';
 import { useNetworkStatus } from '@src/state/context/NetworkContext';
-import { createDropboxFolder } from '@src/services/cloudStorage/dropbox/helpers/createDropBoxFolder';
 import { generateBuffer } from '@dropbox/helpers/generateBuffer';
 import { CloudFileType } from '@src/components/common/enums';
 import { createBackup } from '@src/utils/createAndShareBackup';
@@ -68,11 +67,9 @@ const useDropboxFileGenerator = () => {
         const accessToken = await getValidAccessToken();
         const contentBuffer = await generateBuffer(uri);
 
-        await createDropboxFolder(songTitle);
-
         await uploadFileToDropbox(path, contentBuffer, accessToken);
       } else {
-        addToUploadQueue({ path, uri, songTitle });
+        addToUploadQueue({ path, uri });
       }
     }
   };

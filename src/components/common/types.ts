@@ -338,3 +338,5 @@ export type UpdatePurchasesDbPayload = {
   updatedPurchases: Partial<Purchases>;
   db: SQLiteDatabase;
 };
+
+export type FileToUpload = { path: string; uri: string };

@@ -9,7 +9,6 @@ import {
   finishUploadSessionBatch,
 } from '@dropbox/helpers/batchUploadApiRequests';
 import { generateBuffer } from './generateBuffer';
-import { createDropboxFolder } from './createDropBoxFolder';
 
 export const getValidAccessToken = async () => {
   const expiry = await getAccessTokenExpiry();
@@ -22,17 +21,15 @@ export const getValidAccessToken = async () => {
 };
 
 export const uploadFilesInBatch = async (
-  files: { path: string; uri: string; songTitle: string }[],
+  files: { path: string; uri: string }[],
 ) => {
   const entries = [];
   const accessToken = await getValidAccessToken();
 
   for (let i = 0; i < files.length; i++) {
-    const { path, uri, songTitle } = files[i];
+    const { path, uri } = files[i];
 
-    createDropboxFolder(songTitle);
     const contentBuffer = await generateBuffer(uri);
-
     const sessionId = await startUploadSession(contentBuffer, accessToken);
 
     const offset = contentBuffer.length;
