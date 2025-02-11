@@ -6,7 +6,6 @@ import { UPLOAD_QUEUE_KEY } from '@src/components/common/constants';
 interface FileToUpload {
   path: string;
   uri: string;
-  songTitle: string;
 }
 
 const useUploadQueue = () => {
