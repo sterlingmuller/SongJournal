@@ -109,7 +109,7 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
           />
           {updatedTitle !== '' && (
             <TouchableOpacity onPress={clearInput} style={styles.clearButton}>
-              <StyledText style={styles.clearText}>X</StyledText>
+              <StyledText style={styles.boldText}>X</StyledText>
             </TouchableOpacity>
           )}
         </View>
