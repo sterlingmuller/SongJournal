@@ -5,9 +5,11 @@ interface Styles {
   container: ViewStyle;
   textbox: ViewStyle;
   clearButton: ViewStyle;
+  button: ViewStyle;
   title: TextStyle;
   input: TextStyle;
-  clearText: TextStyle;
+  text: TextStyle;
+  boldText: TextStyle;
   tipText: TextStyle;
 }
 
@@ -17,17 +19,19 @@ const useCommonModalStyle = () => {
   const commonModalStyle: Styles = StyleSheet.create({
     container: {
       alignSelf: 'center',
-      backgroundColor: '#fff',
       width: '80%',
       height: 280,
       borderRadius: 15,
       gap: 30,
       paddingTop: 25,
+      backgroundColor: theme.secondary,
+      paddingHorizontal: 10,
     },
 
     title: {
-      paddingLeft: 40,
+      paddingLeft: 30,
       fontSize: 24,
+      fontWeight: '500',
     },
 
     textbox: {
@@ -38,7 +42,7 @@ const useCommonModalStyle = () => {
       width: '75%',
       borderWidth: 1,
       borderColor: '#ccc',
-      marginLeft: 35,
+      marginLeft: 25,
       marginBottom: 10,
     },
 
@@ -53,7 +57,14 @@ const useCommonModalStyle = () => {
       alignSelf: 'center',
     },
 
-    clearText: { fontWeight: 'bold' },
+    button: {
+      width: '50%',
+      alignSelf: 'center',
+      paddingTop: 10,
+    },
+
+    text: { textAlign: 'center', fontSize: 15, paddingHorizontal: 5 },
+    boldText: { fontWeight: 'bold' },
 
     tipText: {
       fontStyle: 'italic',

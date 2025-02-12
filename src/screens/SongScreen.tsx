@@ -20,23 +20,30 @@ import {
   Take,
 } from '@src/components/common/types';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
-import { selectCurrentSongTotalTakes } from '@src/state/selectors/songsSelector';
+import {
+  selectCurrentSongTakes,
+  selectCurrentSongTotalTakes,
+} from '@src/state/selectors/songsSelector';
 import SongDisplay from '@src/components/songFolder/components/SongDisplay';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
 import { Screen } from '@src/components/common/enums';
 import EditTitleModal from '@src/components/common/components/EditTitleModal';
+import MaxTakesModal from '@src/components/songFolder/components/MaxTakesModal';
 
 const SongScreen = () => {
   const styles = useSongScreenStyles();
   const globalStyles = useGlobalStyles();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const totalTakes = useAppSelector(selectCurrentSongTotalTakes);
+  const takes = useAppSelector(selectCurrentSongTakes);
   const isPermissionGranted = useMicrophonePermissions();
   const { clearPlayback } = useAudioPlayer();
 
   const [toDelete, setToDelete] = useState<DeleteObject>(EMPTY_DELETE_OBJECT);
   const [currentTake, setCurrentTake] = useState<Take>(EMPTY_TAKE);
   const [isPermissionsNeededModalOpen, setIsPermissionsNeededModalOpen] =
+    useState<boolean>(false);
+  const [isMaxTakesModalOpen, setIsMaxTakesModalOpen] =
     useState<boolean>(false);
   const [titleToEdit, setTitleToEdit] = useState<{
     songTitle: string;
@@ -46,17 +53,21 @@ const SongScreen = () => {
   }>({ songTitle: '', takeTitle: '', songId: -1, takeId: -1 });
 
   const onRecordPress = () => {
-    const recording = () => {
-      const newTakeTitle = `Take ${totalTakes + 1}`;
+    if (takes.length <= 6) {
+      const recording = () => {
+        const newTakeTitle = `Take ${totalTakes + 1}`;
 
-      navigation.navigate(Screen.RECORDING, { title: newTakeTitle });
-    };
+        navigation.navigate(Screen.RECORDING, { title: newTakeTitle });
+      };
 
-    clearPlayback();
+      clearPlayback();
 
-    isPermissionGranted === 'granted'
-      ? recording()
-      : setIsPermissionsNeededModalOpen(true);
+      isPermissionGranted === 'granted'
+        ? recording()
+        : setIsPermissionsNeededModalOpen(true);
+    } else {
+      setIsMaxTakesModalOpen(true);
+    }
   };
 
   useEffect(() => {
@@ -78,6 +89,7 @@ const SongScreen = () => {
   return (
     <View style={globalStyles.container}>
       <SongDisplay
+        takes={takes}
         setToDelete={setToDelete}
         setCurrentTake={setCurrentTake}
         setTitleToEdit={setTitleToEdit}
@@ -100,6 +112,10 @@ const SongScreen = () => {
       <EditTitleModal
         titleToEdit={titleToEdit}
         setTitleToEdit={setTitleToEdit}
+      />
+      <MaxTakesModal
+        isMaxTakesModalOpen={isMaxTakesModalOpen}
+        setIsMaxTakesModalOpen={setIsMaxTakesModalOpen}
       />
     </View>
   );

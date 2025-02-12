@@ -3,14 +3,13 @@ import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import useSongScreenStyles from '@src/styles/songScreen';
-import { DeleteObject, Take } from '@src/components/common/types';
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
-import { selectCurrentSongTakes } from '@src/state/selectors/songsSelector';
+import { DeleteObject, Take, Takes } from '@src/components/common/types';
 import ComposerMessage from '@src/components/common/components/ComposerMessage';
 import SongTake from '@src/components/songFolder/components/SongTake';
 import { Screen } from '@src/components/common/enums';
 
 interface Props {
+  takes: Takes;
   setToDelete: (value: DeleteObject) => void;
   setCurrentTake: (value: Take) => void;
   setTitleToEdit: (value: {
@@ -22,8 +21,8 @@ interface Props {
 }
 
 const SongDisplay = (props: Props) => {
-  const { setToDelete, setCurrentTake, setTitleToEdit } = props;
-  const takes = useAppSelector(selectCurrentSongTakes);
+  const { takes, setToDelete, setCurrentTake, setTitleToEdit } = props;
+
   const styles = useSongScreenStyles();
 
   const orderedTakes: Take[] = [...takes].reverse();
