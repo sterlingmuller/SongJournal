@@ -1,5 +1,6 @@
 import { Dimensions } from 'react-native';
 import { documentDirectory, cacheDirectory } from 'expo-file-system';
+import Constants from 'expo-constants';
 
 import EditIcon from '@src/icons/EditIcon';
 import ChordsIcon from '@src/icons/ChordsIcon';
@@ -21,6 +22,10 @@ import EggSelectIcon from '@src/icons/EggSelectIcon';
 import BadEggSelectIcon from '@src/icons/BadEggSelectIcon';
 import CacsusSelectIcon from '@src/icons/CacsusSelectIcon';
 import DeadAdimSelectIcon from '@src/icons/DeadAdimSelectIcon';
+
+export const DROPBOX_CLIENT_ID = Constants.expoConfig.extra.dropboxClientId;
+export const DROPBOX_CLIENT_SECRET =
+  Constants.expoConfig.extra.dropboxClientSecret;
 
 export const DB_NAME = 'songjournal.db';
 export const DB_PATH = `${documentDirectory}SQLite/${DB_NAME}`;
