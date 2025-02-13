@@ -12,11 +12,13 @@ import { useSQLiteContext } from 'expo-sqlite';
 import { CloudConnection } from '@src/components/common/enums';
 import useCloudStorageStyle from '@src/styles/cloudStorage';
 import { useColorTheme } from '@src/state/context/ThemeContext';
+import {
+  DROPBOX_CLIENT_ID,
+  DROPBOX_CLIENT_SECRET,
+} from '@src/components/common/constants';
 
 const exchangeCodeForToken = async (code: string, codeVerifier: string) => {
   const tokenEndpoint = 'https://api.dropboxapi.com/oauth2/token';
-  const clientId = 'qehgg4lala5ryh6';
-  const clientSecret = 'iusw57fe5ezmwa6';
   const redirectUri = makeRedirectUri({
     scheme: 'songjournal',
     path: 'authConfirmation',
@@ -25,10 +27,8 @@ const exchangeCodeForToken = async (code: string, codeVerifier: string) => {
   const params = new URLSearchParams();
   params.append('code', code);
   params.append('grant_type', 'authorization_code');
-  // params.append('client_id', process.env.DROPBOX_CLIENT_ID);
-  // params.append('client_secret', process.env.DROPBOX_CLIENT_SECRET);
-  params.append('client_id', clientId);
-  params.append('client_secret', clientSecret);
+  params.append('client_id', DROPBOX_CLIENT_ID);
+  params.append('client_secret', DROPBOX_CLIENT_SECRET);
   params.append('redirect_uri', redirectUri);
   params.append('code_verifier', codeVerifier);
 
@@ -64,7 +64,7 @@ const DropboxAuth = () => {
   const [codeVerifier, setCodeVerifier] = useState('');
   const [request, response, promptAsync] = useAuthRequest(
     {
-      clientId: 'qehgg4lala5ryh6',
+      clientId: DROPBOX_CLIENT_ID,
       scopes: [],
       redirectUri: makeRedirectUri({
         scheme: 'songjournal',

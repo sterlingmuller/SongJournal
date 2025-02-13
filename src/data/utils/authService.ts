@@ -1,9 +1,10 @@
+import {
+  DROPBOX_CLIENT_ID,
+  DROPBOX_CLIENT_SECRET,
+} from '@src/components/common/constants';
 import { getRefreshToken, storeAccessToken } from './tokenStorage';
 
 export const refreshAccessToken = async () => {
-  const clientId = 'qehgg4lala5ryh6';
-  const clientSecret = 'iusw57fe5ezmwa6';
-
   const refreshToken = await getRefreshToken();
   if (!refreshToken) {
     throw new Error('No refresh token available');
@@ -18,8 +19,8 @@ export const refreshAccessToken = async () => {
       body: new URLSearchParams({
         grant_type: 'refresh_token',
         refresh_token: refreshToken,
-        client_id: clientId,
-        client_secret: clientSecret,
+        client_id: DROPBOX_CLIENT_ID,
+        client_secret: DROPBOX_CLIENT_SECRET,
       }).toString(),
     });
 
