@@ -1,12 +1,10 @@
-# SongJournal
+# SongJournal - Public Readme
 
-SongJournal is a tool for organizing song recordings and writing lyrics.
+# Overview
 
-The Starred version of a Song is displayed on the Home Screen. Pressing on a Song will open the Song Folder, containing all takes of a song. Takes can be appended with notes, starred, or renamed. Songs include a Lyrics Page for adding lyrics, chords, time signature, and bpm. User can export songs, individual takes, or lyrics as a print-ready pdf.
+Song Journal is a tool for organizing song recordings and writing lyrics.
 
-# Downloading the Android APK
-
-The latest APK can be found in the Releases section of this repository. Navigate to the most recent release and download the file with the .apk extension under Assets.
+The Starred version of a Song is displayed on the Home Screen. Pressing on a Song will open the Song Folder, containing all Takes of a Song. Takes can be appended with notes, starred, or renamed. Songs include a Lyrics Page for adding lyrics, chords, time signature, and bpm. Groups of Pages can be exported as a print-ready pdf. User can import/export an app backup and connect to Dropbox to enable autosyncing of recordings and lyrics.
 
 ## Access, share, and delete songs on Home Screen and change Theme on Settings Screen
 
@@ -28,28 +26,7 @@ The latest APK can be found in the Releases section of this repository. Navigate
 <img src="assets/NewSongModal.jpg" alt="New Song Modal" width="300" />
 </p>
 
-## Change Theme on Settings Screen
-
-<p align="center">
-<img src="assets/SettingsSurf.jpg" alt="Settings Screen" width="300" />
-<img src="assets/HomeScreenSurf.jpg" alt="Home Screen with 'Surf' Theme" width="300" />
-</p>
-
-## Add lyrics and info on Lyrics Screen
-
-<p align="center">
-<img src="assets/LyricsScreen.jpg" alt="Lyrics Screen" width="300" />
-<img src="assets/LyricsScreenShare.jpg" alt="Lyrics Screen Share" width="300" />
-<img src="assets/SongInfoModal.jpg" alt="Song Info Modal" width="300" />
-</p>
-
-## Chord Creator
-
-<p align="center">
-<img src="assets/ChordCreator.jpg" alt="Chord Creator" width="300" />
-</p>
-
-## Initiate recording, add notes, and select takes on Song Screen
+## Record, add notes, and select takes on Song Screen
 
 <p align="center">
 <img src="assets/SongScreenEmpty.jpg" alt="Song Screen empty" width="300" />
@@ -57,8 +34,18 @@ The latest APK can be found in the Releases section of this repository. Navigate
 <img src="assets/NotesModal.jpg" alt="Song Screen Notes Modal" width="300" />
 </p>
 
-## Audio recording and playback on Recording Screen
+## Add lyrics and info on Lyrics Screen
 
 <p align="center">
-<img src="assets/RecordingAndPlayback.jpg" alt="Recording and Playback" width="300" />
+<img src="assets/LyricsScreen.jpg" alt="Lyrics Screen" width="300" />
+<img src="assets/LyricsScreenShare.jpg" alt="Lyrics Screen Share" width="300" />
+  <img src="assets/ChordGenerator.jpg" alt="Chord Generator" width="300" />
+<img src="assets/SongInfoModal.jpg" alt="Song Info Modal" width="300" />
+</p>
+
+## Enable cloud storage and adjust preferences on Settings Screen
+
+<p align="center">
+<img src="assets/SettingsPreferences.jpg" alt="Lyrics Screen" width="300" />
+<img src="assets/SettingsConductorThemeRestore.jpg" alt="Lyrics Screen Share" width="300" />
 </p>
