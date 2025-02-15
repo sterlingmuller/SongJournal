@@ -30,7 +30,10 @@ export const selectCurrentSongTitle = createSelector(
 
 export const selectCurrentSongTakes = createSelector(
   [selectCurrentSong],
-  (song: Song) => song.takes,
+  (song: Song) => {
+    console.log('ujh');
+    return song.takes;
+  },
 );
 
 export const selectCurrentSongSelectedTakeId = createSelector(
@@ -54,6 +57,8 @@ export const selectCurrentTakeUri = createSelector(
     const selectedTake: Take = takes.find(
       (take: Take) => take.takeId === selectedTakeId,
     );
+
+    console.log('hrm');
 
     return selectedTake
       ? {

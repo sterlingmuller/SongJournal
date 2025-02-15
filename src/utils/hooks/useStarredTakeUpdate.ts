@@ -18,23 +18,22 @@ import { updateSelectedTakeRequest } from '@src/state/thunk/takeThunk';
 import { updateSelectedTakeIdSuccess } from '@src/state/slice/songsSlice';
 
 export const useStarredTakeUpdateAndUpload = () => {
+  const { currentTakeUri, currentTakeTitle } =
+    useAppSelector(selectCurrentTakeUri);
+  const isAutoSyncEnabled = useAppSelector(selectIsAutoSyncEnabled);
+  const { isUnstarredTakeConditionEnabled } = useAppSelector(selectSyncFilters);
+  const song = useAppSelector(selectCurrentSong);
+  const dispatch = useAppDispatch();
+  const db = useSQLiteContext();
+  const { generateAndUploadFile, generateFileDeletion } =
+    useDropboxFileGenerator();
+
   const updateAndUploadStarredTake = async (
     newStarredTakeId: number,
     songId: number,
     newUri: string,
     newStarredTakeTitle: string,
   ) => {
-    const { currentTakeUri, currentTakeTitle } =
-      useAppSelector(selectCurrentTakeUri);
-    const dispatch = useAppDispatch();
-    const db = useSQLiteContext();
-    const { generateAndUploadFile, generateFileDeletion } =
-      useDropboxFileGenerator();
-    const isAutoSyncEnabled = useAppSelector(selectIsAutoSyncEnabled);
-    const { isUnstarredTakeConditionEnabled } =
-      useAppSelector(selectSyncFilters);
-    const song = useAppSelector(selectCurrentSong);
-
     const { title: songTitle } = song;
 
     try {
