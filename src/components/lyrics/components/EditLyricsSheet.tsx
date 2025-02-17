@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import { View } from 'react-native';
 
 import useLyricScreenStyles from '@src/styles/lyricsScreen';
@@ -14,9 +14,8 @@ interface Props {
 
 const EditLyricsSheet = ({ newLyrics, setNewLyrics }: Props) => {
   const styles = useLyricScreenStyles();
-  const [localLyrics, setLocalLyrics] = useState(newLyrics);
+  const initialLyricsRef = useRef(newLyrics);
   const keyboardHeight = useKeyboardHeight();
-
   const textBoxHeight = SCREEN_HEIGHT * 0.8 - keyboardHeight;
 
   const debouncedLyrics = useDebounce((lyrics: string) => {
@@ -24,13 +23,15 @@ const EditLyricsSheet = ({ newLyrics, setNewLyrics }: Props) => {
   }, 400);
 
   const handleLyricsChange = (lyrics: string) => {
-    setLocalLyrics(lyrics);
     debouncedLyrics(lyrics);
   };
 
   return (
     <View style={[styles.editTextContainer, { height: textBoxHeight }]}>
-      <TextEditor initialText={localLyrics} setText={handleLyricsChange} />
+      <TextEditor
+        initialText={initialLyricsRef.current}
+        setText={handleLyricsChange}
+      />
     </View>
   );
 };
