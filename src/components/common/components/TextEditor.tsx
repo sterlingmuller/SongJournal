@@ -4,7 +4,7 @@ import {
   useEditorBridge,
   useEditorContent,
 } from '@10play/tentap-editor';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { KeyboardAvoidingView, Platform } from 'react-native';
 
 interface Props {
@@ -22,12 +22,8 @@ const TextEditor = ({ initialText, setText }: Props) => {
   const content = useEditorContent(editor, { type: 'html' });
 
   useEffect(() => {
-    if (content !== undefined) {
-      editor
-        .getText()
-        .then((updateText: string) =>
-          setText(updateText.trim() ? content : ''),
-        );
+    if (content) {
+      setText(content);
     }
   }, [content]);
 

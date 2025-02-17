@@ -32,8 +32,7 @@ const LyricsScreen = () => {
   useEffect(() => {
     if (page && !page.lyrics) {
       setSelectedOption(LyricsOption.EDIT);
-    }
-    if (page && newLyrics !== page.lyrics) {
+    } else if (page && newLyrics !== page.lyrics) {
       setNewLyrics(page.lyrics);
     }
   }, [page]);
