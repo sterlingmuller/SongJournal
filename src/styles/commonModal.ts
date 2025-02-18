@@ -22,7 +22,7 @@ const useCommonModalStyle = () => {
     container: {
       alignSelf: 'center',
       width: '80%',
-      height: 280,
+      height: 300,
       borderRadius: 15,
       gap: 30,
       paddingTop: 25,
