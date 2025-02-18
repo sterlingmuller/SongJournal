@@ -15,6 +15,7 @@ import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
 import Gap from '@src/components/common/components/Gap';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import { sanitizeInput } from '@src/utils/sanitizeInput';
+import { MAX_TITLE_LENGTH } from '@src/components/common/constants';
 
 interface Props {
   isNewArtistOpen: boolean;
@@ -60,14 +61,21 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
               placeholderTextColor={theme.secondaryText}
               value={newArtist}
               onChangeText={(title: string) => {
-                setNewArtist(title);
+                if (title.length <= MAX_TITLE_LENGTH) {
+                  setNewArtist(title);
+                }
               }}
             />
           </View>
+          <View style={styles.infoContainer}>
+            <StyledText style={styles.infoText}>
+              {newArtist.length}/{MAX_TITLE_LENGTH}
+            </StyledText>
+          </View>
           {displayTips ? (
             <StyledText style={{ ...styles.tipText, paddingBottom: 0 }}>
-              Tip: New songs will be credited to the default artist. A song's
-              artist can be changed on the Lyrics screen.
+              Tip: New Songs will be credited to the Default Artist. A Song's
+              Artist can be changed on the Lyrics Screen.
             </StyledText>
           ) : (
             <Gap />
