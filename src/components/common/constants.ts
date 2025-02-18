@@ -213,3 +213,5 @@ export const HEIGHT_MAPPING: [number, number][] = [
   [86, 90], // 42 and above will be 60
   [87, 100], // 42 and above will be 60
 ];
+
+export const MAX_TITLE_LENGTH = 40;

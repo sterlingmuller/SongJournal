@@ -17,6 +17,7 @@ import { Screen } from '@src/components/common/enums';
 import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
 import Gap from '@src/components/common/components/Gap';
 import { useColorTheme } from '@src/state/context/ThemeContext';
+import { MAX_TITLE_LENGTH } from '@src/components/common/constants';
 
 interface Props {
   isNewSongOpen: boolean;
@@ -55,6 +56,12 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
     [navigate],
   );
 
+  const handleTitleChange = (title: string) => {
+    if (title.length <= MAX_TITLE_LENGTH) {
+      setSongTitle(title);
+    }
+  };
+
   return (
     <Modal
       isVisible={isNewSongOpen}
@@ -70,8 +77,13 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
               placeholder="Cobra Strike Alpha Deluxe"
               placeholderTextColor={theme.secondaryText}
               value={songTitle}
-              onChangeText={(title: string) => setSongTitle(title)}
+              onChangeText={handleTitleChange}
             />
+          </View>
+          <View style={styles.infoContainer}>
+            <StyledText style={styles.infoText}>
+              {songTitle.length}/{MAX_TITLE_LENGTH}
+            </StyledText>
           </View>
           {displayTips ? (
             <StyledText style={styles.tipText}>
