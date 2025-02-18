@@ -3,9 +3,9 @@ import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Styles {
   container: ViewStyle;
+  titleContainer: ViewStyle;
   title: TextStyle;
   titlePlusArrow: ViewStyle;
-  info: ViewStyle;
   headerIconRow: ViewStyle;
 }
 
@@ -31,18 +31,18 @@ const useLyricsHeaderStyles = () => {
       gap: 15,
     },
 
-    title: {
-      fontSize: 32,
-    },
+    titleContainer: { width: '75%' },
 
-    info: {
-      left: 0,
+    title: {
+      fontSize: 30,
+      fontWeight: 500,
     },
 
     headerIconRow: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: 30,
+      gap: 20,
+      right: '8%',
     },
   });
 

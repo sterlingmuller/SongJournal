@@ -6,7 +6,7 @@ const CloseIcon = () => (
     <Path
       d="M6 6L46.5 52M46.5 6L6 52"
       stroke="black"
-      strokeWidth="5"
+      strokeWidth="8"
       strokeLinecap="round"
       strokeLinejoin="round"
     />

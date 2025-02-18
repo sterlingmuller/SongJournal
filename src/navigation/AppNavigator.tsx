@@ -11,17 +11,16 @@ import MusicPlayerScreen from '@src/screens/MusicPlayerScreen';
 import { RootStackParamList } from '@src/components/common/types';
 import HeaderPageButton from '@src/components/songFolder/subcomponents/HeaderPageButton';
 import useHeaderStyles from '@styles/header';
-import { selectCurrentSongTitle } from '@src/state/selectors/songsSelector';
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import HeaderBackButton from '@src/components/common/components/HeaderBackButton';
 import { Screen } from '@src/components/common/enums';
 import SetlistScreen from '@src/screens/SetlistScreen';
+import CustomHeaderTitle from '@src/components/common/components/CustomHeaderTitle';
+import { useColorTheme } from '@src/state/context/ThemeContext';
 
 const AppNavigator = () => {
   const RootStack = createNativeStackNavigator<RootStackParamList>();
   const styles = useHeaderStyles();
-
-  const title = useAppSelector(selectCurrentSongTitle);
+  const { theme } = useColorTheme();
 
   return (
     <NavigationContainer>
@@ -32,9 +31,11 @@ const AppNavigator = () => {
           component={SongScreen}
           options={{
             ...styles,
-            title,
+            headerTintColor: theme.headerText,
+            headerTitle: () => <CustomHeaderTitle />,
             headerRight: () => <HeaderPageButton />,
             headerLeft: () => <HeaderBackButton />,
+            headerBackVisible: false,
           }}
         />
         <RootStack.Screen

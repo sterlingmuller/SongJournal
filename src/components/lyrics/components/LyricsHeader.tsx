@@ -46,10 +46,7 @@ const LyricsHeader = (props: Props) => {
     }
 
     return (
-      <TouchableOpacity
-        style={styles.info}
-        onPress={() => setIsInfoModalOpen(!isInfoModalOpen)}
-      >
+      <TouchableOpacity onPress={() => setIsInfoModalOpen(!isInfoModalOpen)}>
         <InfoIcon />
       </TouchableOpacity>
     );
@@ -61,7 +58,11 @@ const LyricsHeader = (props: Props) => {
         <TouchableOpacity onPress={goBack}>
           <BackIcon />
         </TouchableOpacity>
-        <Text style={styles.title}>{title}</Text>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">
+            {title}
+          </Text>
+        </View>
       </View>
       {renderIcon()}
     </View>
