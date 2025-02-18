@@ -49,8 +49,8 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
   const [updatedTitle, setUpdatedTitle] = useState<string>('');
 
   const disabled: boolean = takeId
-    ? updatedTitle === originalSongTitle || !updatedTitle
-    : updatedTitle === originalTakeTitle || !updatedTitle;
+    ? updatedTitle === originalTakeTitle || !updatedTitle
+    : updatedTitle === originalSongTitle || !updatedTitle;
   const modalTitle = takeId ? 'Edit Take Title' : 'Edit Song Title';
 
   useEffect(() => {
