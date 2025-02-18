@@ -50,6 +50,7 @@ const useSongFolderStyles = () => {
 
     titleContainer: {
       alignSelf: 'flex-start',
+      width: '90%',
     },
 
     iconRow: {

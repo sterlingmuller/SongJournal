@@ -1,6 +1,6 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { useColorTheme } from '@src/state/context/ThemeContext';
-import { SCREEN_WIDTH } from '@src/components/common/constants';
+import { SCREEN_WIDTH, SCREEN_HEIGHT } from '@src/components/common/constants';
 
 interface Styles {
   contents: ViewStyle;
@@ -40,7 +40,13 @@ const useSongTakeStyles = () => {
       fontSize: 24,
     },
 
-    titleRow: { flexDirection: 'row', gap: 10 },
+    titleRow: {
+      flexDirection: 'row',
+      gap: 10,
+      width: '80%',
+      alignItems: 'center',
+      height: SCREEN_HEIGHT * 0.035,
+    },
 
     iconRow: {
       paddingTop: 5,
