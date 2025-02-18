@@ -9,15 +9,15 @@ interface Styles {
   headerIconRow: ViewStyle;
 }
 
-const useLyricsHeaderStyles = () => {
+const useNavigationHeaderStyles = () => {
   const { theme } = useColorTheme();
 
-  const lyricsHeaderStyles: Styles = StyleSheet.create({
+  const navigationHeaderStyles: Styles = StyleSheet.create({
     container: {
       display: 'flex',
       flexDirection: 'row',
       paddingTop: 50,
-      paddingBottom: 20,
+      paddingBottom: 10,
       alignItems: 'center',
       justifyContent: 'space-between',
       backgroundColor: theme.primary,
@@ -36,6 +36,7 @@ const useLyricsHeaderStyles = () => {
     title: {
       fontSize: 30,
       fontWeight: 500,
+      color: theme.headerText,
     },
 
     headerIconRow: {
@@ -46,7 +47,7 @@ const useLyricsHeaderStyles = () => {
     },
   });
 
-  return lyricsHeaderStyles;
+  return navigationHeaderStyles;
 };
 
-export default useLyricsHeaderStyles;
+export default useNavigationHeaderStyles;

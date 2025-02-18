@@ -12,7 +12,7 @@ const useHomeHeaderStyles = () => {
     container: {
       display: 'flex',
       flexDirection: 'row',
-      height: 115,
+      height: 105,
       paddingTop: 45,
       alignItems: 'center',
       backgroundColor: theme.primary,
