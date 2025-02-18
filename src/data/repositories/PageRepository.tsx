@@ -13,7 +13,7 @@ export const fetchPageBySongId = async (payload: FetchPagePayload) => {
   try {
     const dbPage: DbPage = await db.getFirstAsync(
       'SELECT * FROM Page WHERE songId = ?',
-      songId,
+      [songId],
     );
 
     const songInfo = {
@@ -85,17 +85,15 @@ export const updateLyrics = async (payload: UpdateLyricsPayload) => {
   const { songId, lyrics, db } = payload;
 
   try {
-    await db.runAsync(
-      'UPDATE Page SET lyrics = ? WHERE songId = ?',
+    await db.runAsync('UPDATE Page SET lyrics = ? WHERE songId = ?', [
       lyrics,
       songId,
-    );
+    ]);
 
-    await db.runAsync(
-      'UPDATE Songs SET hasLyrics = ? WHERE songId = ?',
+    await db.runAsync('UPDATE Songs SET hasLyrics = ? WHERE songId = ?', [
       !!lyrics.trim(),
       songId,
-    );
+    ]);
   } catch (err) {
     console.error('Error updating lyrics,', err);
   }

@@ -9,24 +9,24 @@ export const createTake = async (
 
   try {
     const result = await db.runAsync(
-      'INSERT INTO Takes (songId, title, date, uri, duration, notes) VALUES (?, ?, ?, ?, ?, "")',
-      [songId, title, date, uri, duration],
+      'INSERT INTO Takes (songId, title, date, uri, duration, notes) VALUES (?, ?, ?, ?, ?, ?)',
+      [songId, title, date, uri, duration, ''],
     );
 
     const takeId = result.lastInsertRowId;
 
     await db.runAsync(
       'UPDATE Songs SET totalTakes = totalTakes + 1 WHERE songId = ?;',
-      songId,
+      [songId],
     );
     await db.runAsync(
-      'UPDATE Songs Set selectedTakeId = ? WHERE selectedTakeId = -1;',
-      takeId,
+      'UPDATE Songs SET selectedTakeId = ? WHERE selectedTakeId = -1;',
+      [takeId],
     );
 
     const take: t.Take = db.getFirstSync(
       'SELECT * FROM Takes WHERE takeId = ?',
-      takeId,
+      [takeId],
     );
 
     return take;
@@ -38,7 +38,7 @@ export const createTake = async (
 
 export const deleteTake = ({ db, takeId }: t.DeleteTakeDbPayload) => {
   try {
-    db.runSync('DELETE FROM Takes WHERE takeId = ?', takeId);
+    db.runSync('DELETE FROM Takes WHERE takeId = ?', [takeId]);
   } catch (err) {
     console.error('Error deleting take', err);
   }
@@ -65,11 +65,10 @@ export const updateTakeTitle = async ({
   title,
 }: t.UpdateTakeTitleDbPayload) => {
   try {
-    await db.runAsync(
-      'UPDATE Takes SET title = ? WHERE takeId = ?',
+    await db.runAsync('UPDATE Takes SET title = ? WHERE takeId = ?', [
       title,
       takeId,
-    );
+    ]);
   } catch (err) {
     console.error('Error updating take title', err);
   }

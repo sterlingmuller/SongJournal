@@ -8,15 +8,13 @@ export const fetchSongsWithArtists = (db: SQLiteDatabase) =>
   );
 
 export const getTakesAndPageBySongId = (db: SQLiteDatabase, songId: number) => {
-  const takes: t.Takes = db.getAllSync(
-    'SELECT * FROM Takes WHERE songId = ?',
+  const takes: t.Takes = db.getAllSync('SELECT * FROM Takes WHERE songId = ?', [
     songId,
-  );
+  ]);
 
-  const page: t.Page = db.getFirstSync(
-    'SELECT * FROM Page WHERE songId = ?',
+  const page: t.Page = db.getFirstSync('SELECT * FROM Page WHERE songId = ?', [
     songId,
-  );
+  ]);
 
   return { takes, page };
 };
@@ -31,26 +29,24 @@ export const createSong = async ({ db, title }: t.CreateSongPayload) => {
     const creationDate = new Date().toISOString();
 
     const result = await db.runAsync(
-      'INSERT INTO Songs (title, artistId, creationDate, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal) VALUES (?, ?, ?, -1, 0, false, false, true)',
-      title,
-      defaultArtistId,
-      creationDate,
+      'INSERT INTO Songs (title, artistId, creationDate, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      [title, defaultArtistId, creationDate, -1, 0, false, false, true],
     );
     const songId = result.lastInsertRowId;
 
     await db.runAsync(
-      'INSERT INTO Page (songId, lyrics, bpm, keySignature, time, about) VALUES (?, "", "", "", "", "")',
-      songId,
+      'INSERT INTO Page (songId, lyrics, bpm, keySignature, time, about) VALUES (?, ?, ?, ?, ?, ?)',
+      [songId, '', '', '', '', ''],
     );
 
     const song: t.DbSong = await db.getFirstAsync(
-      `SELECT songId, creationDate, title, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal, artistId FROM Songs WHERE Songs.songId = ?`,
-      songId,
+      'SELECT songId, creationDate, title, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal, artistId FROM Songs WHERE songId = ?',
+      [songId],
     );
 
     const page: t.Page = db.getFirstSync(
       'SELECT * FROM Page WHERE songId = ?',
-      songId,
+      [songId],
     );
 
     return { ...song, page, takes: [] };
@@ -61,7 +57,7 @@ export const createSong = async ({ db, title }: t.CreateSongPayload) => {
 
 export const deleteSong = async ({ db, songId }: t.DeleteSongPayload) => {
   const statement = await db.prepareAsync(
-    'DELETE FROM Songs WHERE songId = $songId; DELETE FROM Takes WHERE songId = $songId; DELETE FROM Page WHERE songId = $songId;',
+    'DELETE FROM Songs WHERE songId = ?; DELETE FROM Takes WHERE songId = ?; DELETE FROM Page WHERE songId = ?;',
   );
 
   try {
@@ -77,11 +73,10 @@ export const updateSelectedTakeId = async ({
   takeId,
 }: t.UpdateSelectedTakeIdPayloadDb) => {
   try {
-    await db.runAsync(
-      'UPDATE Songs SET selectedTakeId = ? WHERE songId = ?',
+    await db.runAsync('UPDATE Songs SET selectedTakeId = ? WHERE songId = ?', [
       takeId,
       songId,
-    );
+    ]);
   } catch (err) {
     console.error('Error updating selectedTakeId', err);
   }
@@ -93,11 +88,10 @@ export const updateSongTitle = async ({
   title,
 }: t.UpdateSongTitleSagaPayload) => {
   try {
-    await db.runAsync(
-      'UPDATE Songs SET title = ? WHERE songId = ?',
+    await db.runAsync('UPDATE Songs SET title = ? WHERE songId = ?', [
       title,
       songId,
-    );
+    ]);
   } catch (err) {
     console.error('Error updating song title', err);
   }
@@ -109,11 +103,10 @@ export const updateSongArtist = async ({
   artistId,
 }: t.UpdateSongArtistSagaPayload) => {
   try {
-    await db.runAsync(
-      'UPDATE Songs SET artistId = ? WHERE songId = ?',
+    await db.runAsync('UPDATE Songs SET artistId = ? WHERE songId = ?', [
       artistId,
       songId,
-    );
+    ]);
   } catch (err) {
     console.error('Error updating song artist', err);
   }
@@ -125,11 +118,10 @@ export const updateSongCompletion = async ({
   completed,
 }: t.UpdateSongCompletionSagaPayload) => {
   try {
-    await db.runAsync(
-      'UPDATE Songs SET completed = ? WHERE songId = ?',
+    await db.runAsync('UPDATE Songs SET completed = ? WHERE songId = ?', [
       completed,
       songId,
-    );
+    ]);
   } catch (err) {
     console.error('Error updating song completion', err);
   }

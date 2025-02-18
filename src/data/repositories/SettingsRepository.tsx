@@ -7,7 +7,8 @@ import { SQLiteDatabase } from 'expo-sqlite';
 export const fetchUserSettings = async (db: SQLiteDatabase) => {
   try {
     const settings: UserSettings = await db.getFirstAsync(
-      'SELECT * FROM Settings WHERE id = 1',
+      'SELECT * FROM Settings WHERE id = ?',
+      [1],
     );
     return {
       defaultSortType: settings.defaultSortType,
