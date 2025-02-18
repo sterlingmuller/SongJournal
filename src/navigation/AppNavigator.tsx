@@ -9,18 +9,17 @@ import LyricsScreen from '@src/screens/LyricsScreen';
 import HomeScreen from '@src/screens/HomeScreen';
 import MusicPlayerScreen from '@src/screens/MusicPlayerScreen';
 import { RootStackParamList } from '@src/components/common/types';
-import HeaderPageButton from '@src/components/songFolder/subcomponents/HeaderPageButton';
 import useHeaderStyles from '@styles/header';
-import HeaderBackButton from '@src/components/common/components/HeaderBackButton';
 import { Screen } from '@src/components/common/enums';
 import SetlistScreen from '@src/screens/SetlistScreen';
-import CustomHeaderTitle from '@src/components/common/components/CustomHeaderTitle';
-import { useColorTheme } from '@src/state/context/ThemeContext';
+import DefaultHeader from './subcomponents/DefaultHeader';
+import { selectCurrentSongTitle } from '@src/state/selectors/songsSelector';
+import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 
 const AppNavigator = () => {
   const RootStack = createNativeStackNavigator<RootStackParamList>();
   const styles = useHeaderStyles();
-  const { theme } = useColorTheme();
+  const title = useAppSelector(selectCurrentSongTitle);
 
   return (
     <NavigationContainer>
@@ -30,12 +29,7 @@ const AppNavigator = () => {
           name={Screen.SONG}
           component={SongScreen}
           options={{
-            ...styles,
-            headerTintColor: theme.headerText,
-            headerTitle: () => <CustomHeaderTitle />,
-            headerRight: () => <HeaderPageButton />,
-            headerLeft: () => <HeaderBackButton />,
-            headerBackVisible: false,
+            header: () => <DefaultHeader title={title} screen={Screen.SONG} />,
           }}
         />
         <RootStack.Screen
@@ -46,9 +40,8 @@ const AppNavigator = () => {
           }: {
             route: RouteProp<RootStackParamList, 'Recording'>;
           }) => ({
-            ...styles,
             animation: 'fade',
-            title: route.params.title,
+            header: () => <DefaultHeader title={route.params.title} />,
           })}
         />
         <RootStack.Screen
@@ -59,17 +52,23 @@ const AppNavigator = () => {
         <RootStack.Screen
           name={Screen.MUSIC_PLAYER}
           component={MusicPlayerScreen}
-          options={{ ...styles }}
+          options={{
+            header: () => <DefaultHeader title={Screen.MUSIC_PLAYER} />,
+          }}
         />
         <RootStack.Screen
           name={Screen.SETLIST}
           component={SetlistScreen}
-          options={{ ...styles }}
+          options={{
+            header: () => <DefaultHeader title={Screen.SETLIST} />,
+          }}
         />
         <RootStack.Screen
           name={Screen.SETTINGS}
           component={SettingsScreen}
-          options={{ ...styles }}
+          options={{
+            header: () => <DefaultHeader title={Screen.SETTINGS} />,
+          }}
         />
       </RootStack.Navigator>
     </NavigationContainer>

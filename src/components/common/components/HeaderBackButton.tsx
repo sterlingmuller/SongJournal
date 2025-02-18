@@ -8,7 +8,10 @@ const HeaderBackButton = () => {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity onPress={() => navigation.goBack()}>
+    <TouchableOpacity
+      onPress={() => navigation.goBack()}
+      style={{ paddingRight: 20 }}
+    >
       <BackIcon />
     </TouchableOpacity>
   );

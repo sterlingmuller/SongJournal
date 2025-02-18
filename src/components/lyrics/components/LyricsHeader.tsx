@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import InfoIcon from '@src/icons/InfoIcon';
 import BackIcon from '@src/icons/BackIcon';
-import useLyricsHeaderStyles from '@src/styles/lyricsHeader';
+import useLyricsHeaderStyles from '@src/styles/navigationHeader';
 import { selectCurrentSongTitle } from '@src/state/selectors/songsSelector';
 import CheckIcon from '@src/icons/CheckIcon';
 import CloseIcon from '@src/icons/CloseIcon';
