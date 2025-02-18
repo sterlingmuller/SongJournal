@@ -50,7 +50,7 @@ export const updateArtist = async ({
 
 export const deleteArtist = ({ db, artistId }: DeleteArtistDbPayload) => {
   try {
-    db.runSync('DELETE FROM Artists WHERE artistId = ?', artistId);
+    db.runSync('DELETE FROM Artists WHERE artistId = ?', [artistId]);
   } catch (err) {
     console.error('Error deleting artist', err);
   }
