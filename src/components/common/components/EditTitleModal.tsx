@@ -9,7 +9,8 @@ import SaveAndCancelButtons from '@src/components/common/components/SaveAndCance
 import useCommonModalStyle from '@src/styles/commonModal';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import useRenameUpdateAndUpload from '@src/utils/hooks/useRenameUpdateAndUpload';
-import { MAX_TITLE_LENGTH } from '../constants';
+import { MAX_TITLE_LENGTH } from '@src/components/common/constants';
+import { sanitizeInput } from '@src/utils/sanitizeInput';
 
 interface Props {
   titleToEdit: {
@@ -69,18 +70,20 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
   };
 
   const onSavePress = () => {
+    const sanitizedTitle = sanitizeInput(updatedTitle);
+
     if (takeId) {
       updateAndUploadTakeRename(
         originalSongTitle,
         originalTakeTitle,
-        updatedTitle,
+        sanitizedTitle,
         songId,
         takeId,
       );
     } else {
       updateAndUploadSongRename(
         originalSongTitle,
-        updatedTitle,
+        sanitizedTitle,
         songId,
         artistId,
         hasLyrics,

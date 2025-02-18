@@ -18,6 +18,7 @@ import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
 import Gap from '@src/components/common/components/Gap';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import { MAX_TITLE_LENGTH } from '@src/components/common/constants';
+import { sanitizeInput } from '@src/utils/sanitizeInput';
 
 interface Props {
   isNewSongOpen: boolean;
@@ -42,7 +43,8 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
   const disabled: boolean = !songTitle;
 
   const onSavePress = () => {
-    dispatch(createSongRequest({ db, title: songTitle }));
+    const sanitizedTitle = sanitizeInput(songTitle);
+    dispatch(createSongRequest({ db, title: sanitizedTitle }));
 
     navigate(Screen.SONG);
   };
@@ -74,7 +76,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
           <View style={styles.textbox}>
             <TextInput
               style={styles.input}
-              placeholder="Cobra Strike Alpha Deluxe"
+              placeholder="Cobra Strike Lightning Deluxe"
               placeholderTextColor={theme.secondaryText}
               value={songTitle}
               onChangeText={handleTitleChange}

@@ -14,6 +14,7 @@ import { addArtistRequest } from '@src/state/sagas/actionCreators';
 import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
 import Gap from '@src/components/common/components/Gap';
 import { useColorTheme } from '@src/state/context/ThemeContext';
+import { sanitizeInput } from '@src/utils/sanitizeInput';
 
 interface Props {
   isNewArtistOpen: boolean;
@@ -37,7 +38,9 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
   const disabled: boolean = !newArtist;
 
   const onSavePress = () => {
-    dispatch(addArtistRequest({ db, name: newArtist }));
+    const sanitizedArtistName = sanitizeInput(newArtist);
+    dispatch(addArtistRequest({ db, name: sanitizedArtistName }));
+    setNewArtist('');
     setIsNewArtistOpen(false);
   };
 
@@ -56,7 +59,9 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
               placeholder="Cobra Strike Alpha Deluxe"
               placeholderTextColor={theme.secondaryText}
               value={newArtist}
-              onChangeText={(title: string) => setNewArtist(title)}
+              onChangeText={(title: string) => {
+                setNewArtist(title);
+              }}
             />
           </View>
           {displayTips ? (
