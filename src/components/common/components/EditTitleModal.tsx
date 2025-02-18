@@ -9,6 +9,7 @@ import SaveAndCancelButtons from '@src/components/common/components/SaveAndCance
 import useCommonModalStyle from '@src/styles/commonModal';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import useRenameUpdateAndUpload from '@src/utils/hooks/useRenameUpdateAndUpload';
+import { MAX_TITLE_LENGTH } from '../constants';
 
 interface Props {
   titleToEdit: {
@@ -91,6 +92,12 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
 
   useEffect(() => addListener('blur', () => onExitPress()), [navigate]);
 
+  const handleTitleChange = (title: string) => {
+    if (title.length <= MAX_TITLE_LENGTH) {
+      setUpdatedTitle(title);
+    }
+  };
+
   return (
     <Modal
       isVisible={!!originalSongTitle}
@@ -99,19 +106,26 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
     >
       <View style={styles.container}>
         <StyledText style={styles.title}>{modalTitle}</StyledText>
-        <View style={styles.textbox}>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter a new title"
-            placeholderTextColor={theme.secondaryText}
-            value={updatedTitle}
-            onChangeText={(title: string) => setUpdatedTitle(title)}
-          />
-          {updatedTitle !== '' && (
-            <TouchableOpacity onPress={clearInput} style={styles.clearButton}>
-              <StyledText style={styles.boldText}>X</StyledText>
-            </TouchableOpacity>
-          )}
+        <View>
+          <View style={styles.textbox}>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter a new title"
+              placeholderTextColor={theme.secondaryText}
+              value={updatedTitle}
+              onChangeText={handleTitleChange}
+            />
+            {updatedTitle !== '' && (
+              <TouchableOpacity onPress={clearInput} style={styles.clearButton}>
+                <StyledText style={styles.boldText}>X</StyledText>
+              </TouchableOpacity>
+            )}
+          </View>
+          <View style={styles.infoContainer}>
+            <StyledText style={styles.infoText}>
+              {updatedTitle.length}/{MAX_TITLE_LENGTH}
+            </StyledText>
+          </View>
         </View>
         <SaveAndCancelButtons
           onPress={onSavePress}

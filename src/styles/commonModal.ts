@@ -6,11 +6,13 @@ interface Styles {
   textbox: ViewStyle;
   clearButton: ViewStyle;
   button: ViewStyle;
+  infoContainer: ViewStyle;
   title: TextStyle;
   input: TextStyle;
   text: TextStyle;
   boldText: TextStyle;
   tipText: TextStyle;
+  infoText: TextStyle;
 }
 
 const useCommonModalStyle = () => {
@@ -42,8 +44,8 @@ const useCommonModalStyle = () => {
       width: '75%',
       borderWidth: 1,
       borderColor: '#ccc',
-      marginLeft: 25,
-      marginBottom: 10,
+      alignSelf: 'center',
+      marginBottom: 5,
     },
 
     input: {
@@ -71,7 +73,18 @@ const useCommonModalStyle = () => {
       fontSize: 12,
       textAlign: 'center',
       marginHorizontal: 20,
+    },
+
+    infoContainer: {
+      width: '75%',
+      alignSelf: 'center',
       paddingBottom: 10,
+    },
+
+    infoText: {
+      textAlign: 'right',
+      fontSize: 14,
+      color: 'gray',
     },
   });
 
