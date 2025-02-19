@@ -1,4 +1,5 @@
 import { Switch, View } from 'react-native';
+import { useState, useEffect } from 'react';
 
 import StyledText from '@src/components/common/components/StyledText';
 import { useColorTheme } from '@src/state/context/ThemeContext';
@@ -13,15 +14,25 @@ interface Props {
 const SettingsToggle = ({ label, isActive, onToggle }: Props) => {
   const styles = usePreferencesStyle();
   const { theme } = useColorTheme();
+  const [localActive, setLocalActive] = useState(isActive);
+
+  useEffect(() => {
+    setLocalActive(isActive);
+  }, [isActive]);
+
+  const handleToggle = () => {
+    setLocalActive(!localActive);
+    onToggle();
+  };
 
   return (
     <View style={styles.toggleContainer}>
       <StyledText style={styles.toggleLabel}>{label}</StyledText>
       <Switch
-        value={isActive}
-        onValueChange={onToggle}
+        value={localActive}
+        onValueChange={handleToggle}
         trackColor={{ false: theme.highlight, true: theme.mutedPrimary }}
-        thumbColor={isActive ? theme.primary : '#f4f3f4'}
+        thumbColor={localActive ? theme.primary : '#f4f3f4'}
       />
     </View>
   );
