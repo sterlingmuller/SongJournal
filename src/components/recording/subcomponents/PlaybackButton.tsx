@@ -21,7 +21,7 @@ const PlaybackButton = ({ uri, songId }: Props) => {
   };
 
   return (
-    <TouchableOpacity style={{}} onPress={handlePlaybackPress}>
+    <TouchableOpacity style={{}} onPress={handlePlaybackPress} hitSlop={20}>
       {isPlaying ? (
         <PauseRecordingPlaybackIcon />
       ) : (

@@ -35,10 +35,10 @@ const LyricsHeader = (props: Props) => {
     if (displaySave) {
       return (
         <View style={styles.headerIconRow}>
-          <TouchableOpacity onPress={handleSaveLyrics}>
+          <TouchableOpacity onPress={handleSaveLyrics} hitSlop={10}>
             <CheckIcon />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleCancelEdit}>
+          <TouchableOpacity onPress={handleCancelEdit} hitSlop={10}>
             <CloseIcon />
           </TouchableOpacity>
         </View>
@@ -46,7 +46,10 @@ const LyricsHeader = (props: Props) => {
     }
 
     return (
-      <TouchableOpacity onPress={() => setIsInfoModalOpen(!isInfoModalOpen)}>
+      <TouchableOpacity
+        onPress={() => setIsInfoModalOpen(!isInfoModalOpen)}
+        hitSlop={20}
+      >
         <InfoIcon />
       </TouchableOpacity>
     );

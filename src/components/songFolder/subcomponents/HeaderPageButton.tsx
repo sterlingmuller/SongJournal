@@ -6,7 +6,10 @@ import { useSQLiteContext } from 'expo-sqlite';
 import PageIcon from '@src/icons/PageIcon';
 import { RootStackParamList } from '@src/components/common/types';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
-import { useAppDispatch, useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '@src/utils/hooks/typedReduxHooks';
 import { fetchPageRequest } from '@src/state/sagas/actionCreators';
 import { selectCurrentSongId } from '@src/state/selectors/songsSelector';
 import { Screen } from '@src/components/common/enums';
@@ -26,7 +29,7 @@ const HeaderPageButton = () => {
   };
 
   return (
-    <TouchableOpacity onPress={onNavigationPress}>
+    <TouchableOpacity onPress={onNavigationPress} hitSlop={20}>
       <PageIcon />
     </TouchableOpacity>
   );

@@ -46,7 +46,7 @@ const AboutArtist = ({ selectedArtistId, setSelectedArtistId }: Props) => {
           </TouchableOpacity>
           <StyledText>Artist</StyledText>
         </View>
-        <TouchableOpacity onPress={() => setIsNewArtistOpen(true)}>
+        <TouchableOpacity onPress={() => setIsNewArtistOpen(true)} hitSlop={20}>
           <StyledText style={styles.artistEditText}>+ Add or Edit</StyledText>
         </TouchableOpacity>
       </View>

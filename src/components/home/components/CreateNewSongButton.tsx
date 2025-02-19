@@ -16,6 +16,7 @@ const CreateNewSongButton = ({ setIsNewSongOpen }: Props) => {
       style={styles.container}
       onPress={() => setIsNewSongOpen(true)}
       testID="touchable-opacity"
+      hitSlop={10}
     >
       <NewSongIcon />
     </TouchableOpacity>
