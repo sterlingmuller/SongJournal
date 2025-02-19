@@ -5,6 +5,7 @@ interface Styles {
   container: ViewStyle;
   recordingRow: ViewStyle;
   sideButton: ViewStyle;
+  disabledButtonText: TextStyle;
   buttonText: TextStyle;
   recordButtonContainer: ViewStyle;
   timerContainer: ViewStyle;
@@ -34,8 +35,14 @@ const useRecordingStyles = () => {
       width: 120,
       alignItems: 'center',
     },
+    disabledButtonText: {
+      fontSize: 18,
+      color: theme.secondaryText,
+    },
     buttonText: {
       fontSize: 18,
+      color: theme.primaryText,
+      fontWeight: 600,
     },
     recordButtonContainer: {
       flex: 1,
