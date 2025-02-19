@@ -32,6 +32,7 @@ interface Props {
 
 const RecordingControls = (props: Props) => {
   const {
+    recordingDuration,
     setRecordingDuration,
     isRecording,
     setIsRecording,
@@ -108,10 +109,11 @@ const RecordingControls = (props: Props) => {
     setWave([]);
     fullWaveRef.current = [];
 
-    clearRecording(recording, setRecording, setUri, setRecordingWave);
+    clearRecording(recording, setRecording, setRecordingWave);
     // setRecordingWave([]);
     setIsRecording(false);
     setRecordingDuration(null);
+    setUri(null);
   };
 
   const onSavePress = async () => {
@@ -130,14 +132,21 @@ const RecordingControls = (props: Props) => {
     goBack();
   };
 
+  const isDisabled = recordingDuration === null;
+
   return (
     <View style={styles.recordingRow}>
       <TouchableOpacity
         onPress={onClearPress}
         style={styles.sideButton}
         hitSlop={20}
+        disabled={isDisabled}
       >
-        <Text style={styles.buttonText}>Clear</Text>
+        <Text
+          style={isDisabled ? styles.disabledButtonText : styles.buttonText}
+        >
+          Clear
+        </Text>
       </TouchableOpacity>
       <View style={styles.recordButtonContainer}>
         {uri ? (
@@ -150,8 +159,13 @@ const RecordingControls = (props: Props) => {
         onPress={onSavePress}
         style={styles.sideButton}
         hitSlop={20}
+        disabled={isDisabled}
       >
-        <Text style={styles.buttonText}>Save</Text>
+        <Text
+          style={isDisabled ? styles.disabledButtonText : styles.buttonText}
+        >
+          Save
+        </Text>
       </TouchableOpacity>
     </View>
   );

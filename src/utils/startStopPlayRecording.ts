@@ -78,7 +78,6 @@ export const stopRecording = async (recording: Audio.Recording) => {
 export const clearRecording = async (
   recording: Audio.Recording | null,
   setRecording: (value: Audio.Recording | null) => void,
-  setRecordingUri: (uri: string | null) => void,
   setRecordingWave: (value: number[] | ((value: number[]) => number[])) => void,
 ) => {
   if (recording) {
@@ -88,7 +87,6 @@ export const clearRecording = async (
   }
 
   setRecordingWave([]);
-  setRecordingUri(null);
 };
 
 export const playRecording = async (uri: string) => {
