@@ -22,7 +22,7 @@ const HomeHeader = (props: Props) => {
   return (
     <View style={styles.container}>
       <SearchBar searchText={searchText} setSearchText={setSearchText} />
-      <TouchableOpacity onPress={toggleSort}>
+      <TouchableOpacity onPress={toggleSort} hitSlop={20}>
         {isSortOpen ? <HorzDotsIcon /> : <VertDotsIcon />}
       </TouchableOpacity>
     </View>

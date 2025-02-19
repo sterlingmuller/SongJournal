@@ -17,6 +17,7 @@ const CompletionStatus = ({ isCompleted, handleInputChange }: Props) => {
       <TouchableOpacity
         style={styles.checkbox}
         onPress={() => handleInputChange()}
+        hitSlop={20}
       >
         {isCompleted ? <CheckIcon /> : null}
       </TouchableOpacity>

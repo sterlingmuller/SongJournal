@@ -12,7 +12,7 @@ interface Props {
 
 const RecordButton = ({ onPress, isRecording, style }: Props) => {
   return (
-    <TouchableOpacity style={style} onPress={onPress}>
+    <TouchableOpacity style={style} onPress={onPress} hitSlop={10}>
       {isRecording ? <StopRecordIcon /> : <RecordIcon />}
     </TouchableOpacity>
   );

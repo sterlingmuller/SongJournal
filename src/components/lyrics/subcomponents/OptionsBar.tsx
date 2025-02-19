@@ -57,6 +57,7 @@ const OptionsBar = ({ selectedOption, setSelectedOption, page }: Props) => {
             ]}
             onPress={() => handleOptionPress(option.name)}
             disabled={inDevelopment}
+            hitSlop={20}
           >
             {<option.icon />}
           </TouchableOpacity>

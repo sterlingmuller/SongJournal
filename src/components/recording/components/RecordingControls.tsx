@@ -132,7 +132,11 @@ const RecordingControls = (props: Props) => {
 
   return (
     <View style={styles.recordingRow}>
-      <TouchableOpacity onPress={onClearPress} style={styles.sideButton}>
+      <TouchableOpacity
+        onPress={onClearPress}
+        style={styles.sideButton}
+        hitSlop={20}
+      >
         <Text style={styles.buttonText}>Clear</Text>
       </TouchableOpacity>
       <View style={styles.recordButtonContainer}>
@@ -142,7 +146,11 @@ const RecordingControls = (props: Props) => {
           <RecordButton onPress={onRecordPress} isRecording={isRecording} />
         )}
       </View>
-      <TouchableOpacity onPress={onSavePress} style={styles.sideButton}>
+      <TouchableOpacity
+        onPress={onSavePress}
+        style={styles.sideButton}
+        hitSlop={20}
+      >
         <Text style={styles.buttonText}>Save</Text>
       </TouchableOpacity>
     </View>
