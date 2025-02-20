@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, KeyboardAvoidingView } from 'react-native';
 import Modal from 'react-native-modal';
 
 import SortByCategories from '@src/components/home/subcomponents/SortCategories';
@@ -33,29 +33,31 @@ const SortByModal = (props: Props) => {
   const onExitPress = () => setIsSortOpen(false);
 
   return (
-    <Modal
-      isVisible={isSortOpen}
-      avoidKeyboard
-      onBackdropPress={onExitPress}
-      style={{ margin: 0 }}
-    >
-      <View style={styles.container}>
-        <Text style={styles.title}>Sort by</Text>
-        <View style={styles.line} />
-        <SortByCategories
-          sortedCategory={sortedCategory}
-          setSortedCategory={setSortedCategory}
-          isSortAscending={isSortAscending}
-          setIsSortAscending={setIsSortAscending}
-        />
-        <Text style={styles.title}>Filter</Text>
-        <View style={styles.line} />
-        <FilterSection
-          activeFilters={activeFilters}
-          setActiveFilters={setActiveFilters}
-        />
-      </View>
-    </Modal>
+    <KeyboardAvoidingView>
+      <Modal
+        isVisible={isSortOpen}
+        avoidKeyboard
+        onBackdropPress={onExitPress}
+        style={{ margin: 0 }}
+      >
+        <View style={styles.container}>
+          <Text style={styles.title}>Sort by</Text>
+          <View style={styles.line} />
+          <SortByCategories
+            sortedCategory={sortedCategory}
+            setSortedCategory={setSortedCategory}
+            isSortAscending={isSortAscending}
+            setIsSortAscending={setIsSortAscending}
+          />
+          <Text style={styles.title}>Filter</Text>
+          <View style={styles.line} />
+          <FilterSection
+            activeFilters={activeFilters}
+            setActiveFilters={setActiveFilters}
+          />
+        </View>
+      </Modal>
+    </KeyboardAvoidingView>
   );
 };
 
