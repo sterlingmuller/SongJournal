@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, TouchableOpacity } from 'react-native';
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Modal from 'react-native-modal';
 
@@ -102,41 +107,46 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
   };
 
   return (
-    <Modal
-      isVisible={!!originalSongTitle}
-      avoidKeyboard
-      onBackdropPress={onExitPress}
-    >
-      <View style={styles.container}>
-        <StyledText style={styles.title}>{modalTitle}</StyledText>
-        <View>
-          <View style={styles.textbox}>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter a new title"
-              placeholderTextColor={theme.secondaryText}
-              value={updatedTitle}
-              onChangeText={handleTitleChange}
-            />
-            {updatedTitle !== '' && (
-              <TouchableOpacity onPress={clearInput} style={styles.clearButton}>
-                <StyledText style={styles.boldText}>X</StyledText>
-              </TouchableOpacity>
-            )}
+    <KeyboardAvoidingView>
+      <Modal
+        isVisible={!!originalSongTitle}
+        avoidKeyboard
+        onBackdropPress={onExitPress}
+      >
+        <View style={styles.container}>
+          <StyledText style={styles.title}>{modalTitle}</StyledText>
+          <View>
+            <View style={styles.textbox}>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter a new title"
+                placeholderTextColor={theme.secondaryText}
+                value={updatedTitle}
+                onChangeText={handleTitleChange}
+              />
+              {updatedTitle !== '' && (
+                <TouchableOpacity
+                  onPress={clearInput}
+                  style={styles.clearButton}
+                >
+                  <StyledText style={styles.boldText}>X</StyledText>
+                </TouchableOpacity>
+              )}
+            </View>
+            <View style={styles.infoContainer}>
+              <StyledText style={styles.infoText}>
+                {updatedTitle.length}/{MAX_TITLE_LENGTH}
+              </StyledText>
+            </View>
           </View>
-          <View style={styles.infoContainer}>
-            <StyledText style={styles.infoText}>
-              {updatedTitle.length}/{MAX_TITLE_LENGTH}
-            </StyledText>
-          </View>
+          <SaveAndCancelButtons
+            onPress={onSavePress}
+            onExitPress={onExitPress}
+            disabled={disabled}
+          />
         </View>
-        <SaveAndCancelButtons
-          onPress={onSavePress}
-          onExitPress={onExitPress}
-          disabled={disabled}
-        />
-      </View>
-    </Modal>
+      </Modal>
+    </KeyboardAvoidingView>
   );
 };
 

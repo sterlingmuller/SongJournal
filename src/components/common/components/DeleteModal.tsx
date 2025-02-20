@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Button } from 'react-native';
+import { View, Button, KeyboardAvoidingView } from 'react-native';
 import Modal from 'react-native-modal';
 import { useSQLiteContext } from 'expo-sqlite';
 
@@ -80,25 +80,27 @@ const DeleteModal = (props: Props) => {
   };
 
   return (
-    <Modal isVisible={!!title} avoidKeyboard onBackdropPress={onExitPress}>
-      <View style={styles.container}>
-        <StyledText style={styles.title}>
-          Delete {title} from Google account and current device
-        </StyledText>
-        <StyledText style={styles.text}>
-          {title}
-          {deleteText}
-        </StyledText>
-        <View style={styles.buttons}>
-          <View style={styles.button}>
-            <Button title="Delete" onPress={onDeletePress} color="red" />
-          </View>
-          <View style={styles.button}>
-            <Button title="Cancel" color="#D6D6D6" onPress={onExitPress} />
+    <KeyboardAvoidingView>
+      <Modal isVisible={!!title} avoidKeyboard onBackdropPress={onExitPress}>
+        <View style={styles.container}>
+          <StyledText style={styles.title}>
+            Delete {title} from Google account and current device
+          </StyledText>
+          <StyledText style={styles.text}>
+            {title}
+            {deleteText}
+          </StyledText>
+          <View style={styles.buttons}>
+            <View style={styles.button}>
+              <Button title="Delete" onPress={onDeletePress} color="red" />
+            </View>
+            <View style={styles.button}>
+              <Button title="Cancel" color="#D6D6D6" onPress={onExitPress} />
+            </View>
           </View>
         </View>
-      </View>
-    </Modal>
+      </Modal>
+    </KeyboardAvoidingView>
   );
 };
 
