@@ -52,9 +52,15 @@ function* addArtistSaga(action: PayloadAction<AddArtistDbPayload>) {
 
 function* updateArtistSaga(action: PayloadAction<UpdateArtistDbPayload>) {
   yield put(startLoading());
+
   try {
-    const updatedArtist = yield call(updateArtist, action.payload);
-    yield put(updateArtistSuccess(updatedArtist));
+    yield call(updateArtist, action.payload);
+    yield put(
+      updateArtistSuccess({
+        artistId: action.payload.artistId,
+        name: action.payload.name,
+      }),
+    );
     yield put(endLoading());
   } catch (error) {
     yield put(setError(error));

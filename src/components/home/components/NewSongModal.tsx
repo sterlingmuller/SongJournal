@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, KeyboardAvoidingView } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Modal from 'react-native-modal';
 import { useSQLiteContext } from 'expo-sqlite';
@@ -65,43 +65,45 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
   };
 
   return (
-    <Modal
-      isVisible={isNewSongOpen}
-      avoidKeyboard
-      onBackdropPress={onExitPress}
-    >
-      <View style={styles.container}>
-        <StyledText style={styles.title}>Song Title</StyledText>
-        <View>
-          <View style={styles.textbox}>
-            <TextInput
-              style={styles.input}
-              placeholder="Cobra Strike Lightning Deluxe"
-              placeholderTextColor={theme.secondaryText}
-              value={songTitle}
-              onChangeText={handleTitleChange}
-            />
+    <KeyboardAvoidingView>
+      <Modal
+        isVisible={isNewSongOpen}
+        avoidKeyboard
+        onBackdropPress={onExitPress}
+      >
+        <View style={styles.container}>
+          <StyledText style={styles.title}>Song Title</StyledText>
+          <View>
+            <View style={styles.textbox}>
+              <TextInput
+                style={styles.input}
+                placeholder="Cobra Strike Lightning Deluxe"
+                placeholderTextColor={theme.secondaryText}
+                value={songTitle}
+                onChangeText={handleTitleChange}
+              />
+            </View>
+            <View style={styles.infoContainer}>
+              <StyledText style={styles.infoText}>
+                {songTitle.length}/{MAX_TITLE_LENGTH}
+              </StyledText>
+            </View>
+            {displayTips ? (
+              <StyledText style={styles.tipText}>
+                Tip: Double Tap the Title of a saved Song or Take to rename
+              </StyledText>
+            ) : (
+              <Gap />
+            )}
           </View>
-          <View style={styles.infoContainer}>
-            <StyledText style={styles.infoText}>
-              {songTitle.length}/{MAX_TITLE_LENGTH}
-            </StyledText>
-          </View>
-          {displayTips ? (
-            <StyledText style={styles.tipText}>
-              Tip: Double Tap the Title of a saved Song or Take to rename
-            </StyledText>
-          ) : (
-            <Gap />
-          )}
+          <SaveAndCancelButtons
+            onPress={onSavePress}
+            onExitPress={onExitPress}
+            disabled={disabled}
+          />
         </View>
-        <SaveAndCancelButtons
-          onPress={onSavePress}
-          onExitPress={onExitPress}
-          disabled={disabled}
-        />
-      </View>
-    </Modal>
+      </Modal>
+    </KeyboardAvoidingView>
   );
 };
 
