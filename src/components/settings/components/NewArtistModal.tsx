@@ -5,7 +5,6 @@ import { useSQLiteContext } from 'expo-sqlite';
 
 import StyledText from '@src/components/common/components/StyledText';
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
-import useCommonModalStyle from '@src/styles/commonModal';
 import {
   useAppDispatch,
   useAppSelector,
@@ -16,6 +15,8 @@ import Gap from '@src/components/common/components/Gap';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import { sanitizeInput } from '@src/utils/sanitizeInput';
 import { MAX_TITLE_LENGTH } from '@src/components/common/constants';
+import EditOrDeleteArtist from '../subcomponents/EditOrDeleteArtist';
+import useEditOrAddArtistStyles from '@src/styles/editOrAddArtist';
 
 interface Props {
   isNewArtistOpen: boolean;
@@ -25,7 +26,7 @@ interface Props {
 const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
   const db = useSQLiteContext();
   const dispatch = useAppDispatch();
-  const styles = useCommonModalStyle();
+  const styles = useEditOrAddArtistStyles();
   const displayTips = useAppSelector(selectDisplayTips);
   const { theme } = useColorTheme();
 
@@ -51,12 +52,12 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
       avoidKeyboard
       onBackdropPress={onExitPress}
     >
-      <View style={styles.container}>
-        <StyledText style={styles.title}>Add New Artist</StyledText>
+      <View style={styles.modalContainer}>
+        <StyledText style={styles.title}>Add or Edit Artist</StyledText>
         <View>
           <View style={styles.textbox}>
             <TextInput
-              style={styles.input}
+              style={styles.newArtistInput}
               placeholder="Cobra Strike Alpha Deluxe"
               placeholderTextColor={theme.secondaryText}
               value={newArtist}
@@ -81,11 +82,14 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
             <Gap />
           )}
         </View>
-        <SaveAndCancelButtons
-          onPress={onSavePress}
-          onExitPress={onExitPress}
-          disabled={disabled}
-        />
+        <EditOrDeleteArtist />
+        <View style={styles.buttons}>
+          <SaveAndCancelButtons
+            onPress={onSavePress}
+            onExitPress={onExitPress}
+            disabled={disabled}
+          />
+        </View>
       </View>
     </Modal>
   );
