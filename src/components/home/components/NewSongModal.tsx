@@ -19,6 +19,7 @@ import Gap from '@src/components/common/components/Gap';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import { MAX_TITLE_LENGTH } from '@src/components/common/constants';
 import { sanitizeInput } from '@src/utils/sanitizeInput';
+import { useAudioPlayer } from '@src/state/context/AudioContext';
 
 interface Props {
   isNewSongOpen: boolean;
@@ -33,6 +34,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
   const styles = useCommonModalStyle();
   const displayTips = useAppSelector(selectDisplayTips);
   const { theme } = useColorTheme();
+  const { clearPlayback } = useAudioPlayer();
 
   const [songTitle, setSongTitle] = useState('');
   const onExitPress = () => {
@@ -46,6 +48,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
     const sanitizedTitle = sanitizeInput(songTitle);
     dispatch(createSongRequest({ db, title: sanitizedTitle }));
 
+    clearPlayback();
     navigate(Screen.SONG);
   };
 
