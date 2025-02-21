@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import RecordButton from '@src/components/common/components/RecordButton';
 import DeleteModal from '@src/components/common/components/DeleteModal';
@@ -29,10 +30,12 @@ import { useAudioPlayer } from '@src/state/context/AudioContext';
 import { Screen } from '@src/components/common/enums';
 import EditTitleModal from '@src/components/common/components/EditTitleModal';
 import MaxTakesModal from '@src/components/songFolder/components/MaxTakesModal';
+import { setCurrentSongId } from '@src/state/slice/currentSongSlice';
 
 const SongScreen = () => {
   const styles = useSongScreenStyles();
   const globalStyles = useGlobalStyles();
+  const dispatch = useDispatch();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const totalTakes = useAppSelector(selectCurrentSongTotalTakes);
   const takes = useAppSelector(selectCurrentSongTakes);
@@ -83,6 +86,7 @@ const SongScreen = () => {
   useEffect(() => {
     navigation.addListener('beforeRemove', () => {
       clearPlayback();
+      dispatch(setCurrentSongId(-1));
     });
   }, [navigation]);
 

@@ -3,6 +3,7 @@ import {
   CloudConnection,
   Conductor,
   LyricsOption,
+  Screen,
   SortBy,
 } from '@src/components/common/enums';
 
@@ -14,7 +15,7 @@ export type FilterOptions = {
 export type RootStackParamList = {
   Home: undefined;
   Song: undefined;
-  Lyrics: undefined;
+  Lyrics: { previousScreen: Screen.HOME | Screen.SONG };
   Settings: undefined;
   Recording: { title: string };
   Covers: undefined;
