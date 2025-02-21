@@ -84,6 +84,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
                 placeholderTextColor={theme.secondaryText}
                 value={songTitle}
                 onChangeText={handleTitleChange}
+                autoCapitalize="words"
               />
             </View>
             <View style={styles.infoContainer}>

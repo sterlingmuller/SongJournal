@@ -66,6 +66,7 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
                   setNewArtist(title);
                 }
               }}
+              autoCapitalize="words"
             />
           </View>
           <View style={styles.infoContainer}>

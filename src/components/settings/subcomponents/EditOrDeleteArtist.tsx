@@ -96,6 +96,7 @@ const EditOrDeleteArtist = () => {
                     placeholder={name}
                     style={styles.input}
                     autoFocus
+                    autoCapitalize="words"
                   />
                 </View>
               ) : (
