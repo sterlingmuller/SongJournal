@@ -19,6 +19,7 @@ import {
   WAVE_BAR_TOTAL_WIDTH,
 } from '@src/components/common/constants';
 import useTakeGenerator from '@src/utils/hooks/useTakeGenerator';
+import { Screen } from '@src/components/common/enums';
 
 interface Props {
   recordingDuration: number;
@@ -42,7 +43,7 @@ const RecordingControls = (props: Props) => {
 
   const { goBack } = useNavigation();
   const styles = useRecordingStyles();
-  const route = useRoute<RouteProp<RootStackParamList, 'Recording'>>();
+  const route = useRoute<RouteProp<RootStackParamList, Screen.RECORDING>>();
   const songId = useAppSelector(selectCurrentSongId);
   const generateTake = useTakeGenerator();
   const [recording, setRecording] = useState<Audio.Recording | null>(null);

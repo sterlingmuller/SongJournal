@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 
 import LyricsHeader from '@src/components/lyrics/components/LyricsHeader';
 import InfoModal from '@src/components/lyrics/components/InfoModal';
@@ -12,14 +12,29 @@ import LoadingIndicator from '@src/components/common/components/LoadingIndicator
 import useLyricScreenStyles from '@styles/lyricsScreen';
 import OptionsBar from '@src/components/lyrics/subcomponents/OptionsBar';
 import EditLyricsSheet from '@src/components/lyrics/components/EditLyricsSheet';
-import { LyricsOption } from '@src/components/common/enums';
+import { LyricsOption, Screen } from '@src/components/common/enums';
 import useLyricsSheetGenerator from '@src/utils/hooks/useLyricsSheetGenerator';
+import { useDispatch } from 'react-redux';
+import { setCurrentSongId } from '@src/state/slice/currentSongSlice';
+import { RootStackParamList } from '@src/components/common/types';
 
 const LyricsScreen = () => {
   const styles = useLyricScreenStyles();
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const route = useRoute<RouteProp<RootStackParamList, Screen.LYRICS>>();
+
   const page = useAppSelector(selectCurrentSongPage);
   const songId = useAppSelector(selectCurrentSongId);
   const { updateLyrics } = useLyricsSheetGenerator();
+
+  useEffect(() => {
+    navigation.addListener('beforeRemove', () => {
+      if (route.params?.previousScreen === Screen.HOME) {
+        dispatch(setCurrentSongId(-1));
+      }
+    });
+  }, [navigation]);
 
   const [selectedOption, setSelectedOption] = useState<LyricsOption>(
     LyricsOption.NONE,

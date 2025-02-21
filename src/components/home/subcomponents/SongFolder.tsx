@@ -72,12 +72,12 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
   const handleOnPressNavigation = useCallback(
     (screen: Screen.SONG | Screen.LYRICS) => {
       dispatch(setCurrentSongId(songId));
-      if (screen === Screen.LYRICS) {
-        dispatch(fetchPageRequest({ songId, db }));
-      }
       clearPlayback();
 
-      navigate(screen);
+      if (screen === Screen.LYRICS) {
+        dispatch(fetchPageRequest({ songId, db }));
+        navigate(screen, { previousScreen: Screen.HOME });
+      } else navigate(screen);
     },
     [dispatch, songId, db, navigate],
   );
