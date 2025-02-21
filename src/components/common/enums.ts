@@ -3,7 +3,7 @@ export enum Screen {
   RECORDING = 'Recording',
   HOME = 'Home',
   LYRICS = 'Lyrics',
-  MUSIC_PLAYER = 'MusicPlayer',
+  COVERS = 'Covers',
   SETLIST = 'Setlist',
   SETTINGS = 'Settings',
   CONNECTION_SUCCESS = 'ConnectionSuccess',

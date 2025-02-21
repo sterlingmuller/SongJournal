@@ -12,10 +12,11 @@ const useHomeFooterStyles = () => {
     container: {
       flexDirection: 'row',
       width: '100%',
-      height: 90,
+      height: 80,
       alignItems: 'center',
       justifyContent: 'space-around',
       backgroundColor: theme.primary,
+      alignSelf: 'center',
     },
   });
 
