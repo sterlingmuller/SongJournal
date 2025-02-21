@@ -29,7 +29,6 @@ const artistSlice = createSlice({
       state: ArtistsSliceState,
       action: PayloadAction<Artist>,
     ) => {
-      console.log('success payload:', action.payload);
       const index = state.items.findIndex(
         (artist: Artist) => artist.artistId === action.payload.artistId,
       );

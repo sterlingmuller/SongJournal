@@ -13,10 +13,7 @@ import {
   useAppDispatch,
 } from '@src/utils/hooks/typedReduxHooks';
 import { selectArtists } from '@src/state/selectors/artistsSelector';
-import {
-  deleteArtistRequest,
-  updateArtistRequest,
-} from '@src/state/sagas/actionCreators';
+import { deleteArtistRequest } from '@src/state/sagas/actionCreators';
 import { useSQLiteContext } from 'expo-sqlite';
 import { Artist } from '@src/components/common/types';
 import EditIcon from '@src/icons/EditIcon';
@@ -24,6 +21,8 @@ import CheckIcon from '@src/icons/CheckIcon';
 import TrashIcon from '@src/icons/TrashIcon';
 import CloseIcon from '@src/icons/CloseIcon';
 import { MAX_TITLE_LENGTH } from '@src/components/common/constants';
+import { updateArtistRequest } from '@src/state/thunk/artistThunk';
+import { updateArtistSuccess } from '@src/state/slice/artistsSlice';
 
 const EditOrDeleteArtist = () => {
   const styles = useEditOrAddArtistStyles();
@@ -42,19 +41,30 @@ const EditOrDeleteArtist = () => {
     setEditingArtistId(null);
   };
 
-  const handleSaveEdit = (originalName: string) => {
+  const handleSaveEdit = async (originalName: string) => {
     if (newArtistName && newArtistName !== originalName) {
-      dispatch(
-        updateArtistRequest({
-          name: newArtistName,
-          artistId: editingArtistId,
-          db,
-        }),
-      );
+      try {
+        const resultAction = await dispatch(
+          updateArtistRequest({
+            name: newArtistName,
+            artistId: editingArtistId,
+            db,
+          }),
+        );
 
-      // add wait for loading so name state isn't seen changing. Do this with Actions on React 19
-      setEditingArtistId(null);
-      setNewArtistName('');
+        if (updateArtistRequest.fulfilled.match(resultAction)) {
+          dispatch(
+            updateArtistSuccess({
+              artistId: editingArtistId,
+              name: newArtistName,
+            }),
+          );
+          setEditingArtistId(null);
+          setNewArtistName('');
+        }
+      } catch (err) {
+        console.error('Error updating artist:', err);
+      }
     }
   };
 
@@ -84,12 +94,11 @@ const EditOrDeleteArtist = () => {
       const isEditingArtist = editingArtistId === artistId;
 
       return (
-        <>
-          <View style={styles.artistRow} key={artistId}>
+        <View key={artistId}>
+          <View style={styles.artistRow}>
             <View style={styles.artistNameContainer}>
               {isEditingArtist ? (
                 <View style={styles.editTextbox}>
-                  {/* input change is flickering, think has to do with setting state in map, see if react compiler addresses issue */}
                   <TextInput
                     value={newArtistName}
                     onChangeText={handleArtistChange}
@@ -135,7 +144,7 @@ const EditOrDeleteArtist = () => {
             </View>
           </View>
           <View style={styles.separator} />
-        </>
+        </View>
       );
     });
 
