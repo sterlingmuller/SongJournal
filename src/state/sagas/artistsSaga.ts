@@ -3,13 +3,11 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import {
   fetchArtists,
   addArtist,
-  updateArtist,
   deleteArtist,
 } from '@src/data/repositories/ArtistsRepository';
 import {
   addArtistSuccess,
   fetchArtistsSuccess,
-  updateArtistSuccess,
   removeArtistSuccess,
 } from '@src/state/slice/artistsSlice';
 import {
@@ -21,7 +19,6 @@ import { SQLiteDatabase } from 'expo-sqlite';
 import {
   AddArtistDbPayload,
   DeleteArtistDbPayload,
-  UpdateArtistDbPayload,
 } from '@src/components/common/types';
 import * as at from '@src/state/sagas/actionTypes';
 
@@ -50,23 +47,6 @@ function* addArtistSaga(action: PayloadAction<AddArtistDbPayload>) {
   }
 }
 
-function* updateArtistSaga(action: PayloadAction<UpdateArtistDbPayload>) {
-  yield put(startLoading());
-
-  try {
-    yield call(updateArtist, action.payload);
-    yield put(
-      updateArtistSuccess({
-        artistId: action.payload.artistId,
-        name: action.payload.name,
-      }),
-    );
-    yield put(endLoading());
-  } catch (error) {
-    yield put(setError(error));
-  }
-}
-
 function* deleteArtistSaga(action: PayloadAction<DeleteArtistDbPayload>) {
   yield put(startLoading());
   try {
@@ -81,6 +61,5 @@ function* deleteArtistSaga(action: PayloadAction<DeleteArtistDbPayload>) {
 export default function* artistsSaga() {
   yield takeLatest(at.FETCH_ARTISTS_REQUEST, fetchArtistsSaga);
   yield takeLatest(at.ADD_ARTIST_REQUEST, addArtistSaga);
-  yield takeLatest(at.UPDATE_ARTIST_REQUEST, updateArtistSaga);
   yield takeLatest(at.DELETE_ARTIST_REQUEST, deleteArtistSaga);
 }
