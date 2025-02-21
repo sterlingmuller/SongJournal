@@ -17,6 +17,7 @@ import {
   Filter,
   LyricsOption,
   Conductor,
+  Screen,
 } from '@src/components/common/enums';
 import EggSelectIcon from '@src/icons/EggSelectIcon';
 import BadEggSelectIcon from '@src/icons/BadEggSelectIcon';
@@ -57,9 +58,9 @@ export const LYRIC_SCREEN_OPTIONS: t.LyricsScreenOption[] = [
 ];
 
 export const TABS: t.Tab[] = [
-  { name: 'Setlist', icon: PlaylistIcon },
-  { name: 'MusicPlayer', icon: MusicPlayerIcon },
-  { name: 'Settings', icon: SettingIcon },
+  { name: Screen.HOME, icon: PlaylistIcon },
+  { name: Screen.COVERS, icon: MusicPlayerIcon },
+  { name: Screen.SETTINGS, icon: SettingIcon },
 ];
 
 export const CONDUCTOR_ICONS = {

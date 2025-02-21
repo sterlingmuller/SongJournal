@@ -16,7 +16,7 @@ import CacsusIcon from '@src/icons/CacsusIcon';
 import DeadAdimIcon from '@src/icons/DeadAdimIcon';
 
 interface props {
-  screen: 'Home' | 'Song' | 'MusicPlayer' | 'Setlist' | 'ConnectionSuccess';
+  screen: 'Home' | 'Song' | 'Covers' | 'Setlist' | 'ConnectionSuccess';
 }
 const ComposerMessage = ({ screen }: props) => {
   const styles = useGetStartedHomeStyles();
@@ -49,11 +49,11 @@ const ComposerMessage = ({ screen }: props) => {
     </StyledText>
   );
 
-  const musicPlayerPlansMessage = (
+  const coversPlansMessage = (
     <StyledText style={styles.text}>
       Ah! What are <StyledText style={styles.italicText}>you</StyledText> doing
-      here!? The <StyledText style={styles.boldText}>Music Player</StyledText>{' '}
-      is not ready{' '}
+      here!? The <StyledText style={styles.boldText}>Covers Tab</StyledText> is
+      not ready{' '}
       <StyledText style={styles.boldText}>4{FRACTION_UNICODE}4</StyledText> the
       world to <StyledText style={styles.boldText}>C</StyledText>
     </StyledText>
@@ -87,8 +87,8 @@ const ComposerMessage = ({ screen }: props) => {
       message = getStartedSongInstructions;
       tip = songTip;
       break;
-    case Screen.MUSIC_PLAYER:
-      message = musicPlayerPlansMessage;
+    case Screen.COVERS:
+      message = coversPlansMessage;
       tip = '';
       break;
     case Screen.SETLIST:
