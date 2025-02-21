@@ -31,6 +31,7 @@ const PlaybackBar = ({ duration, fromSongTakes }: Props) => {
   const handleOnValueChange = (time: number) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     seekTo(time);
+    progress.value = time;
   };
 
   return (
