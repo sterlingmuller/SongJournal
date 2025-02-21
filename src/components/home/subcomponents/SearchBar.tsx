@@ -37,6 +37,7 @@ const SearchBar = ({ searchText, setSearchText }: Props) => {
         placeholderTextColor={theme.secondaryText}
         value={localSearchText}
         onChangeText={handleTextChange}
+        autoCapitalize="words"
       />
       <Ionicons name="search" size={24} color="black" />
     </View>

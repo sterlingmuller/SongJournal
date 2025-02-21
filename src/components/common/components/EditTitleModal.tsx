@@ -123,6 +123,7 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
                 placeholderTextColor={theme.secondaryText}
                 value={updatedTitle}
                 onChangeText={handleTitleChange}
+                autoCapitalize="words"
               />
               {updatedTitle !== '' && (
                 <TouchableOpacity
