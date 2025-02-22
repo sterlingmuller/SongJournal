@@ -1,8 +1,8 @@
-const formatDuration = (seconds: number) => {
+const formatDuration = (seconds: number | null) => {
   if (seconds === null) return '-- : --';
 
   const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = Math.floor(seconds % 60);
+  const remainingSeconds = Math.round(seconds % 60);
 
   return `${minutes.toString().padStart(1, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
 };
