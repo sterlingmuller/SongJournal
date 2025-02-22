@@ -1,23 +1,15 @@
-import React, { useRef, useEffect, useState, useMemo } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { Audio } from 'expo-av';
 
 import useRecordingStyles from '@src/styles/recording';
 import RecordButton from '@src/components/common/components/RecordButton';
-import {
-  clearRecording,
-  startRecording,
-  stopRecording,
-} from '@src/utils/startStopPlayRecording';
+import { startRecording, stopRecording } from '@src/utils/RecordingHelpers';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { RootStackParamList } from '@src/components/common/types';
 import { selectCurrentSongId } from '@src/state/selectors/songsSelector';
 import PlaybackButton from '@src/components/recording/subcomponents/PlaybackButton';
-import {
-  SCREEN_WIDTH,
-  WAVE_BAR_TOTAL_WIDTH,
-} from '@src/components/common/constants';
 import useTakeGenerator from '@src/utils/hooks/useTakeGenerator';
 import { Screen } from '@src/components/common/enums';
 
@@ -26,9 +18,8 @@ interface Props {
   setRecordingDuration: (value: number | ((value: number) => void)) => void;
   isRecording: boolean;
   setIsRecording: (value: boolean) => void;
-  setWave: (value: number[]) => void;
-  // dispatchRecordingWave: (value: number[]) => void;
-  setRecordingWave: (value: number[]) => void;
+  setFullWave: (value: number[]) => void;
+  setDisplayWave: (value: number[]) => void;
 }
 
 const RecordingControls = (props: Props) => {
@@ -37,8 +28,8 @@ const RecordingControls = (props: Props) => {
     setRecordingDuration,
     isRecording,
     setIsRecording,
-    setWave,
-    setRecordingWave,
+    setFullWave,
+    setDisplayWave,
   } = props;
 
   const { goBack } = useNavigation();
@@ -48,31 +39,20 @@ const RecordingControls = (props: Props) => {
   const generateTake = useTakeGenerator();
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const { title } = route.params;
-
   const [uri, setUri] = useState<string | null>(null);
-
-  const recordingStartTimeRef = useRef(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const fullWaveRef = useRef<number[]>([]);
-  const maxBars = useMemo(() => {
-    return Math.floor((SCREEN_WIDTH * 0.9) / WAVE_BAR_TOTAL_WIDTH);
-  }, []);
 
-  const updateDuration = () => {
-    if (recordingStartTimeRef.current) {
-      const currentDuration = Math.floor(
-        (Date.now() - recordingStartTimeRef.current) / 1000,
-      );
-      setRecordingDuration(currentDuration);
-    }
-  };
+  const fullWaveRef = useRef<number[]>([]);
 
   const handleStartRecording = async () => {
-    setRecordingDuration(0);
-    recordingStartTimeRef.current = Date.now();
-    await startRecording(setRecording, fullWaveRef, setRecordingWave, maxBars);
+    await startRecording(setRecording, fullWaveRef, setDisplayWave);
     setIsRecording(true);
-    intervalRef.current = setInterval(updateDuration, 1000);
+    setRecordingDuration(0);
+
+    intervalRef.current = setInterval(
+      () => setRecordingDuration((prev: number) => prev + 1),
+      1000,
+    );
   };
 
   useEffect(() => {
@@ -89,10 +69,12 @@ const RecordingControls = (props: Props) => {
       clearInterval(intervalRef.current);
     }
 
-    setWave(fullWaveRef.current);
-    const newUri = await stopRecording(recording);
-    setUri(newUri);
+    setFullWave(fullWaveRef.current);
+    fullWaveRef.current = [];
+    await stopRecording(recording, setIsRecording);
 
+    const newUri = recording.getURI();
+    setUri(newUri);
     return newUri;
   };
 
@@ -102,23 +84,26 @@ const RecordingControls = (props: Props) => {
     setIsRecording(!isRecording);
   };
 
-  const onClearPress = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-    }
-    // need to figure out how to clear new wave
-    setWave([]);
-    fullWaveRef.current = [];
+  const onClearPress = async () => {
+    if (isRecording) {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
 
-    clearRecording(recording, setRecording, setRecordingWave);
-    // setRecordingWave([]);
-    setIsRecording(false);
+      await stopRecording(recording, setIsRecording);
+      fullWaveRef.current = [];
+    } else {
+      setFullWave([]);
+      setUri(null);
+    }
+
+    setDisplayWave([]);
     setRecordingDuration(null);
-    setUri(null);
   };
 
   const onSavePress = async () => {
     let newUri = uri;
+
     if (isRecording) {
       newUri = await handleStopRecording();
     }

@@ -8,29 +8,26 @@ import AudioWaveDisplay from '@src/components/recording/components/AudioWaveDisp
 
 const RecordingScreen = () => {
   const styles = useRecordingStyles();
-  const [recordingDuration, setRecordingDuration] = useState<number | null>(
-    null,
-  );
+  const [recordingDuration, setRecordingDuration] = useState<number>(0);
   const [isRecording, setIsRecording] = useState<boolean>(true);
-  const [wave, setWave] = useState<number[]>([]);
-
-  const [recordingWave, setRecordingWave] = useState<number[]>([]);
+  const [fullWave, setFullWave] = useState<number[]>([]);
+  const [displayWave, setDisplayWave] = useState<number[]>([]);
 
   return (
     <View style={styles.container}>
       <AudioWaveDisplay
         isRecording={isRecording}
-        wave={wave}
-        recordingWave={recordingWave}
+        fullWave={fullWave}
+        displayWave={displayWave}
       />
-      <Timer recordingDuration={recordingDuration} isRecording={isRecording} />
+      <Timer time={recordingDuration} isRecording={isRecording} />
       <RecordingControls
         recordingDuration={recordingDuration}
         setRecordingDuration={setRecordingDuration}
         isRecording={isRecording}
         setIsRecording={setIsRecording}
-        setWave={setWave}
-        setRecordingWave={setRecordingWave}
+        setFullWave={setFullWave}
+        setDisplayWave={setDisplayWave}
       />
     </View>
   );

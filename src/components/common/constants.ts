@@ -185,18 +185,20 @@ export const SORT_SELECT = [
   { label: SortBy.LENGTH, value: SortBy.LENGTH },
 ];
 
+export const PLAYBACK_START_DELAY = 100;
 export const MAX_AUDIO_WAVE_BARS = 40;
 export const AUDIO_WAVE_MIDPOINT = 12;
 export const AUDIO_UPDATES_PER_SECOND = 6;
 export const AUDIO_UPDATE_INTERVAL = 1000 / AUDIO_UPDATES_PER_SECOND;
 export const MAX_LEVEL = 50;
-export const SILENCE_THRESHOLD = 0.05;
+export const SILENCE_THRESHOLD = -140;
 export const MINIMUM_WAVE_HEIGHT = 22;
 export const WAVE_BAR_WIDTH = 8;
 export const WAVE_BAR_GAP = 2;
 export const WAVE_BAR_TOTAL_WIDTH = WAVE_BAR_WIDTH + WAVE_BAR_GAP;
 export const PAN_SENSITIVITY = 0.15;
 export const WAVE_CONTAINER_WIDTH = SCREEN_WIDTH * 0.9;
+export const MAX_BARS = Math.floor((SCREEN_WIDTH * 0.9) / WAVE_BAR_TOTAL_WIDTH);
 
 export const HEIGHT_MAPPING: [number, number][] = [
   [0, 0], // Anything below 22 will be 0

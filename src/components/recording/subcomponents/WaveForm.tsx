@@ -11,6 +11,8 @@ interface Props {
 const WaveForms = ({ waveForms }: Props) => {
   const styles = useAudioWaveStyles();
 
+  // console.log('waveForms:', waveForms);
+
   const mapBars = waveForms.map((waveHeight: number, index: number) =>
     waveHeight < 39 ? (
       <View style={styles.waveColumn} key={index}>

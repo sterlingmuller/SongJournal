@@ -20,6 +20,7 @@ import Animated, {
 
 import useAudioWaveStyles from '@src/styles/audioWave';
 import {
+  PLAYBACK_START_DELAY,
   // PAN_SENSITIVITY,
   WAVE_BAR_TOTAL_WIDTH,
   WAVE_CONTAINER_WIDTH,
@@ -32,16 +33,16 @@ import RecordingWave from '../subcomponents/RecordingWave';
 
 interface Props {
   isRecording: boolean;
-  wave: number[];
-  recordingWave: number[];
+  fullWave: number[];
+  displayWave: number[];
 }
 
 const AudioWaveDisplay = (props: Props) => {
-  const { isRecording, wave, recordingWave } = props;
+  const { isRecording, fullWave, displayWave } = props;
   const styles = useAudioWaveStyles();
   // const sliding = useSharedValue(false);
   const prevIsRecording = useRef(isRecording);
-  const prevWave = useRef(wave);
+  const prevWave = useRef(fullWave);
   const { isPlaying, duration } = useAppSelector(selectPlaybackInfo);
   // const { seekTo } = useAudioPlayer();
 
@@ -57,12 +58,10 @@ const AudioWaveDisplay = (props: Props) => {
   const isRecordingShared = useSharedValue(isRecording);
   const hasReachedEnd = useSharedValue(false);
 
-  const PLAYBACK_START_DELAY = 100;
-
   const waveformWidth = useDerivedValue(() =>
     isRecording
-      ? recordingWave.length * WAVE_BAR_TOTAL_WIDTH
-      : wave.length * WAVE_BAR_TOTAL_WIDTH,
+      ? displayWave.length * WAVE_BAR_TOTAL_WIDTH
+      : fullWave.length * WAVE_BAR_TOTAL_WIDTH,
   );
 
   const panX = useDerivedValue(() => {
@@ -85,11 +84,11 @@ const AudioWaveDisplay = (props: Props) => {
   }, [duration, isPlaying, isRecording]);
 
   useEffect(() => {
-    if (wave.length === 0) {
+    if (fullWave.length === 0) {
       progress.value = 0;
       manualPanX.value = 0;
     }
-  }, [wave]);
+  }, [fullWave]);
 
   useAnimatedReaction(
     () => isPlayingShared.value,
@@ -189,11 +188,11 @@ const AudioWaveDisplay = (props: Props) => {
   // console.log('wave:', wave);
 
   useEffect(() => {
-    if (wave.length === 0 && prevWave.current.length > 0) {
+    if (fullWave.length === 0 && prevWave.current.length > 0) {
       resetWaveformPosition();
     }
-    prevWave.current = wave;
-  }, [wave]);
+    prevWave.current = fullWave;
+  }, [fullWave]);
 
   const maskAnimatedStyle = useAnimatedStyle(() => {
     return { transform: [{ translateX: panX.value }] };
@@ -206,8 +205,8 @@ const AudioWaveDisplay = (props: Props) => {
   });
 
   const memoizedWaveForms = useMemo(() => {
-    return <WaveForms waveForms={isRecording ? recordingWave : wave} />;
-  }, [isRecording, wave, recordingWave]);
+    return <WaveForms waveForms={isRecording ? displayWave : fullWave} />;
+  }, [isRecording, fullWave, displayWave]);
 
   const maskedElement = (
     <Animated.View
@@ -218,7 +217,7 @@ const AudioWaveDisplay = (props: Props) => {
         maskAnimatedStyle,
       ]}
     >
-      {wave.length > 0 && memoizedWaveForms}
+      {fullWave.length > 0 && memoizedWaveForms}
     </Animated.View>
   );
 
@@ -227,7 +226,7 @@ const AudioWaveDisplay = (props: Props) => {
       <View style={styles.waveContainer}>
         {/* <GestureDetector gesture={panGestureHandler}> */}
         {isRecording ? (
-          <RecordingWave recordingWave={recordingWave} />
+          <RecordingWave recordingWave={displayWave} />
         ) : (
           <MaskedView style={styles.maskedView} maskElement={maskedElement}>
             <Animated.View
@@ -238,7 +237,9 @@ const AudioWaveDisplay = (props: Props) => {
         )}
         {/* </GestureDetector> */}
       </View>
-      {!isRecording && wave.length > 0 && <View style={styles.midpointLine} />}
+      {!isRecording && fullWave.length > 0 && (
+        <View style={styles.midpointLine} />
+      )}
     </View>
   );
 };
