@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { View } from 'react-native';
 // import {
 //   Gesture,
@@ -15,7 +15,6 @@ import Animated, {
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
-  withTiming,
 } from 'react-native-reanimated';
 
 import useAudioWaveStyles from '@src/styles/audioWave';
@@ -37,11 +36,10 @@ interface Props {
   displayWave: number[];
 }
 
-const AudioWaveDisplay = (props: Props) => {
+const AudioWaveDisplay = React.memo((props: Props) => {
   const { isRecording, fullWave, displayWave } = props;
   const styles = useAudioWaveStyles();
   // const sliding = useSharedValue(false);
-  const prevIsRecording = useRef(isRecording);
   const prevWave = useRef(fullWave);
   const { isPlaying, duration } = useAppSelector(selectPlaybackInfo);
   // const { seekTo } = useAudioPlayer();
@@ -50,6 +48,10 @@ const AudioWaveDisplay = (props: Props) => {
   //   'worklet';
   //   return Math.floor(n / multiple) * multiple;
   // };
+
+  const memoizedWaveForms = useMemo(() => {
+    return <WaveForms waveForms={isRecording ? displayWave : fullWave} />;
+  }, [isRecording]);
 
   const progress = useSharedValue(0);
   const manualPanX = useSharedValue(0);
@@ -72,6 +74,11 @@ const AudioWaveDisplay = (props: Props) => {
     return progress.value * -waveformWidth.value;
   });
 
+  const resetWaveformPosition = useCallback(() => {
+    progress.value = 0;
+    manualPanX.value = 0;
+  }, [progress, manualPanX]);
+
   useEffect(() => {
     durationShared.value = duration || 1;
     isPlayingShared.value = isPlaying;
@@ -83,17 +90,10 @@ const AudioWaveDisplay = (props: Props) => {
     }
   }, [duration, isPlaying, isRecording]);
 
-  useEffect(() => {
-    if (fullWave.length === 0) {
-      progress.value = 0;
-      manualPanX.value = 0;
-    }
-  }, [fullWave]);
-
   useAnimatedReaction(
     () => isPlayingShared.value,
-    (isPlaying: boolean) => {
-      if (isPlaying && !isRecordingShared.value) {
+    (isAnimatedPlaying: boolean) => {
+      if (isAnimatedPlaying && !isRecordingShared.value) {
         const startProgress = progress.value;
         const startTime = Date.now();
 
@@ -129,10 +129,6 @@ const AudioWaveDisplay = (props: Props) => {
     [isPlayingShared, durationShared, isRecordingShared],
   );
 
-  const resetWaveformPosition = () => {
-    manualPanX.value = withTiming(0, { duration: 300 });
-  };
-
   useAnimatedReaction(
     () => waveformWidth.value,
     () => {
@@ -144,11 +140,11 @@ const AudioWaveDisplay = (props: Props) => {
   );
 
   useEffect(() => {
-    if (!isRecording && prevIsRecording.current) {
+    if (fullWave.length === 0 && prevWave.current.length > 0) {
       resetWaveformPosition();
     }
-    prevIsRecording.current = isRecording;
-  }, [isRecording]);
+    prevWave.current = fullWave;
+  }, [fullWave]);
 
   // disabled for now, backlog ticket to fix manual pan
 
@@ -187,13 +183,6 @@ const AudioWaveDisplay = (props: Props) => {
 
   // console.log('wave:', wave);
 
-  useEffect(() => {
-    if (fullWave.length === 0 && prevWave.current.length > 0) {
-      resetWaveformPosition();
-    }
-    prevWave.current = fullWave;
-  }, [fullWave]);
-
   const maskAnimatedStyle = useAnimatedStyle(() => {
     return { transform: [{ translateX: panX.value }] };
   });
@@ -203,10 +192,6 @@ const AudioWaveDisplay = (props: Props) => {
       width: isRecording ? 0 : -panX.value,
     };
   });
-
-  const memoizedWaveForms = useMemo(() => {
-    return <WaveForms waveForms={isRecording ? displayWave : fullWave} />;
-  }, [isRecording, fullWave, displayWave]);
 
   const maskedElement = (
     <Animated.View
@@ -242,6 +227,6 @@ const AudioWaveDisplay = (props: Props) => {
       )}
     </View>
   );
-};
+});
 
-export default React.memo(AudioWaveDisplay);
+export default AudioWaveDisplay;

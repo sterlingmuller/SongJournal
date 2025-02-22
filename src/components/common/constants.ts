@@ -199,6 +199,7 @@ export const WAVE_BAR_TOTAL_WIDTH = WAVE_BAR_WIDTH + WAVE_BAR_GAP;
 export const PAN_SENSITIVITY = 0.15;
 export const WAVE_CONTAINER_WIDTH = SCREEN_WIDTH * 0.9;
 export const MAX_BARS = Math.floor((SCREEN_WIDTH * 0.9) / WAVE_BAR_TOTAL_WIDTH);
+export const DOT_HEIGHT = WAVE_BAR_WIDTH * 0.75;
 
 export const HEIGHT_MAPPING: [number, number][] = [
   [0, 0], // Anything below 22 will be 0
