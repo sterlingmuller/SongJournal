@@ -42,7 +42,7 @@ export const startRecording = async (
       if (levelCount > 0) {
         const averageLevel = Math.round(levelSum / levelCount);
 
-        fullWaveRef.current.push(averageLevel);
+        fullWaveRef.current = [...fullWaveRef.current, averageLevel];
         setRecordingWave((prevWave: number[]) => {
           const newWave = [...prevWave, averageLevel];
           return newWave.slice(-MAX_BARS);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { View } from 'react-native';
 
 import useRecordingStyles from '@styles/recording';
@@ -10,14 +10,14 @@ const RecordingScreen = () => {
   const styles = useRecordingStyles();
   const [recordingDuration, setRecordingDuration] = useState<number>(0);
   const [isRecording, setIsRecording] = useState<boolean>(true);
-  const [fullWave, setFullWave] = useState<number[]>([]);
   const [displayWave, setDisplayWave] = useState<number[]>([]);
+  const fullWaveRef = useRef<number[]>([]);
 
   return (
     <View style={styles.container}>
       <AudioWaveDisplay
         isRecording={isRecording}
-        fullWave={fullWave}
+        fullWave={fullWaveRef.current}
         displayWave={displayWave}
       />
       <Timer time={recordingDuration} isRecording={isRecording} />
@@ -26,7 +26,7 @@ const RecordingScreen = () => {
         setRecordingDuration={setRecordingDuration}
         isRecording={isRecording}
         setIsRecording={setIsRecording}
-        setFullWave={setFullWave}
+        fullWaveRef={fullWaveRef}
         setDisplayWave={setDisplayWave}
       />
     </View>
