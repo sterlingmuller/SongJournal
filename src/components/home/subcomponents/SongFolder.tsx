@@ -123,7 +123,10 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
           </StyledText>
           <StyledText style={styles.trackSubtext}>
             {selectedTake?.uri
-              ? formatDuration(selectedTake.duration)
+              ? useMemo(
+                  () => formatDuration(selectedTake.duration),
+                  [selectedTake.duration],
+                )
               : 'No recordings exist for this song'}
           </StyledText>
         </View>

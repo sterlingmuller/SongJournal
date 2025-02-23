@@ -90,6 +90,8 @@ const SongScreen = () => {
     });
   }, [navigation]);
 
+  console.log('songScreen');
+
   return (
     <View style={globalStyles.container}>
       <SongDisplay

@@ -31,4 +31,4 @@ const Timer = ({ time, isRecording }: Props) => {
   );
 };
 
-export default Timer;
+export default React.memo(Timer);
