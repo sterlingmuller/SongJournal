@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, MutableRefObject } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { Audio } from 'expo-av';
@@ -18,7 +18,7 @@ interface Props {
   setRecordingDuration: (value: number | ((value: number) => void)) => void;
   isRecording: boolean;
   setIsRecording: (value: boolean) => void;
-  setFullWave: (value: number[]) => void;
+  fullWaveRef: MutableRefObject<number[]>;
   setDisplayWave: (value: number[]) => void;
 }
 
@@ -28,7 +28,7 @@ const RecordingControls = (props: Props) => {
     setRecordingDuration,
     isRecording,
     setIsRecording,
-    setFullWave,
+    fullWaveRef,
     setDisplayWave,
   } = props;
 
@@ -42,9 +42,9 @@ const RecordingControls = (props: Props) => {
   const [uri, setUri] = useState<string | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const fullWaveRef = useRef<number[]>([]);
-
   const handleStartRecording = async () => {
+    fullWaveRef.current = [];
+
     await startRecording(setRecording, fullWaveRef, setDisplayWave);
     setIsRecording(true);
     setRecordingDuration(0);
@@ -69,8 +69,6 @@ const RecordingControls = (props: Props) => {
       clearInterval(intervalRef.current);
     }
 
-    setFullWave(fullWaveRef.current);
-    fullWaveRef.current = [];
     await stopRecording(recording, setIsRecording);
 
     const newUri = recording.getURI();
@@ -91,12 +89,11 @@ const RecordingControls = (props: Props) => {
       }
 
       await stopRecording(recording, setIsRecording);
-      fullWaveRef.current = [];
     } else {
-      setFullWave([]);
       setUri(null);
     }
 
+    fullWaveRef.current = [];
     setDisplayWave([]);
     setRecordingDuration(null);
   };
