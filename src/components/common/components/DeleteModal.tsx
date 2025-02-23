@@ -16,13 +16,14 @@ import { selectPlayingId } from '@src/state/selectors/playbackSelector';
 import {
   deleteSongRequest,
   deleteTakeRequest,
-  updateSelectedTakeIdRequest,
 } from '@src/state/sagas/actionCreators';
 import {
   selectCurrentSongSelectedTakeId,
   selectCurrentSongTakes,
 } from '@src/state/selectors/songsSelector';
 import { findReplacementStarredTakeId } from '@src/utils/replaceStarredTake';
+import { updateSelectedTakeRequest } from '@src/state/thunk/takeThunk';
+import { updateSelectedTakeIdSuccess } from '@src/state/slice/songsSlice';
 
 interface Props {
   setToDelete: (value: DeleteObject | null) => void;
@@ -64,13 +65,19 @@ const DeleteModal = (props: Props) => {
           currentSongTakes,
         );
 
-        dispatch(
-          updateSelectedTakeIdRequest({
+        const resultAction = await dispatch(
+          updateSelectedTakeRequest({
             songId,
-            db,
             takeId: newSelectedTakeId,
+            db,
           }),
         );
+
+        if (updateSelectedTakeRequest.fulfilled.match(resultAction)) {
+          dispatch(
+            updateSelectedTakeIdSuccess({ songId, takeId: newSelectedTakeId }),
+          );
+        }
       }
 
       dispatch(deleteTakeRequest({ songId, takeId, db }));
