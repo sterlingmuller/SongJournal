@@ -57,7 +57,7 @@ export const createSong = async ({ db, title }: t.CreateSongPayload) => {
 
 export const deleteSong = async ({ db, songId }: t.DeleteSongPayload) => {
   const statement = await db.prepareAsync(
-    'DELETE FROM Songs WHERE songId = ?; DELETE FROM Takes WHERE songId = ?; DELETE FROM Page WHERE songId = ?;',
+    'DELETE FROM Songs WHERE songId = $songId; DELETE FROM Takes WHERE songId = $songId; DELETE FROM Page WHERE songId = $songId;',
   );
 
   try {

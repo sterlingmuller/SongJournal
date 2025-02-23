@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { View } from 'react-native';
 import { Slider } from 'react-native-awesome-slider';
 import { useSharedValue } from 'react-native-reanimated';
@@ -63,7 +63,7 @@ const PlaybackBar = ({ duration, fromSongTakes }: Props) => {
       </View>
       <View style={styles.timeContainer}>
         <StyledText style={styles.timeText}>
-          {formatDuration(currentTime)}
+          {useMemo(() => formatDuration(currentTime), [currentTime])}
         </StyledText>
       </View>
     </View>

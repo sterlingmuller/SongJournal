@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { View, TouchableOpacity, TextInput } from 'react-native';
 
 import ShareIcon from '@src/icons/ShareIcon';
@@ -89,7 +89,8 @@ const SongTake = (props: Props) => {
         <View>
           <StyledText style={styles.trackSubtext}>{formattedDate}</StyledText>
           <StyledText style={styles.trackSubtext}>
-            {formatDuration(duration)}
+            {/* {formatDuration(duration)} */}
+            {useMemo(() => formatDuration(duration), [duration])}
           </StyledText>
         </View>
         <View style={styles.iconRow}>
