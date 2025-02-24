@@ -116,7 +116,7 @@ const RecordingControls = (props: Props) => {
   };
 
   const isDisabled = recordingDuration === null;
-  console.log('a');
+
   return (
     <View style={styles.recordingRow}>
       <TouchableOpacity
