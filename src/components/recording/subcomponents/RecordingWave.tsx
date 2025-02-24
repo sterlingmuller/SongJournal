@@ -19,7 +19,7 @@ const RecordingWave = ({ recordingWave }: Props) => {
     const waveformWidth = recordingWave.length * WAVE_BAR_TOTAL_WIDTH;
     const translateX = Math.min(0, WAVE_CONTAINER_WIDTH - waveformWidth);
     return { transform: [{ translateX }] };
-  }, [recordingWave]);
+  });
 
   return (
     <Animated.View style={[styles.maskElementContainer, animatedStyle]}>

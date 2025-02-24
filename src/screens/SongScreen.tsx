@@ -56,7 +56,7 @@ const SongScreen = () => {
   }>({ songTitle: '', takeTitle: '', songId: -1, takeId: -1 });
 
   const onRecordPress = () => {
-    if (takes.length <= 6) {
+    if (takes.length <= 8) {
       const recording = () => {
         const newTakeTitle = `Take ${totalTakes + 1}`;
 
@@ -89,8 +89,6 @@ const SongScreen = () => {
       dispatch(setCurrentSongId(-1));
     });
   }, [navigation]);
-
-  console.log('songScreen');
 
   return (
     <View style={globalStyles.container}>

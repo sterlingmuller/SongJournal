@@ -62,6 +62,14 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
     [takes, selectedTakeId],
   );
 
+  const durationText = useMemo(
+    () =>
+      selectedTake?.uri
+        ? formatDuration(selectedTake.duration)
+        : 'No recordings exist for this song',
+    [selectedTake?.duration, selectedTake?.uri],
+  );
+
   const handleShare = useCallback(() => {
     shareSongFolder(song);
   }, [shareSongFolder, song]);
@@ -121,14 +129,7 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
           <StyledText style={styles.trackSubtext}>
             {formatDateFromISOString(song.creationDate)}
           </StyledText>
-          <StyledText style={styles.trackSubtext}>
-            {selectedTake?.uri
-              ? useMemo(
-                  () => formatDuration(selectedTake.duration),
-                  [selectedTake.duration],
-                )
-              : 'No recordings exist for this song'}
-          </StyledText>
+          <StyledText style={styles.trackSubtext}>{durationText}</StyledText>
         </View>
         <View style={styles.iconRow}>
           <TouchableOpacity
@@ -167,4 +168,4 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
   );
 };
 
-export default SongFolder;
+export default React.memo(SongFolder);

@@ -69,6 +69,7 @@ const SongTake = (props: Props) => {
   const isCurrentTakePlaying = takeId === selectedPlayingId && isPlaying;
 
   const formattedDate = formatDateFromISOString(take.date);
+  const formattedDuration = useMemo(() => formatDuration(duration), [duration]);
 
   const handleShare = () => {
     shareTake(uri, title, songTitle);
@@ -89,8 +90,7 @@ const SongTake = (props: Props) => {
         <View>
           <StyledText style={styles.trackSubtext}>{formattedDate}</StyledText>
           <StyledText style={styles.trackSubtext}>
-            {/* {formatDuration(duration)} */}
-            {useMemo(() => formatDuration(duration), [duration])}
+            {formattedDuration}
           </StyledText>
         </View>
         <View style={styles.iconRow}>

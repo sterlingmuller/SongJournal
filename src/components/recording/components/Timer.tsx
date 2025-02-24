@@ -22,11 +22,14 @@ const Timer = ({ time, isRecording }: Props) => {
     return time;
   }, [isRecording, isPlaying, time, playbackTime]);
 
+  const formattedDuration = useMemo(
+    () => formatDuration(displayTime),
+    [displayTime],
+  );
+
   return (
     <View style={styles.timerContainer}>
-      <StyledText style={styles.timer}>
-        {formatDuration(displayTime)}
-      </StyledText>
+      <StyledText style={styles.timer}>{formattedDuration}</StyledText>
     </View>
   );
 };
