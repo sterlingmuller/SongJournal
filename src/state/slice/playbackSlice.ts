@@ -39,12 +39,6 @@ const playbackSlice = createSlice({
       state.isPlaying = false;
     },
     stopPlayback: () => initialState,
-    updatePlaybackTime: (
-      state: PlaybackState,
-      action: PayloadAction<number>,
-    ) => {
-      state.playbackTime = action.payload;
-    },
     updatePlaybackDuration: (
       state: PlaybackState,
       action: PayloadAction<number>,
@@ -59,7 +53,6 @@ export const {
   resumePlayback,
   pausePlayback,
   stopPlayback,
-  updatePlaybackTime,
   updatePlaybackDuration,
 } = playbackSlice.actions;
 export default playbackSlice.reducer;

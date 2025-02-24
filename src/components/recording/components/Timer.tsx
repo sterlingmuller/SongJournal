@@ -13,14 +13,15 @@ interface Props {
 
 const Timer = ({ time, isRecording }: Props) => {
   const styles = useRecordingStyles();
-  const { isPlaying, playbackTime } = useAppSelector(selectPlaybackInfo);
+  const { isPlaying } = useAppSelector(selectPlaybackInfo);
 
   const displayTime = useMemo(() => {
     if (isRecording) return time;
-    if (isPlaying) return playbackTime;
+    // if (isPlaying) return playbackTime;
+    if (isPlaying) return 10;
     if (!isPlaying && !isRecording && !time) return null;
     return time;
-  }, [isRecording, isPlaying, time, playbackTime]);
+  }, [isRecording, isPlaying, time]);
 
   const formattedDuration = useMemo(
     () => formatDuration(displayTime),

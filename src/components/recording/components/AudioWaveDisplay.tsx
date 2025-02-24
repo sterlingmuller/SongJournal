@@ -26,7 +26,10 @@ import {
 } from '@src/components/common/constants';
 import WaveForms from '@src/components/recording/subcomponents/WaveForm';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
-import { selectPlaybackInfo } from '@src/state/selectors/playbackSelector';
+import {
+  selectIsPlaying,
+  selectPlaybackDuration,
+} from '@src/state/selectors/playbackSelector';
 import RecordingWave from '../subcomponents/RecordingWave';
 // import { useAudioPlayer } from '@src/state/context/AudioContext';
 
@@ -41,13 +44,21 @@ const AudioWaveDisplay = React.memo((props: Props) => {
   const styles = useAudioWaveStyles();
   // const sliding = useSharedValue(false);
   const prevWave = useRef(fullWave);
-  const { isPlaying, duration } = useAppSelector(selectPlaybackInfo);
+  const isPlaying = useAppSelector(selectIsPlaying);
+  const duration = useAppSelector(selectPlaybackDuration);
+  // It's so smooth when I hard code these values, figure out whats up with that
+  // const isPlaying = true;
+  // const duration = 10;
+
   // const { seekTo } = useAudioPlayer();
 
   // const findNearestMultiple = (n: number, multiple: number) => {
   //   'worklet';
   //   return Math.floor(n / multiple) * multiple;
   // };
+
+  console.log('isPlaying:', isPlaying);
+  console.log('duration:', duration);
 
   const memoizedWaveForms = useMemo(() => {
     return <WaveForms waveForms={isRecording ? displayWave : fullWave} />;
