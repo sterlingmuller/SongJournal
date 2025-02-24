@@ -34,6 +34,11 @@ const PlaybackBar = ({ duration, fromSongTakes }: Props) => {
     progress.value = time;
   };
 
+  const formattedDuration = useMemo(
+    () => formatDuration(currentTime),
+    [currentTime],
+  );
+
   return (
     <View style={fromSongTakes ? styles.takesContainer : styles.container}>
       <View
@@ -62,9 +67,7 @@ const PlaybackBar = ({ duration, fromSongTakes }: Props) => {
         />
       </View>
       <View style={styles.timeContainer}>
-        <StyledText style={styles.timeText}>
-          {useMemo(() => formatDuration(currentTime), [currentTime])}
-        </StyledText>
+        <StyledText style={styles.timeText}>{formattedDuration}</StyledText>
       </View>
     </View>
   );

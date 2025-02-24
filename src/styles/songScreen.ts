@@ -10,7 +10,6 @@ const useSongScreenStyles = () => {
     takes: {
       marginTop: 25,
       gap: 20,
-      marginBottom: 175,
     },
     recordingButton: {
       position: 'absolute',

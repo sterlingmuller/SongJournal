@@ -1,6 +1,5 @@
-import React from 'react';
-import { View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import React, { useCallback, useMemo } from 'react';
+import { FlatList, View } from 'react-native';
 
 import useSongScreenStyles from '@src/styles/songScreen';
 import { DeleteObject, Take, Takes } from '@src/components/common/types';
@@ -22,27 +21,37 @@ interface Props {
 
 const SongDisplay = (props: Props) => {
   const { takes, setToDelete, setCurrentTake, setTitleToEdit } = props;
-
   const styles = useSongScreenStyles();
 
   const orderedTakes: Take[] = [...takes].reverse();
 
-  const renderTakes = () =>
-    orderedTakes.map((take: Take) => (
+  const renderTake = useCallback(
+    ({ item }: { item: Take }) => (
       <SongTake
-        key={take.title}
-        take={take}
+        key={item.title}
+        take={item}
         setToDelete={setToDelete}
         setCurrentTake={setCurrentTake}
         setTitleToEdit={setTitleToEdit}
       />
-    ));
+    ),
+    [setToDelete, setCurrentTake, setTitleToEdit],
+  );
+
+  const ListFooter = useMemo(() => () => <View style={{ height: 180 }} />, []);
 
   if (takes.length > 0) {
     return (
-      <ScrollView>
-        <View style={styles.takes}>{renderTakes()}</View>
-      </ScrollView>
+      <FlatList
+        data={orderedTakes}
+        renderItem={renderTake}
+        keyExtractor={(item: Take) => item.title}
+        contentContainerStyle={styles.takes}
+        ListFooterComponent={ListFooter}
+        removeClippedSubviews={true}
+        maxToRenderPerBatch={10}
+        windowSize={10}
+      />
     );
   }
 
