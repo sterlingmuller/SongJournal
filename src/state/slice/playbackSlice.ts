@@ -7,7 +7,6 @@ interface PlaybackState {
   uri: string | null;
   id: number;
   duration: number;
-  playbackTime: number;
 }
 
 const initialState: PlaybackState = {
@@ -15,7 +14,6 @@ const initialState: PlaybackState = {
   uri: null,
   id: -1,
   duration: 0,
-  playbackTime: 0,
 };
 
 const playbackSlice = createSlice({
@@ -30,7 +28,6 @@ const playbackSlice = createSlice({
       state.uri = action.payload.uri;
       state.id = action.payload.id;
       state.duration = action.payload.duration;
-      state.playbackTime = 0;
     },
     resumePlayback: (state: PlaybackState) => {
       state.isPlaying = true;
