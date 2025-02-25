@@ -37,28 +37,16 @@ interface Props {
   isRecording: boolean;
   fullWave: number[];
   displayWave: number[];
+  isPlaying: boolean;
 }
 
-const AudioWaveDisplay = React.memo((props: Props) => {
-  const { isRecording, fullWave, displayWave } = props;
+const Test = React.memo((props: Props) => {
+  const { isRecording, fullWave, displayWave, isPlaying } = props;
   const styles = useAudioWaveStyles();
-  // const sliding = useSharedValue(false);
   const prevWave = useRef(fullWave);
-  const isPlaying = useAppSelector(selectIsPlaying);
-  const duration = useAppSelector(selectPlaybackDuration);
-  // It's so smooth when I hard code these values, figure out whats up with that
-  // const isPlaying = true;
-  // const duration = 10;
-
-  // const { seekTo } = useAudioPlayer();
-
-  // const findNearestMultiple = (n: number, multiple: number) => {
-  //   'worklet';
-  //   return Math.floor(n / multiple) * multiple;
-  // };
-
-  console.log('isPlaying:', isPlaying);
-  console.log('duration:', duration);
+  // const isPlaying = useAppSelector(selectIsPlaying);
+  // const duration = useAppSelector(selectPlaybackDuration);
+  const duration = 9;
 
   const memoizedWaveForms = useMemo(() => {
     return <WaveForms waveForms={isRecording ? displayWave : fullWave} />;
@@ -157,43 +145,6 @@ const AudioWaveDisplay = React.memo((props: Props) => {
     prevWave.current = fullWave;
   }, [fullWave]);
 
-  // disabled for now, backlog ticket to fix manual pan
-
-  // const panGestureHandler = Gesture.Pan()
-  //   .onBegin(() => {
-  //     sliding.value = true;
-  //     cancelAnimation(panX);
-  //   })
-  //   .onChange(
-  //     (
-  //       event: GestureUpdateEvent<
-  //         PanGestureHandlerEventPayload & PanGestureChangeEventPayload
-  //       >,
-  //     ) => {
-  //       if (!isRecording) {
-  //         const translation = event.translationX * PAN_SENSITIVITY;
-  //         const nextPanX = panX.value + translation;
-
-  //         panX.value = Math.max(-waveformWidth.value, Math.min(0, nextPanX));
-  //       }
-  //     },
-  //   )
-  //   .onFinalize(() => {
-  //     if (!isRecording) {
-  //       panX.value = withTiming(
-  //         findNearestMultiple(panX.value, WAVE_BAR_TOTAL_WIDTH),
-  //       );
-  //       sliding.value = false;
-
-  //       const scrollableWidth = waveformWidth.value - WAVE_CONTAINER_WIDTH;
-  //       const newProgress = -panX.value / scrollableWidth;
-  //       const newTime = newProgress * duration;
-  //       runOnJS(seekTo)(newTime);
-  //     }
-  //   });
-
-  // console.log('wave:', wave);
-
   const maskAnimatedStyle = useAnimatedStyle(() => {
     return { transform: [{ translateX: panX.value }] };
   });
@@ -240,4 +191,4 @@ const AudioWaveDisplay = React.memo((props: Props) => {
   );
 });
 
-export default AudioWaveDisplay;
+export default Test;

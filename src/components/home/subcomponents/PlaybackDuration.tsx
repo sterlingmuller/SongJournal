@@ -1,31 +1,36 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { View } from 'react-native';
 import StyledText from '@src/components/common/components/StyledText';
 import formatDuration from '@src/utils/formatDuration';
 import usePlaybackBarStyles from '@src/styles/playbackBar';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
+import { runOnJS, useAnimatedReaction } from 'react-native-reanimated';
 
 const PlaybackDuration = () => {
   const styles = usePlaybackBarStyles();
-  const { subscribeToPlaybackStatus } = useAudioPlayer();
-  const [displayTime, setDisplayTime] = useState(0);
+  const { currentTime } = useAudioPlayer();
+  const [elapsedTime, setElapsedTime] = useState(0);
 
-  const formattedDuration = useMemo(
-    () => formatDuration(displayTime),
-    [displayTime],
+  useAnimatedReaction(
+    () => {
+      return currentTime.value;
+    },
+    (currentValue: number, previousValue: number) => {
+      if (currentValue !== previousValue) {
+        runOnJS(setElapsedTime)(currentValue);
+      }
+    },
+    [currentTime],
   );
 
-  useEffect(() => {
-    const unsubscribe = subscribeToPlaybackStatus((position: number) => {
-      setDisplayTime(position);
-    });
-
-    return () => unsubscribe();
-  }, []);
+  const formattedElapsedTime = useMemo(
+    () => formatDuration(elapsedTime),
+    [elapsedTime],
+  );
 
   return (
     <View style={styles.timeContainer}>
-      <StyledText style={styles.timeText}>{formattedDuration}</StyledText>
+      <StyledText style={styles.timeText}>{formattedElapsedTime}</StyledText>
     </View>
   );
 };
