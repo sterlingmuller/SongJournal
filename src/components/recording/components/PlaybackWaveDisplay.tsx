@@ -1,16 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { View } from 'react-native';
-// import {
-//   Gesture,
-//   GestureDetector,
-//   GestureUpdateEvent,
-//   PanGestureChangeEventPayload,
-//   PanGestureHandlerEventPayload,
-// } from 'react-native-gesture-handler';
 import MaskedView from '@react-native-masked-view/masked-view';
 import Animated, {
   cancelAnimation,
-  // runOnJS,
   useAnimatedReaction,
   useAnimatedStyle,
   useDerivedValue,
@@ -20,18 +12,9 @@ import Animated, {
 import useAudioWaveStyles from '@src/styles/audioWave';
 import {
   PLAYBACK_START_DELAY,
-  // PAN_SENSITIVITY,
   WAVE_BAR_TOTAL_WIDTH,
-  WAVE_CONTAINER_WIDTH,
 } from '@src/components/common/constants';
 import WaveForms from '@src/components/recording/subcomponents/WaveForm';
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
-import {
-  selectIsPlaying,
-  selectPlaybackDuration,
-} from '@src/state/selectors/playbackSelector';
-import { useAudioPlayer } from '@src/state/context/AudioContext';
-// import { useAudioPlayer } from '@src/state/context/AudioContext';
 
 interface Props {
   fullWave: number[];
@@ -40,14 +23,10 @@ interface Props {
 }
 
 const PlaybackWaveDisplay = React.memo((props: Props) => {
-  const { fullWave, isPlaying } = props;
+  const { fullWave, duration, isPlaying } = props;
   const styles = useAudioWaveStyles();
   const prevWave = useRef(fullWave);
-  // const { isPlaying } = useAudioPlayer();
-  // const duration = 10;
-  // const isPlaying = useAppSelector(selectIsPlaying);
-  // const duration = useAppSelector(selectPlaybackDuration);
-  console.log('wave');
+
   const memoizedWaveForms = useMemo(() => {
     return <WaveForms waveForms={fullWave} />;
   }, []);

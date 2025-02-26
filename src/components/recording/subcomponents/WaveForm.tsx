@@ -11,8 +11,6 @@ interface Props {
 const WaveForms = ({ waveForms }: Props) => {
   const styles = useAudioWaveStyles();
 
-  console.log('urm');
-
   const mapBars = waveForms.map((waveHeight: number, index: number) => (
     <View style={styles.waveColumn} key={index}>
       <View style={styles.topWaveContainer}>

@@ -89,8 +89,6 @@ export const AudioProvider = ({ children }: Props) => {
     };
   }, []);
 
-  console.log('audio context ');
-
   const togglePlayback = useCallback(
     async (newUri: string, id: number) => {
       if (soundRef.current) {
