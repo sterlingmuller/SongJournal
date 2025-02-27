@@ -1,121 +1,81 @@
-import React, { useRef, useEffect, useState, MutableRefObject } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { Audio } from 'expo-av';
 
 import useRecordingStyles from '@src/styles/recording';
 import RecordButton from '@src/components/common/components/RecordButton';
-import { startRecording, stopRecording } from '@src/utils/RecordingHelpers';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { RootStackParamList } from '@src/components/common/types';
 import { selectCurrentSongId } from '@src/state/selectors/songsSelector';
 import PlaybackButton from '@src/components/recording/subcomponents/PlaybackButton';
 import useTakeGenerator from '@src/utils/hooks/useTakeGenerator';
 import { Screen } from '@src/components/common/enums';
+import { useRecording } from '@src/state/context/RecordingContext';
+import { useAudioPlayer } from '@src/state/context/AudioContext';
 
-interface Props {
-  recordingDuration: number;
-  setRecordingDuration: (value: number | ((value: number) => void)) => void;
-  isRecording: boolean;
-  setIsRecording: (value: boolean) => void;
-  fullWaveRef: MutableRefObject<number[]>;
-  setDisplayWave: (value: number[]) => void;
-}
-
-const RecordingControls = (props: Props) => {
-  const {
-    recordingDuration,
-    setRecordingDuration,
-    isRecording,
-    setIsRecording,
-    fullWaveRef,
-    setDisplayWave,
-  } = props;
-
+const RecordingControls = () => {
   const { goBack } = useNavigation();
   const styles = useRecordingStyles();
   const route = useRoute<RouteProp<RootStackParamList, Screen.RECORDING>>();
   const songId = useAppSelector(selectCurrentSongId);
   const generateTake = useTakeGenerator();
-  const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const { title } = route.params;
   const [uri, setUri] = useState<string | null>(null);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [localDuration, setLocalDuration] = useState<number | null>(null);
 
-  const handleStartRecording = async () => {
-    fullWaveRef.current = [];
+  const {
+    isRecording,
+    startRecording,
+    stopRecording,
+    clearRecording,
+    duration,
+  } = useRecording();
+  const { clearPlayback } = useAudioPlayer();
 
-    await startRecording(setRecording, fullWaveRef, setDisplayWave);
-    setIsRecording(true);
-    setRecordingDuration(0);
+  const isClearSaveDisabled = duration === null && !isRecording;
 
-    intervalRef.current = setInterval(
-      () => setRecordingDuration((prev: number) => prev + 1),
-      1000,
-    );
+  const handleRecordPress = async () => {
+    if (isRecording) {
+      const { uri, duration } = await stopRecording();
+      setUri(uri);
+      setLocalDuration(duration);
+    } else {
+      setUri(null);
+      setLocalDuration(null);
+      await startRecording();
+    }
   };
 
   useEffect(() => {
-    handleStartRecording();
+    handleRecordPress();
+
     return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
+      clearRecording();
     };
   }, []);
 
-  const handleStopRecording = async () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-    }
-
-    await stopRecording(recording, setIsRecording);
-
-    const newUri = recording.getURI();
-    setUri(newUri);
-    return newUri;
-  };
-
-  const onRecordPress = async () => {
-    isRecording ? await handleStopRecording() : await handleStartRecording();
-
-    setIsRecording(!isRecording);
-  };
-
   const onClearPress = async () => {
-    if (isRecording) {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-
-      await stopRecording(recording, setIsRecording);
-    } else {
-      setUri(null);
-    }
-
-    fullWaveRef.current = [];
-    setDisplayWave([]);
-    setRecordingDuration(null);
+    await clearPlayback();
+    await clearRecording();
+    setUri(null);
   };
 
   const onSavePress = async () => {
     let newUri = uri;
+    let newDuration = localDuration;
 
     if (isRecording) {
-      newUri = await handleStopRecording();
+      const { uri, duration } = await stopRecording();
+      newUri = uri;
+      newDuration = duration;
     }
 
-    const duration = Math.floor(recording._finalDurationMillis / 1000);
-
-    if (newUri) {
-      generateTake(newUri, title, duration);
+    if (newUri && newDuration) {
+      generateTake(newUri, title, newDuration);
     }
 
-    setRecording(null);
     goBack();
   };
-
-  const isDisabled = recordingDuration === null;
 
   return (
     <View style={styles.recordingRow}>
@@ -123,10 +83,12 @@ const RecordingControls = (props: Props) => {
         onPress={onClearPress}
         style={styles.sideButton}
         hitSlop={20}
-        disabled={isDisabled}
+        disabled={isClearSaveDisabled}
       >
         <Text
-          style={isDisabled ? styles.disabledButtonText : styles.buttonText}
+          style={
+            isClearSaveDisabled ? styles.disabledButtonText : styles.buttonText
+          }
         >
           Clear
         </Text>
@@ -135,17 +97,19 @@ const RecordingControls = (props: Props) => {
         {uri ? (
           <PlaybackButton uri={uri} songId={songId} />
         ) : (
-          <RecordButton onPress={onRecordPress} isRecording={isRecording} />
+          <RecordButton onPress={handleRecordPress} isRecording={isRecording} />
         )}
       </View>
       <TouchableOpacity
         onPress={onSavePress}
         style={styles.sideButton}
         hitSlop={20}
-        disabled={isDisabled}
+        disabled={isClearSaveDisabled}
       >
         <Text
-          style={isDisabled ? styles.disabledButtonText : styles.buttonText}
+          style={
+            isClearSaveDisabled ? styles.disabledButtonText : styles.buttonText
+          }
         >
           Save
         </Text>

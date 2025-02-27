@@ -9,7 +9,6 @@ import { ColorThemeProvider } from '@src/state/context/ThemeContext';
 import { NetworkProvider } from '@src/state/context/NetworkContext';
 import store from '@src/state/store/index';
 import { migrateDbIfNeeded } from '@src/data/database/db';
-import { AudioProvider } from '@src/state/context/AudioContext';
 import { DB_NAME } from '@src/components/common/constants';
 
 const App = () => {
@@ -25,9 +24,7 @@ const App = () => {
           >
             <Provider store={store}>
               <NetworkProvider>
-                <AudioProvider>
-                  <AppNavigator />
-                </AudioProvider>
+                <AppNavigator />
               </NetworkProvider>
             </Provider>
           </SQLiteProvider>

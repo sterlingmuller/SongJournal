@@ -6,6 +6,7 @@ import React, {
   useCallback,
   useEffect,
   ReactNode,
+  useMemo,
 } from 'react';
 import { Audio, AVPlaybackStatusSuccess } from 'expo-av';
 import { SharedValue, useSharedValue } from 'react-native-reanimated';
@@ -35,7 +36,7 @@ type Props = {
   children?: ReactNode;
 };
 
-export const AudioProvider = ({ children }: Props) => {
+const AudioProvider = ({ children }: Props) => {
   const soundRef = useRef<Audio.Sound | null>(null);
   const { isPlaying, uri } = useAppSelector(selectPlaybackInfo);
   const dispatch = useAppDispatch();
@@ -52,6 +53,7 @@ export const AudioProvider = ({ children }: Props) => {
   const clearPlayback = useCallback(async () => {
     dispatch(stopPlayback());
     await unloadSound();
+    currentTime.set(null);
   }, [dispatch, unloadSound]);
 
   const handlePlaybackStatusUpdate = useCallback(
@@ -82,12 +84,6 @@ export const AudioProvider = ({ children }: Props) => {
     },
     [handlePlaybackStatusUpdate],
   );
-
-  useEffect(() => {
-    return () => {
-      soundRef.current?.setOnPlaybackStatusUpdate(null);
-    };
-  }, []);
 
   const togglePlayback = useCallback(
     async (newUri: string, id: number) => {
@@ -133,22 +129,44 @@ export const AudioProvider = ({ children }: Props) => {
     return () => {
       if (soundRef.current) {
         soundRef.current.setOnPlaybackStatusUpdate(null);
+        soundRef.current.unloadAsync();
       }
     };
   }, []);
 
+  const contextValue = useMemo(
+    () => ({
+      togglePlayback,
+      clearPlayback,
+      seekTo,
+      currentTime,
+    }),
+    [togglePlayback, clearPlayback, seekTo, currentTime],
+  );
+
   return (
-    <AudioContext.Provider
-      value={{
-        togglePlayback,
-        clearPlayback,
-        seekTo,
-        currentTime,
-      }}
-    >
+    <AudioContext.Provider value={contextValue}>
       {children}
     </AudioContext.Provider>
   );
 };
 
 export const useAudioPlayer = () => useContext(AudioContext);
+
+export const RecordingAudioProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => <AudioProvider>{children}</AudioProvider>;
+
+export const SongTakesAudioProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => <AudioProvider>{children}</AudioProvider>;
+
+export const HomeSongsAudioProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => <AudioProvider>{children}</AudioProvider>;

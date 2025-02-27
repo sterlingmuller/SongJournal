@@ -15,16 +15,16 @@ import {
   WAVE_BAR_TOTAL_WIDTH,
 } from '@src/components/common/constants';
 import WaveForms from '@src/components/recording/subcomponents/WaveForm';
+import { useRecording } from '@src/state/context/RecordingContext';
+import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { selectIsPlaying } from '@src/state/selectors/playbackSelector';
 
-interface Props {
-  fullWave: number[];
-  duration: number;
-  isPlaying: boolean;
-}
-
-const PlaybackWaveDisplay = React.memo((props: Props) => {
-  const { fullWave, duration, isPlaying } = props;
+const PlaybackWaveDisplay = React.memo(() => {
   const styles = useAudioWaveStyles();
+  const isPlaying = useAppSelector(selectIsPlaying);
+  const { fullWaveRef, duration } = useRecording();
+  const fullWave = fullWaveRef.current;
+
   const prevWave = useRef(fullWave);
 
   const memoizedWaveForms = useMemo(() => {

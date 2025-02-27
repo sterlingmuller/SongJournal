@@ -5,7 +5,6 @@ import { useSQLiteContext } from 'expo-sqlite';
 
 import PageIcon from '@src/icons/PageIcon';
 import { RootStackParamList } from '@src/components/common/types';
-import { useAudioPlayer } from '@src/state/context/AudioContext';
 import {
   useAppDispatch,
   useAppSelector,
@@ -16,14 +15,12 @@ import { Screen } from '@src/components/common/enums';
 
 const HeaderPageButton = () => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
-  const { clearPlayback } = useAudioPlayer();
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
   const songId = useAppSelector(selectCurrentSongId);
 
   const onNavigationPress = () => {
     dispatch(fetchPageRequest({ songId, db }));
-    clearPlayback();
 
     navigate(Screen.LYRICS, { previousScreen: Screen.SONG });
   };
