@@ -1,23 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
+import { runOnJS, useAnimatedReaction } from 'react-native-reanimated';
 
 import useAudioWaveStyles from '@src/styles/audioWave';
 import RecordingWave from '@src/components/recording/subcomponents/RecordingWave';
+import { useRecording } from '@src/state/context/RecordingContext';
 
-interface Props {
-  displayWave: number[];
-}
-
-const RecordingWaveDisplay = React.memo((props: Props) => {
-  const { displayWave } = props;
+const RecordingWaveDisplay = React.memo(() => {
+  const { displayWaveShared } = useRecording();
   const styles = useAudioWaveStyles();
+  const [localWave, setLocalWave] = useState([]);
 
-  // later update window logic so that there is  ~10 bars in array that do not fit in display then animate scroll as bars are added. Should hopefully get rid of choppiness
+  useAnimatedReaction(
+    () => displayWaveShared.value,
+    (currentWave: number[]) => {
+      runOnJS(setLocalWave)(currentWave);
+    },
+    [displayWaveShared],
+  );
 
   return (
     <View style={styles.container}>
       <View style={styles.waveContainer}>
-        <RecordingWave recordingWave={displayWave} />
+        <RecordingWave recordingWave={localWave} />
       </View>
     </View>
   );

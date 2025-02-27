@@ -6,11 +6,13 @@ import formatDuration from '@src/utils/formatDuration';
 import useRecordingStyles from '@src/styles/recording';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
 import { runOnJS, useAnimatedReaction } from 'react-native-reanimated';
+import { useRecording } from '@src/state/context/RecordingContext';
 
-const Timer = () => {
+const RecordingPlaybackTimer = () => {
   const styles = useRecordingStyles();
   const { currentTime } = useAudioPlayer();
-  const [elapsedTime, setElapsedTime] = useState(0);
+  const { duration } = useRecording();
+  const [elapsedTime, setElapsedTime] = useState(duration);
 
   useAnimatedReaction(
     () => {
@@ -24,10 +26,10 @@ const Timer = () => {
     [currentTime],
   );
 
-  const formattedElapsedTime = useMemo(
-    () => formatDuration(elapsedTime),
-    [elapsedTime],
-  );
+  const formattedElapsedTime = useMemo(() => {
+    if (elapsedTime) return formatDuration(elapsedTime);
+    return formatDuration(duration);
+  }, [elapsedTime]);
 
   return (
     <View style={styles.timerContainer}>
@@ -36,4 +38,4 @@ const Timer = () => {
   );
 };
 
-export default React.memo(Timer);
+export default React.memo(RecordingPlaybackTimer);
