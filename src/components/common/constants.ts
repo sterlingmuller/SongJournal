@@ -202,20 +202,21 @@ export const MAX_BARS = Math.floor((SCREEN_WIDTH * 0.9) / WAVE_BAR_TOTAL_WIDTH);
 export const DOT_HEIGHT = WAVE_BAR_WIDTH * 0.75;
 
 export const HEIGHT_MAPPING: [number, number][] = [
-  [0, 0], // Anything below 22 will be 0
-  [40, 10], // 22-25 will be 10
-  [50, 20], // 22-25 will be 10
-  [60, 25], // 22-25 will be 10
-  [70, 40], // 30-33 will be 30
-  [75, 50], // 30-33 will be 30
-  [80, 60], // 42 and above will be 60
-  [81, 65], // 42 and above will be 60
-  [82, 70], // 42 and above will be 60
-  [83, 75], // 42 and above will be 60
-  [84, 80], // 42 and above will be 60
-  [85, 85], // 42 and above will be 60
-  [86, 90], // 42 and above will be 60
-  [87, 100], // 42 and above will be 60
+  [0, 0],
+  [60, 5],
+  [70, 10],
+  [78, 15],
+  [80, 20],
+  [85, 25],
+  [87, 30],
+  [88, 40],
+  [89, 50],
+  [90, 60],
+  [91, 70],
+  [92, 75],
+  [93, 80],
+  [94, 85],
+  [95, 90],
+  [96, 95],
+  [97, 100],
 ];
-
-export const MAX_TITLE_LENGTH = 40;

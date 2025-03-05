@@ -17,6 +17,7 @@ import {
   MAX_BARS,
   SILENCE_THRESHOLD,
 } from '@src/components/common/constants';
+import { scaleDbToHeight } from '@src/utils/scaleDbToHeight';
 
 interface RecordingContextType {
   startRecording: () => Promise<void>;
@@ -99,7 +100,9 @@ export const RecordingProvider = ({ children }: Props) => {
             levelSum.current / levelCount.current,
           );
 
-          fullWaveRef.current.push(averageLevel);
+          const scaledHeight = scaleDbToHeight(averageLevel);
+
+          fullWaveRef.current.push(scaledHeight);
           displayWaveShared.set(fullWaveRef.current.slice(-MAX_BARS));
 
           levelSum.current = 0;
