@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { View } from 'react-native';
 import MaskedView from '@react-native-masked-view/masked-view';
 import Animated, {
@@ -16,7 +16,7 @@ import { selectIsPlaying } from '@src/state/selectors/playbackSelector';
 import { useRecording } from '@src/state/context/RecordingContext';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
 
-const PlaybackWaveFormDisplay = () => {
+const PlaybackWaveDisplay = () => {
   const styles = useAudioWaveStyles();
   const isPlaying = useAppSelector(selectIsPlaying);
   const { fullWaveRef, duration } = useRecording();
@@ -32,9 +32,6 @@ const PlaybackWaveFormDisplay = () => {
   const lastTimestamp = useSharedValue(0);
   const animationActive = useSharedValue(false);
 
-  const memoizedWaveForms = useMemo(() => {
-    return <WaveForms waveForms={fullWave} />;
-  }, [fullWave]);
   const waveformWidth = useDerivedValue(() => {
     return fullWave.length * WAVE_BAR_TOTAL_WIDTH;
   });
@@ -47,7 +44,7 @@ const PlaybackWaveFormDisplay = () => {
       progress.value = 0;
     }
     prevWave.current = fullWave;
-  }, [fullWave, progress]);
+  }, [fullWave]);
 
   const prevPlayingRef = useRef(isPlaying);
 
@@ -65,21 +62,14 @@ const PlaybackWaveFormDisplay = () => {
     }
 
     prevPlayingRef.current = isPlaying;
-  }, [
-    duration,
-    isPlaying,
-    durationShared,
-    isPlayingShared,
-    progress,
-    hasReachedEnd,
-  ]);
+  }, [isPlaying]);
 
   useEffect(() => {
     if (didJustFinish) {
       progress.value = 1;
       hasReachedEnd.value = true;
     }
-  }, [didJustFinish, progress, hasReachedEnd]);
+  }, [didJustFinish]);
 
   useAnimatedReaction(
     () => isPlayingShared.value,
@@ -112,11 +102,7 @@ const PlaybackWaveFormDisplay = () => {
             return;
           }
 
-          if (isPlayingShared.value) {
-            requestAnimationFrame(animate);
-          } else {
-            animationActive.value = false;
-          }
+          requestAnimationFrame(animate);
         };
 
         requestAnimationFrame(animate);
@@ -139,7 +125,7 @@ const PlaybackWaveFormDisplay = () => {
     <Animated.View
       style={[styles.maskElementContainerNotRecording, maskAnimatedStyle]}
     >
-      {fullWave.length > 0 && memoizedWaveForms}
+      {fullWave.length > 0 && <WaveForms waveForms={fullWave} />}
     </Animated.View>
   );
 
@@ -156,4 +142,4 @@ const PlaybackWaveFormDisplay = () => {
   );
 };
 
-export default React.memo(PlaybackWaveFormDisplay);
+export default React.memo(PlaybackWaveDisplay);

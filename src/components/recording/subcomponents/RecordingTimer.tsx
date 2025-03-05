@@ -10,9 +10,13 @@ const RecordingTimer = () => {
   const styles = useRecordingStyles();
   const { duration } = useRecording();
 
+  const displayTime = duration || 0;
+
   return (
     <View style={styles.timerContainer}>
-      <StyledText style={styles.timer}>{formatDuration(duration)}</StyledText>
+      <StyledText style={styles.timer}>
+        {formatDuration(displayTime)}
+      </StyledText>
     </View>
   );
 };
