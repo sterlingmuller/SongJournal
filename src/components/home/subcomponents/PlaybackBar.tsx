@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { Slider } from 'react-native-awesome-slider';
 import { useSharedValue } from 'react-native-reanimated';
@@ -19,8 +19,13 @@ const PlaybackBar = ({ duration, fromSongTakes }: Props) => {
   const { currentTime, seekTo } = useAudioPlayer();
   const { theme } = useColorTheme();
 
+  const progress = useSharedValue(currentTime);
   const min = useSharedValue(0);
   const max = useSharedValue(duration);
+
+  useEffect(() => {
+    progress.set(currentTime);
+  }, [currentTime]);
 
   const handleOnValueChange = (time: number) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -37,7 +42,7 @@ const PlaybackBar = ({ duration, fromSongTakes }: Props) => {
         <Slider
           containerStyle={{ borderRadius: 8 }}
           renderBubble={() => null}
-          progress={currentTime}
+          progress={progress}
           minimumValue={min}
           maximumValue={max}
           onSlidingStart={() => {
@@ -54,7 +59,7 @@ const PlaybackBar = ({ duration, fromSongTakes }: Props) => {
           heartbeat
         />
       </View>
-      <PlaybackDuration />
+      <PlaybackDuration currentTime={currentTime} />
     </View>
   );
 };

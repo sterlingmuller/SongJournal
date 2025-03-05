@@ -7,9 +7,9 @@ import React, {
   useEffect,
   ReactNode,
   useMemo,
+  useState,
 } from 'react';
 import { Audio, AVPlaybackStatusSuccess } from 'expo-av';
-import { SharedValue, useSharedValue } from 'react-native-reanimated';
 
 import {
   useAppDispatch,
@@ -27,7 +27,7 @@ interface AudioContextType {
   togglePlayback: (uri: string, id: number) => Promise<void>;
   clearPlayback: () => Promise<void>;
   seekTo: (position: number) => Promise<void>;
-  currentTime: SharedValue<number>;
+  currentTime: number;
 }
 
 const AudioContext: Context<AudioContextType> = createContext(undefined);
@@ -40,7 +40,7 @@ const AudioProvider = ({ children }: Props) => {
   const soundRef = useRef<Audio.Sound | null>(null);
   const { isPlaying, uri } = useAppSelector(selectPlaybackInfo);
   const dispatch = useAppDispatch();
-  const currentTime = useSharedValue(0);
+  const [currentTime, setCurrentTime] = useState(null);
 
   const unloadSound = useCallback(async () => {
     if (soundRef.current) {
@@ -53,13 +53,13 @@ const AudioProvider = ({ children }: Props) => {
   const clearPlayback = useCallback(async () => {
     dispatch(stopPlayback());
     await unloadSound();
-    currentTime.set(null);
+    setCurrentTime(null);
   }, [dispatch, unloadSound]);
 
   const handlePlaybackStatusUpdate = useCallback(
     (playbackStatus: AVPlaybackStatusSuccess) => {
       if (playbackStatus.isLoaded) {
-        currentTime.value = playbackStatus.positionMillis / 1000;
+        setCurrentTime(playbackStatus.positionMillis / 1000);
         if (playbackStatus.didJustFinish) {
           clearPlayback();
         }
@@ -119,7 +119,7 @@ const AudioProvider = ({ children }: Props) => {
     async (position: number) => {
       if (soundRef.current) {
         await soundRef.current.setPositionAsync(position * 1000);
-        currentTime.value = position;
+        setCurrentTime(position);
       }
     },
     [dispatch],
