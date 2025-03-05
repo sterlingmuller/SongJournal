@@ -1,5 +1,9 @@
-import { StyleSheet, ViewStyle } from 'react-native';
-import { SCREEN_WIDTH, WAVE_BAR_WIDTH } from '@src/components/common/constants';
+import { DimensionValue, StyleSheet, ViewStyle } from 'react-native';
+import {
+  DOT_HEIGHT,
+  SCREEN_WIDTH,
+  WAVE_BAR_WIDTH,
+} from '@src/components/common/constants';
 
 interface Styles {
   container: ViewStyle;
@@ -85,13 +89,22 @@ const useAudioWaveStyles = () => {
     dot: {
       width: WAVE_BAR_WIDTH,
       marginHorizontal: 1,
-      height: 100,
+      height: DOT_HEIGHT,
       borderRadius: 2,
       backgroundColor: '#3f51b5',
     },
   });
 
-  return audioWaveStyles;
+  const getDynamicStyles = (waveHeight: number) => {
+    return {
+      bar: {
+        ...audioWaveStyles.bar,
+        height: `${waveHeight}%` as DimensionValue,
+      },
+    };
+  };
+
+  return { ...audioWaveStyles, getDynamicStyles };
 };
 
 export default useAudioWaveStyles;
