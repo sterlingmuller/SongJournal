@@ -14,14 +14,14 @@ const Bar = React.memo(({ waveHeight }: { waveHeight: number }) => {
   return (
     <View style={styles.waveColumn}>
       <View style={styles.topWaveContainer}>
-        {waveHeight < 39 ? (
+        {waveHeight < 0 ? (
           <View style={styles.dot} />
         ) : (
           <View style={dynamicStyles.bar} />
         )}
       </View>
       <View style={styles.bottomWaveContainer}>
-        {waveHeight < 39 ? (
+        {waveHeight < 0 ? (
           <View style={styles.dot} />
         ) : (
           <View style={dynamicStyles.bar} />
