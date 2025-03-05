@@ -28,6 +28,7 @@ interface AudioContextType {
   clearPlayback: () => Promise<void>;
   seekTo: (position: number) => Promise<void>;
   currentTime: number;
+  didJustFinish: boolean;
 }
 
 const AudioContext: Context<AudioContextType> = createContext(undefined);
@@ -41,6 +42,7 @@ const AudioProvider = ({ children }: Props) => {
   const { isPlaying, uri } = useAppSelector(selectPlaybackInfo);
   const dispatch = useAppDispatch();
   const [currentTime, setCurrentTime] = useState(null);
+  const [didJustFinish, setDidJustFinish] = useState(false);
 
   const unloadSound = useCallback(async () => {
     if (soundRef.current) {
@@ -54,15 +56,17 @@ const AudioProvider = ({ children }: Props) => {
     dispatch(stopPlayback());
     await unloadSound();
     setCurrentTime(null);
+    setDidJustFinish(false);
   }, [dispatch, unloadSound]);
 
   const handlePlaybackStatusUpdate = useCallback(
     (playbackStatus: AVPlaybackStatusSuccess) => {
-      if (playbackStatus.isLoaded) {
-        setCurrentTime(playbackStatus.positionMillis / 1000);
-        if (playbackStatus.didJustFinish) {
-          clearPlayback();
-        }
+      if (!playbackStatus.isLoaded) return;
+      setCurrentTime(playbackStatus.positionMillis / 1000);
+      setDidJustFinish(playbackStatus.didJustFinish || false);
+
+      if (playbackStatus.didJustFinish) {
+        clearPlayback();
       }
     },
     [clearPlayback],
@@ -70,60 +74,71 @@ const AudioProvider = ({ children }: Props) => {
 
   const loadSound = useCallback(
     async (newUri: string) => {
-      const { sound, status } = await Audio.Sound.createAsync(
-        { uri: newUri },
-        { shouldPlay: false },
-        handlePlaybackStatusUpdate,
-      );
-      soundRef.current = sound;
+      try {
+        const { sound, status } = await Audio.Sound.createAsync(
+          { uri: newUri },
+          {
+            shouldPlay: false,
+            progressUpdateIntervalMillis: 250,
+          },
+          handlePlaybackStatusUpdate,
+        );
+        soundRef.current = sound;
 
-      if (status.isLoaded) {
-        return status.durationMillis ? status.durationMillis / 1000 : 0;
+        if (status.isLoaded) {
+          return status.durationMillis ? status.durationMillis / 1000 : 0;
+        }
+        return 0;
+      } catch (error) {
+        console.error('Failed to load sound:', error);
+        return 0;
       }
-      return 0;
     },
     [handlePlaybackStatusUpdate],
   );
 
   const togglePlayback = useCallback(
     async (newUri: string, id: number) => {
-      if (soundRef.current) {
-        if (uri === newUri) {
-          if (isPlaying) {
-            await soundRef.current.pauseAsync();
-            dispatch(pausePlayback());
+      try {
+        setDidJustFinish(false);
+
+        if (soundRef.current) {
+          if (uri === newUri) {
+            if (isPlaying) {
+              await soundRef.current.pauseAsync();
+              dispatch(pausePlayback());
+            } else {
+              await soundRef.current.playAsync();
+              dispatch(resumePlayback());
+            }
           } else {
-            await soundRef.current.playAsync();
-            dispatch(resumePlayback());
+            await clearPlayback();
+            const duration = await loadSound(newUri);
+            dispatch(startPlayback({ uri: newUri, id, duration }));
+            if (soundRef.current) {
+              await soundRef.current.playAsync();
+            }
           }
         } else {
-          await clearPlayback();
           const duration = await loadSound(newUri);
           dispatch(startPlayback({ uri: newUri, id, duration }));
           if (soundRef.current) {
             await soundRef.current.playAsync();
           }
         }
-      } else {
-        const duration = await loadSound(newUri);
-        dispatch(startPlayback({ uri: newUri, id, duration }));
-        if (soundRef.current) {
-          await soundRef.current.playAsync();
-        }
+      } catch (error) {
+        console.error('Error toggling playback:', error);
       }
     },
     [uri, isPlaying, clearPlayback, loadSound, dispatch],
   );
 
-  const seekTo = useCallback(
-    async (position: number) => {
-      if (soundRef.current) {
-        await soundRef.current.setPositionAsync(position * 1000);
-        setCurrentTime(position);
-      }
-    },
-    [dispatch],
-  );
+  const seekTo = useCallback(async (position: number) => {
+    if (soundRef.current) {
+      await soundRef.current.setPositionAsync(position * 1000);
+      setCurrentTime(position);
+    }
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -140,8 +155,9 @@ const AudioProvider = ({ children }: Props) => {
       clearPlayback,
       seekTo,
       currentTime,
+      didJustFinish,
     }),
-    [togglePlayback, clearPlayback, seekTo, currentTime],
+    [togglePlayback, clearPlayback, seekTo, currentTime, didJustFinish],
   );
 
   return (

@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { View } from 'react-native';
 import MaskedView from '@react-native-masked-view/masked-view';
 import Animated, {
-  cancelAnimation,
   useAnimatedReaction,
   useAnimatedStyle,
   useDerivedValue,
@@ -10,101 +9,121 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import useAudioWaveStyles from '@src/styles/audioWave';
-import {
-  PLAYBACK_START_DELAY,
-  WAVE_BAR_TOTAL_WIDTH,
-} from '@src/components/common/constants';
+import { WAVE_BAR_TOTAL_WIDTH } from '@src/components/common/constants';
 import WaveForms from '@src/components/recording/subcomponents/WaveForm';
-import { useRecording } from '@src/state/context/RecordingContext';
 import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
 import { selectIsPlaying } from '@src/state/selectors/playbackSelector';
+import { useRecording } from '@src/state/context/RecordingContext';
+import { useAudioPlayer } from '@src/state/context/AudioContext';
 
-const PlaybackWaveDisplay = React.memo(() => {
+const PlaybackWaveFormDisplay = () => {
   const styles = useAudioWaveStyles();
   const isPlaying = useAppSelector(selectIsPlaying);
   const { fullWaveRef, duration } = useRecording();
   const fullWave = fullWaveRef.current;
+  const { didJustFinish } = useAudioPlayer();
 
   const prevWave = useRef(fullWave);
 
-  const memoizedWaveForms = useMemo(() => {
-    return <WaveForms waveForms={fullWave} />;
-  }, []);
-
   const progress = useSharedValue(0);
-  const manualPanX = useSharedValue(0);
-  const isPlayingShared = useSharedValue(false);
+  const isPlayingShared = useSharedValue(isPlaying);
   const durationShared = useSharedValue(duration || 1);
   const hasReachedEnd = useSharedValue(false);
+  const lastTimestamp = useSharedValue(0);
+  const animationActive = useSharedValue(false);
 
-  const waveformWidth = useDerivedValue(
-    () => fullWave.length * WAVE_BAR_TOTAL_WIDTH,
-  );
-
+  const memoizedWaveForms = useMemo(() => {
+    return <WaveForms waveForms={fullWave} />;
+  }, [fullWave]);
+  const waveformWidth = useDerivedValue(() => {
+    return fullWave.length * WAVE_BAR_TOTAL_WIDTH;
+  });
   const panX = useDerivedValue(() => {
     return progress.value * -waveformWidth.value;
   });
 
-  const resetWaveformPosition = useCallback(() => {
-    progress.value = 0;
-    manualPanX.value = 0;
-  }, [progress, manualPanX]);
+  useEffect(() => {
+    if (fullWave.length === 0 && prevWave.current.length > 0) {
+      progress.value = 0;
+    }
+    prevWave.current = fullWave;
+  }, [fullWave, progress]);
+
+  const prevPlayingRef = useRef(isPlaying);
 
   useEffect(() => {
     durationShared.value = duration || 1;
     isPlayingShared.value = isPlaying;
 
-    if (isPlaying && hasReachedEnd.value) {
-      progress.value = 0;
-      hasReachedEnd.value = false;
+    if (isPlaying) {
+      if (hasReachedEnd.value) {
+        progress.value = 0;
+        hasReachedEnd.value = false;
+      } else if (progress.value === 1) {
+        progress.value = 0;
+      }
     }
-  }, [duration, isPlaying]);
+
+    prevPlayingRef.current = isPlaying;
+  }, [
+    duration,
+    isPlaying,
+    durationShared,
+    isPlayingShared,
+    progress,
+    hasReachedEnd,
+  ]);
+
+  useEffect(() => {
+    if (didJustFinish) {
+      progress.value = 1;
+      hasReachedEnd.value = true;
+    }
+  }, [didJustFinish, progress, hasReachedEnd]);
 
   useAnimatedReaction(
     () => isPlayingShared.value,
     (isAnimatedPlaying: boolean) => {
-      if (isAnimatedPlaying) {
-        const startProgress = progress.value;
-        const startTime = Date.now();
+      if (isAnimatedPlaying && !animationActive.value) {
+        animationActive.value = true;
+        lastTimestamp.value = Date.now();
 
         const animate = () => {
-          const elapsedTime = Date.now() - startTime;
-
-          if (elapsedTime < PLAYBACK_START_DELAY) {
-            requestAnimationFrame(animate);
+          if (!isPlayingShared.value) {
+            animationActive.value = false;
             return;
           }
 
-          const adjustedElapsedTime =
-            (elapsedTime - PLAYBACK_START_DELAY) / 1000;
-          progress.value =
-            startProgress + adjustedElapsedTime / durationShared.value;
+          const now = Date.now();
+          const deltaTime = (now - lastTimestamp.value) / 1000;
+          lastTimestamp.value = now;
+
+          if (deltaTime > 0 && deltaTime < 0.1) {
+            progress.value = Math.min(
+              1,
+              progress.value + deltaTime / durationShared.value,
+            );
+          }
 
           if (progress.value >= 1) {
             progress.value = 1;
             hasReachedEnd.value = true;
+            animationActive.value = false;
             return;
           }
 
-          if (progress.value < 1 && isPlayingShared.value) {
+          if (isPlayingShared.value) {
             requestAnimationFrame(animate);
+          } else {
+            animationActive.value = false;
           }
         };
 
-        animate();
-      } else {
-        cancelAnimation(progress);
+        requestAnimationFrame(animate);
       }
     },
     [isPlayingShared, durationShared],
   );
-
-  useEffect(() => {
-    if (fullWave.length === 0 && prevWave.current.length > 0) {
-      resetWaveformPosition();
-    }
-    prevWave.current = fullWave;
-  }, [fullWave]);
 
   const maskAnimatedStyle = useAnimatedStyle(() => {
     return { transform: [{ translateX: panX.value }] };
@@ -135,6 +154,6 @@ const PlaybackWaveDisplay = React.memo(() => {
       {fullWave.length > 0 && <View style={styles.midpointLine} />}
     </View>
   );
-});
+};
 
-export default PlaybackWaveDisplay;
+export default React.memo(PlaybackWaveFormDisplay);
