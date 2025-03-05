@@ -25,7 +25,6 @@ interface RecordingContextType {
 
   isRecording: boolean;
   duration: number;
-  recordingDurationShared: SharedValue<number>;
   displayWaveShared: SharedValue<number[]>;
   fullWaveRef: React.MutableRefObject<number[]>;
   recordingRef: React.MutableRefObject<Audio.Recording | null>;
@@ -40,7 +39,7 @@ type Props = {
 
 export const RecordingProvider = ({ children }: Props) => {
   const [isRecording, setIsRecording] = useState(false);
-  const [finalDuration, setFinalDuration] = useState<number | null>(null);
+  const [duration, setDuration] = useState<number | null>(0);
 
   const recordingRef = useRef<Audio.Recording | null>(null);
   const fullWaveRef = useRef<number[]>([]);
@@ -50,8 +49,6 @@ export const RecordingProvider = ({ children }: Props) => {
   const levelSum = useRef(0);
   const levelCount = useRef(0);
   let audioWaveIntervalId: NodeJS.Timeout;
-
-  const recordingDurationShared = useSharedValue(0);
 
   useEffect(() => {
     return () => {
@@ -71,9 +68,6 @@ export const RecordingProvider = ({ children }: Props) => {
       fullWaveRef.current = [];
       displayWaveShared.set([]);
 
-      recordingDurationShared.set(0);
-      setFinalDuration(null);
-
       levelSum.current = 0;
       levelCount.current = 0;
 
@@ -81,8 +75,8 @@ export const RecordingProvider = ({ children }: Props) => {
         clearInterval(intervalRef.current);
       }
 
-      intervalRef.current = setInterval(() => {
-        recordingDurationShared.value += 1;
+      intervalRef.current = setInterval(async () => {
+        setDuration((prevDuration: number) => prevDuration + 1);
       }, 1000);
 
       const { recording } = await Audio.Recording.createAsync(
@@ -129,11 +123,11 @@ export const RecordingProvider = ({ children }: Props) => {
     clearInterval(audioWaveIntervalId);
 
     const { durationMillis } = await recordingRef.current.getStatusAsync();
-
-    const uri = recordingRef.current.getURI();
     const finalDurationSec = Math.floor(durationMillis / 1000);
 
-    setFinalDuration(finalDurationSec);
+    const uri = recordingRef.current.getURI();
+
+    setDuration(finalDurationSec);
     setIsRecording(false);
 
     return { uri, duration: finalDurationSec };
@@ -154,8 +148,7 @@ export const RecordingProvider = ({ children }: Props) => {
 
     fullWaveRef.current = [];
     displayWaveShared.set([]);
-    recordingDurationShared.set(null);
-    setFinalDuration(null);
+    setDuration(null);
     setIsRecording(false);
   }, [isRecording]);
 
@@ -166,8 +159,7 @@ export const RecordingProvider = ({ children }: Props) => {
         startRecording,
         stopRecording,
         clearRecording,
-        duration: finalDuration,
-        recordingDurationShared,
+        duration,
         displayWaveShared,
         fullWaveRef,
         recordingRef,
