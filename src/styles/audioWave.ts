@@ -2,6 +2,7 @@ import { DimensionValue, StyleSheet, ViewStyle } from 'react-native';
 import {
   DOT_HEIGHT,
   SCREEN_WIDTH,
+  WAVE_BAR_GAP,
   WAVE_BAR_WIDTH,
 } from '@src/components/common/constants';
 
@@ -18,10 +19,29 @@ interface Styles {
   unplayedSection: ViewStyle;
   waveformContainer: ViewStyle;
   bar: ViewStyle;
+  overlayBar: ViewStyle;
+  bottomOverlayBar: ViewStyle;
+  bottomBar: ViewStyle;
   dotContainer: ViewStyle;
   dot: ViewStyle;
+  overlayDot: ViewStyle;
+  bottomDot: ViewStyle;
+  overlayBottomDot: ViewStyle;
   midpointLine: ViewStyle;
+  progressOverlay: ViewStyle;
 }
+
+const baseDotStyle = {
+  width: WAVE_BAR_WIDTH,
+  marginRight: WAVE_BAR_GAP,
+  height: DOT_HEIGHT,
+  borderRadius: 2,
+};
+const baseBarStyle = {
+  width: WAVE_BAR_WIDTH,
+  marginRight: WAVE_BAR_GAP,
+  borderRadius: 3,
+};
 
 const useAudioWaveStyles = () => {
   const audioWaveStyles: Styles = StyleSheet.create({
@@ -55,17 +75,15 @@ const useAudioWaveStyles = () => {
     unplayedSection: { flex: 1, backgroundColor: '#3f51b5' },
     waveformContainer: {
       flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      alignSelf: 'center',
     },
     waveColumn: { flexDirection: 'column', gap: 1 },
     topWaveContainer: { height: '60%', justifyContent: 'flex-end' },
     bottomWaveContainer: {
       height: '40%',
       justifyContent: 'flex-start',
-      opacity: 0.3,
-    },
-    waveContentReversed: {
-      alignItems: 'flex-start',
-      opacity: 0.3,
     },
     midpointLine: {
       position: 'absolute',
@@ -75,10 +93,36 @@ const useAudioWaveStyles = () => {
       marginLeft: '50%',
     },
     bar: {
-      width: WAVE_BAR_WIDTH,
-      marginHorizontal: 1,
-      borderRadius: 3,
-      backgroundColor: 'blue',
+      ...baseBarStyle,
+      backgroundColor: '#3f51b5',
+    },
+    overlayBar: {
+      ...baseBarStyle,
+      backgroundColor: '#ff4081',
+    },
+    bottomBar: {
+      ...baseBarStyle,
+      backgroundColor: '#a0a9de',
+    },
+    bottomOverlayBar: {
+      ...baseBarStyle,
+      backgroundColor: '#ff9fc0',
+    },
+    dot: {
+      ...baseDotStyle,
+      backgroundColor: '#3f51b5',
+    },
+    overlayDot: {
+      ...baseDotStyle,
+      backgroundColor: '#ff4081',
+    },
+    bottomDot: {
+      ...baseDotStyle,
+      backgroundColor: '#a0a9de',
+    },
+    overlayBottomDot: {
+      ...baseDotStyle,
+      backgroundColor: '#FFAED5',
     },
     dotContainer: {
       width: 10,
@@ -86,24 +130,49 @@ const useAudioWaveStyles = () => {
       justifyContent: 'center',
       alignItems: 'center',
     },
-    dot: {
-      width: WAVE_BAR_WIDTH,
-      marginHorizontal: 1,
-      height: DOT_HEIGHT,
-      borderRadius: 2,
-      backgroundColor: '#3f51b5',
+    progressOverlay: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      height: '100%',
+      flexDirection: 'row',
+      alignItems: 'center',
+      overflow: 'hidden',
+      backgroundColor: 'rgba(0, 0, 0, 0)',
     },
   });
 
-  const getDynamicStyles = (waveHeight: number) => {
-    return {
-      bar: {
-        ...audioWaveStyles.bar,
-        height: `${waveHeight}%` as DimensionValue,
-      },
-    };
-  };
+  const getDynamicStyles = (
+    waveHeight: number,
+    isOverlay: boolean = false,
+    isBottom: boolean = false,
+  ) => {
+    const styleCase = (isOverlay ? 2 : 0) + (isBottom ? 1 : 0);
 
+    switch (styleCase) {
+      case 3:
+        return {
+          ...audioWaveStyles.bottomOverlayBar,
+          height: `${waveHeight + 1}%` as DimensionValue,
+        };
+      case 2:
+        return {
+          ...audioWaveStyles.overlayBar,
+          height: `${waveHeight}%` as DimensionValue,
+        };
+      case 1:
+        return {
+          ...audioWaveStyles.bottomBar,
+          height: `${waveHeight}%` as DimensionValue,
+        };
+      case 0:
+      default:
+        return {
+          ...audioWaveStyles.bar,
+          height: `${waveHeight}%` as DimensionValue,
+        };
+    }
+  };
   return { ...audioWaveStyles, getDynamicStyles };
 };
 

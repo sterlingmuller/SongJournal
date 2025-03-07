@@ -23,7 +23,7 @@ const RecordingWave = ({ recordingWave }: Props) => {
 
   return (
     <Animated.View style={[styles.maskElementContainer, animatedStyle]}>
-      <WaveForms waveForms={recordingWave} />
+      <WaveForms waveForm={recordingWave} />
     </Animated.View>
   );
 };

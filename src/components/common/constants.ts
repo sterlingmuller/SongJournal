@@ -193,18 +193,22 @@ export const AUDIO_UPDATE_INTERVAL = 1000 / AUDIO_UPDATES_PER_SECOND;
 export const MAX_LEVEL = 50;
 export const SILENCE_THRESHOLD = -140;
 export const MINIMUM_WAVE_HEIGHT = 22;
-export const WAVE_BAR_WIDTH = 8;
+export const WAVE_BAR_WIDTH = 6;
 export const WAVE_BAR_GAP = 2;
 export const WAVE_BAR_TOTAL_WIDTH = WAVE_BAR_WIDTH + WAVE_BAR_GAP;
 export const PAN_SENSITIVITY = 0.15;
-export const WAVE_CONTAINER_WIDTH = SCREEN_WIDTH * 0.9;
-export const MAX_BARS = Math.floor((SCREEN_WIDTH * 0.9) / WAVE_BAR_TOTAL_WIDTH);
+export const WAVE_CONTAINER_WIDTH = SCREEN_WIDTH * 0.85;
+export const MAX_BARS = Math.floor(WAVE_CONTAINER_WIDTH / WAVE_BAR_TOTAL_WIDTH);
 export const DOT_HEIGHT = WAVE_BAR_WIDTH * 0.75;
 
 export const HEIGHT_MAPPING: [number, number][] = [
   [0, 0],
-  [60, 5],
+  [42, 0],
+  [45, 3],
+  [50, 5],
+  [60, 8],
   [70, 10],
+  [75, 12],
   [78, 15],
   [80, 20],
   [85, 25],
@@ -220,3 +224,5 @@ export const HEIGHT_MAPPING: [number, number][] = [
   [96, 95],
   [97, 100],
 ];
+
+export const MAX_TITLE_LENGTH = 40;
