@@ -26,16 +26,28 @@ const FixedPlaybackWaveDisplay = () => {
   const styles = useAudioWaveStyles();
   const isPlaying = useAppSelector(selectIsPlaying);
   const { fullWaveRef, duration } = useRecording();
-  const { currentTime, didJustFinish, seekTo } = useAudioPlayer();
+  const { currentTime, didJustFinish } = useAudioPlayer();
+
+  // Use shared values for animation state
+  const progress = useSharedValue(0);
+  const isPlayingShared = useSharedValue(false);
+  const shouldAnimateShared = useSharedValue(false);
+  const driftFactorShared = useSharedValue(SYNC_CALIBRATION);
+
+  // Regular state/refs for React side only
   const [wasFinished, setWasFinished] = useState(false);
   const animationRef = useRef(null);
   const intervalRef = useRef(null);
-  const driftFactorRef = useRef(SYNC_CALIBRATION);
+  const isPlayingRef = useRef(isPlaying);
+  const fullWave = useMemo(
+    () => [...(fullWaveRef.current || [])],
+    [fullWaveRef.current],
+  );
 
-  const fullWave = fullWaveRef.current;
-  const progress = useSharedValue(0);
+  // Add a ref to track if playback has completed
+  const completedRef = useRef(false);
 
-  // Improved wave resampling for more accurate representation
+  // Resample the waveform to fit screen width
   const resampledWave = useMemo(() => {
     if (!fullWave || fullWave.length === 0) return [];
 
@@ -47,7 +59,6 @@ const FixedPlaybackWaveDisplay = () => {
     }
 
     // Use more precise resampling for larger waveforms
-    // This approach ensures time-proportional sampling
     const output = [];
     const ratio = fullWave.length / totalBars;
 
@@ -77,6 +88,34 @@ const FixedPlaybackWaveDisplay = () => {
     return resampledWave.length * WAVE_BAR_TOTAL_WIDTH;
   }, [resampledWave]);
 
+  // Explicitly handle playback status changes
+  useEffect(() => {
+    // When transitioning from playing to paused
+    if (isPlayingRef.current && !isPlaying) {
+      runOnUI(() => {
+        cancelAnimation(progress);
+        if (currentTime !== null && duration > 0) {
+          progress.value = currentTime / duration;
+        }
+      })();
+      animationRef.current = null;
+    }
+
+    isPlayingRef.current = isPlaying;
+    isPlayingShared.value = isPlaying;
+
+    // Control animation state
+    shouldAnimateShared.value = isPlaying && !wasFinished;
+  }, [
+    isPlaying,
+    currentTime,
+    duration,
+    progress,
+    isPlayingShared,
+    shouldAnimateShared,
+    wasFinished,
+  ]);
+
   // Adaptive sync mechanism that monitors and corrects drift
   useEffect(() => {
     if (!isPlaying) {
@@ -102,8 +141,8 @@ const FixedPlaybackWaveDisplay = () => {
         // Analyze drift for patterns
         if (progressDiff > 0.03) {
           // Audio is ahead of animation - speed up animation
-          driftFactorRef.current = Math.min(
-            driftFactorRef.current + 0.01,
+          driftFactorShared.value = Math.min(
+            driftFactorShared.value + 0.01,
             1.15,
           );
 
@@ -113,15 +152,21 @@ const FixedPlaybackWaveDisplay = () => {
             runOnUI(() => {
               cancelAnimation(progress);
               progress.value = expectedProgress;
-              progress.value = withTiming(1, {
-                duration: remainingDuration / driftFactorRef.current,
-                easing: Easing.linear,
-              });
+              // Only start animation if still playing
+              if (isPlayingShared.value) {
+                progress.value = withTiming(1, {
+                  duration: remainingDuration / driftFactorShared.value,
+                  easing: Easing.linear,
+                });
+              }
             })();
           }
         } else if (progressDiff < -0.03) {
           // Animation is ahead of audio - slow down animation slightly
-          driftFactorRef.current = Math.max(driftFactorRef.current - 0.01, 1.0);
+          driftFactorShared.value = Math.max(
+            driftFactorShared.value - 0.01,
+            1.0,
+          );
         }
       }
     }, 250);
@@ -132,11 +177,23 @@ const FixedPlaybackWaveDisplay = () => {
         intervalRef.current = null;
       }
     };
-  }, [isPlaying, currentTime, duration, progress]);
+  }, [
+    isPlaying,
+    currentTime,
+    duration,
+    progress,
+    isPlayingShared,
+    driftFactorShared,
+  ]);
 
   // Handle direct updates to progress when not playing
   useEffect(() => {
-    if (!isPlaying && currentTime !== null && duration > 0) {
+    if (
+      !isPlaying &&
+      currentTime !== null &&
+      duration > 0 &&
+      !completedRef.current
+    ) {
       runOnUI(() => {
         cancelAnimation(progress);
         progress.value = currentTime / duration;
@@ -148,7 +205,7 @@ const FixedPlaybackWaveDisplay = () => {
   useEffect(() => {
     if (isPlaying) {
       // Reset drift factor when starting playback
-      driftFactorRef.current = SYNC_CALIBRATION;
+      driftFactorShared.value = SYNC_CALIBRATION;
 
       // Reset progress if we're starting playback after finishing
       if (wasFinished) {
@@ -156,41 +213,72 @@ const FixedPlaybackWaveDisplay = () => {
           progress.value = 0;
         })();
         setWasFinished(false);
+        completedRef.current = false; // Reset completion state
       }
 
       if (duration > 0 && currentTime !== null) {
         const startPos = Math.max(0, currentTime / duration);
         const remainingDuration = (1 - startPos) * duration * 1000;
+        const currentDriftFactor = driftFactorShared.value;
+
+        // Update shared value before animation
+        shouldAnimateShared.value = true;
 
         // Use a slightly larger delay to ensure audio is properly initialized
-        setTimeout(() => {
-          runOnUI(() => {
-            cancelAnimation(progress);
-            progress.value = startPos;
-            progress.value = withTiming(1, {
-              duration: remainingDuration / driftFactorRef.current,
-              easing: Easing.linear,
-            });
-          })();
-          animationRef.current = 'running';
+        const timeoutId = setTimeout(() => {
+          // Check if still playing before starting animation
+          if (isPlayingRef.current) {
+            runOnUI(() => {
+              cancelAnimation(progress);
+              progress.value = startPos;
+              // Check animation state using shared value in worklet
+              if (shouldAnimateShared.value) {
+                progress.value = withTiming(1, {
+                  duration: remainingDuration / currentDriftFactor,
+                  easing: Easing.linear,
+                });
+              }
+            })();
+            animationRef.current = 'running';
+          }
         }, 100);
+
+        return () => clearTimeout(timeoutId);
       }
-    } else {
+    } else if (!didJustFinish && !completedRef.current) {
+      // Only update progress when paused and not just finished and not in completed state
+      runOnUI(() => {
+        cancelAnimation(progress);
+        if (currentTime !== null && duration > 0) {
+          progress.value = currentTime / duration;
+        }
+      })();
       animationRef.current = null;
     }
-  }, [isPlaying, wasFinished, duration, currentTime, progress]);
+  }, [
+    isPlaying,
+    wasFinished,
+    duration,
+    currentTime,
+    progress,
+    didJustFinish,
+    shouldAnimateShared,
+    driftFactorShared,
+  ]);
 
   // Handle playback completion
   useEffect(() => {
     if (didJustFinish) {
       runOnUI(() => {
         cancelAnimation(progress);
-        progress.value = 0;
+        progress.value = 1; // Keep at 1 to show completed state
       })();
       setWasFinished(true);
+      shouldAnimateShared.value = false;
+      completedRef.current = true; // Mark as completed to prevent resets
       animationRef.current = null;
     }
-  }, [didJustFinish]);
+  }, [didJustFinish, progress, shouldAnimateShared]);
 
   return (
     <View style={styles.container}>
