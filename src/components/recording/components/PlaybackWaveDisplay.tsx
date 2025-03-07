@@ -125,7 +125,7 @@ const PlaybackWaveDisplay = () => {
     <Animated.View
       style={[styles.maskElementContainerNotRecording, maskAnimatedStyle]}
     >
-      {fullWave.length > 0 && <WaveForms waveForms={fullWave} />}
+      {fullWave.length > 0 && <WaveForms waveForm={fullWave} />}
     </Animated.View>
   );
 
