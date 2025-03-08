@@ -79,7 +79,7 @@ const AudioProvider = ({ children }: Props) => {
           { uri: newUri },
           {
             shouldPlay: false,
-            progressUpdateIntervalMillis: 250,
+            progressUpdateIntervalMillis: 100,
           },
           handlePlaybackStatusUpdate,
         );

@@ -99,6 +99,7 @@ const useAudioWaveStyles = () => {
     overlayBar: {
       ...baseBarStyle,
       backgroundColor: '#ff4081',
+      top: 0.5,
     },
     bottomBar: {
       ...baseBarStyle,
@@ -115,6 +116,8 @@ const useAudioWaveStyles = () => {
     overlayDot: {
       ...baseDotStyle,
       backgroundColor: '#ff4081',
+      height: DOT_HEIGHT + 0.5,
+      top: 0.5,
     },
     bottomDot: {
       ...baseDotStyle,
@@ -123,6 +126,7 @@ const useAudioWaveStyles = () => {
     overlayBottomDot: {
       ...baseDotStyle,
       backgroundColor: '#FFAED5',
+      top: 0.5,
     },
     dotContainer: {
       width: 10,
