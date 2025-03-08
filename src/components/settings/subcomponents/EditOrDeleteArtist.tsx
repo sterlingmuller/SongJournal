@@ -8,10 +8,7 @@ import {
 } from 'react-native';
 import StyledText from '@src/components/common/components/StyledText';
 import useEditOrAddArtistStyles from '@src/styles/editOrAddArtist';
-import {
-  useAppSelector,
-  useAppDispatch,
-} from '@src/utils/hooks/typedReduxHooks';
+import { useAppSelector, useAppDispatch } from '@src/hooks/typedReduxHooks';
 import { selectArtists } from '@src/state/selectors/artistsSelector';
 import { deleteArtistRequest } from '@src/state/sagas/actionCreators';
 import { useSQLiteContext } from 'expo-sqlite';

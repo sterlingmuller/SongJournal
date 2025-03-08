@@ -6,7 +6,7 @@ import {
   storeRefreshToken,
 } from '@src/data/utils/tokenStorage';
 import { generateChallange } from '@src/data/utils/pkceVerifier';
-import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
+import { useAppDispatch } from '@src/hooks/typedReduxHooks';
 import { updateSettingsRequest } from '@src/state/sagas/actionCreators';
 import { useSQLiteContext } from 'expo-sqlite';
 import { CloudConnection } from '@src/components/common/enums';

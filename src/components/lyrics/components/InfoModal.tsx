@@ -8,10 +8,7 @@ import SaveAndCancelButtons from '@src/components/common/components/SaveAndCance
 import { SongInfo } from '@src/components/common/types';
 import { SONG_DETAILS } from '@src/components/common/constants';
 import useInfoModalStyle from '@src/styles/infoModal';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@src/utils/hooks/typedReduxHooks';
+import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import {
   updateSongArtistRequest,
   updateSongCompletionRequest,
@@ -25,7 +22,7 @@ import {
 } from '@src/state/selectors/songsSelector';
 import AboutArtist from '@src/components/lyrics/subcomponents/AboutArtist';
 import { useColorTheme } from '@src/state/context/ThemeContext';
-import useLyricsSheetGenerator from '@src/utils/hooks/useLyricsSheetGenerator';
+import useLyricsSheetGenerator from '@src/hooks/useLyricsSheetGenerator';
 
 interface Props {
   isInfoModalOpen: boolean;

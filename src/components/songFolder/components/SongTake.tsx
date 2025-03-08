@@ -7,9 +7,9 @@ import NotesIcon from '@src/icons/NotesIcon';
 import TrashIcon from '@src/icons/TrashIcon';
 import { DeleteObject, Take } from '@src/components/common/types';
 import StarIcon from '@src/icons/StarIcon';
-import useDoubleTap from '@src/utils/hooks/useDoubleTap';
+import useDoubleTap from '@src/hooks/useDoubleTap';
 import useSongTakeStyles from '@src/styles/songTake';
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import PauseIcon from '@src/icons/PauseIcon';
 import {
   selectIsPlaying,
@@ -20,12 +20,12 @@ import {
   selectCurrentSongTitle,
 } from '@src/state/selectors/songsSelector';
 import { formatDateFromISOString } from '@src/utils/formateDateFromISOString';
-import useFileShare from '@src/utils/hooks/useFileShare';
+import useFileShare from '@src/hooks/useFileShare';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
 import PlaybackBar from '@src/components/home/subcomponents/PlaybackBar';
 import formatDuration from '@src/utils/formatDuration';
 import StyledText from '@src/components/common/components/StyledText';
-import useStarredTakeUpdateAndUpload from '@src/utils/hooks/useStarredTakeUpdate';
+import useStarredTakeUpdateAndUpload from '@src/hooks/useStarredTakeUpdate';
 
 interface Props {
   take: Take;

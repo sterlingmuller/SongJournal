@@ -13,7 +13,7 @@ import StyledText from '@src/components/common/components/StyledText';
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
 import useCommonModalStyle from '@src/styles/commonModal';
 import { useColorTheme } from '@src/state/context/ThemeContext';
-import useRenameUpdateAndUpload from '@src/utils/hooks/useRenameUpdateAndUpload';
+import useRenameUpdateAndUpload from '@src/hooks/useRenameUpdateAndUpload';
 import { MAX_TITLE_LENGTH } from '@src/components/common/constants';
 import { sanitizeInput } from '@src/utils/sanitizeInput';
 

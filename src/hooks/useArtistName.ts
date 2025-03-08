@@ -1,4 +1,4 @@
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import { Artist } from '@src/components/common/types';
 import { selectArtists } from '@src/state/selectors/artistsSelector';
 

@@ -8,10 +8,7 @@ import { RootStackParamList } from '@src/components/common/types';
 import StyledText from '@src/components/common/components/StyledText';
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
 import useCommonModalStyle from '@src/styles/commonModal';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@src/utils/hooks/typedReduxHooks';
+import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { createSongRequest } from '@src/state/sagas/actionCreators';
 import { Screen } from '@src/components/common/enums';
 import { selectDisplayTips } from '@src/state/selectors/settingsSelector';

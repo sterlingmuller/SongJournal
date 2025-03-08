@@ -6,7 +6,7 @@ import DeleteRow from '@src/components/home/subcomponents/DeleteRow';
 import { ListRenderItemInfo } from 'react-native';
 import * as t from '@src/components/common/types';
 import { Filter, SortBy } from '@src/components/common/enums';
-import { useProcessSongs } from '@src/utils/hooks/useProcessSongs';
+import { useProcessSongs } from '@src/hooks/useProcessSongs';
 
 interface Props {
   setToDelete: (value: t.DeleteObject | null) => void;

@@ -14,13 +14,13 @@ import {
 import useSongScreenStyles from '@styles/songScreen';
 import useGlobalStyles from '@styles/global';
 import PermissionsNeededModal from '@src/components/songFolder/components/PermissionsNeededModal';
-import useMicrophonePermissions from '@src/utils/hooks/useMicrophonePermissions';
+import useMicrophonePermissions from '@src/hooks/useMicrophonePermissions';
 import {
   RootStackParamList,
   DeleteObject,
   Take,
 } from '@src/components/common/types';
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import {
   selectCurrentSongTakes,
   selectCurrentSongTotalTakes,

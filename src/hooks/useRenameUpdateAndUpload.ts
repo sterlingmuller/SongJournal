@@ -1,9 +1,6 @@
 import { useSQLiteContext } from 'expo-sqlite';
 
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@src/utils/hooks/typedReduxHooks';
+import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import {
   selectIsAutoSyncEnabled,
   selectSyncFilters,
@@ -18,7 +15,7 @@ import { updateTakeTitleRequest } from '@src/state/thunk/takeThunk';
 import { generatePagePdf } from '@src/utils/generatePagePdf';
 import { CloudFileType } from '@src/components/common/enums';
 import { fetchPageBySongId } from '@src/data/repositories/PageRepository';
-import { useArtistName } from '@src/utils/hooks/useArtistName';
+import { useArtistName } from '@src/hooks/useArtistName';
 
 export const useRenameUpdateAndUpload = () => {
   const dispatch = useAppDispatch();

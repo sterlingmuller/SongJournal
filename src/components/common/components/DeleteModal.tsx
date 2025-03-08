@@ -7,10 +7,7 @@ import { DeleteObject } from '@src/components/common/types';
 import { EMPTY_DELETE_OBJECT } from '@src/components/common/constants';
 import StyledText from '@src/components/common/components/StyledText';
 import useDeleteModalStyles from '@src/styles/deleteModal';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@src/utils/hooks/typedReduxHooks';
+import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
 import { selectPlayingId } from '@src/state/selectors/playbackSelector';
 import {

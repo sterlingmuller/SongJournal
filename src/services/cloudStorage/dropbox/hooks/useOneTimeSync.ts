@@ -2,11 +2,11 @@ import { useCallback } from 'react';
 import { useSQLiteContext } from 'expo-sqlite';
 
 import { uploadFilesInBatch } from '@src/services/cloudStorage/dropbox/helpers/dropboxFileRequests';
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectSongs } from '@src/state/selectors/songsSelector';
 import { FileToUpload, Page, Take } from '@src/components/common/types';
 import { fetchPages } from '@src/data/repositories/PageRepository';
-import { useArtistName } from '@src/utils/hooks/useArtistName';
+import { useArtistName } from '@src/hooks/useArtistName';
 import { generatePagePdf } from '@src/utils/generatePagePdf';
 import { selectSyncFilters } from '@src/state/selectors/settingsSelector';
 import useAddToUploadQueue from '@src/services/cloudStorage/useAddToUploadQueue';

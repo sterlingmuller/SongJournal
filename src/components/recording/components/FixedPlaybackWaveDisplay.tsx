@@ -4,7 +4,7 @@ import { useSharedValue, runOnUI } from 'react-native-reanimated';
 
 import useAudioWaveStyles from '@src/styles/audioWave';
 import WaveForms from '@src/components/recording/subcomponents/WaveForm';
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectIsPlaying } from '@src/state/selectors/playbackSelector';
 import { useRecording } from '@src/state/context/RecordingContext';
 import { useAudioPlayer } from '@src/state/context/AudioContext';

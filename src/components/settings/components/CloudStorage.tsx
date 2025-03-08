@@ -4,10 +4,7 @@ import { Button, View, Alert } from 'react-native';
 import { clearTokens } from '@src/data/utils/tokenStorage';
 import StyledText from '@src/components/common/components/StyledText';
 import DropboxAuth from '@src/components/settings/components/DropboxAuth';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@src/utils/hooks/typedReduxHooks';
+import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { updateSettingsRequest } from '@src/state/sagas/actionCreators';
 import { CloudConnection } from '@src/components/common/enums';
 import { useSQLiteContext } from 'expo-sqlite';

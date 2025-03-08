@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Songs } from '@src/components/common/types';
 import { SortBy, Filter } from '@src/components/common/enums';
-import { useNumberedSongs } from '@src/utils/hooks/useNumberedSongs';
+import { useNumberedSongs } from '@src/hooks/useNumberedSongs';
 import { filterSongs, searchSongs, sortSongs } from '@src/utils/songExplorer';
 
 export const useProcessSongs = (

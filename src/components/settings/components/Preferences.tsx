@@ -7,9 +7,9 @@ import Separator from '@src/components/common/components/Separator';
 import usePreferencesStyle from '@src/styles/preferences';
 import SortSettingsOptions from '@src/components/settings/subcomponents/SortSettingsOptions';
 import DefaultArtistOptions from '../subcomponents/DefaultArtistOptions';
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectUserSettings } from '@src/state/selectors/settingsSelector';
-import { useToggleSetting } from '@src/utils/hooks/useToggleSettings';
+import { useToggleSetting } from '@src/hooks/useToggleSettings';
 import { ToggleableSettings } from '@src/components/common/enums';
 
 const Preferences = () => {

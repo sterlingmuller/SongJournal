@@ -5,10 +5,10 @@ import { useSQLiteContext } from 'expo-sqlite';
 import usePreferencesStyle from '@src/styles/preferences';
 import SettingsWheel from '@src/components/common/components/SettingsWheel';
 import StyledText from '@src/components/common/components/StyledText';
-import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
+import { useAppDispatch } from '@src/hooks/typedReduxHooks';
 import { updateSettingsRequest } from '@src/state/sagas/actionCreators';
 import NewArtistModal from '../components/NewArtistModal';
-import { useArtistName } from '@src/utils/hooks/useArtistName';
+import { useArtistName } from '@src/hooks/useArtistName';
 
 interface Props {
   defaultArtistId: number;

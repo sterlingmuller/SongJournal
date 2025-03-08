@@ -7,10 +7,10 @@ import StyledText from '@src/components/common/components/StyledText';
 import { useState } from 'react';
 import { SORT_SELECT } from '@src/components/common/constants';
 import { SortBy, ToggleableSettings } from '@src/components/common/enums';
-import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
+import { useAppDispatch } from '@src/hooks/typedReduxHooks';
 import { updateSettingsRequest } from '@src/state/sagas/actionCreators';
 import { useSQLiteContext } from 'expo-sqlite';
-import { useToggleSetting } from '@src/utils/hooks/useToggleSettings';
+import { useToggleSetting } from '@src/hooks/useToggleSettings';
 
 interface Props {
   defaultSort: SortBy;

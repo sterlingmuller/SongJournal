@@ -4,7 +4,7 @@ import Modal from 'react-native-modal';
 import { useSQLiteContext } from 'expo-sqlite';
 
 import StyledText from '@src/components/common/components/StyledText';
-import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
+import { useAppDispatch } from '@src/hooks/typedReduxHooks';
 import { updatePurchasesRequest } from '@src/state/sagas/actionCreators';
 import { Conductor } from '../enums';
 import { CONDUCTOR_ICONS, PURCHASE_KEYS } from '../constants';

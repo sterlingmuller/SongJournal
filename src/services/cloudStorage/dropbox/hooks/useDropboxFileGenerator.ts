@@ -11,7 +11,7 @@ import { useNetworkStatus } from '@src/state/context/NetworkContext';
 import { generateBuffer } from '@dropbox/helpers/generateBuffer';
 import { CloudFileType } from '@src/components/common/enums';
 import { createBackup } from '@src/utils/createAndShareBackup';
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectSyncFilters } from '@src/state/selectors/settingsSelector';
 import { selectCurrentSongCompletionStatus } from '@src/state/selectors/songsSelector';
 import { EXPORT_ZIP_PATH } from '@src/components/common/constants';

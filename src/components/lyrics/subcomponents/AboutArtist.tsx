@@ -5,7 +5,7 @@ import SettingsWheel from '@src/components/common/components/SettingsWheel';
 import StyledText from '@src/components/common/components/StyledText';
 import NewArtistModal from '@src/components/settings/components/NewArtistModal';
 import useInfoModalStyle from '@src/styles/infoModal';
-import { useArtistName } from '@src/utils/hooks/useArtistName';
+import { useArtistName } from '@src/hooks/useArtistName';
 
 interface Props {
   selectedArtistId: number;
