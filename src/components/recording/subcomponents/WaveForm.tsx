@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { FlexAlignType, View } from 'react-native';
 import Animated, {
   SharedValue,
   useAnimatedStyle,
@@ -54,7 +54,7 @@ const WaveForms = ({
   const containerStyle = actualWaveWidth
     ? {
         width: actualWaveWidth,
-        alignSelf: 'center',
+        alignSelf: 'center' as FlexAlignType,
       }
     : null;
 
@@ -73,14 +73,14 @@ const WaveForms = ({
   return (
     <View style={[styles.waveformContainer, containerStyle]}>
       {waveForm.map((waveHeight: number, index: number) => (
-        <Bar key={index} waveHeight={waveHeight} />
+        <Bar key={index} waveHeight={waveHeight * 1.2} />
       ))}
       {progress && (
         <Animated.View style={[styles.progressOverlay, playedAnimatedStyle]}>
           {waveForm.map((waveHeight: number, index: number) => (
             <Bar
               key={`overlay-${index}`}
-              waveHeight={waveHeight}
+              waveHeight={waveHeight * 1.2}
               isOverlay={true}
             />
           ))}
