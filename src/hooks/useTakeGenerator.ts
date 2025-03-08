@@ -1,9 +1,6 @@
 import { useSQLiteContext } from 'expo-sqlite';
 
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@src/utils/hooks/typedReduxHooks';
+import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectCurrentSong } from '@src/state/selectors/songsSelector';
 import {
   selectIsAutoSyncEnabled,

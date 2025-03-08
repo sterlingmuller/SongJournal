@@ -1,5 +1,5 @@
 import { Songs, Song } from '@src/components/common/types';
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectIsNumbered } from '@src/state/selectors/settingsSelector';
 
 export const useNumberedSongs = () => {

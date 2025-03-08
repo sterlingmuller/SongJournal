@@ -3,7 +3,7 @@ import { TouchableOpacity } from 'react-native';
 
 import PlayRecordingPlaybackIcon from '@src/icons/PlayRecordingPlaybackIcon';
 import PauseRecordingPlaybackIcon from '@src/icons/PauseRecordingPlaybackIcon';
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectIsPlaying } from '@src/state/selectors/playbackSelector';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
 

@@ -6,9 +6,9 @@ import React, {
   ReactNode,
 } from 'react';
 import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
-import useDebounce from '@src/utils/hooks/useDebounce';
+import useDebounce from '@src/hooks/useDebounce';
 import useUploadQueue from '@dropbox/hooks/useUploadQueue';
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import {
   selectCloudConnection,
   selectIsAutoSyncEnabled,

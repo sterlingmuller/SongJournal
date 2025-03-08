@@ -2,7 +2,7 @@ import React from 'react';
 
 import SongFolders from '@src/components/home/components/SongFolders';
 import { DeleteObject } from '@src/components/common/types';
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectSongs } from '@src/state/selectors/songsSelector';
 import ComposerMessage from '@src/components/common/components/ComposerMessage';
 import { Filter, Screen, SortBy } from '@src/components/common/enums';

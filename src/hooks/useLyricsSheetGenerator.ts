@@ -1,9 +1,6 @@
 import { useSQLiteContext } from 'expo-sqlite';
 
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@src/utils/hooks/typedReduxHooks';
+import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectCurrentSong } from '@src/state/selectors/songsSelector';
 import { selectIsAutoSyncEnabled } from '@src/state/selectors/settingsSelector';
 import useDropboxFileGenerator from '@src/services/cloudStorage/dropbox/hooks/useDropboxFileGenerator';
@@ -18,7 +15,7 @@ import {
 } from '@src/state/thunk/pageThunk';
 import { Page, SongInfo } from '@src/components/common/types';
 import { generatePagePdf } from '@src/utils/generatePagePdf';
-import { useArtistName } from '@src/utils/hooks/useArtistName';
+import { useArtistName } from '@src/hooks/useArtistName';
 import { updateSongHasLyrics } from '@src/state/slice/songsSlice';
 import { selectCurrentSongPage } from '@src/state/selectors/pagesSelector';
 

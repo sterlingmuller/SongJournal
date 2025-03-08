@@ -11,10 +11,7 @@ import React, {
 } from 'react';
 import { Audio, AVPlaybackStatusSuccess } from 'expo-av';
 
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@src/utils/hooks/typedReduxHooks';
+import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectPlaybackInfo } from '@src/state/selectors/playbackSelector';
 import {
   pausePlayback,

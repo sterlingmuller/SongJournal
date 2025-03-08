@@ -1,7 +1,4 @@
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@src/utils/hooks/typedReduxHooks';
+import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { UserSettings } from '@src/components/common/types';
 import { selectUserSettings } from '@src/state/selectors/settingsSelector';
 import { updateSettingsRequest } from '@src/state/sagas/actionCreators';

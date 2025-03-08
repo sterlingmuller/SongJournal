@@ -4,8 +4,8 @@ import { View, TouchableOpacity } from 'react-native';
 import { LyricsScreenOption, Page } from '@src/components/common/types';
 import useOptionBarStyles from '@src/styles/optionBar';
 import { LYRIC_SCREEN_OPTIONS } from '@src/components/common/constants';
-import useFileShare from '@src/utils/hooks/useFileShare';
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import useFileShare from '@src/hooks/useFileShare';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import {
   selectCurrentSongArtistId,
   selectCurrentSongTitle,

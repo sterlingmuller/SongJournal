@@ -5,7 +5,7 @@ import StyledText from '@src/components/common/components/StyledText';
 import useGetStartedHomeStyles from '@src/styles/getStartedHome';
 import { Conductor, Screen } from '@src/components/common/enums';
 import { FRACTION_UNICODE } from '../constants';
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import {
   selectConductor,
   selectDisplayTips,

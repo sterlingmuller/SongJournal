@@ -3,8 +3,8 @@ import { View } from 'react-native';
 
 import useLyricScreenStyles from '@src/styles/lyricsScreen';
 import TextEditor from '@src/components/common/components/TextEditor';
-import useDebounce from '@src/utils/hooks/useDebounce';
-import useKeyboardHeight from '@src/utils/hooks/useKeyboardHeight';
+import useDebounce from '@src/hooks/useDebounce';
+import useKeyboardHeight from '@src/hooks/useKeyboardHeight';
 import { SCREEN_HEIGHT } from '@src/components/common/constants';
 
 interface Props {

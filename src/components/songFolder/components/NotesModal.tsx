@@ -6,7 +6,7 @@ import SaveAndCancelButtons from '@src/components/common/components/SaveAndCance
 import { Take } from '@src/components/common/types';
 import useTakeNotesModalStyles from '@src/styles/takeNotesModal';
 import { EMPTY_TAKE } from '@src/components/common/constants';
-import { useAppDispatch } from '@src/utils/hooks/typedReduxHooks';
+import { useAppDispatch } from '@src/hooks/typedReduxHooks';
 import { useSQLiteContext } from 'expo-sqlite';
 import { updateTakeNotesRequest } from '@src/state/sagas/actionCreators';
 import { useColorTheme } from '@src/state/context/ThemeContext';

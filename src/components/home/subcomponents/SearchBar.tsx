@@ -3,7 +3,7 @@ import { TextInput, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import useSearchBarStyle from '@src/styles/search';
-import useDebounce from '@src/utils/hooks/useDebounce';
+import useDebounce from '@src/hooks/useDebounce';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Props {

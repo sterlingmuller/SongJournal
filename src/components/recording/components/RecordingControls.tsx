@@ -4,11 +4,11 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 
 import useRecordingStyles from '@src/styles/recording';
 import RecordButton from '@src/components/common/components/RecordButton';
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import { RootStackParamList } from '@src/components/common/types';
 import { selectCurrentSongId } from '@src/state/selectors/songsSelector';
 import PlaybackButton from '@src/components/recording/subcomponents/PlaybackButton';
-import useTakeGenerator from '@src/utils/hooks/useTakeGenerator';
+import useTakeGenerator from '@src/hooks/useTakeGenerator';
 import { Screen } from '@src/components/common/enums';
 import { useRecording } from '@src/state/context/RecordingContext';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
@@ -22,6 +22,8 @@ const RecordingControls = () => {
   const { title } = route.params;
   const [uri, setUri] = useState<string | null>(null);
   const [localDuration, setLocalDuration] = useState<number | null>(null);
+
+  console.log('ho');
 
   const {
     isRecording,

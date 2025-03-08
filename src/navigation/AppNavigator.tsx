@@ -8,7 +8,7 @@ import useHeaderStyles from '@styles/header';
 import { Screen } from '@src/components/common/enums';
 import DefaultHeader from './subcomponents/DefaultHeader';
 import { selectCurrentSongTitle } from '@src/state/selectors/songsSelector';
-import { useAppSelector } from '@src/utils/hooks/typedReduxHooks';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import CoversScreen from '@src/screens/CoversScreen';
 import SettingsScreen from '@src/screens/SettingsScreen';
 import HomeScreenAudioContainer from '@src/screens/HomeScreenAudioContainer';

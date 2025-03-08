@@ -5,10 +5,7 @@ import StyledText from '@src/components/common/components/StyledText';
 import useSettingsStyle from '@src/styles/settings';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import { Conductor } from '@src/components/common/enums';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@src/utils/hooks/typedReduxHooks';
+import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { updateSettingsRequest } from '@src/state/sagas/actionCreators';
 import { useSQLiteContext } from 'expo-sqlite';
 import LockIcon from '@src/icons/LockIcon';

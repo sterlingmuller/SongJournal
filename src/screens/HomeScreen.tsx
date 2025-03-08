@@ -15,10 +15,7 @@ import {
   EMPTY_DELETE_OBJECT,
 } from '@src/components/common/constants';
 import useGlobalStyles from '@styles/global';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@src/utils/hooks/typedReduxHooks';
+import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { fetchStartupDataRequest } from '@src/state/sagas/actionCreators';
 import HomeDisplay from '@src/components/home/components/HomeDisplay';
 import { Filter, SortBy } from '@src/components/common/enums';

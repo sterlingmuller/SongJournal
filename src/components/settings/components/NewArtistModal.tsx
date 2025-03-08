@@ -5,10 +5,7 @@ import { useSQLiteContext } from 'expo-sqlite';
 
 import StyledText from '@src/components/common/components/StyledText';
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@src/utils/hooks/typedReduxHooks';
+import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { addArtistRequest } from '@src/state/sagas/actionCreators';
 import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
 import Gap from '@src/components/common/components/Gap';

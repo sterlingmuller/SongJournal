@@ -8,10 +8,7 @@ import PlayIcon from '@src/icons/PlayIcon';
 import PlaybackBar from '@src/components/home/subcomponents/PlaybackBar';
 import { RootStackParamList, Song, Take } from '@src/components/common/types';
 import useSongFolderStyles from '@src/styles/songFolder';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@src/utils/hooks/typedReduxHooks';
+import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { setCurrentSongId } from '@src/state/slice/currentSongSlice';
 import PauseIcon from '@src/icons/PauseIcon';
 import {
@@ -20,10 +17,10 @@ import {
 } from '@src/state/selectors/playbackSelector';
 import { fetchPageRequest } from '@src/state/sagas/actionCreators';
 import { useSQLiteContext } from 'expo-sqlite';
-import useDoubleTap from '@src/utils/hooks/useDoubleTap';
+import useDoubleTap from '@src/hooks/useDoubleTap';
 import { TextInput } from 'react-native-gesture-handler';
 import { formatDateFromISOString } from '@src/utils/formateDateFromISOString';
-import useFileShare from '@src/utils/hooks/useFileShare';
+import useFileShare from '@src/hooks/useFileShare';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
 import PageIcon from '@src/icons/PageIcon';
 import { Screen } from '@src/components/common/enums';
