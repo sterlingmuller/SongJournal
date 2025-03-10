@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
-import { FlatList, View } from 'react-native';
+import { View } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 
 import useSongScreenStyles from '@src/styles/songScreen';
 import { DeleteObject, Take, Takes } from '@src/components/common/types';
@@ -40,17 +41,23 @@ const SongDisplay = (props: Props) => {
 
   const ListFooter = useMemo(() => () => <View style={{ height: 180 }} />, []);
 
+  // Create a separator component to handle the gap between items
+  const ItemSeparator = useMemo(
+    () => () => <View style={{ height: 20 }} />,
+    [],
+  );
+
   if (takes.length > 0) {
     return (
-      <FlatList
+      <FlashList
         data={orderedTakes}
         renderItem={renderTake}
+        estimatedItemSize={orderedTakes.length}
         keyExtractor={(item: Take) => item.title}
         contentContainerStyle={styles.takes}
+        ItemSeparatorComponent={ItemSeparator}
         ListFooterComponent={ListFooter}
         removeClippedSubviews={true}
-        maxToRenderPerBatch={10}
-        windowSize={10}
       />
     );
   }

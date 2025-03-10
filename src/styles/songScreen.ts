@@ -8,8 +8,7 @@ interface Styles {
 const useSongScreenStyles = () => {
   const songScreenStyles: Styles = StyleSheet.create({
     takes: {
-      marginTop: 25,
-      gap: 20,
+      paddingTop: 25,
     },
     recordingButton: {
       position: 'absolute',
