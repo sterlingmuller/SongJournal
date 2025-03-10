@@ -4,7 +4,10 @@ export const selectPlayingId = (state: RootState) => state.playback.id;
 
 export const selectIsPlaying = (state: RootState) => state.playback.isPlaying;
 
-export const selectPlaybackInfo = (state: RootState) => state.playback;
+export const selectAudioPlayerInfo = (state: RootState) => ({
+  isPlaying: state.playback.isPlaying,
+  uri: state.playback.uri,
+});
 
 export const selectPlaybackDuration = (state: RootState) =>
   state.playback.duration;

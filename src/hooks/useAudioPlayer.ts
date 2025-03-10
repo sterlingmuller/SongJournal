@@ -1,16 +1,5 @@
-import React, {
-  Context,
-  createContext,
-  useContext,
-  useRef,
-  useCallback,
-  useEffect,
-  ReactNode,
-  useMemo,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Audio, AVPlaybackStatusSuccess } from 'expo-av';
-
 import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectAudioPlayerInfo } from '@src/state/selectors/playbackSelector';
 import {
@@ -20,25 +9,14 @@ import {
   stopPlayback,
 } from '@src/state/slice/playbackSlice';
 
-interface AudioContextType {
-  togglePlayback: (uri: string, id: number) => Promise<void>;
-  clearPlayback: () => Promise<void>;
-  seekTo: (position: number) => Promise<void>;
-  currentTime: number;
-  didJustFinish: boolean;
-}
-
-const AudioContext: Context<AudioContextType> = createContext(undefined);
-
-type Props = {
-  children?: ReactNode;
-};
-
-const AudioProvider = ({ children }: Props) => {
+const useAudioPlayer = () => {
+  // make soundRef a singleton
   const soundRef = useRef<Audio.Sound | null>(null);
   const { isPlaying, uri } = useAppSelector(selectAudioPlayerInfo);
   const dispatch = useAppDispatch();
-  const [currentTime, setCurrentTime] = useState(null);
+  const [currentTime, setCurrentTime] = useState<number | null>(null);
+
+  // add to redux?
   const [didJustFinish, setDidJustFinish] = useState(false);
 
   const unloadSound = useCallback(async () => {
@@ -146,40 +124,13 @@ const AudioProvider = ({ children }: Props) => {
     };
   }, []);
 
-  const contextValue = useMemo(
-    () => ({
-      togglePlayback,
-      clearPlayback,
-      seekTo,
-      currentTime,
-      didJustFinish,
-    }),
-    [togglePlayback, clearPlayback, seekTo, currentTime, didJustFinish],
-  );
-
-  return (
-    <AudioContext.Provider value={contextValue}>
-      {children}
-    </AudioContext.Provider>
-  );
+  return {
+    togglePlayback,
+    clearPlayback,
+    seekTo,
+    currentTime,
+    didJustFinish,
+  };
 };
 
-export const useAudioPlayer = () => useContext(AudioContext);
-
-export const RecordingAudioProvider = ({
-  children,
-}: {
-  children: ReactNode;
-}) => <AudioProvider>{children}</AudioProvider>;
-
-export const SongTakesAudioProvider = ({
-  children,
-}: {
-  children: ReactNode;
-}) => <AudioProvider>{children}</AudioProvider>;
-
-export const HomeSongsAudioProvider = ({
-  children,
-}: {
-  children: ReactNode;
-}) => <AudioProvider>{children}</AudioProvider>;
+export default useAudioPlayer;
