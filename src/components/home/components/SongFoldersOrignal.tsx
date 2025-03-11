@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { RowMap, SwipeListView } from 'react-native-swipe-list-view';
 import { ListRenderItemInfo } from 'react-native';
 
 import SongFolder from '@src/components/home/subcomponents/SongFolder';
@@ -6,8 +7,6 @@ import DeleteRow from '@src/components/home/subcomponents/DeleteRow';
 import * as t from '@src/components/common/types';
 import { Filter, SortBy } from '@src/components/common/enums';
 import { useProcessSongs } from '@src/hooks/useProcessSongs';
-import SwipeableFlashList from '@src/components/common/components/SwipeableFlashList';
-import { SwipeableItemRef } from '@src/components/common/components/SwipeableItem';
 
 interface Props {
   setToDelete: (value: t.DeleteObject | null) => void;
@@ -24,7 +23,7 @@ interface Props {
   searchText: string;
 }
 
-const SongFolders = (props: Props) => {
+const SongFoldersOriginal = (props: Props) => {
   const {
     setToDelete,
     setTitleToEdit,
@@ -43,7 +42,7 @@ const SongFolders = (props: Props) => {
     searchText,
   );
 
-  const openRowRef = useRef<SwipeableItemRef | null>(null);
+  const openRowRef = useRef(null);
 
   useEffect(() => {
     if (openRowRef.current) {
@@ -51,33 +50,33 @@ const SongFolders = (props: Props) => {
     }
   }, [songs]);
 
-  const onRowDidOpen = (
-    rowKey: string,
-    rowMap: Map<string, React.RefObject<SwipeableItemRef>>,
-  ) => {
-    const rowRef = rowMap.get(rowKey);
-    if (rowRef?.current) {
-      openRowRef.current = rowRef.current;
-    }
+  const onRowDidOpen = (rowKey: string, rowMap: RowMap<t.Song>) => {
+    openRowRef.current = rowMap[rowKey];
   };
 
   return (
-    <SwipeableFlashList
+    <SwipeListView
+      contentContainerStyle={{ paddingBottom: 200 }}
       data={songsToDisplay}
+      disableRightSwipe
+      previewRowKey={'0'}
+      previewOpenValue={-40}
+      previewOpenDelay={3000}
       keyExtractor={(item: t.Song) => item.songId.toString()}
       onRowDidOpen={onRowDidOpen}
-      renderItem={({ item }: ListRenderItemInfo<t.Song>) => (
-        <SongFolder song={item} setTitleToEdit={setTitleToEdit} />
-      )}
-      renderHiddenItem={({ item }: ListRenderItemInfo<t.Song>) => (
+      renderItem={(data: ListRenderItemInfo<t.Song>) => {
+        return <SongFolder song={data.item} setTitleToEdit={setTitleToEdit} />;
+      }}
+      renderHiddenItem={(data: ListRenderItemInfo<t.SongItem>) => (
         <DeleteRow
-          title={item.title}
-          id={item.songId}
+          title={data.item.title}
+          id={data.item.songId}
           setToDelete={setToDelete}
         />
       )}
+      rightOpenValue={-100}
     />
   );
 };
 
-export default SongFolders;
+export default SongFoldersOriginal;

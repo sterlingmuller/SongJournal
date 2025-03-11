@@ -39,11 +39,10 @@ const SongDisplay = (props: Props) => {
     [setToDelete, setCurrentTake, setTitleToEdit],
   );
 
-  const ListFooter = useMemo(() => () => <View style={{ height: 180 }} />, []);
+  const ListFooter = useMemo(() => () => <View style={styles.footer} />, []);
 
-  // Create a separator component to handle the gap between items
   const ItemSeparator = useMemo(
-    () => () => <View style={{ height: 20 }} />,
+    () => () => <View style={styles.takeSeperator} />,
     [],
   );
 

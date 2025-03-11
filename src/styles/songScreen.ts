@@ -2,6 +2,8 @@ import { StyleSheet, ViewStyle } from 'react-native';
 
 interface Styles {
   takes: ViewStyle;
+  takeSeperator: ViewStyle;
+  footer: ViewStyle;
   recordingButton: ViewStyle;
 }
 
@@ -10,6 +12,8 @@ const useSongScreenStyles = () => {
     takes: {
       paddingTop: 25,
     },
+    takeSeperator: { height: 20 },
+    footer: { height: 180 },
     recordingButton: {
       position: 'absolute',
       flex: 5,
