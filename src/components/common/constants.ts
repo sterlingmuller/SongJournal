@@ -225,3 +225,6 @@ export const HEIGHT_MAPPING: [number, number][] = [
 ];
 
 export const MAX_TITLE_LENGTH = 40;
+
+export const SWIPE_THRESHOLD = -100;
+export const SWIPE_TRIGGER_THRESHOLD = -40;

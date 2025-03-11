@@ -1,5 +1,6 @@
 import React, { useRef, useState, useCallback } from 'react';
-import { View, LayoutChangeEvent } from 'react-native';
+import { View } from 'react-native';
+
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import SwipeableItem, { SwipeableItemRef } from './SwipeableItem';
@@ -32,15 +33,6 @@ const SwipeableFlashList = <T,>({
     new Map(),
   );
   const flashListRef = useRef(null);
-  const [listDimensions, setListDimensions] = useState({ width: 0, height: 0 });
-  const shouldRenderList =
-    listDimensions.width > 0 && listDimensions.height > 0;
-
-  const handleLayout = useCallback((event: LayoutChangeEvent) => {
-    const { width, height } = event.nativeEvent.layout;
-    setListDimensions({ width, height });
-  }, []);
-
   const separator = () => <View style={styles.separator} />;
 
   const renderSwipeableItem = useCallback(
@@ -71,22 +63,17 @@ const SwipeableFlashList = <T,>({
   );
 
   return (
-    <GestureHandlerRootView style={styles.container} onLayout={handleLayout}>
-      {shouldRenderList ? (
-        <FlashList
-          ref={flashListRef}
-          data={data}
-          renderItem={renderSwipeableItem}
-          keyExtractor={keyExtractor}
-          estimatedItemSize={data.length}
-          estimatedListSize={listDimensions}
-          contentContainerStyle={{ paddingBottom: 200 }}
-          ItemSeparatorComponent={separator}
-          ListFooterComponent={separator}
-        />
-      ) : (
-        <View style={styles.placeholderContainer} />
-      )}
+    <GestureHandlerRootView style={styles.container}>
+      <FlashList
+        ref={flashListRef}
+        data={data}
+        renderItem={renderSwipeableItem}
+        keyExtractor={keyExtractor}
+        estimatedItemSize={150}
+        contentContainerStyle={{ paddingBottom: 200 }}
+        ItemSeparatorComponent={separator}
+        ListFooterComponent={separator}
+      />
     </GestureHandlerRootView>
   );
 };

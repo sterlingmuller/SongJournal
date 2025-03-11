@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { ListRenderItemInfo } from 'react-native';
+import { ListRenderItemInfo, View } from 'react-native';
 
 import SongFolder from '@src/components/home/subcomponents/SongFolder';
 import DeleteRow from '@src/components/home/subcomponents/DeleteRow';
@@ -62,21 +62,23 @@ const SongFolders = (props: Props) => {
   };
 
   return (
-    <SwipeableFlashList
-      data={songsToDisplay}
-      keyExtractor={(item: t.Song) => item.songId.toString()}
-      onRowDidOpen={onRowDidOpen}
-      renderItem={({ item }: ListRenderItemInfo<t.Song>) => (
-        <SongFolder song={item} setTitleToEdit={setTitleToEdit} />
-      )}
-      renderHiddenItem={({ item }: ListRenderItemInfo<t.Song>) => (
-        <DeleteRow
-          title={item.title}
-          id={item.songId}
-          setToDelete={setToDelete}
-        />
-      )}
-    />
+    <View style={{ flex: 1 }}>
+      <SwipeableFlashList
+        data={songsToDisplay}
+        keyExtractor={(item: t.Song) => item.songId.toString()}
+        onRowDidOpen={onRowDidOpen}
+        renderItem={({ item }: ListRenderItemInfo<t.Song>) => (
+          <SongFolder song={item} setTitleToEdit={setTitleToEdit} />
+        )}
+        renderHiddenItem={({ item }: ListRenderItemInfo<t.Song>) => (
+          <DeleteRow
+            title={item.title}
+            id={item.songId}
+            setToDelete={setToDelete}
+          />
+        )}
+      />
+    </View>
   );
 };
 

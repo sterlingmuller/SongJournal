@@ -1,16 +1,19 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { View } from 'react-native';
+import {
+  Gesture,
+  GestureDetector,
+  GestureType,
+} from 'react-native-gesture-handler';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
   runOnJS,
 } from 'react-native-reanimated';
-import useHomeSwipeListStyles from '@src/styles/homeSwipeList';
 
-const SWIPE_THRESHOLD = -100;
-const SWIPE_TRIGGER_THRESHOLD = -40;
+import useHomeSwipeListStyles from '@src/styles/homeSwipeList';
+import { SWIPE_THRESHOLD, SWIPE_TRIGGER_THRESHOLD } from '../constants';
 
 export interface SwipeableItemRef {
   closeRow: () => void;
@@ -21,11 +24,11 @@ interface SwipeableItemProps {
   renderHiddenItem: () => React.ReactNode;
   itemKey: string;
   onSwipeableOpen: (key: string) => void;
-  simultaneousHandlers: React.RefObject<any>;
+  simultaneousHandlers: React.RefObject<GestureType>;
 }
 
 const SwipeableItem = forwardRef<SwipeableItemRef, SwipeableItemProps>(
-  (props, ref) => {
+  (props: SwipeableItemProps, ref: React.Ref<SwipeableItemRef>) => {
     const {
       children,
       renderHiddenItem,
@@ -56,7 +59,7 @@ const SwipeableItem = forwardRef<SwipeableItemRef, SwipeableItemProps>(
       .onStart(() => {
         startX.value = translateX.value;
       })
-      .onUpdate((event) => {
+      .onUpdate((event: { translationX: number }) => {
         const dragX = startX.value + event.translationX;
         translateX.value = Math.min(0, dragX);
       })
