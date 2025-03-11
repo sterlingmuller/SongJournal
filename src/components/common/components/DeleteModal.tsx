@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Button, KeyboardAvoidingView } from 'react-native';
 import Modal from 'react-native-modal';
 import { useSQLiteContext } from 'expo-sqlite';
@@ -36,12 +36,20 @@ const DeleteModal = (props: Props) => {
   const playingId = useAppSelector(selectPlayingId);
   const selectedTakeId = useAppSelector(selectCurrentSongSelectedTakeId);
   const currentSongTakes = useAppSelector(selectCurrentSongTakes);
+  const [isVisible, setIsVisible] = useState(false);
 
   const { deleteText, setToDelete, toDelete } = props;
   const { title, songId, takeId, type } = toDelete;
 
+  useEffect(() => {
+    setIsVisible(!!title);
+  }, [title]);
+
   const onExitPress = (): void => {
-    setToDelete(EMPTY_DELETE_OBJECT);
+    setIsVisible(false);
+    setTimeout(() => {
+      setToDelete(EMPTY_DELETE_OBJECT);
+    }, 300);
   };
 
   const onDeletePress = async () => {
@@ -80,12 +88,15 @@ const DeleteModal = (props: Props) => {
       dispatch(deleteTakeRequest({ songId, takeId, db }));
     }
 
-    setToDelete(EMPTY_DELETE_OBJECT);
+    setIsVisible(false);
+    setTimeout(() => {
+      setToDelete(EMPTY_DELETE_OBJECT);
+    }, 300);
   };
 
   return (
     <KeyboardAvoidingView>
-      <Modal isVisible={!!title} avoidKeyboard onBackdropPress={onExitPress}>
+      <Modal isVisible={isVisible} avoidKeyboard onBackdropPress={onExitPress}>
         <View style={styles.container}>
           <StyledText style={styles.title}>
             Delete {title} from Google account and current device
