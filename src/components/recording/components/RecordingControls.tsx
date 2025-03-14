@@ -23,8 +23,6 @@ const RecordingControls = () => {
   const [uri, setUri] = useState<string | null>(null);
   const [localDuration, setLocalDuration] = useState<number | null>(null);
 
-  console.log('ho');
-
   const {
     isRecording,
     startRecording,

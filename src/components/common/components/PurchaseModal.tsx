@@ -62,7 +62,7 @@ const PurchaseModal = ({
           </View>
         )}
         <TouchableOpacity style={styles.button} onPress={onPurchase}>
-          <StyledText style={styles.price}>$ 0.50</StyledText>
+          <StyledText style={styles.price}>$ 0.00</StyledText>
         </TouchableOpacity>
       </View>
     </Modal>

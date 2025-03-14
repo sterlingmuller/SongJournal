@@ -14,14 +14,16 @@ import EggIcon from '@src/icons/EggIcon';
 import BadEggIcon from '@src/icons/BadEggIcon';
 import CacsusIcon from '@src/icons/CacsusIcon';
 import DeadAdimIcon from '@src/icons/DeadAdimIcon';
+import useGlobalStyles from '@src/styles/global';
 
 interface props {
-  screen: 'Home' | 'Song' | 'Covers' | 'Setlist' | 'ConnectionSuccess';
+  screen: 'Originals' | 'Song' | 'Covers' | 'Setlist' | 'ConnectionSuccess';
 }
 const ComposerMessage = ({ screen }: props) => {
   const styles = useGetStartedHomeStyles();
   const conductor = useAppSelector(selectConductor);
   const displayTips = useAppSelector(selectDisplayTips);
+  const globalStyles = useGlobalStyles();
 
   let message: React.ReactElement;
   let tip: string;
@@ -117,13 +119,15 @@ const ComposerMessage = ({ screen }: props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.eggContainer}>{renderConductor()}</View>
-      <View style={styles.textbox}>
-        {message}
-        <View style={styles.arrow} />
+    <View style={globalStyles.container}>
+      <View style={styles.container}>
+        <View style={styles.eggContainer}>{renderConductor()}</View>
+        <View style={styles.textbox}>
+          {message}
+          <View style={styles.arrow} />
+        </View>
+        {displayTips && <StyledText style={styles.tipText}>{tip}</StyledText>}
       </View>
-      {displayTips && <StyledText style={styles.tipText}>{tip}</StyledText>}
     </View>
   );
 };
