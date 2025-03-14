@@ -73,6 +73,8 @@ const useCommonModalStyle = () => {
       fontSize: 12,
       textAlign: 'center',
       marginHorizontal: 20,
+      color: theme.primary,
+      fontWeight: '700',
     },
 
     infoContainer: {

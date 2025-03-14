@@ -21,6 +21,7 @@ const useGetStartedHomeStyles = () => {
       justifyContent: 'center',
       height: 520,
       gap: 20,
+      backgroundColor: theme.primaryBackground,
     },
     textbox: {
       width: '80%',
@@ -67,6 +68,8 @@ const useGetStartedHomeStyles = () => {
       textAlign: 'center',
       paddingHorizontal: 30,
       fontStyle: 'italic',
+      color: theme.primary,
+      fontWeight: '600',
     },
   });
 

@@ -21,9 +21,9 @@ const AppNavigator = () => {
 
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName="MainTabs" id={undefined}>
+      <RootStack.Navigator initialRouteName={Screen.TABS} id={undefined}>
         <RootStack.Screen
-          name="MainTabs"
+          name={Screen.TABS}
           component={TabNavigator}
           options={{
             headerShown: false,

@@ -13,7 +13,6 @@ export type FilterOptions = {
 };
 
 export type RootStackParamList = {
-  MainTabs: undefined;
   Home: undefined;
   Song: undefined;
   Lyrics: { previousScreen: Screen.HOME | Screen.SONG };
@@ -22,7 +21,7 @@ export type RootStackParamList = {
   Covers: undefined;
   Setlist: undefined;
   ConnectionSuccess: undefined;
-  TabNavigator: undefined;
+  Tabs: undefined;
 };
 
 export type TabNames = 'Home' | 'Covers' | 'Settings' | 'Setlist';

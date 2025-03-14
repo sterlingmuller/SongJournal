@@ -81,7 +81,6 @@ const TabNavigator = () => {
 
       <Tab.Screen
         name={Screen.SETTINGS}
-        component={() => null}
         listeners={{
           tabPress: (e: any) => {
             e.preventDefault();
@@ -91,7 +90,9 @@ const TabNavigator = () => {
         options={{
           tabBarIcon: () => <SettingIcon />,
         }}
-      />
+      >
+        {() => null}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 };

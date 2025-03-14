@@ -7,6 +7,7 @@ export enum Screen {
   SETLIST = 'Setlist',
   SETTINGS = 'Settings',
   CONNECTION_SUCCESS = 'ConnectionSuccess',
+  TABS = 'Tabs',
 }
 
 export enum RequestStatus {
