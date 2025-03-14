@@ -13,6 +13,7 @@ export type FilterOptions = {
 };
 
 export type RootStackParamList = {
+  MainTabs: undefined;
   Home: undefined;
   Song: undefined;
   Lyrics: { previousScreen: Screen.HOME | Screen.SONG };
@@ -24,7 +25,7 @@ export type RootStackParamList = {
   TabNavigator: undefined;
 };
 
-export type TabNames = 'Home' | 'Covers' | 'Settings';
+export type TabNames = 'Home' | 'Covers' | 'Settings' | 'Setlist';
 export type Tab = { name: TabNames; icon: React.ComponentType };
 
 export type LyricsScreenOption = {
