@@ -110,7 +110,7 @@ const HomeScreen = () => {
           setToDelete={setToDelete}
         />
       </View>
-      <Footer />
+      {/* <Footer /> */}
     </View>
   );
 };

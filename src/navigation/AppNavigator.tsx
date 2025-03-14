@@ -9,11 +9,10 @@ import { Screen } from '@src/components/common/enums';
 import DefaultHeader from './subcomponents/DefaultHeader';
 import { selectCurrentSongTitle } from '@src/state/selectors/songsSelector';
 import { useAppSelector } from '@src/hooks/typedReduxHooks';
-import CoversScreen from '@src/screens/CoversScreen';
 import SettingsScreen from '@src/screens/SettingsScreen';
-import HomeScreenAudioContainer from '@src/screens/HomeScreenAudioContainer';
 import SongScreenAudioContainer from '@src/screens/SongScreenAudioContainer';
 import RecordingScreenAudioContainer from '@src/screens/RecordingScreenAudioContainer';
+import TabNavigator from './TabNavigator';
 
 const AppNavigator = () => {
   const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -22,17 +21,14 @@ const AppNavigator = () => {
 
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName={Screen.HOME} id={undefined}>
-        {/* <RootStack.Navigator initialRouteName={'TabNavigator'} id={undefined}> */}
-        {/* <RootStack.Screen
-          name={'TabNavigator'}
-          component={TabNavigation}
+      <RootStack.Navigator initialRouteName="MainTabs" id={undefined}>
+        <RootStack.Screen
+          name="MainTabs"
+          component={TabNavigator}
           options={{
             headerShown: false,
-            contentStyle: { backgroundColor: 'transparent' },
           }}
-        /> */}
-
+        />
         <RootStack.Screen
           name={Screen.SONG}
           component={SongScreenAudioContainer}
@@ -56,17 +52,6 @@ const AppNavigator = () => {
           name={Screen.LYRICS}
           component={LyricsScreen}
           options={{ ...styles }}
-        />
-        <RootStack.Screen
-          name={Screen.HOME}
-          component={HomeScreenAudioContainer}
-        />
-        <RootStack.Screen
-          name={Screen.COVERS}
-          component={CoversScreen}
-          options={{
-            header: () => <DefaultHeader title={Screen.COVERS} />,
-          }}
         />
         <RootStack.Screen
           name={Screen.SETTINGS}

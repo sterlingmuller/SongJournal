@@ -23,6 +23,8 @@ import EggSelectIcon from '@src/icons/EggSelectIcon';
 import BadEggSelectIcon from '@src/icons/BadEggSelectIcon';
 import CacsusSelectIcon from '@src/icons/CacsusSelectIcon';
 import DeadAdimSelectIcon from '@src/icons/DeadAdimSelectIcon';
+import PersonIcon from '@src/icons/PersonIcon';
+import MaskIcon from '@src/icons/MaskIcon';
 
 export const DROPBOX_CLIENT_ID = Constants.expoConfig.extra.dropboxClientId;
 export const DROPBOX_CLIENT_SECRET =
@@ -58,8 +60,9 @@ export const LYRIC_SCREEN_OPTIONS: t.LyricsScreenOption[] = [
 ];
 
 export const TABS: t.Tab[] = [
-  { name: Screen.HOME, icon: PlaylistIcon },
-  { name: Screen.COVERS, icon: MusicPlayerIcon },
+  { name: Screen.SETLIST, icon: PlaylistIcon },
+  { name: Screen.HOME, icon: PersonIcon },
+  { name: Screen.COVERS, icon: MaskIcon },
   { name: Screen.SETTINGS, icon: SettingIcon },
 ];
 

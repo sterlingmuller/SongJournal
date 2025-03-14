@@ -1,7 +1,7 @@
 export enum Screen {
   SONG = 'Song',
   RECORDING = 'Recording',
-  HOME = 'Home',
+  HOME = 'Originals',
   LYRICS = 'Lyrics',
   COVERS = 'Covers',
   SETLIST = 'Setlist',
