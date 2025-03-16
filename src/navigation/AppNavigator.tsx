@@ -6,13 +6,13 @@ import LyricsScreen from '@src/screens/LyricsScreen';
 import { RootStackParamList } from '@src/components/common/types';
 import useHeaderStyles from '@styles/header';
 import { Screen } from '@src/components/common/enums';
-import DefaultHeader from './subcomponents/DefaultHeader';
+import DefaultHeader from '@src/navigation/subcomponents/DefaultHeader';
 import { selectCurrentSongTitle } from '@src/state/selectors/songsSelector';
 import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import SettingsScreen from '@src/screens/SettingsScreen';
 import SongScreenAudioContainer from '@src/screens/SongScreenAudioContainer';
 import RecordingScreenAudioContainer from '@src/screens/RecordingScreenAudioContainer';
-import TabNavigator from './TabNavigator';
+import TabNavigator from '@src/navigation/TabNavigator';
 
 const AppNavigator = () => {
   const RootStack = createNativeStackNavigator<RootStackParamList>();

@@ -7,7 +7,6 @@ import HomeHeader from '@src/components/home/components/HomeHeader';
 import CreateNewSongButton from '@src/components/home/components/CreateNewSongButton';
 import SortByModal from '@src/components/home/components/SortByModal';
 import NewSongModal from '@src/components/home/components/NewSongModal';
-import Footer from '@src/components/home/components/Footer';
 import { DeleteObject, Sort } from '@src/components/common/types';
 import DeleteModal from '@src/components/common/components/DeleteModal';
 import {
@@ -110,7 +109,6 @@ const HomeScreen = () => {
           setToDelete={setToDelete}
         />
       </View>
-      {/* <Footer /> */}
     </View>
   );
 };
