@@ -15,6 +15,7 @@ import AutoSyncSettings from '@src/components/settings/components/AutoSyncSettin
 import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectCloudConnection } from '@src/state/selectors/settingsSelector';
 import { CloudConnection } from '@src/components/common/enums';
+import ReportABug from '@src/components/settings/components/ReportABug';
 
 const SettingsScreen = () => {
   const styles = useSettingsStyle();
@@ -30,6 +31,7 @@ const SettingsScreen = () => {
         <ChooseConductor />
         <Theme />
         <BackupAndRestore />
+        <ReportABug />
         <PrivacyPolicy />
         <About />
       </View>
