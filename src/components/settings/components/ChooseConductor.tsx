@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState, lazy } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
 import StyledText from '@src/components/common/components/StyledText';
@@ -10,12 +10,15 @@ import { updateSettingsRequest } from '@src/state/sagas/actionCreators';
 import { useSQLiteContext } from 'expo-sqlite';
 import LockIcon from '@src/icons/LockIcon';
 import { selectPurchases } from '@src/state/selectors/purchasesSelector';
-import PurchaseModal from '@src/components/common/components/PurchaseModal';
 import {
   CONDUCTOR_ICONS,
   PURCHASE_KEYS,
 } from '@src/components/common/constants';
 import { selectConductor } from '@src/state/selectors/settingsSelector';
+
+const LazyPurchasesModal = lazy(
+  async () => await import('@src/components/common/components/PurchaseModal'),
+);
 
 const ChooseComposer = () => {
   const styles = useSettingsStyle();
@@ -38,33 +41,40 @@ const ChooseComposer = () => {
     }
   };
 
-  const renderConductor = (conductor: Conductor) => {
-    const ConductorIcon = CONDUCTOR_ICONS[conductor];
-    const isPurchased =
-      conductor === Conductor.EGG || purchases[PURCHASE_KEYS[conductor]];
-    const isSelected = selectedConductor === conductor;
-    const iconBackgroundColor = isSelected
-      ? theme.settingsEmphasis
-      : theme.conductorBackground;
+  const renderConductor = useCallback(
+    (conductor: Conductor) => {
+      const ConductorIcon = CONDUCTOR_ICONS[conductor];
+      const isPurchased =
+        conductor === Conductor.EGG || purchases[PURCHASE_KEYS[conductor]];
+      const isSelected = selectedConductor === conductor;
+      const iconBackgroundColor = isSelected
+        ? theme.settingsEmphasis
+        : theme.conductorBackground;
 
-    return (
-      <TouchableOpacity
-        key={conductor}
-        onPress={() => handleOnPress(conductor)}
-        style={styles.conductorContainer}
-      >
-        <ConductorIcon
-          backgroundColor={iconBackgroundColor}
-          selected={isSelected}
-        />
-        {!isPurchased && (
-          <View style={styles.lockedConductorIcon}>
-            <LockIcon />
-          </View>
-        )}
-      </TouchableOpacity>
-    );
-  };
+      const handleConductorPress = (conductor: Conductor) => () => {
+        handleOnPress(conductor);
+      };
+
+      return (
+        <TouchableOpacity
+          key={conductor}
+          onPress={handleConductorPress(conductor)}
+          style={styles.conductorContainer}
+        >
+          <ConductorIcon
+            backgroundColor={iconBackgroundColor}
+            selected={isSelected}
+          />
+          {!isPurchased && (
+            <View style={styles.lockedConductorIcon}>
+              <LockIcon />
+            </View>
+          )}
+        </TouchableOpacity>
+      );
+    },
+    [purchases, selectedConductor, theme],
+  );
 
   return (
     <View>
@@ -75,7 +85,7 @@ const ChooseComposer = () => {
       <View style={styles.conductorRow}>
         {conductorsArray.slice(2, 4).map(renderConductor)}
       </View>
-      <PurchaseModal
+      <LazyPurchasesModal
         conductorToPurchase={conductorToPurchase}
         setConductorToPurchase={setConductorToPurchase}
       />
