@@ -1,14 +1,20 @@
-import { useState } from 'react';
+import { useState, lazy } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { useSQLiteContext } from 'expo-sqlite';
 
 import usePreferencesStyle from '@src/styles/preferences';
-import SettingsWheel from '@src/components/common/components/SettingsWheel';
 import StyledText from '@src/components/common/components/StyledText';
 import { useAppDispatch } from '@src/hooks/typedReduxHooks';
 import { updateSettingsRequest } from '@src/state/sagas/actionCreators';
-import NewArtistModal from '../components/NewArtistModal';
 import { useArtistName } from '@src/hooks/useArtistName';
+
+const LazySettingsWheel = lazy(
+  async () => await import('@src/components/common/components/SettingsWheel'),
+);
+const LazyDefaultArtistModal = lazy(
+  async () =>
+    await import('@src/components/settings/components/NewArtistModal'),
+);
 
 interface Props {
   defaultArtistId: number;
@@ -66,7 +72,7 @@ const DefaultArtistOptions = ({ defaultArtistId }: Props) => {
           </StyledText>
         </TouchableOpacity>
       </View>
-      <SettingsWheel
+      <LazySettingsWheel
         isWheelOpen={isSettingsWheelOpen}
         onExitPress={onExitPress}
         handleInputChange={handleInputChange}
@@ -74,7 +80,7 @@ const DefaultArtistOptions = ({ defaultArtistId }: Props) => {
         label={'Default Artist'}
         items={artistItems}
       />
-      <NewArtistModal
+      <LazyDefaultArtistModal
         isNewArtistOpen={isNewArtistOpen}
         setIsNewArtistOpen={setIsNewArtistOpen}
       />
