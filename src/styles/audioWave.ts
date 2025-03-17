@@ -29,6 +29,7 @@ interface Styles {
   overlayBottomDot: ViewStyle;
   midpointLine: ViewStyle;
   progressOverlay: ViewStyle;
+  pressableContainer: ViewStyle;
 }
 
 const baseDotStyle = {
@@ -143,6 +144,11 @@ const useAudioWaveStyles = () => {
       alignItems: 'center',
       overflow: 'hidden',
       backgroundColor: 'rgba(0, 0, 0, 0)',
+    },
+    pressableContainer: {
+      height: '100%',
+      position: 'absolute',
+      zIndex: 1,
     },
   });
 

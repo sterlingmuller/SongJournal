@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from 'react';
-import { View } from 'react-native';
+import { View, Pressable, GestureResponderEvent } from 'react-native';
 import { useSharedValue, runOnUI } from 'react-native-reanimated';
 
 import useAudioWaveStyles from '@src/styles/audioWave';
@@ -18,11 +18,12 @@ const FixedPlaybackWaveDisplay = () => {
   const styles = useAudioWaveStyles();
   const isPlaying = useAppSelector(selectIsPlaying);
   const { fullWaveRef, duration } = useRecording();
-  const { soundRef, didJustFinish } = useAudioPlayer();
+  const { soundRef, didJustFinish, seekTo } = useAudioPlayer();
 
   const progress = useSharedValue(0);
   const completedRef = useRef(false);
   const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isSeekingRef = useRef(false);
 
   const fullWave = useMemo(
     () => [...(fullWaveRef.current || [])],
@@ -62,7 +63,7 @@ const FixedPlaybackWaveDisplay = () => {
   }, [fullWave]);
 
   usePlaybackTimer(soundRef, isPlaying, (currentTime: number) => {
-    if (duration > 0 && !completedRef.current) {
+    if (!isSeekingRef.current && duration > 0 && !completedRef.current) {
       if (animationTimeoutRef.current) {
         clearTimeout(animationTimeoutRef.current);
       }
@@ -100,10 +101,48 @@ const FixedPlaybackWaveDisplay = () => {
     };
   }, []);
 
+  const handleSeek = async (event: GestureResponderEvent) => {
+    const { locationX } = event.nativeEvent;
+
+    if (locationX >= 0 && locationX <= actualWaveWidth) {
+      const seekPosition = (locationX / actualWaveWidth) * duration;
+
+      if (seekPosition >= 0 && seekPosition <= duration) {
+        isSeekingRef.current = true;
+
+        runOnUI(() => {
+          progress.value = seekPosition / duration;
+        })();
+
+        await seekTo(seekPosition);
+
+        if (soundRef.current) {
+          const status = await soundRef.current.getStatusAsync();
+          if (status.isLoaded) {
+            runOnUI(() => {
+              progress.value = status.positionMillis / 1000 / duration;
+            })();
+          }
+        }
+
+        isSeekingRef.current = false;
+      }
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.waveContainer}>
-        <View style={[styles.waveformContainer]}>
+        <Pressable
+          onPress={handleSeek}
+          style={[
+            styles.pressableContainer,
+            {
+              width: actualWaveWidth,
+            },
+          ]}
+        />
+        <View style={[styles.waveformContainer, { width: actualWaveWidth }]}>
           <WaveForms
             waveForm={resampledWave}
             progress={progress}
