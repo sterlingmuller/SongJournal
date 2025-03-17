@@ -24,8 +24,8 @@ interface AudioContextType {
   togglePlayback: (uri: string, id: number) => Promise<void>;
   clearPlayback: () => Promise<void>;
   seekTo: (position: number) => Promise<void>;
-  currentTime: number;
   didJustFinish: boolean;
+  soundRef: React.MutableRefObject<Audio.Sound | null>;
 }
 
 const AudioContext: Context<AudioContextType> = createContext(undefined);
@@ -38,7 +38,6 @@ const AudioProvider = ({ children }: Props) => {
   const soundRef = useRef<Audio.Sound | null>(null);
   const { isPlaying, uri } = useAppSelector(selectAudioPlayerInfo);
   const dispatch = useAppDispatch();
-  const [currentTime, setCurrentTime] = useState(null);
   const [didJustFinish, setDidJustFinish] = useState(false);
 
   const unloadSound = useCallback(async () => {
@@ -52,18 +51,17 @@ const AudioProvider = ({ children }: Props) => {
   const clearPlayback = useCallback(async () => {
     dispatch(stopPlayback());
     await unloadSound();
-    setCurrentTime(null);
     setDidJustFinish(false);
   }, [dispatch, unloadSound]);
 
   const handlePlaybackStatusUpdate = useCallback(
-    (playbackStatus: AVPlaybackStatusSuccess) => {
+    async (playbackStatus: AVPlaybackStatusSuccess) => {
       if (!playbackStatus.isLoaded) return;
-      setCurrentTime(playbackStatus.positionMillis / 1000);
-      setDidJustFinish(playbackStatus.didJustFinish || false);
 
       if (playbackStatus.didJustFinish) {
-        clearPlayback();
+        setDidJustFinish(true);
+        dispatch(stopPlayback());
+        await unloadSound();
       }
     },
     [clearPlayback],
@@ -133,7 +131,6 @@ const AudioProvider = ({ children }: Props) => {
   const seekTo = useCallback(async (position: number) => {
     if (soundRef.current) {
       await soundRef.current.setPositionAsync(position * 1000);
-      setCurrentTime(position);
     }
   }, []);
 
@@ -151,10 +148,10 @@ const AudioProvider = ({ children }: Props) => {
       togglePlayback,
       clearPlayback,
       seekTo,
-      currentTime,
       didJustFinish,
+      soundRef,
     }),
-    [togglePlayback, clearPlayback, seekTo, currentTime, didJustFinish],
+    [togglePlayback, clearPlayback, seekTo, didJustFinish],
   );
 
   return (

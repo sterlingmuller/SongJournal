@@ -8,6 +8,9 @@ import PlaybackDuration from '@src/components/home/subcomponents/PlaybackDuratio
 import usePlaybackBarStyles from '@src/styles/playbackBar';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
 import { useColorTheme } from '@src/state/context/ThemeContext';
+import usePlaybackTimer from '@src/hooks/usePlaybackTimer';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
+import { selectIsPlaying } from '@src/state/selectors/playbackSelector';
 
 interface Props {
   duration: number;
@@ -16,8 +19,11 @@ interface Props {
 
 const PlaybackBar = ({ duration, fromSongTakes }: Props) => {
   const styles = usePlaybackBarStyles();
-  const { currentTime, seekTo } = useAudioPlayer();
+  const { seekTo, soundRef } = useAudioPlayer();
+  const isPlaying = useAppSelector(selectIsPlaying);
   const { theme } = useColorTheme();
+
+  const currentTime = usePlaybackTimer(soundRef, isPlaying);
 
   const progress = useSharedValue(currentTime);
   const min = useSharedValue(0);

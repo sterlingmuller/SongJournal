@@ -1,22 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 
 import StyledText from '@src/components/common/components/StyledText';
 import formatDuration from '@src/utils/formatDuration';
 import useRecordingStyles from '@src/styles/recording';
-import { useRecording } from '@src/state/context/RecordingContext';
+import useTimer from '@src/hooks/useTimer';
 
 const RecordingTimer = () => {
   const styles = useRecordingStyles();
-  const { duration } = useRecording();
+  const { duration, startTimer, resetTimer } = useTimer();
 
-  const displayTime = duration || 0;
+  useEffect(() => {
+    startTimer();
+
+    return () => {
+      resetTimer();
+    };
+  }, []);
 
   return (
     <View style={styles.timerContainer}>
-      <StyledText style={styles.timer}>
-        {formatDuration(displayTime)}
-      </StyledText>
+      <StyledText style={styles.timer}>{formatDuration(duration)}</StyledText>
     </View>
   );
 };
