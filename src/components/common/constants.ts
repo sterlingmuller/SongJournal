@@ -7,7 +7,6 @@ import ChordsIcon from '@src/icons/ChordsIcon';
 import MetronomeIcon from '@src/icons/MetronomeIcon';
 import ShareIcon from '@src/icons/ShareIcon';
 import PlaylistIcon from '@src/icons/PlaylistIcon';
-import MusicPlayerIcon from '@src/icons/MusicPlayerIcon';
 import SettingIcon from '@src/icons/SettingIcon';
 import * as t from '@src/components/common/types';
 import {
@@ -231,3 +230,5 @@ export const MAX_TITLE_LENGTH = 40;
 
 export const SWIPE_THRESHOLD = -100;
 export const SWIPE_TRIGGER_THRESHOLD = -40;
+
+export const SUPPORT_EMAIL = 'SongJournalContact@gmail.com';

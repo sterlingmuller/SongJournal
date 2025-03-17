@@ -24,7 +24,7 @@ export type RootStackParamList = {
   Tabs: undefined;
 };
 
-export type TabNames = 'Home' | 'Covers' | 'Settings' | 'Setlist';
+export type TabNames = 'Originals' | 'Covers' | 'Settings' | 'Setlist';
 export type Tab = { name: TabNames; icon: React.ComponentType };
 
 export type LyricsScreenOption = {
