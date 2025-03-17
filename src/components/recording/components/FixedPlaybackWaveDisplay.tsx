@@ -12,15 +12,17 @@ import {
   WAVE_BAR_TOTAL_WIDTH,
   WAVE_CONTAINER_WIDTH,
 } from '@src/components/common/constants';
+import usePlaybackTimer from '@src/hooks/usePlaybackTimer';
 
 const FixedPlaybackWaveDisplay = () => {
   const styles = useAudioWaveStyles();
   const isPlaying = useAppSelector(selectIsPlaying);
   const { fullWaveRef, duration } = useRecording();
-  const { currentTime, didJustFinish } = useAudioPlayer();
+  const { soundRef, didJustFinish } = useAudioPlayer();
 
   const progress = useSharedValue(0);
   const completedRef = useRef(false);
+  const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const fullWave = useMemo(
     () => [...(fullWaveRef.current || [])],
@@ -59,13 +61,18 @@ const FixedPlaybackWaveDisplay = () => {
     };
   }, [fullWave]);
 
-  useEffect(() => {
-    if (currentTime !== null && duration > 0 && !completedRef.current) {
-      runOnUI(() => {
-        progress.value = currentTime / duration;
-      })();
+  usePlaybackTimer(soundRef, isPlaying, (currentTime: number) => {
+    if (duration > 0 && !completedRef.current) {
+      if (animationTimeoutRef.current) {
+        clearTimeout(animationTimeoutRef.current);
+      }
+      animationTimeoutRef.current = setTimeout(() => {
+        runOnUI(() => {
+          progress.value = currentTime / duration;
+        })();
+      }, 50);
     }
-  }, [currentTime, duration, progress]);
+  });
 
   useEffect(() => {
     if (didJustFinish) {
@@ -84,6 +91,14 @@ const FixedPlaybackWaveDisplay = () => {
       completedRef.current = false;
     }
   }, [isPlaying, progress]);
+
+  useEffect(() => {
+    return () => {
+      if (animationTimeoutRef.current) {
+        clearTimeout(animationTimeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <View style={styles.container}>

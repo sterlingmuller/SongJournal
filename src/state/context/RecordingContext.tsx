@@ -72,14 +72,6 @@ export const RecordingProvider = ({ children }: Props) => {
       levelSum.current = 0;
       levelCount.current = 0;
 
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-
-      intervalRef.current = setInterval(async () => {
-        setDuration((prevDuration: number) => prevDuration + 1);
-      }, 1000);
-
       const { recording } = await Audio.Recording.createAsync(
         Audio.RecordingOptionsPresets.HIGH_QUALITY,
         ({ metering }: RecordingStatus) => {

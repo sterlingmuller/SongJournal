@@ -6,12 +6,17 @@ import formatDuration from '@src/utils/formatDuration';
 import useRecordingStyles from '@src/styles/recording';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
 import { useRecording } from '@src/state/context/RecordingContext';
+import { selectIsPlaying } from '@src/state/selectors/playbackSelector';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
+import usePlaybackTimer from '@src/hooks/usePlaybackTimer';
 
 const RecordingPlaybackTimer = () => {
   const timerStyles = useRecordingStyles();
-  const { currentTime } = useAudioPlayer();
+  const { soundRef } = useAudioPlayer();
   const { duration } = useRecording();
+  const isPlaying = useAppSelector(selectIsPlaying);
 
+  const currentTime = usePlaybackTimer(soundRef, isPlaying);
   const displayTime = currentTime ? currentTime : duration;
 
   return (
