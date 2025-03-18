@@ -67,7 +67,7 @@ const usePreferencesStyle = () => {
       fontWeight: '700',
     },
     labelText: { fontSize: 14, color: theme.primaryText, fontWeight: 600 },
-    inputText: { fontSize: 14, color: theme.secondaryText, fontWeight: 700 },
+    inputText: { fontSize: 14, color: theme.secondaryText, fontWeight: 600 },
   });
 
   return preferencesStyle;
