@@ -35,7 +35,8 @@ const TabNavigator = () => {
         tabBarStyle: {
           backgroundColor: theme.primary,
           height: '7%',
-          borderTopWidth: 0,
+          borderColor: theme.primaryBackground,
+          borderTopWidth: 1,
         },
         tabBarItemStyle: {
           flexDirection: 'row',
