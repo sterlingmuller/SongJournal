@@ -23,7 +23,7 @@ const useSearchBarStyle = () => {
 
     input: {
       flex: 1,
-      fontSize: 16,
+      fontSize: 14,
       marginLeft: 8,
       fontWeight: 600,
       color: theme.secondaryText,

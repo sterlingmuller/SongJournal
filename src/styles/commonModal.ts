@@ -71,7 +71,7 @@ const useCommonModalStyle = () => {
     text: { textAlign: 'center', fontSize: 15, paddingHorizontal: 5 },
     boldText: { fontWeight: 'bold' },
 
-    inputX: { fontWeight: 'bold', color: theme.secondaryText, fontSize: 14 },
+    inputX: { fontWeight: 600, color: theme.secondaryText, fontSize: 14 },
 
     tipText: {
       fontStyle: 'italic',

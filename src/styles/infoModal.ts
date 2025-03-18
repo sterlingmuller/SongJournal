@@ -97,7 +97,7 @@ const useInfoModalStyle = () => {
       paddingBottom: 30,
     },
     labelText: { fontSize: 14, color: theme.primaryText, fontWeight: 600 },
-    inputText: { fontSize: 16, color: theme.secondaryText, fontWeight: 700 },
+    inputText: { fontSize: 14, color: theme.secondaryText, fontWeight: 600 },
   });
 
   return infoModalStyle;
