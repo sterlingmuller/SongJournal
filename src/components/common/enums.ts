@@ -19,7 +19,7 @@ export enum RequestStatus {
 
 export enum ColorTheme {
   LIGHT = 'Light',
-  DARK = 'Dark - In Development',
+  DARK = 'Dark',
   SURF = 'Surf',
   METAL = 'Metal - In Development',
   PSYCH = 'Psych - In Development',
