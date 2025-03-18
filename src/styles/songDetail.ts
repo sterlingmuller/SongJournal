@@ -1,3 +1,4 @@
+import { useColorTheme } from '@src/state/context/ThemeContext';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 interface Styles {
@@ -5,12 +6,15 @@ interface Styles {
   textbox: ViewStyle;
   completedContainer: ViewStyle;
   checkbox: ViewStyle;
-  text: TextStyle;
+  labelText: TextStyle;
+  inputText: TextStyle;
   select: ViewStyle;
   pickerContainer: ViewStyle;
 }
 
 const useSongDetailStyles = () => {
+  const { theme } = useColorTheme();
+
   const songDetailStyles: Styles = StyleSheet.create({
     container: {
       alignItems: 'center',
@@ -18,7 +22,7 @@ const useSongDetailStyles = () => {
     },
 
     textbox: {
-      backgroundColor: '#f0f0f0',
+      backgroundColor: theme.inputBackground,
       borderRadius: 5,
       width: 65,
       height: 30,
@@ -36,8 +40,8 @@ const useSongDetailStyles = () => {
     },
 
     checkbox: {
-      borderWidth: 1,
-      borderColor: 'ccc',
+      borderWidth: 2,
+      borderColor: theme.primaryText,
       borderRadius: 5,
       width: 20,
       height: 20,
@@ -47,7 +51,8 @@ const useSongDetailStyles = () => {
       paddingBottom: 6,
     },
 
-    text: { fontSize: 16 },
+    labelText: { fontSize: 14, color: theme.primaryText, fontWeight: 600 },
+    inputText: { fontSize: 16, color: theme.secondaryText, fontWeight: 700 },
 
     select: {
       fontSize: 14,

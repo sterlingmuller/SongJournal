@@ -10,6 +10,8 @@ interface Styles {
   toggleLabel: TextStyle;
   sectionTitle: TextStyle;
   addArtistText: TextStyle;
+  labelText: TextStyle;
+  inputText: TextStyle;
 }
 
 const usePreferencesStyle = () => {
@@ -23,7 +25,7 @@ const usePreferencesStyle = () => {
     },
 
     togglesContainer: {
-      backgroundColor: theme.clearBackground,
+      backgroundColor: theme.secondaryBackground,
       padding: 10,
       borderRadius: 10,
       flexDirection: 'column',
@@ -46,7 +48,7 @@ const usePreferencesStyle = () => {
     toggleLabel: {},
 
     textbox: {
-      backgroundColor: theme.secondaryBackground,
+      backgroundColor: theme.inputBackground,
       borderRadius: 5,
       maxWidth: 100,
       minWidth: 60,
@@ -59,11 +61,13 @@ const usePreferencesStyle = () => {
     },
 
     addArtistText: {
-      color: theme.primary,
+      color: theme.toggleOn,
       fontStyle: 'italic',
       paddingRight: 5,
-      fontWeight: '500',
+      fontWeight: '700',
     },
+    labelText: { fontSize: 14, color: theme.primaryText, fontWeight: 600 },
+    inputText: { fontSize: 14, color: theme.secondaryText, fontWeight: 700 },
   });
 
   return preferencesStyle;

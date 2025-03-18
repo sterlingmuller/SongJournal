@@ -120,7 +120,7 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
               <TextInput
                 style={styles.input}
                 placeholder="Enter a new title"
-                placeholderTextColor={theme.secondaryText}
+                placeholderTextColor={theme.placeholderText}
                 value={updatedTitle}
                 onChangeText={handleTitleChange}
                 autoCapitalize="words"
@@ -130,7 +130,7 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
                   onPress={clearInput}
                   style={styles.clearButton}
                 >
-                  <StyledText style={styles.boldText}>X</StyledText>
+                  <StyledText style={styles.inputX}>X</StyledText>
                 </TouchableOpacity>
               )}
             </View>

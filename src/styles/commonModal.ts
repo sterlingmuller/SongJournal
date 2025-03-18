@@ -13,6 +13,7 @@ interface Styles {
   boldText: TextStyle;
   tipText: TextStyle;
   infoText: TextStyle;
+  inputX: TextStyle;
 }
 
 const useCommonModalStyle = () => {
@@ -38,7 +39,7 @@ const useCommonModalStyle = () => {
 
     textbox: {
       flexDirection: 'row',
-      backgroundColor: theme.secondaryBackground,
+      backgroundColor: theme.inputBackground,
       borderRadius: 10,
       padding: 6,
       width: '75%',
@@ -52,6 +53,8 @@ const useCommonModalStyle = () => {
       flex: 1,
       fontSize: 14,
       marginLeft: 8,
+      fontWeight: 500,
+      color: theme.secondaryText,
     },
 
     clearButton: {
@@ -68,12 +71,14 @@ const useCommonModalStyle = () => {
     text: { textAlign: 'center', fontSize: 15, paddingHorizontal: 5 },
     boldText: { fontWeight: 'bold' },
 
+    inputX: { fontWeight: 'bold', color: theme.secondaryText, fontSize: 14 },
+
     tipText: {
       fontStyle: 'italic',
       fontSize: 12,
       textAlign: 'center',
       marginHorizontal: 20,
-      color: theme.primary,
+      color: theme.secondaryTipText,
       fontWeight: '700',
     },
 
@@ -86,7 +91,7 @@ const useCommonModalStyle = () => {
     infoText: {
       textAlign: 'right',
       fontSize: 14,
-      color: 'gray',
+      color: theme.primaryText,
     },
   });
 

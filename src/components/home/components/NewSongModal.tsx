@@ -78,7 +78,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
               <TextInput
                 style={styles.input}
                 placeholder="Cobra Strike Lightning Deluxe"
-                placeholderTextColor={theme.secondaryText}
+                placeholderTextColor={theme.placeholderText}
                 value={songTitle}
                 onChangeText={handleTitleChange}
                 autoCapitalize="words"

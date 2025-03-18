@@ -4,7 +4,7 @@ import { useColorTheme } from '@src/state/context/ThemeContext';
 
 const PersonIcon = ({ focused }: { focused?: boolean }) => {
   const { theme } = useColorTheme();
-  const fillColor = focused ? theme.secondary : theme.secondaryText;
+  const fillColor = focused ? theme.secondary : theme.footerText;
 
   return (
     <Svg width="36" height="36" viewBox="0 0 24 24" fill="none">

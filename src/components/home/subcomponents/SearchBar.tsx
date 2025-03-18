@@ -34,7 +34,7 @@ const SearchBar = ({ searchText, setSearchText }: Props) => {
       <TextInput
         style={styles.input}
         placeholder="Search songs..."
-        placeholderTextColor={theme.secondaryText}
+        placeholderTextColor={theme.placeholderText}
         value={localSearchText}
         onChangeText={handleTextChange}
         autoCapitalize="words"

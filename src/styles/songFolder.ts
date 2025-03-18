@@ -30,12 +30,13 @@ const useSongFolderStyles = () => {
       paddingLeft: 25,
       paddingRight: 30,
       width: '100%',
-      borderBottomWidth: 0,
-      borderBottomColor: '#000',
+      borderBottomWidth: 1,
+      borderBottomColor: theme.primaryText,
       justifyContent: 'space-between',
       alignContent: 'center',
     },
 
+    // fix color
     rowPressed: { backgroundColor: '#DDD' },
 
     contents: {

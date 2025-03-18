@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 
 import useSongDetailStyles from '@src/styles/songDetail';
 import { SongInfo } from '@src/components/common/types';
@@ -33,9 +33,9 @@ const SongDetailSelect = (props: Props) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={songDetailPress} style={styles.textbox}>
-        <StyledText>{value}</StyledText>
+        <StyledText style={styles.inputText}>{value}</StyledText>
       </TouchableOpacity>
-      <Text>{label}</Text>
+      <StyledText style={styles.labelText}>{label}</StyledText>
       <ChordWheelModal
         isWheelOpen={isChordWheelOpen}
         setIsWheelOpen={setIsChordWheelOpen}

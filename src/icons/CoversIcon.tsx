@@ -4,7 +4,7 @@ import Svg, { Path } from 'react-native-svg';
 
 const CoversIcon = ({ focused }: { focused?: boolean }) => {
   const { theme } = useColorTheme();
-  const fillColor = focused ? theme.secondary : theme.secondaryText;
+  const fillColor = focused ? theme.secondary : theme.footerText;
 
   return (
     <Svg width={45} height={35} viewBox="0 0 20 20">

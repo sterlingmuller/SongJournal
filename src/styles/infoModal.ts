@@ -15,6 +15,8 @@ interface Styles {
   details: ViewStyle;
   input: TextStyle;
   artistEditText: TextStyle;
+  labelText: TextStyle;
+  inputText: TextStyle;
 }
 
 const useInfoModalStyle = () => {
@@ -44,9 +46,10 @@ const useInfoModalStyle = () => {
       fontWeight: 'bold',
       padding: 20,
       paddingBottom: 0,
+      color: theme.primaryText,
     },
     textbox: {
-      backgroundColor: '#f0f0f0',
+      backgroundColor: theme.inputBackground,
       borderRadius: 10,
       padding: 8,
       width: '85%',
@@ -68,7 +71,7 @@ const useInfoModalStyle = () => {
       paddingBottom: 5,
     },
     artistTextbox: {
-      backgroundColor: '#f0f0f0',
+      backgroundColor: theme.inputBackground,
       borderRadius: 5,
       paddingHorizontal: 10,
       paddingVertical: 8,
@@ -93,6 +96,8 @@ const useInfoModalStyle = () => {
     buttonContainer: {
       paddingBottom: 30,
     },
+    labelText: { fontSize: 14, color: theme.primaryText, fontWeight: 600 },
+    inputText: { fontSize: 16, color: theme.secondaryText, fontWeight: 700 },
   });
 
   return infoModalStyle;

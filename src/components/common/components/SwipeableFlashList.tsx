@@ -70,8 +70,6 @@ const SwipeableFlashList = <T,>({
         renderItem={renderSwipeableItem}
         keyExtractor={keyExtractor}
         estimatedItemSize={150}
-        contentContainerStyle={{ paddingBottom: 200 }}
-        ItemSeparatorComponent={separator}
         ListFooterComponent={separator}
       />
     </GestureHandlerRootView>

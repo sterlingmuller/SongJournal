@@ -1,3 +1,4 @@
+import { useColorTheme } from '@src/state/context/ThemeContext';
 import { StyleSheet, ViewStyle } from 'react-native';
 
 interface Styles {
@@ -7,6 +8,8 @@ interface Styles {
 }
 
 const useOptionBarStyles = () => {
+  const { theme } = useColorTheme();
+
   const optionBarStyles: Styles = StyleSheet.create({
     options: {
       flexDirection: 'row',
@@ -23,7 +26,7 @@ const useOptionBarStyles = () => {
     },
 
     selected: {
-      backgroundColor: '#fcd470',
+      backgroundColor: theme.secondary,
     },
   });
 
