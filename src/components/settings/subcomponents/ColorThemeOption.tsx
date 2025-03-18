@@ -21,7 +21,6 @@ const ColorThemeOption = ({ label }: Props) => {
   };
 
   const inDevelopment =
-    label === ColorTheme.DARK ||
     label === ColorTheme.METAL ||
     label === ColorTheme.POP ||
     label === ColorTheme.PSYCH;
