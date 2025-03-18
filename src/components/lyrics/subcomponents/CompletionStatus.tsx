@@ -21,7 +21,7 @@ const CompletionStatus = ({ isCompleted, handleInputChange }: Props) => {
       >
         {isCompleted ? <CheckIcon /> : null}
       </TouchableOpacity>
-      <Text style={styles.text}>Completed</Text>
+      <Text style={styles.labelText}>Completed</Text>
     </View>
   );
 };

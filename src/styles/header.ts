@@ -12,9 +12,9 @@ const useHeaderStyles = () => {
 
   const headerStyles: Styles = {
     headerStyle: { backgroundColor: theme.primary },
-    headerTitleStyle: { fontSize: 28, color: theme.headerText },
+    headerTitleStyle: { fontSize: 28, color: theme.primaryText },
     rightIcon: { padding: 8 },
-    headerTintColor: theme.headerText,
+    headerTintColor: theme.primaryText,
   };
 
   return headerStyles;

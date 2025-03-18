@@ -27,12 +27,12 @@ const SettingsToggle = ({ label, isActive, onToggle }: Props) => {
 
   return (
     <View style={styles.toggleContainer}>
-      <StyledText style={styles.toggleLabel}>{label}</StyledText>
+      <StyledText style={styles.labelText}>{label}</StyledText>
       <Switch
         value={localActive}
         onValueChange={handleToggle}
-        trackColor={{ false: theme.highlight, true: theme.mutedPrimary }}
-        thumbColor={localActive ? theme.primary : '#f4f3f4'}
+        trackColor={{ false: theme.highlight, true: theme.toggleShadow }}
+        thumbColor={localActive ? theme.toggleOn : '#f4f3f4'}
       />
     </View>
   );

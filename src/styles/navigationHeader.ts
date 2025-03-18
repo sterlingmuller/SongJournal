@@ -36,7 +36,7 @@ const useNavigationHeaderStyles = () => {
     title: {
       fontSize: 30,
       fontWeight: 500,
-      color: theme.headerText,
+      color: theme.primaryText,
     },
 
     headerIconRow: {

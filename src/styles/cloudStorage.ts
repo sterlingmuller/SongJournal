@@ -25,7 +25,7 @@ const useCloudStorageStyle = () => {
       flex: 1,
     },
     togglesContainer: {
-      backgroundColor: theme.clearBackground,
+      backgroundColor: theme.secondaryBackground,
       padding: 10,
       borderRadius: 10,
       flexDirection: 'column',
@@ -34,8 +34,8 @@ const useCloudStorageStyle = () => {
 
     tipText: {
       fontStyle: 'italic',
-      fontWeight: '500',
-      color: theme.primary,
+      fontWeight: '600',
+      color: theme.tipText,
       fontSize: 12,
       textAlign: 'center',
     },

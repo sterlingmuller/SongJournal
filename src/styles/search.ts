@@ -1,3 +1,4 @@
+import { useColorTheme } from '@src/state/context/ThemeContext';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 interface Styles {
@@ -6,10 +7,12 @@ interface Styles {
 }
 
 const useSearchBarStyle = () => {
+  const { theme } = useColorTheme();
+
   const searchBarStyle: Styles = StyleSheet.create({
     container: {
       flexDirection: 'row',
-      backgroundColor: '#f0f0f0',
+      backgroundColor: theme.inputBackground,
       borderRadius: 10,
       padding: 6,
       width: '75%',
@@ -22,6 +25,8 @@ const useSearchBarStyle = () => {
       flex: 1,
       fontSize: 16,
       marginLeft: 8,
+      fontWeight: 600,
+      color: theme.secondaryText,
     },
   });
 

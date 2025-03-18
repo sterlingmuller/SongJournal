@@ -45,7 +45,7 @@ const useSettingsStyle = () => {
       paddingTop: 30,
       paddingBottom: 20,
       alignSelf: 'center',
-      color: theme.headerText,
+      color: theme.primaryText,
     },
 
     about: {

@@ -56,7 +56,7 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
             <TextInput
               style={styles.newArtistInput}
               placeholder="Cobra Strike Alpha Deluxe"
-              placeholderTextColor={theme.secondaryText}
+              placeholderTextColor={theme.placeholderText}
               value={newArtist}
               onChangeText={(title: string) => {
                 if (title.length <= MAX_TITLE_LENGTH) {

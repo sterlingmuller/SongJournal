@@ -1,24 +1,25 @@
 import { StyleSheet, ViewStyle } from 'react-native';
 
 import { SCREEN_WIDTH } from '@src/components/common/constants';
+import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Styles {
   separator: ViewStyle;
   container: ViewStyle;
   placeholderContainer: ViewStyle;
-  separatorContainer: ViewStyle;
-  defaultSeparator: ViewStyle;
   backgroundContainer: ViewStyle;
   underlayContainer: ViewStyle;
   underlayContent: ViewStyle;
 }
 
 const useHomeSwipeListStyles = () => {
+  const { theme } = useColorTheme();
+
   const homeSwipeListStyles: Styles = StyleSheet.create({
     separator: {
       height: 1,
       width: '100%',
-      backgroundColor: '#000',
+      backgroundColor: theme.primaryText,
     },
     container: {
       flex: 1,
@@ -26,18 +27,6 @@ const useHomeSwipeListStyles = () => {
     },
     placeholderContainer: {
       flex: 1,
-    },
-    separatorContainer: {
-      width: '100%',
-      paddingLeft: 0,
-      paddingRight: 0,
-      marginLeft: 0,
-      marginRight: 0,
-    },
-    defaultSeparator: {
-      height: 2,
-      width: '100%',
-      backgroundColor: 'black',
     },
     backgroundContainer: {
       position: 'absolute',

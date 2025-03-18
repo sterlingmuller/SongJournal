@@ -4,7 +4,7 @@ import Svg, { Path } from 'react-native-svg';
 
 const PlaylistIcon = ({ focused }: { focused?: boolean }) => {
   const { theme } = useColorTheme();
-  const fillColor = focused ? theme.secondary : theme.secondaryText;
+  const fillColor = focused ? theme.secondary : theme.footerText;
 
   return (
     <Svg width={40} height={26} viewBox="0 0 46 36">

@@ -9,10 +9,10 @@ interface Styles {
   artistNameContainer: ViewStyle;
   textbox: ViewStyle;
   editTextbox: ViewStyle;
-  input: ViewStyle;
   deleteButton: ViewStyle;
   editButton: ViewStyle;
-  newArtistInput: ViewStyle;
+  newArtistInput: TextStyle;
+  editArtistInput: TextStyle;
   infoContainer: ViewStyle;
   iconsContainer: ViewStyle;
   buttons: ViewStyle;
@@ -56,7 +56,7 @@ const useEditOrAddArtistStyles = () => {
     artistNameContainer: { width: '50%' },
     textbox: {
       flexDirection: 'row',
-      backgroundColor: theme.secondaryBackground,
+      backgroundColor: theme.inputBackground,
       borderRadius: 10,
       padding: 6,
       width: '100%',
@@ -67,18 +67,13 @@ const useEditOrAddArtistStyles = () => {
     },
     editTextbox: {
       flexDirection: 'row',
-      backgroundColor: theme.secondaryBackground,
+      backgroundColor: theme.inputBackground,
       borderRadius: 10,
       padding: 2,
       width: '100%',
       borderWidth: 1,
       borderColor: '#ccc',
       alignSelf: 'center',
-    },
-    input: {
-      flex: 1,
-      fontSize: 14,
-      marginLeft: 8,
     },
     deleteButton: {
       marginLeft: 10,
@@ -91,9 +86,16 @@ const useEditOrAddArtistStyles = () => {
       borderRadius: 5,
     },
     newArtistInput: {
-      flex: 1,
       fontSize: 14,
       marginLeft: 8,
+      fontWeight: 600,
+      color: theme.secondaryText,
+    },
+    editArtistInput: {
+      fontSize: 14,
+      marginLeft: 8,
+      fontWeight: 600,
+      color: theme.secondaryText,
     },
     infoContainer: {
       width: '75%',
@@ -110,7 +112,7 @@ const useEditOrAddArtistStyles = () => {
     infoText: {
       textAlign: 'right',
       fontSize: 14,
-      color: 'gray',
+      color: theme.primaryText,
     },
     title: {
       paddingLeft: 30,
@@ -122,8 +124,8 @@ const useEditOrAddArtistStyles = () => {
       fontSize: 12,
       textAlign: 'center',
       marginHorizontal: 10,
-      color: theme.primary,
-      fontWeight: '500',
+      color: theme.secondaryTipText,
+      fontWeight: '600',
     },
   });
 

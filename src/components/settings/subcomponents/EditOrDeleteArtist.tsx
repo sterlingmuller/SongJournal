@@ -100,7 +100,7 @@ const EditOrDeleteArtist = () => {
                     value={newArtistName}
                     onChangeText={handleArtistChange}
                     placeholder={name}
-                    style={styles.input}
+                    style={styles.editArtistInput}
                     autoFocus
                     autoCapitalize="words"
                   />

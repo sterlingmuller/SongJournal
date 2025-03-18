@@ -38,12 +38,13 @@ const useSortByModalStyles = () => {
       paddingLeft: 30,
       fontSize: 16,
       fontWeight: 'bold',
+      color: theme.primaryText,
     },
 
     line: {
       width: '100%',
       borderTopWidth: 1,
-      borderColor: c.black,
+      borderColor: theme.primaryText,
     },
 
     categories: {
@@ -61,6 +62,7 @@ const useSortByModalStyles = () => {
     label: {
       paddingVertical: 4,
       marginLeft: 55,
+      color: theme.primaryText,
     },
 
     arrow: {

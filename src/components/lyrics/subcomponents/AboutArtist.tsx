@@ -42,9 +42,11 @@ const AboutArtist = ({ selectedArtistId, setSelectedArtistId }: Props) => {
             onPress={() => setIsSettingsWheelOpen(true)}
             style={styles.artistTextbox}
           >
-            <StyledText>{displayedArtistName}</StyledText>
+            <StyledText style={styles.inputText}>
+              {displayedArtistName}
+            </StyledText>
           </TouchableOpacity>
-          <StyledText>Artist</StyledText>
+          <StyledText style={styles.labelText}>Artist</StyledText>
         </View>
         <TouchableOpacity onPress={() => setIsNewArtistOpen(true)} hitSlop={20}>
           <StyledText style={styles.artistEditText}>+ Add or Edit</StyledText>

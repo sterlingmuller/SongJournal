@@ -1,9 +1,10 @@
 import React from 'react';
-import { TextInput, View, Text } from 'react-native';
+import { TextInput, View } from 'react-native';
 
 import useSongDetailStyles from '@src/styles/songDetail';
 import { SongInfo } from '@src/components/common/types';
 import { SONG_DETAILS } from '@src/components/common/constants';
+import StyledText from '@src/components/common/components/StyledText';
 
 interface Props {
   value: string;
@@ -17,14 +18,14 @@ const BpmDetail = (props: Props) => {
   return (
     <View style={styles.container}>
       <TextInput
-        style={styles.textbox}
+        style={[styles.textbox, styles.inputText]}
         value={value}
         onChangeText={(newBpm: string) => handleInputChange('bpm', newBpm)}
         textAlign="center"
         keyboardType="numeric"
         caretHidden
       />
-      <Text>{SONG_DETAILS.bpm}</Text>
+      <StyledText style={styles.labelText}>{SONG_DETAILS.bpm}</StyledText>
     </View>
   );
 };

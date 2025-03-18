@@ -68,7 +68,7 @@ const useGetStartedHomeStyles = () => {
       textAlign: 'center',
       paddingHorizontal: 30,
       fontStyle: 'italic',
-      color: theme.primary,
+      color: theme.tipText,
       fontWeight: '600',
     },
   });

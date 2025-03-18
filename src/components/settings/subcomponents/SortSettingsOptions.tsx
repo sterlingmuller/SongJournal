@@ -47,12 +47,12 @@ const SortSettingsOptions = ({ defaultSort, isAscending }: Props) => {
     <>
       <View style={styles.sortSettingsContainer}>
         <View style={styles.selectContainer}>
-          <StyledText>Default Sort:</StyledText>
+          <StyledText style={styles.labelText}>Default Sort:</StyledText>
           <TouchableOpacity
             onPress={() => setIsSettingsWheelOpen(true)}
             style={styles.textbox}
           >
-            <StyledText>{sortValue}</StyledText>
+            <StyledText style={styles.inputText}>{sortValue}</StyledText>
           </TouchableOpacity>
         </View>
         <SettingsToggle
