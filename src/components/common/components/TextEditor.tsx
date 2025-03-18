@@ -5,7 +5,7 @@ import {
   useEditorContent,
 } from '@10play/tentap-editor';
 import React, { useEffect } from 'react';
-import { KeyboardAvoidingView, Platform } from 'react-native';
+import { View } from 'react-native';
 
 interface Props {
   initialText: string;
@@ -30,17 +30,9 @@ const TextEditor = ({ initialText, setText }: Props) => {
   return (
     <>
       <RichText editor={editor} />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{
-          position: 'absolute',
-          width: '100%',
-          bottom: 0,
-          alignSelf: 'center',
-        }}
-      >
+      <View style={{ bottom: 0, position: 'absolute' }}>
         <Toolbar editor={editor} />
-      </KeyboardAvoidingView>
+      </View>
     </>
   );
 };
