@@ -1,10 +1,8 @@
 import { StyleSheet, ViewStyle } from 'react-native';
 
 import { SCREEN_WIDTH } from '@src/components/common/constants';
-import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Styles {
-  separator: ViewStyle;
   container: ViewStyle;
   placeholderContainer: ViewStyle;
   backgroundContainer: ViewStyle;
@@ -13,14 +11,7 @@ interface Styles {
 }
 
 const useHomeSwipeListStyles = () => {
-  const { theme } = useColorTheme();
-
   const homeSwipeListStyles: Styles = StyleSheet.create({
-    separator: {
-      height: 1,
-      width: '100%',
-      backgroundColor: theme.primaryText,
-    },
     container: {
       flex: 1,
       width: '100%',

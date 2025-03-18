@@ -1,9 +1,10 @@
 import React, { useRef, useState, useCallback } from 'react';
-import { View } from 'react-native';
-
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import SwipeableItem, { SwipeableItemRef } from './SwipeableItem';
+
+import SwipeableItem, {
+  SwipeableItemRef,
+} from '@src/components/common/components/SwipeableItem';
 import useHomeSwipeListStyles from '@src/styles/homeSwipeList';
 
 interface SwipeableFlashListProps<T> {
@@ -33,7 +34,6 @@ const SwipeableFlashList = <T,>({
     new Map(),
   );
   const flashListRef = useRef(null);
-  const separator = () => <View style={styles.separator} />;
 
   const renderSwipeableItem = useCallback(
     (listRenderInfo: ListRenderItemInfo<T>) => {
@@ -70,7 +70,7 @@ const SwipeableFlashList = <T,>({
         renderItem={renderSwipeableItem}
         keyExtractor={keyExtractor}
         estimatedItemSize={150}
-        ListFooterComponent={separator}
+        contentContainerStyle={{ paddingBottom: 200 }}
       />
     </GestureHandlerRootView>
   );
