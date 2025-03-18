@@ -87,8 +87,9 @@ const EditOrDeleteArtist = () => {
   };
 
   const renderArtistList = () =>
-    artists.map(({ artistId, name }: Artist) => {
+    artists.map(({ artistId, name }: Artist, index: number) => {
       const isEditingArtist = editingArtistId === artistId;
+      const isLastItem = index === artists.length - 1;
 
       return (
         <View key={artistId}>
@@ -140,7 +141,7 @@ const EditOrDeleteArtist = () => {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={styles.separator} />
+          {!isLastItem && <View style={styles.separator} />}
         </View>
       );
     });
@@ -149,7 +150,9 @@ const EditOrDeleteArtist = () => {
     <>
       {artists.length > 0 && (
         <View style={styles.container}>
-          <ScrollView>{renderArtistList()}</ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {renderArtistList()}
+          </ScrollView>
         </View>
       )}
     </>
