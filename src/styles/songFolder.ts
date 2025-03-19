@@ -56,7 +56,7 @@ const useSongFolderStyles = () => {
 
     iconRow: {
       flexDirection: 'row',
-      gap: 20,
+      gap: 16,
       alignItems: 'center',
       paddingTop: 5,
     },
@@ -96,7 +96,7 @@ const useSongFolderStyles = () => {
       height: 15,
       width: SCREEN_WIDTH * 0.5,
       backgroundColor: theme.primary,
-      marginLeft: 10,
+      marginLeft: 14,
       borderRadius: 8,
     },
 

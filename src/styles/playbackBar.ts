@@ -16,11 +16,12 @@ const usePlaybackBarStyles = () => {
   const playbackBarStyles: Styles = StyleSheet.create({
     container: {
       flexDirection: 'row',
-      marginLeft: 10,
+      marginLeft: 14,
     },
     takesContainer: {
       flexDirection: 'row',
       alignItems: 'center',
+      marginLeft: 2,
     },
     sliderContainer: {
       width: SCREEN_WIDTH * 0.5,
