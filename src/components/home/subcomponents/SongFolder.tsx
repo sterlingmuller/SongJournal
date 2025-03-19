@@ -47,6 +47,8 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
   const { title, songId, takes, selectedTakeId, artistId, hasLyrics } = song;
   const [isPressed, setIsPressed] = useState(false);
 
+  const shareDisabled = !takes.length && !hasLyrics;
+
   const inputRef = useRef<TextInput | null>(null);
 
   const selectedPlayingSongId = useAppSelector(selectPlayingId);
@@ -139,8 +141,9 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
           <TouchableOpacity
             onPress={handleShare}
             hitSlop={{ top: 10, bottom: 20, left: 10, right: 10 }}
+            disabled={shareDisabled}
           >
-            <ShareIcon />
+            <ShareIcon disabled={shareDisabled} />
           </TouchableOpacity>
           {selectedTake &&
             (selectedPlayingSongId === songId ? (

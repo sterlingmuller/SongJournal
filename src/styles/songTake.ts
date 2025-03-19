@@ -51,7 +51,7 @@ const useSongTakeStyles = () => {
     iconRow: {
       paddingTop: 5,
       flexDirection: 'row',
-      gap: 18,
+      gap: 16,
     },
 
     playIcon: {
@@ -69,7 +69,7 @@ const useSongTakeStyles = () => {
       height: 15,
       width: SCREEN_WIDTH * 0.35,
       backgroundColor: theme.primary,
-      marginLeft: 0,
+      marginLeft: 2,
       alignSelf: 'center',
       borderRadius: 8,
     },
