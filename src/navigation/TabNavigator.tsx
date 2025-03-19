@@ -31,12 +31,11 @@ const TabNavigator = () => {
       screenOptions={{
         tabBarShowLabel: true,
         tabBarActiveTintColor: theme.secondary,
-        tabBarInactiveTintColor: theme.footerText,
+        tabBarInactiveTintColor: theme.secondaryText,
         tabBarStyle: {
+          flexDirection: 'row',
           backgroundColor: theme.primary,
           height: '7%',
-          borderColor: theme.primaryBackground,
-          borderTopWidth: 1,
         },
         tabBarItemStyle: {
           flexDirection: 'row',

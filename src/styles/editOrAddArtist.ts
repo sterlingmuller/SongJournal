@@ -86,9 +86,10 @@ const useEditOrAddArtistStyles = () => {
       borderRadius: 5,
     },
     newArtistInput: {
+      flex: 1,
       fontSize: 14,
       marginLeft: 8,
-      fontWeight: 600,
+      fontWeight: 500,
       color: theme.secondaryText,
     },
     editArtistInput: {

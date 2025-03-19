@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, KeyboardAvoidingView } from 'react-native';
 import Modal from 'react-native-modal';
 import { useSQLiteContext } from 'expo-sqlite';
 
@@ -43,53 +43,57 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
     setIsNewArtistOpen(false);
   };
 
+  const handleArtistChange = (title: string) => {
+    if (title.length <= MAX_TITLE_LENGTH) {
+      setNewArtist(title);
+    }
+  };
+
   return (
-    <Modal
-      isVisible={isNewArtistOpen}
-      avoidKeyboard
-      onBackdropPress={onExitPress}
-    >
-      <View style={styles.modalContainer}>
-        <StyledText style={styles.title}>Add or Edit Artist</StyledText>
-        <View>
-          <View style={styles.textbox}>
-            <TextInput
-              style={styles.newArtistInput}
-              placeholder="Cobra Strike Alpha Deluxe"
-              placeholderTextColor={theme.placeholderText}
-              value={newArtist}
-              onChangeText={(title: string) => {
-                if (title.length <= MAX_TITLE_LENGTH) {
-                  setNewArtist(title);
-                }
-              }}
-              autoCapitalize="words"
+    <KeyboardAvoidingView>
+      <Modal
+        isVisible={isNewArtistOpen}
+        avoidKeyboard
+        onBackdropPress={onExitPress}
+      >
+        <View style={styles.modalContainer}>
+          <StyledText style={styles.title}>Add or Edit Artist</StyledText>
+          <View>
+            <View style={styles.textbox}>
+              <TextInput
+                style={styles.newArtistInput}
+                placeholder="Cobra Strike Alpha Deluxe"
+                placeholderTextColor={theme.placeholderText}
+                value={newArtist}
+                onChangeText={handleArtistChange}
+                autoCapitalize="words"
+              />
+            </View>
+            <View style={styles.infoContainer}>
+              <StyledText style={styles.infoText}>
+                {newArtist.length}/{MAX_TITLE_LENGTH}
+              </StyledText>
+            </View>
+            {displayTips ? (
+              <StyledText style={{ ...styles.tipText, paddingBottom: 0 }}>
+                Tip: New Songs will be credited to the Default Artist. A Song's
+                Artist can be changed on the Lyrics Screen.
+              </StyledText>
+            ) : (
+              <Gap />
+            )}
+          </View>
+          <EditOrDeleteArtist />
+          <View style={styles.buttons}>
+            <SaveAndCancelButtons
+              onPress={onSavePress}
+              onExitPress={onExitPress}
+              disabled={disabled}
             />
           </View>
-          <View style={styles.infoContainer}>
-            <StyledText style={styles.infoText}>
-              {newArtist.length}/{MAX_TITLE_LENGTH}
-            </StyledText>
-          </View>
-          {displayTips ? (
-            <StyledText style={{ ...styles.tipText, paddingBottom: 0 }}>
-              Tip: New Songs will be credited to the Default Artist. A Song's
-              Artist can be changed on the Lyrics Screen.
-            </StyledText>
-          ) : (
-            <Gap />
-          )}
         </View>
-        <EditOrDeleteArtist />
-        <View style={styles.buttons}>
-          <SaveAndCancelButtons
-            onPress={onSavePress}
-            onExitPress={onExitPress}
-            disabled={disabled}
-          />
-        </View>
-      </View>
-    </Modal>
+      </Modal>
+    </KeyboardAvoidingView>
   );
 };
 
