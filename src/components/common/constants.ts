@@ -232,3 +232,5 @@ export const SWIPE_THRESHOLD = -100;
 export const SWIPE_TRIGGER_THRESHOLD = -40;
 
 export const SUPPORT_EMAIL = 'SongJournalContact@gmail.com';
+
+export const PLACEHOLDER_TITLE = 'Cobra Strike Deluxe';
