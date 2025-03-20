@@ -1,7 +1,6 @@
 import { SQLiteDatabase } from 'expo-sqlite';
 import {
   CloudConnection,
-  ColorTheme,
   Conductor,
   LyricsOption,
   Screen,
