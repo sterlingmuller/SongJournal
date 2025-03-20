@@ -9,9 +9,15 @@ interface Props {
   label: string;
   isActive: boolean;
   onToggle: () => void;
+  isAscendingToggle?: boolean;
 }
 
-const SettingsToggle = ({ label, isActive, onToggle }: Props) => {
+const SettingsToggle = ({
+  label,
+  isActive,
+  onToggle,
+  isAscendingToggle = false,
+}: Props) => {
   const styles = usePreferencesStyle();
   const { theme } = useColorTheme();
   const [localActive, setLocalActive] = useState(isActive);
@@ -27,7 +33,11 @@ const SettingsToggle = ({ label, isActive, onToggle }: Props) => {
 
   return (
     <View style={styles.toggleContainer}>
-      <StyledText style={styles.labelText}>{label}</StyledText>
+      <StyledText
+        style={[styles.labelText, isAscendingToggle && { marginRight: 6 }]}
+      >
+        {label}
+      </StyledText>
       <Switch
         value={localActive}
         onValueChange={handleToggle}

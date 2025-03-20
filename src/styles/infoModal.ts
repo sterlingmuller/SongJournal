@@ -88,6 +88,7 @@ const useInfoModalStyle = () => {
     input: {
       flex: 1,
       fontSize: 14,
+      fontWeight: 500,
     },
     details: {
       flexDirection: 'row',

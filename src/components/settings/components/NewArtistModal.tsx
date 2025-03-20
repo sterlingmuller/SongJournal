@@ -11,7 +11,10 @@ import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
 import Gap from '@src/components/common/components/Gap';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import { sanitizeInput } from '@src/utils/sanitizeInput';
-import { MAX_TITLE_LENGTH } from '@src/components/common/constants';
+import {
+  MAX_TITLE_LENGTH,
+  PLACEHOLDER_TITLE,
+} from '@src/components/common/constants';
 import EditOrDeleteArtist from '../subcomponents/EditOrDeleteArtist';
 import useEditOrAddArtistStyles from '@src/styles/editOrAddArtist';
 
@@ -62,7 +65,7 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
             <View style={styles.textbox}>
               <TextInput
                 style={styles.newArtistInput}
-                placeholder="Cobra Strike Alpha Deluxe"
+                placeholder={PLACEHOLDER_TITLE}
                 placeholderTextColor={theme.placeholderText}
                 value={newArtist}
                 onChangeText={handleArtistChange}

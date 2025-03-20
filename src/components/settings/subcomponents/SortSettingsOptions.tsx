@@ -59,6 +59,7 @@ const SortSettingsOptions = ({ defaultSort, isAscending }: Props) => {
           label="Ascending"
           isActive={isAscending}
           onToggle={() => toggleSetting(ToggleableSettings.IS_ASCENDING)}
+          isAscendingToggle
         />
       </View>
       <SettingsWheel

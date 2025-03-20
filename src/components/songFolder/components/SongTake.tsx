@@ -103,7 +103,7 @@ const SongTake = (props: Props) => {
             <NotesIcon />
           </TouchableOpacity>
           <TouchableOpacity onPress={handleShare} hitSlop={20}>
-            <ShareIcon disabled={false} />
+            <ShareIcon disabled={false} size={32} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
@@ -111,7 +111,7 @@ const SongTake = (props: Props) => {
             }}
             hitSlop={20}
           >
-            <TrashIcon size={34} />
+            <TrashIcon size={32} />
           </TouchableOpacity>
           {selectedPlayingId === takeId ? (
             <PlaybackBar duration={duration} fromSongTakes />

@@ -14,7 +14,10 @@ import { Screen } from '@src/components/common/enums';
 import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
 import Gap from '@src/components/common/components/Gap';
 import { useColorTheme } from '@src/state/context/ThemeContext';
-import { MAX_TITLE_LENGTH } from '@src/components/common/constants';
+import {
+  MAX_TITLE_LENGTH,
+  PLACEHOLDER_TITLE,
+} from '@src/components/common/constants';
 import { sanitizeInput } from '@src/utils/sanitizeInput';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
 
@@ -77,7 +80,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
             <View style={styles.textbox}>
               <TextInput
                 style={styles.input}
-                placeholder="Cobra Strike Lightning Deluxe"
+                placeholder={PLACEHOLDER_TITLE}
                 placeholderTextColor={theme.placeholderText}
                 value={songTitle}
                 onChangeText={handleTitleChange}
