@@ -21,6 +21,10 @@ export interface Theme {
   hyperlink: string;
   toggleOn: string;
   toggleShadow: string;
+  waveBar: string;
+  waveBarBottom: string;
+  playedWaveBar: string;
+  playedWaveBarBottom: string;
 }
 
 type ThemeKey = 'Light' | 'Dark' | 'Metal' | 'Psych' | 'Pop' | 'Surf';
@@ -46,6 +50,10 @@ const themes: Record<ThemeKey, Theme> = {
     hyperlink: c.blue,
     toggleOn: c.coral,
     toggleShadow: getColorWithOpacity(c.coral, 60),
+    waveBar: c.deepBlue,
+    waveBarBottom: c.babyBlue,
+    playedWaveBar: c.hotPink,
+    playedWaveBarBottom: c.babyPink,
   },
   Dark: {
     primary: c.deepCharcoal,
@@ -63,10 +71,14 @@ const themes: Record<ThemeKey, Theme> = {
     highlight: c.darkGray,
     conductorBackground: c.salmon,
     settingsEmphasis: c.teal,
-    error: c.maroon,
+    error: c.bloodRed,
     hyperlink: c.blue,
     toggleOn: c.dimGold,
     toggleShadow: getColorWithOpacity(c.dimGold, 60),
+    waveBar: c.gold,
+    waveBarBottom: c.babyGold,
+    playedWaveBar: c.hotPink,
+    playedWaveBarBottom: c.babyPink,
   },
   Surf: {
     primary: c.oceanBlue,
@@ -79,15 +91,19 @@ const themes: Record<ThemeKey, Theme> = {
     secondaryText: c.darkGray,
     footerText: c.darkGray,
     placeholderText: c.darkGray,
-    tipText: c.sand,
+    tipText: c.sunset,
     secondaryTipText: c.sand,
     highlight: c.sand,
     conductorBackground: c.salmon,
     settingsEmphasis: c.teal,
-    error: c.maroon,
+    error: c.red,
     hyperlink: c.blue,
     toggleOn: c.oceanBlue,
     toggleShadow: getColorWithOpacity(c.oceanBlue, 60),
+    waveBar: c.deepBlue,
+    waveBarBottom: c.babyBlue,
+    playedWaveBar: c.hotPink,
+    playedWaveBarBottom: c.babyPink,
   },
   Metal: {
     primary: c.deepCharcoal,
@@ -105,10 +121,14 @@ const themes: Record<ThemeKey, Theme> = {
     highlight: c.darkGray,
     conductorBackground: c.salmon,
     settingsEmphasis: c.teal,
-    error: c.maroon,
+    error: c.bloodRed,
     hyperlink: c.blue,
     toggleOn: c.dimGold,
     toggleShadow: getColorWithOpacity(c.dimGold, 60),
+    waveBar: c.deepBlue,
+    waveBarBottom: c.babyBlue,
+    playedWaveBar: c.hotPink,
+    playedWaveBarBottom: c.babyPink,
   },
   Psych: {
     primary: c.deepCharcoal,
@@ -126,10 +146,14 @@ const themes: Record<ThemeKey, Theme> = {
     highlight: c.darkGray,
     conductorBackground: c.salmon,
     settingsEmphasis: c.teal,
-    error: c.maroon,
+    error: c.bloodRed,
     hyperlink: c.blue,
     toggleOn: c.dimGold,
     toggleShadow: getColorWithOpacity(c.dimGold, 60),
+    waveBar: c.deepBlue,
+    waveBarBottom: c.babyBlue,
+    playedWaveBar: c.hotPink,
+    playedWaveBarBottom: c.babyPink,
   },
   Pop: {
     primary: c.deepCharcoal,
@@ -147,10 +171,14 @@ const themes: Record<ThemeKey, Theme> = {
     highlight: c.darkGray,
     conductorBackground: c.salmon,
     settingsEmphasis: c.teal,
-    error: c.maroon,
+    error: c.bloodRed,
     hyperlink: c.blue,
     toggleOn: c.dimGold,
     toggleShadow: getColorWithOpacity(c.dimGold, 60),
+    waveBar: c.deepBlue,
+    waveBarBottom: c.babyBlue,
+    playedWaveBar: c.hotPink,
+    playedWaveBarBottom: c.babyPink,
   },
 };
 
