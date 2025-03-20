@@ -14,9 +14,9 @@ import {
 } from '@src/components/common/types';
 import { fetchSongsWithTakesSuccess } from '@src/state/slice/songsSlice';
 import {
-  startLoading,
   setError,
-  endLoading,
+  startDbLoading,
+  endDbLoading,
 } from '@src/state/slice/asyncSlice';
 import { fetchTakes } from '@src/data/repositories/TakeRepository';
 import * as at from '@src/state/sagas/actionTypes';
@@ -28,7 +28,7 @@ import { fetchPurchases } from '@src/data/repositories/PurchasesRepository';
 import { fetchPurchasesSuccess } from '../slice/purchasesSlice';
 
 function* fetchStartupDataSaga(action: PayloadAction<SQLiteDatabase>) {
-  yield put(startLoading());
+  yield put(startDbLoading());
   try {
     const songs: Songs = yield call(fetchSongsWithArtists, action.payload);
     const takes: Takes = yield call(fetchTakes, action.payload);
@@ -49,7 +49,7 @@ function* fetchStartupDataSaga(action: PayloadAction<SQLiteDatabase>) {
     yield put(fetchArtistsSuccess(artists));
     yield put(fetchPurchasesSuccess(purchases));
 
-    yield put(endLoading());
+    yield put(endDbLoading());
   } catch (error) {
     yield put(setError(error));
   }

@@ -25,9 +25,9 @@ import DeadAdimSelectIcon from '@src/icons/DeadAdimSelectIcon';
 import PersonIcon from '@src/icons/PersonIcon';
 import MaskIcon from '@src/icons/MaskIcon';
 
-export const DROPBOX_CLIENT_ID = Constants.expoConfig.extra.dropboxClientId;
+export const DROPBOX_CLIENT_ID = Constants.expoConfig.extra.DROPBOX_CLIENT_ID;
 export const DROPBOX_CLIENT_SECRET =
-  Constants.expoConfig.extra.dropboxClientSecret;
+  Constants.expoConfig.extra.DROPBOX_CLIENT_SECRET;
 
 export const DB_NAME = 'songjournal.db';
 export const DB_PATH = `${documentDirectory}SQLite/${DB_NAME}`;

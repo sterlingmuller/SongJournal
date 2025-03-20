@@ -4,7 +4,9 @@ import {
 } from '@src/components/common/types';
 import { SQLiteDatabase } from 'expo-sqlite';
 
-export const fetchPurchases = (db: SQLiteDatabase): Purchases => {
+export const fetchPurchases = async (
+  db: SQLiteDatabase,
+): Promise<Purchases> => {
   try {
     return db.getFirstSync('SELECT * FROM Purchases', []);
   } catch (err) {

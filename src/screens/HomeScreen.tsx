@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { useSQLiteContext } from 'expo-sqlite';
 import { useNavigation } from '@react-navigation/native';
 
 import HomeHeader from '@src/components/home/components/HomeHeader';
@@ -14,8 +13,7 @@ import {
   EMPTY_DELETE_OBJECT,
 } from '@src/components/common/constants';
 import useGlobalStyles from '@styles/global';
-import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
-import { fetchStartupDataRequest } from '@src/state/sagas/actionCreators';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import HomeDisplay from '@src/components/home/components/HomeDisplay';
 import { Filter, SortBy } from '@src/components/common/enums';
 import EditTitleModal from '@src/components/common/components/EditTitleModal';
@@ -23,8 +21,6 @@ import { selectDefaultSort } from '@src/state/selectors/settingsSelector';
 
 const HomeScreen = () => {
   const { setOptions } = useNavigation();
-  const db = useSQLiteContext();
-  const dispatch = useAppDispatch();
   const styles = useGlobalStyles();
   const defaultSort: Sort = useAppSelector(selectDefaultSort);
 
@@ -43,10 +39,6 @@ const HomeScreen = () => {
     songId: number;
   }>({ songTitle: '', songId: -1 });
   const [toDelete, setToDelete] = useState<DeleteObject>(EMPTY_DELETE_OBJECT);
-
-  useEffect(() => {
-    dispatch(fetchStartupDataRequest(db));
-  }, [dispatch, db]);
 
   useEffect(() => {
     const { sortType: defaultSortType, isAscending: defaultIsAscending } =

@@ -2,7 +2,7 @@ import { SQLiteDatabase } from 'expo-sqlite';
 
 import * as t from '@src/components/common/types';
 
-export const fetchSongsWithArtists = (db: SQLiteDatabase) =>
+export const fetchSongsWithArtists = async (db: SQLiteDatabase) =>
   db.getAllSync(
     'SELECT songId, creationDate, title, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal, artistId FROM Songs',
   );

@@ -11,11 +11,6 @@ export default ({ config }) => {
     icon: './assets/Icon.png',
     userInterfaceStyle: 'light',
     newArchEnabled: true,
-    splash: {
-      image: './assets/splash.png',
-      resizeMode: 'contain',
-      backgroundColor: '#ffffff',
-    },
     plugins: [
       ['@react-native-google-signin/google-signin'],
       [
@@ -25,6 +20,18 @@ export default ({ config }) => {
         },
       ],
       'react-native-cloud-storage',
+      [
+        'expo-splash-screen',
+        {
+          backgroundColor: '#ee865b',
+          image: './assets/SplashIcon.png',
+          dark: {
+            image: './assets/SplashIcon.png',
+            backgroundColor: '#474240',
+          },
+          imageWidth: 200,
+        },
+      ],
     ],
     assetBundlePatterns: ['**/*'],
     ios: {
@@ -56,8 +63,8 @@ export default ({ config }) => {
       eas: {
         projectId: '782ab462-3c4f-4302-ae95-e24dfe286e87',
       },
-      dropboxClientId: process.env.DROPBOX_CLIENT_ID,
-      dropboxClientSecret: process.env.DROPBOX_CLIENT_SECRET,
+      DROPBOX_CLIENT_ID: process.env.DROPBOX_CLIENT_ID,
+      DROPBOX_CLIENT_SECRET: process.env.DROPBOX_CLIENT_SECRET,
     },
     owner: 'sterlo',
     runtimeVersion: '1.0.1',
