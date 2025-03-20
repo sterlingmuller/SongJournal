@@ -10,13 +10,11 @@ import {
 } from '@src/state/slice/playbackSlice';
 
 const useAudioPlayer = () => {
-  // make soundRef a singleton
   const soundRef = useRef<Audio.Sound | null>(null);
   const { isPlaying, uri } = useAppSelector(selectAudioPlayerInfo);
   const dispatch = useAppDispatch();
   const [currentTime, setCurrentTime] = useState<number | null>(null);
 
-  // add to redux?
   const [didJustFinish, setDidJustFinish] = useState(false);
 
   const unloadSound = useCallback(async () => {
