@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import HomeHeader from '@src/components/home/components/HomeHeader';
 import CreateNewSongButton from '@src/components/home/components/CreateNewSongButton';
@@ -18,11 +18,15 @@ import HomeDisplay from '@src/components/home/components/HomeDisplay';
 import { Filter, SortBy } from '@src/components/common/enums';
 import EditTitleModal from '@src/components/common/components/EditTitleModal';
 import { selectDefaultSort } from '@src/state/selectors/settingsSelector';
+import { useAudioPlayer } from '@src/state/context/AudioContext';
+import { selectPlaybackUri } from '@src/state/selectors/playbackSelector';
 
 const HomeScreen = () => {
   const { setOptions } = useNavigation();
   const styles = useGlobalStyles();
   const defaultSort: Sort = useAppSelector(selectDefaultSort);
+  const { clearPlayback } = useAudioPlayer();
+  const playbackUri = useAppSelector(selectPlaybackUri);
 
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [sortedCategory, setSortedCategory] = useState<SortBy>(
@@ -64,6 +68,14 @@ const HomeScreen = () => {
       ),
     });
   }, [setOptions, isSortOpen, setIsSortOpen, searchText, setSearchText]);
+
+  useFocusEffect(() => {
+    return () => {
+      if (playbackUri) {
+        clearPlayback();
+      }
+    };
+  });
 
   return (
     <View style={styles.container}>

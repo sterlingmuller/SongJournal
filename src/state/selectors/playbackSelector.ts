@@ -3,6 +3,8 @@ import { createSelector } from '@reduxjs/toolkit';
 
 export const selectPlayingId = (state: RootState) => state.playback.id;
 
+export const selectPlaybackUri = (state: RootState) => state.playback.uri;
+
 export const selectIsPlaying = (state: RootState) => state.playback.isPlaying;
 
 export const selectAudioPlayerInfo = createSelector(

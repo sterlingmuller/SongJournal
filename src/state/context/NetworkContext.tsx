@@ -52,8 +52,6 @@ export const NetworkProvider = ({ children }: Props) => {
       isAutoSyncEnabled
     ) {
       processUploadQueue();
-    } else {
-      console.log('not connected to cloud or offline');
     }
   }, [processUploadQueue, isOnline, cloudConnection]);
 
