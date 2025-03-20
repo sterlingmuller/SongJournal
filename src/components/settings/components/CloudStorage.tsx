@@ -27,7 +27,7 @@ const CloudStorage = ({ cloudConnection }: Props) => {
   const { generateAndUploadZipBuffer } = useDropboxFileGenerator();
 
   // online toggle for use in development testing
-  const { isOnline, setIsOnline } = useNetworkStatus();
+  const { isOnline } = useNetworkStatus();
 
   const handleAppBackup = async () => {
     generateAndUploadZipBuffer();
@@ -50,14 +50,14 @@ const CloudStorage = ({ cloudConnection }: Props) => {
   return (
     <View>
       <StyledText style={styles.sectionTitle}>Cloud Storage</StyledText>
-      <StyledText
+      {/* <StyledText
         style={styles.sectionTitle}
       >{`Is Online: ${isOnline}`}</StyledText>
       <Button
         title={'Toggle isOnline'}
         onPress={() => setIsOnline(!isOnline)}
         color={theme.settingsEmphasis}
-      />
+      /> */}
       {cloudConnection !== CloudConnection.NONE ? (
         <View>
           <StyledText>

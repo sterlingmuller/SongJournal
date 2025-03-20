@@ -18,6 +18,7 @@ export const fetchUserSettings = async (db: SQLiteDatabase) => {
       displayTips: Boolean(settings.displayTips),
       conductor: settings.conductor,
       cloudConnection: settings.cloudConnection,
+      // theme: settings.theme,
       isAutoSyncEnabled: Boolean(settings.isAutoSyncEnabled),
       isUnstarredTakeConditionEnabled: Boolean(
         settings.isUnstarredTakeConditionEnabled,

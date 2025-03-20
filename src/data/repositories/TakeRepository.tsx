@@ -44,7 +44,7 @@ export const deleteTake = ({ db, takeId }: t.DeleteTakeDbPayload) => {
   }
 };
 
-export const fetchTakes = (db: SQLiteDatabase): t.Takes =>
+export const fetchTakes = async (db: SQLiteDatabase): Promise<t.Takes> =>
   db.getAllSync(
     'SELECT takeId, songId, title, date, notes, uri, duration FROM Takes',
   );

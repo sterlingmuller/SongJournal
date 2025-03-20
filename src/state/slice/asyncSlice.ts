@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type AsyncSliceState = {
+  isDbLoading: boolean;
   isLoading: boolean;
   error: Error | null;
 };
 
 const initialState: AsyncSliceState = {
+  isDbLoading: false,
   isLoading: false,
   error: null,
 };
@@ -25,8 +27,21 @@ const asyncSlice = createSlice({
     endLoading: (state: AsyncSliceState) => {
       state.isLoading = false;
     },
+    startDbLoading: (state: AsyncSliceState) => {
+      state.isDbLoading = true;
+      state.error = null;
+    },
+    endDbLoading: (state: AsyncSliceState) => {
+      state.isDbLoading = false;
+    },
   },
 });
 
-export const { startLoading, setError, endLoading } = asyncSlice.actions;
+export const {
+  startLoading,
+  setError,
+  endLoading,
+  startDbLoading,
+  endDbLoading,
+} = asyncSlice.actions;
 export default asyncSlice.reducer;

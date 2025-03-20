@@ -4,7 +4,9 @@ import React, {
   createContext,
   useContext,
   useState,
+  useEffect,
 } from 'react';
+import { useSQLiteContext } from 'expo-sqlite';
 
 import themes, { Theme } from '@src/theme/themes';
 import { ColorTheme } from '@src/components/common/enums';
@@ -12,7 +14,12 @@ import { ColorTheme } from '@src/components/common/enums';
 interface ColorThemeContextType {
   theme: Theme;
   switchTheme: (newTheme: ColorTheme) => void;
+  isThemeLoading: boolean;
   themeName: ColorTheme;
+}
+
+interface SettingsResult {
+  theme: ColorTheme;
 }
 
 const ColorThemeContext: Context<ColorThemeContextType> = createContext(null);
@@ -22,15 +29,50 @@ type Props = {
 };
 
 export const ColorThemeProvider = ({ children }: Props) => {
-  const [themeName, setThemeName] = useState<ColorTheme>(ColorTheme.LIGHT);
+  const db = useSQLiteContext();
+  const [themeName, setThemeName] = useState<ColorTheme>(ColorTheme.DARK);
+  const [isThemeLoading, setIsThemeLoading] = useState<boolean>(true);
   const theme: Theme = themes[themeName];
 
-  const switchTheme = (newTheme: ColorTheme) => {
+  useEffect(() => {
+    const loadThemePreference = () => {
+      try {
+        const result: SettingsResult = db.getFirstSync(
+          `SELECT theme FROM Settings WHERE id = 1`,
+        );
+
+        if (result) {
+          setThemeName(result.theme);
+        }
+      } catch (error) {
+        console.error('Error loading theme preference:', error);
+      } finally {
+        setIsThemeLoading(false);
+      }
+    };
+
+    loadThemePreference();
+  }, [db]);
+
+  const switchTheme = async (newTheme: ColorTheme) => {
     setThemeName(newTheme);
+
+    try {
+      await db.runAsync(`UPDATE Settings SET theme = ? WHERE id = 1`, [
+        newTheme,
+      ]);
+    } catch (error) {
+      console.error('Error saving theme preference:', error);
+    }
   };
 
+  if (isThemeLoading) {
+    return null;
+  }
   return (
-    <ColorThemeContext.Provider value={{ theme, switchTheme, themeName }}>
+    <ColorThemeContext.Provider
+      value={{ theme, switchTheme, isThemeLoading, themeName }}
+    >
       {children}
     </ColorThemeContext.Provider>
   );

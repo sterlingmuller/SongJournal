@@ -17,7 +17,7 @@ import { CloudConnection } from '@src/components/common/enums';
 
 interface NetworkContextProps {
   isOnline: boolean;
-  setIsOnline: any;
+  setIsOnline: (value: boolean) => void;
 }
 
 const NetworkContext = createContext<NetworkContextProps>(null);
@@ -27,29 +27,23 @@ type Props = {
 };
 
 export const NetworkProvider = ({ children }: Props) => {
-  // For testing
-  // const [isOnline, setIsOnline] = useState<boolean>(false);
-
   const [isOnline, setIsOnline] = useState<boolean>(false);
   const { processUploadQueue } = useUploadQueue();
   const cloudConnection = useAppSelector(selectCloudConnection);
   const isAutoSyncEnabled = useAppSelector(selectIsAutoSyncEnabled);
 
   // comment out lines 35-48 to test without going offline
-  // const handleNetworkChange = useDebounce((networkState: NetInfoState) => {
-  //   console.log('Network state changed:', networkState);
-  //   setIsOnline(networkState.isConnected);
-  // }, 500);
+  const handleNetworkChange = useDebounce((networkState: NetInfoState) => {
+    setIsOnline(networkState.isConnected);
+  }, 500);
 
-  // useEffect(() => {
-  //   console.log('Subscribing to network changes...');
-  //   const unsubscribe = NetInfo.addEventListener(handleNetworkChange);
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(handleNetworkChange);
 
-  //   return () => {
-  //     console.log('Unsubscribing from network changes...');
-  //     unsubscribe();
-  //   };
-  // }, [handleNetworkChange]);
+    return () => {
+      unsubscribe();
+    };
+  }, [handleNetworkChange]);
 
   useEffect(() => {
     if (
