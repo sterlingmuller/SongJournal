@@ -5,6 +5,7 @@ import {
   WAVE_BAR_GAP,
   WAVE_BAR_WIDTH,
 } from '@src/components/common/constants';
+import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Styles {
   container: ViewStyle;
@@ -45,6 +46,8 @@ const baseBarStyle = {
 };
 
 const useAudioWaveStyles = () => {
+  const { theme } = useColorTheme();
+
   const audioWaveStyles: Styles = StyleSheet.create({
     container: {
       justifyContent: 'center',
@@ -67,7 +70,7 @@ const useAudioWaveStyles = () => {
     },
     playedSection: {
       position: 'absolute',
-      backgroundColor: '#ff4081',
+      backgroundColor: theme.playedWaveBar,
       zIndex: 1,
       top: 0,
       bottom: 0,
@@ -95,38 +98,38 @@ const useAudioWaveStyles = () => {
     },
     bar: {
       ...baseBarStyle,
-      backgroundColor: '#3f51b5',
+      backgroundColor: theme.waveBar,
     },
     overlayBar: {
       ...baseBarStyle,
-      backgroundColor: '#ff4081',
+      backgroundColor: theme.playedWaveBar,
       top: 0.5,
     },
     bottomBar: {
       ...baseBarStyle,
-      backgroundColor: '#a0a9de',
+      backgroundColor: theme.waveBarBottom,
     },
     bottomOverlayBar: {
       ...baseBarStyle,
-      backgroundColor: '#ff9fc0',
+      backgroundColor: theme.playedWaveBarBottom,
     },
     dot: {
       ...baseDotStyle,
-      backgroundColor: '#3f51b5',
+      backgroundColor: theme.waveBar,
     },
     overlayDot: {
       ...baseDotStyle,
-      backgroundColor: '#ff4081',
+      backgroundColor: theme.playedWaveBar,
       height: DOT_HEIGHT + 0.5,
       top: 0.5,
     },
     bottomDot: {
       ...baseDotStyle,
-      backgroundColor: '#a0a9de',
+      backgroundColor: theme.waveBarBottom,
     },
     overlayBottomDot: {
       ...baseDotStyle,
-      backgroundColor: '#FFAED5',
+      backgroundColor: theme.playedWaveBarBottom,
       top: 0.5,
     },
     dotContainer: {

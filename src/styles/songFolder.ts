@@ -36,8 +36,7 @@ const useSongFolderStyles = () => {
       alignContent: 'center',
     },
 
-    // fix color
-    rowPressed: { backgroundColor: '#DDD' },
+    rowPressed: { backgroundColor: theme.mutedPrimary },
 
     contents: {
       flexDirection: 'column',
@@ -70,11 +69,13 @@ const useSongFolderStyles = () => {
 
     deleteRow: {
       alignItems: 'center',
-      backgroundColor: 'red',
+      backgroundColor: theme.error,
       flex: 1,
       flexDirection: 'row',
       justifyContent: 'flex-end',
       paddingLeft: 15,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.primaryText,
     },
 
     deleteButton: {
