@@ -10,11 +10,12 @@ export const useProcessSongs = (
   isSortAscending: boolean,
   activeFilters: Filter[],
   searchText: string,
+  isNumbered: boolean,
 ) => {
   const numberSongs = useNumberedSongs();
 
   return useMemo(() => {
-    let processedSongs = numberSongs(songs);
+    let processedSongs = isNumbered ? numberSongs(songs) : songs;
 
     if (activeFilters.length) {
       processedSongs = filterSongs(processedSongs, activeFilters);
@@ -25,5 +26,12 @@ export const useProcessSongs = (
     processedSongs = sortSongs(processedSongs, sortedCategory, isSortAscending);
 
     return processedSongs;
-  }, [songs, sortedCategory, isSortAscending, activeFilters, searchText]);
+  }, [
+    songs,
+    sortedCategory,
+    isSortAscending,
+    activeFilters,
+    searchText,
+    isNumbered,
+  ]);
 };

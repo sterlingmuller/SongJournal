@@ -8,6 +8,8 @@ import { Filter, SortBy } from '@src/components/common/enums';
 import { useProcessSongs } from '@src/hooks/useProcessSongs';
 import SwipeableFlashList from '@src/components/common/components/SwipeableFlashList';
 import { SwipeableItemRef } from '@src/components/common/components/SwipeableItem';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
+import { selectIsNumbered } from '@src/state/selectors/settingsSelector';
 
 interface Props {
   setToDelete: (value: t.DeleteObject | null) => void;
@@ -35,12 +37,15 @@ const SongFolders = (props: Props) => {
     searchText,
   } = props;
 
+  const isNumbered = useAppSelector(selectIsNumbered);
+
   const songsToDisplay = useProcessSongs(
     songs,
     sortedCategory,
     isSortAscending,
     activeFilters,
     searchText,
+    isNumbered,
   );
 
   const openRowRef = useRef<SwipeableItemRef | null>(null);
