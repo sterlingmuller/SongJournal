@@ -77,7 +77,7 @@ export const RecordingProvider = ({ children }: Props) => {
         ({ metering }: RecordingStatus) => {
           if (metering > SILENCE_THRESHOLD) {
             const normalizedLevel = (metering + 160) / 160;
-            const scaledLevel = normalizedLevel * 100;
+            const scaledLevel = Math.log10(normalizedLevel * 9 + 1) * 100;
 
             levelSum.current += scaledLevel;
             levelCount.current++;
@@ -88,10 +88,7 @@ export const RecordingProvider = ({ children }: Props) => {
 
       audioWaveIntervalId = setInterval(() => {
         if (levelCount.current > 0) {
-          const averageLevel = Math.round(
-            levelSum.current / levelCount.current,
-          );
-
+          const averageLevel = levelSum.current / levelCount.current;
           const scaledHeight = scaleDbToHeight(averageLevel);
 
           fullWaveRef.current.push(scaledHeight);

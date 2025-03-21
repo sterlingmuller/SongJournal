@@ -190,7 +190,7 @@ export const SORT_SELECT = [
 export const PLAYBACK_START_DELAY = 100;
 export const MAX_AUDIO_WAVE_BARS = 40;
 export const AUDIO_WAVE_MIDPOINT = 12;
-export const AUDIO_UPDATES_PER_SECOND = 12;
+export const AUDIO_UPDATES_PER_SECOND = 16;
 export const AUDIO_UPDATE_INTERVAL = 1000 / AUDIO_UPDATES_PER_SECOND;
 export const MAX_LEVEL = 50;
 export const SILENCE_THRESHOLD = -140;
@@ -204,26 +204,28 @@ export const MAX_BARS = Math.floor(WAVE_CONTAINER_WIDTH / WAVE_BAR_TOTAL_WIDTH);
 export const DOT_HEIGHT = WAVE_BAR_WIDTH * 0.75;
 
 export const HEIGHT_MAPPING: [number, number][] = [
-  [42, 0],
-  [45, 4],
-  [50, 6],
-  [60, 10],
-  [70, 12],
-  [75, 14],
-  [78, 18],
-  [80, 24],
-  [85, 30],
-  [87, 36],
-  [88, 48],
-  [89, 60],
-  [90, 72],
-  [91, 84],
-  [92, 90],
-  [93, 96],
-  [94, 102],
-  [95, 108],
-  [96, 114],
-  [97, 120],
+  [82, 0],
+  [84, 5],
+  [86, 10],
+  [87, 15],
+  [88, 20],
+  [89, 25],
+  [90, 30],
+  [91, 35],
+  [92, 40],
+  [92.5, 45],
+  [93, 50],
+  [93.25, 55],
+  [93.5, 60],
+  [93.75, 65],
+  [94, 70],
+  [94.25, 75],
+  [94.5, 80],
+  [94.75, 85],
+  [95, 90],
+  [95.25, 95],
+  [95.5, 100],
+  [100, 100],
 ];
 
 export const MAX_TITLE_LENGTH = 40;
