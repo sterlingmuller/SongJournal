@@ -44,7 +44,7 @@ export default ({ config }) => {
     android: {
       softwareKeyboardLayoutMode: 'pan',
       windowSoftInputMode: 'adjustResize',
-      versionCode: 4,
+      versionCode: 5,
       package: 'com.sterling.silverado.songjournal',
       adaptiveIcon: {
         foregroundImage: './assets/adaptive-icon.png',
