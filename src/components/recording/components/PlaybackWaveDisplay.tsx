@@ -2,14 +2,16 @@ import React, { useEffect, useRef } from 'react';
 import { View } from 'react-native';
 import MaskedView from '@react-native-masked-view/masked-view';
 import Animated, {
-  useAnimatedReaction,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
 } from 'react-native-reanimated';
 
 import useAudioWaveStyles from '@src/styles/audioWave';
-import { WAVE_BAR_TOTAL_WIDTH } from '@src/components/common/constants';
+import {
+  WAVE_BAR_TOTAL_WIDTH,
+  AUDIO_UPDATE_INTERVAL,
+} from '@src/components/common/constants';
 import WaveForms from '@src/components/recording/subcomponents/WaveForm';
 import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectIsPlaying } from '@src/state/selectors/playbackSelector';
@@ -21,23 +23,33 @@ const PlaybackWaveDisplay = () => {
   const isPlaying = useAppSelector(selectIsPlaying);
   const { fullWaveRef, duration } = useRecording();
   const fullWave = fullWaveRef.current;
-  const { didJustFinish } = useAudioPlayer();
+  const { didJustFinish, soundRef } = useAudioPlayer();
 
   const prevWave = useRef(fullWave);
+  const intervalRef = useRef(null);
 
   const progress = useSharedValue(0);
   const isPlayingShared = useSharedValue(isPlaying);
   const durationShared = useSharedValue(duration || 1);
   const hasReachedEnd = useSharedValue(false);
-  const lastTimestamp = useSharedValue(0);
-  const animationActive = useSharedValue(false);
 
   const waveformWidth = useDerivedValue(() => {
     return fullWave.length * WAVE_BAR_TOTAL_WIDTH;
   });
+
   const panX = useDerivedValue(() => {
     return progress.value * -waveformWidth.value;
   });
+
+  const getPositionMillis = async () => {
+    try {
+      const status = await soundRef.current.getStatusAsync();
+      return status.isLoaded ? status.positionMillis : 0;
+    } catch (error) {
+      console.error('Error getting audio position:', error);
+      return 0;
+    }
+  };
 
   useEffect(() => {
     if (fullWave.length === 0 && prevWave.current.length > 0) {
@@ -46,23 +58,40 @@ const PlaybackWaveDisplay = () => {
     prevWave.current = fullWave;
   }, [fullWave]);
 
-  const prevPlayingRef = useRef(isPlaying);
-
   useEffect(() => {
     durationShared.value = duration || 1;
     isPlayingShared.value = isPlaying;
+
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
 
     if (isPlaying) {
       if (hasReachedEnd.value) {
         progress.value = 0;
         hasReachedEnd.value = false;
-      } else if (progress.value === 1) {
-        progress.value = 0;
       }
+
+      intervalRef.current = setInterval(async () => {
+        try {
+          const positionMillis = await getPositionMillis();
+          if (positionMillis !== null && positionMillis !== undefined) {
+            const newProgress = Math.min(1, positionMillis / (duration * 1000));
+            progress.value = newProgress;
+          }
+        } catch (error) {
+          console.error('Error getting audio position:', error);
+        }
+      }, AUDIO_UPDATE_INTERVAL);
     }
 
-    prevPlayingRef.current = isPlaying;
-  }, [isPlaying]);
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isPlaying, duration, getPositionMillis]);
 
   useEffect(() => {
     if (didJustFinish) {
@@ -70,46 +99,6 @@ const PlaybackWaveDisplay = () => {
       hasReachedEnd.value = true;
     }
   }, [didJustFinish]);
-
-  useAnimatedReaction(
-    () => isPlayingShared.value,
-    (isAnimatedPlaying: boolean) => {
-      if (isAnimatedPlaying && !animationActive.value) {
-        animationActive.value = true;
-        lastTimestamp.value = Date.now();
-
-        const animate = () => {
-          if (!isPlayingShared.value) {
-            animationActive.value = false;
-            return;
-          }
-
-          const now = Date.now();
-          const deltaTime = (now - lastTimestamp.value) / 1000;
-          lastTimestamp.value = now;
-
-          if (deltaTime > 0 && deltaTime < 0.1) {
-            progress.value = Math.min(
-              1,
-              progress.value + deltaTime / durationShared.value,
-            );
-          }
-
-          if (progress.value >= 1) {
-            progress.value = 1;
-            hasReachedEnd.value = true;
-            animationActive.value = false;
-            return;
-          }
-
-          requestAnimationFrame(animate);
-        };
-
-        requestAnimationFrame(animate);
-      }
-    },
-    [isPlayingShared, durationShared],
-  );
 
   const maskAnimatedStyle = useAnimatedStyle(() => {
     return { transform: [{ translateX: panX.value }] };
