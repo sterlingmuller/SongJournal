@@ -43,7 +43,7 @@ const useSongTakeStyles = () => {
     titleRow: {
       flexDirection: 'row',
       gap: 10,
-      width: '80%',
+      maxWidth: '80%',
       alignItems: 'center',
       height: SCREEN_HEIGHT * 0.035,
     },
