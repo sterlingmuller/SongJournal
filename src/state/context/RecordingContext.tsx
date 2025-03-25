@@ -11,6 +11,7 @@ import React, {
 import { Audio } from 'expo-av';
 import { SharedValue, useSharedValue } from 'react-native-reanimated';
 import { RecordingStatus } from 'expo-av/build/Audio';
+import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 
 import {
   AUDIO_UPDATE_INTERVAL,
@@ -61,6 +62,18 @@ export const RecordingProvider = ({ children }: Props) => {
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (isRecording) {
+      activateKeepAwakeAsync();
+    } else {
+      deactivateKeepAwake();
+    }
+
+    return () => {
+      deactivateKeepAwake();
+    };
+  }, [isRecording]);
 
   const startRecording = useCallback(async () => {
     try {
