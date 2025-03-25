@@ -40,6 +40,15 @@ const AudioProvider = ({ children }: Props) => {
   const dispatch = useAppDispatch();
   const [didJustFinish, setDidJustFinish] = useState(false);
 
+  useEffect(() => {
+    const setAudioMode = async () => {
+      await Audio.setAudioModeAsync({
+        staysActiveInBackground: true,
+      });
+    };
+    setAudioMode();
+  }, []);
+
   const unloadSound = useCallback(async () => {
     if (soundRef.current) {
       await soundRef.current.stopAsync();
