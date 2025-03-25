@@ -16,6 +16,7 @@ import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectCloudConnection } from '@src/state/selectors/settingsSelector';
 import { CloudConnection } from '@src/components/common/enums';
 import ReportABug from '@src/components/settings/components/ReportABug';
+import { APP_VERSION } from '@src/components/common/constants';
 
 const SettingsScreen = () => {
   const styles = useSettingsStyle();
@@ -35,7 +36,7 @@ const SettingsScreen = () => {
         <PrivacyPolicy />
         <About />
       </View>
-      <StyledText style={styles.version}>Version 0.0.0</StyledText>
+      <StyledText style={styles.version}>`Version ${APP_VERSION}</StyledText>
     </ScrollView>
   );
 };
