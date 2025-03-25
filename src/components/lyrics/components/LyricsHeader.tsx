@@ -35,11 +35,11 @@ const LyricsHeader = (props: Props) => {
     if (displaySave) {
       return (
         <View style={styles.headerIconRow}>
-          <TouchableOpacity onPress={handleSaveLyrics} hitSlop={10}>
-            <CheckIcon />
-          </TouchableOpacity>
           <TouchableOpacity onPress={handleCancelEdit} hitSlop={10}>
             <CloseIcon />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleSaveLyrics} hitSlop={10}>
+            <CheckIcon size={28} />
           </TouchableOpacity>
         </View>
       );

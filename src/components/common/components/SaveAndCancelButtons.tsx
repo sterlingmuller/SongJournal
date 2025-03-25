@@ -31,17 +31,17 @@ const SaveAndCancelButtons = (props: Props) => {
     <View style={{ ...styles.buttons, ...buttonsStyle }}>
       <View style={styles.button}>
         <Button
-          title={primaryLabel}
-          onPress={onPress}
-          color={primaryColor}
-          disabled={disabled}
+          title={secondaryLabel}
+          color={secondaryColor}
+          onPress={onExitPress}
         />
       </View>
       <View style={styles.button}>
         <Button
-          title={secondaryLabel}
-          color={secondaryColor}
-          onPress={onExitPress}
+          title={primaryLabel}
+          onPress={onPress}
+          color={primaryColor}
+          disabled={disabled}
         />
       </View>
     </View>

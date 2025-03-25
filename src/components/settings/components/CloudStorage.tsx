@@ -27,7 +27,7 @@ const CloudStorage = ({ cloudConnection }: Props) => {
   const { generateAndUploadZipBuffer } = useDropboxFileGenerator();
 
   // online toggle for use in development testing
-  const { isOnline } = useNetworkStatus();
+  // const { isOnline } = useNetworkStatus();
 
   const handleAppBackup = async () => {
     generateAndUploadZipBuffer();
@@ -61,23 +61,23 @@ const CloudStorage = ({ cloudConnection }: Props) => {
       {cloudConnection !== CloudConnection.NONE ? (
         <View>
           <StyledText>
-            You are connected to your
+            You are connected to yourvdfvdf
             <StyledText style={styles.boldText}> {cloudConnection} </StyledText>
             account. You may adjust settings and enable Auto Syncing below.
           </StyledText>
           <View style={{ ...styles.buttons }}>
             <View style={styles.button}>
               <Button
-                title={'Sync Backup'}
-                onPress={handleAppBackup}
-                color={theme.settingsEmphasis}
+                title={'Disconnect'}
+                color={theme.error}
+                onPress={handleDisconnect}
               />
             </View>
             <View style={styles.button}>
               <Button
-                title={'Disconnect'}
-                color={theme.error}
-                onPress={handleDisconnect}
+                title={'Sync Backup'}
+                onPress={handleAppBackup}
+                color={theme.settingsEmphasis}
               />
             </View>
           </View>
