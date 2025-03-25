@@ -55,7 +55,7 @@ export default ({ config }) => {
     android: {
       softwareKeyboardLayoutMode: 'pan',
       windowSoftInputMode: 'adjustResize',
-      versionCode: 6,
+      versionCode: 7,
       package: IS_DEV
         ? 'com.sterling.silverado.songjournal.dev'
         : 'com.sterling.silverado.songjournal',
