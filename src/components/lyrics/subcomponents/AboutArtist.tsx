@@ -6,6 +6,7 @@ import StyledText from '@src/components/common/components/StyledText';
 import NewArtistModal from '@src/components/settings/components/NewArtistModal';
 import useInfoModalStyle from '@src/styles/infoModal';
 import { useArtistName } from '@src/hooks/useArtistName';
+import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Props {
   selectedArtistId: number;
@@ -15,6 +16,7 @@ interface Props {
 const AboutArtist = ({ selectedArtistId, setSelectedArtistId }: Props) => {
   const styles = useInfoModalStyle();
   const { getArtistName, artistItems } = useArtistName();
+  const { theme } = useColorTheme();
 
   const [isSettingsWheelOpen, setIsSettingsWheelOpen] = useState(false);
   const [isNewArtistOpen, setIsNewArtistOpen] = useState(false);
@@ -42,8 +44,10 @@ const AboutArtist = ({ selectedArtistId, setSelectedArtistId }: Props) => {
             onPress={() => setIsSettingsWheelOpen(true)}
             style={styles.artistTextbox}
           >
-            <StyledText style={styles.inputText}>
-              {displayedArtistName}
+            <StyledText
+              style={[styles.inputText, { color: theme.placeholderText }]}
+            >
+              {displayedArtistName || '--'}
             </StyledText>
           </TouchableOpacity>
           <StyledText style={styles.labelText}>Artist</StyledText>

@@ -8,6 +8,7 @@ import ChordWheelModal from '@src/components/lyrics/components/ChordWheelModal';
 import TimeSignatureWheelModal from '@src/components/lyrics/components/TimeSignatureWheelModal';
 import { SongDetailKey } from '@src/components/common/enums';
 import { SONG_DETAILS } from '@src/components/common/constants';
+import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Props {
   label: string;
@@ -18,6 +19,7 @@ interface Props {
 const SongDetailSelect = (props: Props) => {
   const { label, value, handleInputChange } = props;
   const styles = useSongDetailStyles();
+  const { theme } = useColorTheme();
 
   const [isChordWheelOpen, setIsChordWheelOpen] = useState(false);
   const [isTimeWheelOpen, setIsTimeWheelOpen] = useState(false);
@@ -33,7 +35,11 @@ const SongDetailSelect = (props: Props) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={songDetailPress} style={styles.textbox}>
-        <StyledText style={styles.inputText}>{value}</StyledText>
+        <StyledText
+          style={[styles.inputText, !value && { color: theme.placeholderText }]}
+        >
+          {value || '--'}
+        </StyledText>
       </TouchableOpacity>
       <StyledText style={styles.labelText}>{label}</StyledText>
       <ChordWheelModal
