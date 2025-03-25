@@ -5,6 +5,7 @@ import useLyricScreenStyles from '@src/styles/lyricsScreen';
 import TextEditor from '@src/components/common/components/TextEditor';
 import useDebounce from '@src/hooks/useDebounce';
 import { SCREEN_HEIGHT } from '@src/components/common/constants';
+import { isTextEmpty } from '@src/utils/isTextEmpty';
 
 interface Props {
   newLyrics: string;
@@ -16,7 +17,8 @@ const EditLyricsSheet = ({ newLyrics, setNewLyrics }: Props) => {
   const initialLyricsRef = useRef(newLyrics);
 
   const debouncedLyrics = useDebounce((lyrics: string) => {
-    setNewLyrics(lyrics);
+    const normalizedLyrics = isTextEmpty(lyrics) ? '' : lyrics;
+    setNewLyrics(normalizedLyrics);
   }, 400);
 
   const handleLyricsChange = (lyrics: string) => {

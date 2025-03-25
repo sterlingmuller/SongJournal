@@ -55,7 +55,9 @@ const LyricsScreen = () => {
   const handleSaveLyrics = () => {
     updateLyrics(newLyrics);
 
-    setSelectedOption(LyricsOption.NONE);
+    if (newLyrics) {
+      setSelectedOption(LyricsOption.NONE);
+    }
   };
 
   const handleCancelEdit = () => {
