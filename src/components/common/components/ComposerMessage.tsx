@@ -3,7 +3,7 @@ import { View } from 'react-native';
 
 import StyledText from '@src/components/common/components/StyledText';
 import useGetStartedHomeStyles from '@src/styles/getStartedHome';
-import { Conductor, Screen } from '@src/components/common/enums';
+import { Conductor, MessageIntent } from '@src/components/common/enums';
 import { FRACTION_UNICODE } from '../constants';
 import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import {
@@ -17,9 +17,9 @@ import DeadAdimIcon from '@src/icons/DeadAdimIcon';
 import useGlobalStyles from '@src/styles/global';
 
 interface props {
-  screen: 'Originals' | 'Song' | 'Covers' | 'Setlist' | 'ConnectionSuccess';
+  messageIntent: MessageIntent;
 }
-const ComposerMessage = ({ screen }: props) => {
+const ComposerMessage = ({ messageIntent }: props) => {
   const styles = useGetStartedHomeStyles();
   const conductor = useAppSelector(selectConductor);
   const displayTips = useAppSelector(selectDisplayTips);
@@ -48,6 +48,14 @@ const ComposerMessage = ({ screen }: props) => {
     <StyledText style={styles.text}>
       Press the <StyledText style={styles.boldText}>Record</StyledText> button
       below to record your first Take!
+    </StyledText>
+  );
+
+  const emptySearchMessage = (
+    <StyledText style={styles.text}>
+      Hmmm, I got nothin'. It might be time to record a new{' '}
+      <StyledText style={styles.boldText}>Song</StyledText> or refine your{' '}
+      <StyledText style={styles.boldText}>Search</StyledText>.
     </StyledText>
   );
 
@@ -80,25 +88,29 @@ const ComposerMessage = ({ screen }: props) => {
     </StyledText>
   );
 
-  switch (screen) {
-    case Screen.HOME:
+  switch (messageIntent) {
+    case MessageIntent.GET_STARTED_HOME:
       message = getStartedHomeInstructions;
       tip = homeTip;
       break;
-    case Screen.SONG:
+    case MessageIntent.GET_STARTED_SONG:
       message = getStartedSongInstructions;
       tip = songTip;
       break;
-    case Screen.COVERS:
+    case MessageIntent.HIDE_COVERS_SCREEN:
       message = coversPlansMessage;
       tip = '';
       break;
-    case Screen.SETLIST:
+    case MessageIntent.HIDE_SETLIST_SCREEN:
       message = setlistPlansMessage;
       tip = '';
       break;
-    case Screen.CONNECTION_SUCCESS:
+    case MessageIntent.DROPBOX_CONNECTION_SUCCESS:
       message = dropboxConnectedMessage;
+      tip = '';
+      break;
+    case MessageIntent.EMPTY_SEARCH:
+      message = emptySearchMessage;
       tip = '';
       break;
   }

@@ -83,3 +83,12 @@ export enum CloudFileType {
   PAGE = 'page',
   ZIP = 'zip',
 }
+
+export enum MessageIntent {
+  GET_STARTED_HOME = 'get started home',
+  GET_STARTED_SONG = 'get started song',
+  HIDE_COVERS_SCREEN = 'hide covers screen',
+  HIDE_SETLIST_SCREEN = 'hise setlist screen',
+  DROPBOX_CONNECTION_SUCCESS = 'dropbox connection success',
+  EMPTY_SEARCH = 'empty search',
+}
