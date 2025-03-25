@@ -1,11 +1,13 @@
 import 'dotenv/config';
 
+const IS_DEV = process.env.APP_ENV === 'development';
+
 export default ({ config }) => {
   return {
     ...config,
-    name: 'SongJournal',
+    name: IS_DEV ? 'SJ (Dev)' : 'Song Journal',
     slug: 'SongJournal',
-    scheme: 'songjournal',
+    scheme: IS_DEV ? 'songjournaldev' : 'songjournal',
     version: '1.0.1',
     orientation: 'portrait',
     icon: './assets/Icon.png',
@@ -39,13 +41,17 @@ export default ({ config }) => {
       infoPlist: {
         UIBackgroundModes: ['audio'],
       },
-      bundleIdentifier: 'com.sterling.silverado.songjournal',
+      bundleIdentifier: IS_DEV
+        ? 'com.sterling.silverado.songjournal.dev'
+        : 'com.sterling.silverado.songjournal',
     },
     android: {
       softwareKeyboardLayoutMode: 'pan',
       windowSoftInputMode: 'adjustResize',
       versionCode: 5,
-      package: 'com.sterling.silverado.songjournal',
+      package: IS_DEV
+        ? 'com.sterling.silverado.songjournal.dev'
+        : 'com.sterling.silverado.songjournal',
       adaptiveIcon: {
         foregroundImage: './assets/adaptive-icon.png',
         backgroundColor: '#ee865b',
