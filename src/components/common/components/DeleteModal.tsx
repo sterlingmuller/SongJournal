@@ -99,7 +99,7 @@ const DeleteModal = (props: Props) => {
       <Modal isVisible={isVisible} avoidKeyboard onBackdropPress={onExitPress}>
         <View style={styles.container}>
           <StyledText style={styles.title}>
-            Delete {title} from Google account and current device
+            Delete {title} from your device
           </StyledText>
           <StyledText style={styles.text}>
             {title}
