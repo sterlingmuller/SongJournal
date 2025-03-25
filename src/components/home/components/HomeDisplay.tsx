@@ -5,7 +5,7 @@ import { DeleteObject } from '@src/components/common/types';
 import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectSongs } from '@src/state/selectors/songsSelector';
 import ComposerMessage from '@src/components/common/components/ComposerMessage';
-import { Filter, Screen, SortBy } from '@src/components/common/enums';
+import { Filter, MessageIntent, SortBy } from '@src/components/common/enums';
 
 interface Props {
   setToDelete: (value: DeleteObject | null) => void;
@@ -41,7 +41,7 @@ const HomeDisplay = (props: Props) => {
     );
   }
 
-  return <ComposerMessage screen={Screen.HOME} />;
+  return <ComposerMessage messageIntent={MessageIntent.GET_STARTED_HOME} />;
 };
 
 export default HomeDisplay;

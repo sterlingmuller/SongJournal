@@ -6,7 +6,7 @@ import useSongScreenStyles from '@src/styles/songScreen';
 import { DeleteObject, Take, Takes } from '@src/components/common/types';
 import ComposerMessage from '@src/components/common/components/ComposerMessage';
 import SongTake from '@src/components/songFolder/components/SongTake';
-import { Screen } from '@src/components/common/enums';
+import { MessageIntent } from '@src/components/common/enums';
 
 interface Props {
   takes: Takes;
@@ -61,7 +61,7 @@ const SongDisplay = (props: Props) => {
     );
   }
 
-  return <ComposerMessage screen={Screen.SONG} />;
+  return <ComposerMessage messageIntent={MessageIntent.GET_STARTED_SONG} />;
 };
 
 export default SongDisplay;
