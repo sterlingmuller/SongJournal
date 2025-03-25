@@ -7,6 +7,7 @@ import StyledText from '@src/components/common/components/StyledText';
 import { useAppDispatch } from '@src/hooks/typedReduxHooks';
 import { updateSettingsRequest } from '@src/state/sagas/actionCreators';
 import { useArtistName } from '@src/hooks/useArtistName';
+import { useColorTheme } from '@src/state/context/ThemeContext';
 
 const LazySettingsWheel = lazy(
   async () => await import('@src/components/common/components/SettingsWheel'),
@@ -25,6 +26,7 @@ const DefaultArtistOptions = ({ defaultArtistId }: Props) => {
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
   const { getArtistName, artistItems } = useArtistName();
+  const { theme } = useColorTheme();
 
   const [isSettingsWheelOpen, setIsSettingsWheelOpen] = useState(false);
   const [selectedArtistId, setSelectedArtistId] = useState(defaultArtistId);
@@ -63,8 +65,13 @@ const DefaultArtistOptions = ({ defaultArtistId }: Props) => {
             onPress={() => setIsSettingsWheelOpen(true)}
             style={styles.textbox}
           >
-            <StyledText style={styles.inputText}>
-              {displayedArtistName}
+            <StyledText
+              style={[
+                styles.inputText,
+                !displayedArtistName && { color: theme.placeholderText },
+              ]}
+            >
+              {displayedArtistName || '--'}
             </StyledText>
           </TouchableOpacity>
         </View>

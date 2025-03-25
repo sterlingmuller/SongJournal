@@ -140,7 +140,7 @@ const InfoModal = (props: Props) => {
             <TextInput
               style={styles.input}
               placeholder="Add details for the song..."
-              placeholderTextColor={theme.secondaryText}
+              placeholderTextColor={theme.placeholderText}
               value={newInfo.about}
               onChangeText={(newAbout: string) =>
                 handleInputChange('about', newAbout)
