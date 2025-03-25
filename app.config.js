@@ -8,20 +8,27 @@ export default ({ config }) => {
     name: IS_DEV ? 'SJ (Dev)' : 'Song Journal',
     slug: 'SongJournal',
     scheme: IS_DEV ? 'songjournaldev' : 'songjournal',
-    version: '1.0.1',
+    version: '0.1.0',
     orientation: 'portrait',
     icon: './assets/Icon.png',
     userInterfaceStyle: 'light',
     newArchEnabled: true,
     plugins: [
-      ['@react-native-google-signin/google-signin'],
+      [
+        'expo-build-properties',
+        {
+          android: {
+            enableProguardInReleaseBuilds: true,
+            enableShrinkResourcesInReleaseBuilds: true,
+          },
+        },
+      ],
       [
         'expo-secure-store',
         {
           configureAndroidBackup: true,
         },
       ],
-      'react-native-cloud-storage',
       [
         'expo-splash-screen',
         {
@@ -48,7 +55,7 @@ export default ({ config }) => {
     android: {
       softwareKeyboardLayoutMode: 'pan',
       windowSoftInputMode: 'adjustResize',
-      versionCode: 5,
+      versionCode: 6,
       package: IS_DEV
         ? 'com.sterling.silverado.songjournal.dev'
         : 'com.sterling.silverado.songjournal',
@@ -62,9 +69,6 @@ export default ({ config }) => {
       backgroundColor: '#00000000',
       translucent: true,
     },
-    web: {
-      favicon: './assets/favicon.png',
-    },
     extra: {
       eas: {
         projectId: '782ab462-3c4f-4302-ae95-e24dfe286e87',
@@ -73,7 +77,7 @@ export default ({ config }) => {
       DROPBOX_CLIENT_SECRET: process.env.DROPBOX_CLIENT_SECRET,
     },
     owner: 'sterlo',
-    runtimeVersion: '1.0.1',
+    runtimeVersion: '0.1.0',
     updates: {
       url: 'https://u.expo.dev/782ab462-3c4f-4302-ae95-e24dfe286e87',
     },
