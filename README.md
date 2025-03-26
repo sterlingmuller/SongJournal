@@ -6,6 +6,8 @@ Song Journal is a tool for organizing song recordings and writing lyrics.
 
 The Starred version of a Song is displayed on the Home Screen. Pressing on a Song will open the Song Folder, containing all Takes of a Song. Takes can be appended with notes, starred, or renamed. Songs include a Lyrics Page for adding lyrics, chords, time signature, and bpm. Groups of Pages can be exported as a print-ready pdf. User can import/export an app backup and connect to Dropbox to enable autosyncing of recordings and lyrics.
 
+📲 **Download APK**: [v0.1.0-beta](https://github.com/sterlingmuller/SongJournal/releases/download/v0.1.0-beta/SongJournal-v0.1.0.apk)
+
 ## Access, share, and delete songs on Home Screen and change Theme on Settings Screen
 
 <p align="center">
