@@ -11,7 +11,6 @@ import { useSQLiteContext } from 'expo-sqlite';
 import useCloudStorageStyle from '@src/styles/cloudStorage';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
-import { useNetworkStatus } from '@src/state/context/NetworkContext';
 import useDropboxFileGenerator from '@src/services/cloudStorage/dropbox/hooks/useDropboxFileGenerator';
 
 interface Props {
@@ -61,7 +60,7 @@ const CloudStorage = ({ cloudConnection }: Props) => {
       {cloudConnection !== CloudConnection.NONE ? (
         <View>
           <StyledText>
-            You are connected to yourvdfvdf
+            You are connected to your
             <StyledText style={styles.boldText}> {cloudConnection} </StyledText>
             account. You may adjust settings and enable Auto Syncing below.
           </StyledText>

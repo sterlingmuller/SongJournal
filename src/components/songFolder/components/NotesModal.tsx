@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, ScrollView } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import Modal from 'react-native-modal';
 
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
@@ -43,23 +43,23 @@ const NotesModal = (props: Props) => {
   return (
     <Modal
       isVisible={!!title}
+      avoidKeyboard
       onBackdropPress={onExitPress}
-      avoidKeyboard={true}
       style={styles.modal}
     >
       <View style={styles.container}>
         <Text style={styles.title}>{title} Notes</Text>
-        <ScrollView style={styles.textbox}>
+        <View style={styles.textbox}>
           <TextInput
             style={styles.input}
             placeholder="Add notes for the current take..."
-            placeholderTextColor={theme.secondaryText}
+            placeholderTextColor={theme.placeholderText}
             value={newNote}
             onChangeText={(text: string) => setNewNote(text)}
             multiline={true}
             textAlignVertical="top"
           />
-        </ScrollView>
+        </View>
         <View style={styles.buttonContainer}>
           <SaveAndCancelButtons
             onPress={onSavePress}

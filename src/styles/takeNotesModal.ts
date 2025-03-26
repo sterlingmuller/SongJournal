@@ -1,4 +1,5 @@
 import { SCREEN_HEIGHT } from '@src/components/common/constants';
+import { useColorTheme } from '@src/state/context/ThemeContext';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 interface Styles {
@@ -11,44 +12,48 @@ interface Styles {
 }
 
 const useTakeNotesModalStyles = () => {
+  const { theme } = useColorTheme();
+
   const takeNotesModalStyles: Styles = StyleSheet.create({
     modal: {
       margin: 0,
     },
     container: {
       alignSelf: 'center',
-      backgroundColor: '#fff',
+      backgroundColor: theme.secondary,
       width: '80%',
-      maxHeight: SCREEN_HEIGHT * 0.6,
+      maxHeight: SCREEN_HEIGHT * 0.62,
       borderRadius: 15,
       gap: 20,
     },
 
     title: {
-      paddingTop: 35,
+      paddingTop: 20,
       paddingLeft: 40,
       fontSize: 24,
+      fontWeight: 'bold',
     },
 
     textbox: {
-      backgroundColor: '#f0f0f0',
+      backgroundColor: theme.inputBackground,
       borderRadius: 10,
       padding: 8,
       width: '85%',
-      height: '64%',
+      height: SCREEN_HEIGHT * 0.3,
       borderWidth: 1,
       borderColor: '#ccc',
       marginLeft: 25,
-      marginBottom: 10,
     },
 
     input: {
       flex: 1,
       fontSize: 14,
+      fontWeight: 500,
     },
 
     buttonContainer: {
-      paddingBottom: 20,
+      paddingTop: 10,
+      paddingBottom: 40,
     },
   });
 
