@@ -4,6 +4,7 @@ export enum colors {
   aqua = '#d8f3dc',
   gold = '#fcd470',
   babyGold = '#f2dfa2',
+  lightDimGold = '#b8942c',
   dimGold = '#967923',
   lightGray = '#F0F0F0',
   sandyGray = '#decebf',

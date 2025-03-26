@@ -66,7 +66,7 @@ const themes: Record<ThemeKey, Theme> = {
     secondaryText: c.black,
     footerText: c.sandyGray,
     placeholderText: c.darkGray,
-    tipText: c.dimGold,
+    tipText: c.lightDimGold,
     secondaryTipText: c.lightBlack,
     highlight: c.darkGray,
     conductorBackground: c.salmon,
