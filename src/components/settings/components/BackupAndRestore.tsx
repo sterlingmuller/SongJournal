@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, View } from 'react-native';
+// import { reloadAsync } from 'expo-updates';
 
 import StyledText from '@src/components/common/components/StyledText';
 import useSettingsStyle from '@src/styles/settings';
@@ -12,7 +13,13 @@ const BackupAndRestore = () => {
   const { theme } = useColorTheme();
 
   const onExportPress = () => createAndShareBackup();
-  const onImportPress = () => importBackup();
+  const onImportPress = async () => {
+    const didImport = await importBackup();
+    if (didImport) {
+      // reloadAsync();
+      console.log('hi');
+    }
+  };
 
   return (
     <View>

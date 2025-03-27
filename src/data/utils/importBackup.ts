@@ -50,12 +50,14 @@ export const importBackup = async () => {
         'Restore Successful',
         'Your data has been successfully restored.',
       );
+
+      return true;
     }
   } catch (error) {
-    console.error('Import failed:', error);
     Alert.alert(
       'Import Failed',
       'An error occurred while importing the backup.',
     );
+    return false;
   }
 };
