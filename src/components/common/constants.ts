@@ -104,7 +104,7 @@ export const DELETE_TAKE_TEXT: string =
   ' will be permanently deleted. This action cannot be undone.';
 
 export const DELETE_SONG_TEXT: string =
-  ', its journal entry, and all takes of this song will be permanently deleted. This action cannot be undone.';
+  ', its journal entry, and all takes of the song will be permanently deleted. This action cannot be undone.';
 
 export const EMPTY_DELETE_OBJECT: t.DeleteObject = {
   type: null,
@@ -139,8 +139,6 @@ export const MONTHS = [
   'November',
   'December',
 ];
-
-export const FRACTION_UNICODE = '\u2044';
 
 export const ROOT_NOTES = [
   { label: '', value: '' },

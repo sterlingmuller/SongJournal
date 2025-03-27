@@ -66,7 +66,6 @@ export default ({ config }) => {
       permissions: ['RECORD_AUDIO', 'WAKE_LOCK', 'FOREGROUND_SERVICE'],
     },
     androidStatusBar: {
-      backgroundColor: '#00000000',
       translucent: true,
     },
     extra: {

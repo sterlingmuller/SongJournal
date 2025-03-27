@@ -34,7 +34,8 @@ const useCommonModalStyle = () => {
     title: {
       paddingLeft: 30,
       fontSize: 24,
-      fontWeight: '500',
+      fontWeight: '700',
+      color: theme.secondaryText,
     },
 
     textbox: {
@@ -91,7 +92,7 @@ const useCommonModalStyle = () => {
     infoText: {
       textAlign: 'right',
       fontSize: 14,
-      color: theme.primaryText,
+      color: theme.secondaryText,
     },
   });
 

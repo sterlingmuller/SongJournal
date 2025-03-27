@@ -32,8 +32,9 @@ const useGetStartedHomeStyles = () => {
     text: {
       textAlign: 'center',
       fontSize: 18,
-      fontWeight: '400',
+      fontWeight: '500',
       lineHeight: 26,
+      color: theme.secondaryText,
     },
     arrow: {
       position: 'absolute',
@@ -56,10 +57,12 @@ const useGetStartedHomeStyles = () => {
       marginBottom: 30,
     },
     boldText: {
-      fontWeight: 'bold',
+      fontWeight: 700,
+      color: theme.secondaryText,
     },
     italicText: {
       fontStyle: 'italic',
+      color: theme.secondaryText,
     },
     tipText: {
       position: 'absolute',

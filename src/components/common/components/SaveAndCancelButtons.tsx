@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Button } from 'react-native';
+import { View, ViewStyle } from 'react-native';
 
 import useSaveAndCancelButtonsStyle from '@src/styles/saveAndCancelButtons';
+import StyledButton from './StyledButton';
 
 interface Props {
   onPress: () => void;
@@ -9,9 +10,10 @@ interface Props {
   disabled?: boolean;
   primaryLabel?: string;
   secondaryLabel?: string;
-  buttonsStyle?;
+  buttonsStyle?: ViewStyle;
   primaryColor?: string;
   secondaryColor?: string;
+  primaryTextColor?: string;
 }
 
 const SaveAndCancelButtons = (props: Props) => {
@@ -23,27 +25,20 @@ const SaveAndCancelButtons = (props: Props) => {
     secondaryLabel = 'Cancel',
     buttonsStyle,
     primaryColor = '#81C2F1',
-    secondaryColor = '#D6D6D6',
+    primaryTextColor = '#fff',
   } = props;
   const styles = useSaveAndCancelButtonsStyle();
 
   return (
     <View style={{ ...styles.buttons, ...buttonsStyle }}>
-      <View style={styles.button}>
-        <Button
-          title={secondaryLabel}
-          color={secondaryColor}
-          onPress={onExitPress}
-        />
-      </View>
-      <View style={styles.button}>
-        <Button
-          title={primaryLabel}
-          onPress={onPress}
-          color={primaryColor}
-          disabled={disabled}
-        />
-      </View>
+      <StyledButton onPress={onExitPress} label={secondaryLabel} />
+      <StyledButton
+        onPress={onPress}
+        disabled={disabled}
+        label={primaryLabel}
+        backgroundColor={primaryColor}
+        textColor={primaryTextColor}
+      />
     </View>
   );
 };

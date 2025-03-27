@@ -41,7 +41,7 @@ const useSongDetailStyles = () => {
 
     checkbox: {
       borderWidth: 2,
-      borderColor: theme.primaryText,
+      borderColor: theme.secondaryText,
       borderRadius: 5,
       width: 20,
       height: 20,
@@ -51,7 +51,7 @@ const useSongDetailStyles = () => {
       paddingBottom: 6,
     },
 
-    labelText: { fontSize: 14, color: theme.primaryText, fontWeight: 600 },
+    labelText: { fontSize: 14, color: theme.secondaryText, fontWeight: 600 },
     inputText: { fontSize: 14, color: theme.secondaryText, fontWeight: 700 },
 
     select: {

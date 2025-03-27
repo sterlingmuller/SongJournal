@@ -25,6 +25,7 @@ export interface Theme {
   waveBarBottom: string;
   playedWaveBar: string;
   playedWaveBarBottom: string;
+  wheelSelected: string;
 }
 
 type ThemeKey = 'Light' | 'Dark' | 'Metal' | 'Psych' | 'Pop' | 'Surf';
@@ -35,7 +36,7 @@ const themes: Record<ThemeKey, Theme> = {
     mutedPrimary: getColorWithOpacity(c.coral, 60),
     secondary: c.gold,
     primaryBackground: c.cream,
-    inputBackground: c.lightGray,
+    inputBackground: c.dimWhite,
     secondaryBackground: c.white,
     primaryText: c.black,
     secondaryText: c.black,
@@ -54,6 +55,7 @@ const themes: Record<ThemeKey, Theme> = {
     waveBarBottom: c.babyBlue,
     playedWaveBar: c.hotPink,
     playedWaveBarBottom: c.babyPink,
+    wheelSelected: c.blue,
   },
   Dark: {
     primary: c.deepCharcoal,
@@ -67,7 +69,7 @@ const themes: Record<ThemeKey, Theme> = {
     footerText: c.sandyGray,
     placeholderText: c.darkGray,
     tipText: c.lightDimGold,
-    secondaryTipText: c.lightBlack,
+    secondaryTipText: c.bloodRed,
     highlight: c.darkGray,
     conductorBackground: c.salmon,
     settingsEmphasis: c.teal,
@@ -79,6 +81,7 @@ const themes: Record<ThemeKey, Theme> = {
     waveBarBottom: c.babyGold,
     playedWaveBar: c.hotPink,
     playedWaveBarBottom: c.babyPink,
+    wheelSelected: c.salmon,
   },
   Surf: {
     primary: c.oceanBlue,
@@ -104,6 +107,7 @@ const themes: Record<ThemeKey, Theme> = {
     waveBarBottom: c.babyBlue,
     playedWaveBar: c.hotPink,
     playedWaveBarBottom: c.babyPink,
+    wheelSelected: c.blue,
   },
   Metal: {
     primary: c.deepCharcoal,
@@ -129,6 +133,7 @@ const themes: Record<ThemeKey, Theme> = {
     waveBarBottom: c.babyBlue,
     playedWaveBar: c.hotPink,
     playedWaveBarBottom: c.babyPink,
+    wheelSelected: c.blue,
   },
   Psych: {
     primary: c.deepCharcoal,
@@ -154,6 +159,7 @@ const themes: Record<ThemeKey, Theme> = {
     waveBarBottom: c.babyBlue,
     playedWaveBar: c.hotPink,
     playedWaveBarBottom: c.babyPink,
+    wheelSelected: c.blue,
   },
   Pop: {
     primary: c.deepCharcoal,
@@ -179,6 +185,7 @@ const themes: Record<ThemeKey, Theme> = {
     waveBarBottom: c.babyBlue,
     playedWaveBar: c.hotPink,
     playedWaveBarBottom: c.babyPink,
+    wheelSelected: c.blue,
   },
 };
 

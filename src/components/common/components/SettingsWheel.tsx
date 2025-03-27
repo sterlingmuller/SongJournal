@@ -9,6 +9,7 @@ import Modal from 'react-native-modal';
 
 import useWheelPickerModalStyles from '@src/styles/wheelPickerModal';
 import StyledText from '@src/components/common/components/StyledText';
+import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Props {
   isWheelOpen: boolean;
@@ -29,6 +30,7 @@ const SettingsWheel = (props: Props) => {
     items,
   } = props;
   const styles = useWheelPickerModalStyles();
+  const { theme } = useColorTheme();
 
   return (
     <Modal
@@ -43,6 +45,8 @@ const SettingsWheel = (props: Props) => {
         <WheelPicker
           items={items}
           textStyle={styles.wheelText}
+          inactiveTextColor={theme.secondaryText}
+          activeTextColor={theme.wheelSelected}
           onChange={(item: string) => handleInputChange(item)}
           align={WheelPickerAlign.CENTER}
           style={styles.timeSection}

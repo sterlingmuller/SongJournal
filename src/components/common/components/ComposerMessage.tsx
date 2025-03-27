@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import StyledText from '@src/components/common/components/StyledText';
 import useGetStartedHomeStyles from '@src/styles/getStartedHome';
 import { Conductor, MessageIntent } from '@src/components/common/enums';
-import { FRACTION_UNICODE } from '../constants';
 import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import {
   selectConductor,
@@ -36,10 +35,8 @@ const ComposerMessage = ({ messageIntent }: props) => {
   const getStartedHomeInstructions = (
     <StyledText style={styles.text}>
       {`Looks like your journal is empty.\nTo get started, visit `}
-      <StyledText style={styles.boldText}>
-        Settings 4{FRACTION_UNICODE}4
-      </StyledText>{' '}
-      help importing a journal or press the{' '}
+      <StyledText style={styles.boldText}>Settings 4/4</StyledText> help
+      importing a journal or press the{' '}
       <StyledText style={styles.boldText}>New Song</StyledText> button below.
     </StyledText>
   );
@@ -63,9 +60,8 @@ const ComposerMessage = ({ messageIntent }: props) => {
     <StyledText style={styles.text}>
       Ah! What are <StyledText style={styles.italicText}>you</StyledText> doing
       here!? The <StyledText style={styles.boldText}>Covers Tab</StyledText> is
-      not ready{' '}
-      <StyledText style={styles.boldText}>4{FRACTION_UNICODE}4</StyledText> the
-      world to <StyledText style={styles.boldText}>C</StyledText>
+      not ready <StyledText style={styles.boldText}>4/4</StyledText> the world
+      to <StyledText style={styles.boldText}>C</StyledText>
     </StyledText>
   );
 
@@ -74,9 +70,8 @@ const ComposerMessage = ({ messageIntent }: props) => {
       Ah! What are <StyledText style={styles.italicText}>you</StyledText> doing
       here!? The{' '}
       <StyledText style={styles.boldText}>Setlist Creator</StyledText> is not
-      ready{' '}
-      <StyledText style={styles.boldText}>4{FRACTION_UNICODE}4</StyledText> the
-      world to <StyledText style={styles.boldText}>C</StyledText>
+      ready <StyledText style={styles.boldText}>4/4</StyledText> the world to{' '}
+      <StyledText style={styles.boldText}>C</StyledText>
     </StyledText>
   );
 

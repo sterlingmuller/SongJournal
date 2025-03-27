@@ -143,7 +143,7 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
             hitSlop={{ top: 10, bottom: 20, left: 10, right: 10 }}
             disabled={shareDisabled}
           >
-            <ShareIcon disabled={shareDisabled} />
+            {!shareDisabled && <ShareIcon />}
           </TouchableOpacity>
           {selectedTake &&
             (selectedPlayingSongId === songId ? (
