@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react';
 import * as FileSystem from 'expo-file-system';
-import * as Sharing from 'expo-sharing';
 import { zip } from 'react-native-zip-archive';
 import { useSQLiteContext } from 'expo-sqlite';
 
@@ -58,9 +57,10 @@ const useFileShare = () => {
         fileUri,
         `${FileSystem.cacheDirectory}${formattedTitle}.zip`,
       );
-      await Sharing.shareAsync(`file://${zipUri}`, {
-        mimeType: 'application/zip',
-      });
+      // await Sharing.shareAsync(`file://${zipUri}`, {
+      //   mimeType: 'application/zip',
+      //   dialogTitle: 'Heres the tu.',
+      // });
 
       FileSystem.deleteAsync(fileUri, { idempotent: true });
       FileSystem.deleteAsync(
@@ -84,7 +84,7 @@ const useFileShare = () => {
           to: fileUri,
         });
 
-        await Sharing.shareAsync(fileUri);
+        // await Sharing.shareAsync(fileUri);
 
         FileSystem.deleteAsync(fileUri, { idempotent: true });
       } catch (err) {
@@ -105,7 +105,7 @@ const useFileShare = () => {
           from: pdfUri,
           to: fileUri,
         });
-        await Sharing.shareAsync(fileUri, { mimeType: 'application/pdf' });
+        // await Sharing.shareAsync(fileUri, { mimeType: 'application/pdf' });
 
         FileSystem.deleteAsync(fileUri, { idempotent: true });
       } catch (err) {

@@ -19,13 +19,21 @@ export const createBackup = async () => {
       to: `${BACKUP_DIR}${DB_NAME}`,
     });
 
-    const audioFiles = await FileSystem.readDirectoryAsync(AUDIO_DIR);
+    const audioDirInfo = await FileSystem.getInfoAsync(AUDIO_DIR);
 
-    for (const file of audioFiles) {
-      await FileSystem.copyAsync({
-        from: `${AUDIO_DIR}${file}`,
-        to: `${BACKUP_DIR}Audio/${file}`,
-      });
+    if (audioDirInfo.exists && audioDirInfo.isDirectory) {
+      const audioFiles = await FileSystem.readDirectoryAsync(AUDIO_DIR);
+      if (audioFiles.length > 0) {
+        await FileSystem.makeDirectoryAsync(`${BACKUP_DIR}Audio`, {
+          intermediates: true,
+        });
+        for (const file of audioFiles) {
+          await FileSystem.copyAsync({
+            from: `${AUDIO_DIR}${file}`,
+            to: `${BACKUP_DIR}Audio/${file}`,
+          });
+        }
+      }
     }
 
     const zipPath = `${FileSystem.cacheDirectory}songjournal_backup.zip`;

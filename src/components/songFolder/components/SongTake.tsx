@@ -20,7 +20,7 @@ import {
   selectCurrentSongTitle,
 } from '@src/state/selectors/songsSelector';
 import { formatDateFromISOString } from '@src/utils/formateDateFromISOString';
-import useFileShare from '@src/hooks/useFileShare';
+// import useFileShare from '@src/hooks/useFileShare';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
 import PlaybackBar from '@src/components/home/subcomponents/PlaybackBar';
 import formatDuration from '@src/utils/formatDuration';
@@ -43,7 +43,7 @@ const SongTake = (props: Props) => {
   const { take, setToDelete, setCurrentTake, setTitleToEdit } = props;
   const { takeId, songId, title, uri, duration } = take;
   const styles = useSongTakeStyles();
-  const { shareTake } = useFileShare();
+  // const { shareTake } = useFileShare();
   const { togglePlayback } = useAudioPlayer();
   const updateAndUploadStarredTake = useStarredTakeUpdateAndUpload();
 
@@ -72,7 +72,8 @@ const SongTake = (props: Props) => {
   const formattedDuration = useMemo(() => formatDuration(duration), [duration]);
 
   const handleShare = () => {
-    shareTake(uri, title, songTitle);
+    // shareTake(uri, title, songTitle);
+    console.log('woof');
   };
 
   return (
