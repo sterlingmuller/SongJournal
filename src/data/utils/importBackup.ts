@@ -16,43 +16,62 @@ export const importBackup = async () => {
       type: 'application/zip',
     });
 
-    if (result.canceled === false) {
-      const backupUri = result.assets[0].uri;
+    if (result.canceled) return;
 
-      await FileSystem.makeDirectoryAsync(EXTRACT_DIR, { intermediates: true });
-      await unzip(backupUri, EXTRACT_DIR);
+    const userConfirmed = await new Promise(
+      (resolve: (value: boolean) => void) => {
+        Alert.alert(
+          'Overwrite All Data?',
+          'This will replace ALL your current songs and recordings with the backup contents.',
+          [
+            { text: 'Cancel', style: 'cancel', onPress: () => resolve(false) },
+            {
+              text: 'Continue',
+              style: 'destructive',
+              onPress: () => resolve(true),
+            },
+          ],
+        );
+      },
+    );
 
-      const db = SQLite.openDatabaseSync(DB_NAME);
-      await db.closeAsync();
+    if (!userConfirmed) return;
 
-      await FileSystem.deleteAsync(DB_PATH, { idempotent: true });
+    const backupUri = result.assets[0].uri;
+
+    await FileSystem.makeDirectoryAsync(EXTRACT_DIR, { intermediates: true });
+    await unzip(backupUri, EXTRACT_DIR);
+
+    const db = SQLite.openDatabaseSync(DB_NAME);
+    await db.closeAsync();
+
+    await FileSystem.deleteAsync(DB_PATH, { idempotent: true });
+    await FileSystem.copyAsync({
+      from: EXTRACT_DIR + DB_NAME,
+      to: DB_PATH,
+    });
+
+    await FileSystem.deleteAsync(AUDIO_DIR, { idempotent: true });
+    await FileSystem.makeDirectoryAsync(AUDIO_DIR, { intermediates: true });
+    const restoredAudioFiles = await FileSystem.readDirectoryAsync(
+      `${EXTRACT_DIR}Audio/`,
+    );
+    for (const file of restoredAudioFiles) {
       await FileSystem.copyAsync({
-        from: EXTRACT_DIR + DB_NAME,
-        to: DB_PATH,
+        from: `${EXTRACT_DIR}Audio/${file}`,
+        to: `${AUDIO_DIR}${file}`,
       });
-
-      await FileSystem.deleteAsync(AUDIO_DIR, { idempotent: true });
-      await FileSystem.makeDirectoryAsync(AUDIO_DIR, { intermediates: true });
-      const restoredAudioFiles = await FileSystem.readDirectoryAsync(
-        `${EXTRACT_DIR}Audio/`,
-      );
-      for (const file of restoredAudioFiles) {
-        await FileSystem.copyAsync({
-          from: `${EXTRACT_DIR}Audio/${file}`,
-          to: `${AUDIO_DIR}${file}`,
-        });
-      }
-
-      await FileSystem.deleteAsync(EXTRACT_DIR, { idempotent: true });
-      SQLite.openDatabaseSync(DB_NAME);
-
-      Alert.alert(
-        'Restore Successful',
-        'Your data has been successfully restored.',
-      );
-
-      return true;
     }
+
+    await FileSystem.deleteAsync(EXTRACT_DIR, { idempotent: true });
+    SQLite.openDatabaseSync(DB_NAME);
+
+    Alert.alert(
+      'Restore Successful',
+      'Your data has been successfully restored.',
+    );
+
+    return true;
   } catch (error) {
     Alert.alert(
       'Import Failed',
