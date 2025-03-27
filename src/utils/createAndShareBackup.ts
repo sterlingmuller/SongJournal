@@ -1,5 +1,4 @@
 import * as FileSystem from 'expo-file-system';
-import * as Sharing from 'expo-sharing';
 import { zip } from 'react-native-zip-archive';
 import { Alert } from 'react-native';
 
@@ -52,11 +51,11 @@ export const createAndShareBackup = async () => {
   try {
     const zipPath = await createBackup();
 
-    if (await Sharing.isAvailableAsync()) {
-      await Sharing.shareAsync(zipPath);
-    } else {
-      throw new Error('Sharing is not available on this device');
-    }
+    // if (await Sharing.isAvailableAsync()) {
+    //   await Sharing.shareAsync(zipPath);
+    // } else {
+    //   throw new Error('Sharing is not available on this device');
+    // }
 
     await FileSystem.deleteAsync(zipPath, { idempotent: true });
 
