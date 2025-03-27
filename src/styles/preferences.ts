@@ -7,7 +7,6 @@ interface Styles {
   sortSettingsContainer: ViewStyle;
   selectContainer: ViewStyle;
   textbox: ViewStyle;
-  toggleLabel: TextStyle;
   sectionTitle: TextStyle;
   addArtistText: TextStyle;
   labelText: TextStyle;
@@ -44,8 +43,6 @@ const usePreferencesStyle = () => {
       gap: 10,
       alignItems: 'center',
     },
-
-    toggleLabel: {},
 
     textbox: {
       backgroundColor: theme.inputBackground,

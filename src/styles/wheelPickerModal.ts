@@ -57,6 +57,7 @@ const useWheelPickerModalStyles = () => {
       paddingLeft: 30,
       fontSize: 16,
       fontWeight: 'bold',
+      color: theme.secondaryText,
     },
 
     line: {

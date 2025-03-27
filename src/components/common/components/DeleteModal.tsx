@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Button, KeyboardAvoidingView } from 'react-native';
+import { View, KeyboardAvoidingView } from 'react-native';
 import Modal from 'react-native-modal';
 import { useSQLiteContext } from 'expo-sqlite';
 
@@ -21,6 +21,8 @@ import {
 import { findReplacementStarredTakeId } from '@src/utils/replaceStarredTake';
 import { updateSelectedTakeRequest } from '@src/state/thunk/takeThunk';
 import { updateSelectedTakeIdSuccess } from '@src/state/slice/songsSlice';
+import StyledButton from './StyledButton';
+import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Props {
   setToDelete: (value: DeleteObject | null) => void;
@@ -30,6 +32,7 @@ interface Props {
 
 const DeleteModal = (props: Props) => {
   const styles = useDeleteModalStyles();
+  const { theme } = useColorTheme();
   const db = useSQLiteContext();
   const dispatch = useAppDispatch();
   const { clearPlayback } = useAudioPlayer();
@@ -99,19 +102,24 @@ const DeleteModal = (props: Props) => {
       <Modal isVisible={isVisible} avoidKeyboard onBackdropPress={onExitPress}>
         <View style={styles.container}>
           <StyledText style={styles.title}>
-            Delete {title} from your device
+            Delete {title} from device
           </StyledText>
           <StyledText style={styles.text}>
-            {title}
+            <StyledText style={styles.boldText}> {title}</StyledText>
             {deleteText}
           </StyledText>
           <View style={styles.buttons}>
-            <View style={styles.button}>
-              <Button title="Delete" onPress={onDeletePress} color="red" />
-            </View>
-            <View style={styles.button}>
-              <Button title="Cancel" color="#D6D6D6" onPress={onExitPress} />
-            </View>
+            <StyledButton
+              onPress={onExitPress}
+              label={'Cancel'}
+              textColor={theme.secondaryText}
+            />
+            <StyledButton
+              onPress={onDeletePress}
+              label={'Delete'}
+              backgroundColor={theme.error}
+              textColor={theme.primaryText}
+            />
           </View>
         </View>
       </Modal>

@@ -52,10 +52,8 @@ export const useLyricsSheetGenerator = () => {
       );
 
       if (updateLyricsRequest.fulfilled.match(resultAction)) {
-        dispatch(
-          updateLyricsSuccess({ songId, lyrics: newLyrics }),
-          updateSongHasLyrics({ songId, lyrics: newLyrics }),
-        );
+        dispatch(updateLyricsSuccess({ songId, lyrics: newLyrics }));
+        dispatch(updateSongHasLyrics({ songId, lyrics: newLyrics }));
         if (isAutoSyncEnabled) {
           const newPage = {
             ...page,
@@ -64,7 +62,6 @@ export const useLyricsSheetGenerator = () => {
 
           const pdfUri = await generatePdf(title, newPage, artistId);
 
-          // may need to add revisionId in the future
           generateAndUploadFile(title, pdfUri, CloudFileType.PAGE);
         }
       }

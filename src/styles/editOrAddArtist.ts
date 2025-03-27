@@ -59,7 +59,7 @@ const useEditOrAddArtistStyles = () => {
       backgroundColor: theme.inputBackground,
       borderRadius: 10,
       padding: 6,
-      width: '100%',
+      width: '90%',
       borderWidth: 1,
       borderColor: '#ccc',
       alignSelf: 'center',
@@ -99,7 +99,7 @@ const useEditOrAddArtistStyles = () => {
       color: theme.secondaryText,
     },
     infoContainer: {
-      width: '75%',
+      width: '80%',
       alignSelf: 'center',
       paddingBottom: 10,
     },
@@ -113,12 +113,13 @@ const useEditOrAddArtistStyles = () => {
     infoText: {
       textAlign: 'right',
       fontSize: 14,
-      color: theme.primaryText,
+      color: theme.secondaryText,
     },
     title: {
-      paddingLeft: 30,
+      paddingLeft: 20,
       fontSize: 24,
-      fontWeight: '500',
+      fontWeight: '600',
+      color: theme.secondaryText,
     },
     tipText: {
       fontStyle: 'italic',

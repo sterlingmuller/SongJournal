@@ -46,7 +46,7 @@ const useInfoModalStyle = () => {
       fontWeight: 'bold',
       padding: 20,
       paddingBottom: 0,
-      color: theme.primaryText,
+      color: theme.secondaryText,
     },
     textbox: {
       backgroundColor: theme.inputBackground,
@@ -82,7 +82,7 @@ const useInfoModalStyle = () => {
     },
     artistEditText: {
       fontStyle: 'italic',
-      color: theme.primary,
+      color: theme.secondaryTipText,
       fontWeight: 'bold',
     },
     input: {
@@ -97,7 +97,7 @@ const useInfoModalStyle = () => {
     buttonContainer: {
       paddingBottom: 30,
     },
-    labelText: { fontSize: 14, color: theme.primaryText, fontWeight: 600 },
+    labelText: { fontSize: 14, color: theme.secondaryText, fontWeight: 600 },
     inputText: { fontSize: 14, color: theme.secondaryText, fontWeight: 600 },
   });
 

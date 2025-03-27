@@ -8,6 +8,7 @@ interface Styles {
   button: ViewStyle;
   title: TextStyle;
   text: TextStyle;
+  boldText: TextStyle;
 }
 
 const useDeleteModalStyles = () => {
@@ -26,19 +27,30 @@ const useDeleteModalStyles = () => {
       fontSize: 20,
       textAlign: 'center',
       paddingBottom: 20,
-      fontWeight: '500',
+      fontWeight: '700',
+      color: theme.secondaryText,
     },
 
     text: {
       fontSize: 16,
       textAlign: 'center',
       paddingBottom: 25,
+      color: theme.secondaryText,
+    },
+
+    boldText: {
+      fontSize: 16,
+      textAlign: 'center',
+      paddingBottom: 25,
+      color: theme.secondaryText,
+      fontWeight: 700,
     },
 
     buttons: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      justifyContent: 'space-evenly',
       padding: 5,
+      gap: 20,
     },
 
     button: {
