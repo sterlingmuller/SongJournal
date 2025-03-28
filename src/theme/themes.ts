@@ -26,6 +26,7 @@ export interface Theme {
   playedWaveBar: string;
   playedWaveBarBottom: string;
   wheelSelected: string;
+  disabled: string;
 }
 
 type ThemeKey = 'Light' | 'Dark' | 'Metal' | 'Psych' | 'Pop' | 'Surf';
@@ -56,6 +57,7 @@ const themes: Record<ThemeKey, Theme> = {
     playedWaveBar: c.hotPink,
     playedWaveBarBottom: c.babyPink,
     wheelSelected: c.blue,
+    disabled: c.lightGray,
   },
   Dark: {
     primary: c.deepCharcoal,
@@ -82,6 +84,7 @@ const themes: Record<ThemeKey, Theme> = {
     playedWaveBar: c.hotPink,
     playedWaveBarBottom: c.babyPink,
     wheelSelected: c.salmon,
+    disabled: c.gray,
   },
   Surf: {
     primary: c.oceanBlue,
@@ -108,6 +111,7 @@ const themes: Record<ThemeKey, Theme> = {
     playedWaveBar: c.hotPink,
     playedWaveBarBottom: c.babyPink,
     wheelSelected: c.blue,
+    disabled: c.lightGray,
   },
   Metal: {
     primary: c.deepCharcoal,
@@ -134,6 +138,7 @@ const themes: Record<ThemeKey, Theme> = {
     playedWaveBar: c.hotPink,
     playedWaveBarBottom: c.babyPink,
     wheelSelected: c.blue,
+    disabled: c.lightGray,
   },
   Psych: {
     primary: c.deepCharcoal,
@@ -160,6 +165,7 @@ const themes: Record<ThemeKey, Theme> = {
     playedWaveBar: c.hotPink,
     playedWaveBarBottom: c.babyPink,
     wheelSelected: c.blue,
+    disabled: c.lightGray,
   },
   Pop: {
     primary: c.deepCharcoal,
@@ -186,6 +192,7 @@ const themes: Record<ThemeKey, Theme> = {
     playedWaveBar: c.hotPink,
     playedWaveBarBottom: c.babyPink,
     wheelSelected: c.blue,
+    disabled: c.lightGray,
   },
 };
 

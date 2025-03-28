@@ -32,7 +32,7 @@ const useSaveAndCancelButtonsStyle = () => {
       fontWeight: '500',
     },
     disabledButton: {
-      opacity: 0.5,
+      opacity: 0.6,
     },
   });
 
