@@ -29,7 +29,7 @@ export type Tab = { name: TabNames; icon: React.ComponentType };
 
 export type LyricsScreenOption = {
   name: LyricsOption;
-  icon: React.ComponentType;
+  icon: React.ComponentType<{ isDisabled: boolean }>;
 };
 
 export type SelectEntry = { label: string; value: string };

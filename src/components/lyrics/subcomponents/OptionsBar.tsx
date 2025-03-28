@@ -44,9 +44,10 @@ const OptionsBar = ({ selectedOption, setSelectedOption, page }: Props) => {
   return (
     <View style={styles.options}>
       {LYRIC_SCREEN_OPTIONS.map((option: LyricsScreenOption) => {
-        const inDevelopment =
+        const isDisabled =
           option.name === LyricsOption.CHORDS ||
-          option.name === LyricsOption.METRONOME;
+          option.name === LyricsOption.METRONOME ||
+          (option.name === LyricsOption.SHARE && !page.lyrics);
 
         return (
           <TouchableOpacity
@@ -56,10 +57,10 @@ const OptionsBar = ({ selectedOption, setSelectedOption, page }: Props) => {
               selectedOption === option.name && styles.selected,
             ]}
             onPress={() => handleOptionPress(option.name)}
-            disabled={inDevelopment}
+            disabled={isDisabled}
             hitSlop={20}
           >
-            {<option.icon />}
+            {<option.icon isDisabled={isDisabled} />}
           </TouchableOpacity>
         );
       })}

@@ -39,7 +39,7 @@ const LyricsHeader = (props: Props) => {
             <CloseIcon />
           </TouchableOpacity>
           <TouchableOpacity onPress={handleSaveLyrics} hitSlop={10}>
-            <CheckIcon size={28} />
+            <CheckIcon size={28} isPrimaryText />
           </TouchableOpacity>
         </View>
       );

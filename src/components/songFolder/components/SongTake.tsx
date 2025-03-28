@@ -103,7 +103,7 @@ const SongTake = (props: Props) => {
             <NotesIcon />
           </TouchableOpacity>
           <TouchableOpacity onPress={handleShare} hitSlop={20}>
-            <ShareIcon size={32} />
+            <ShareIcon />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {

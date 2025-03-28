@@ -4,6 +4,7 @@ import Svg, { Path } from 'react-native-svg';
 
 interface Props {
   size?: number;
+  isDisabled?: boolean;
 }
 
 const EditIcon = ({ size = 32 }: Props) => {
