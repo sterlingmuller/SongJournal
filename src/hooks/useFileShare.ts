@@ -59,7 +59,7 @@ const useFileShare = () => {
         `${FileSystem.cacheDirectory}${formattedTitle}.zip`,
       );
 
-      await shareZip(zipUri, formattedTitle);
+      await shareZip(zipUri, formattedTitle, song.title);
     } catch (err) {
       setError((err as Error).message);
     }
@@ -101,7 +101,7 @@ const useFileShare = () => {
           to: fileUri,
         });
 
-        await sharePdf(fileUri, `${formattedTitle} Lyrics`);
+        await sharePdf(fileUri, `${title} Lyrics`);
       } catch (err) {
         setError((err as Error).message);
       }

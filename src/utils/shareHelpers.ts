@@ -13,7 +13,11 @@ export const deleteFiles = (uri: string, title?: string) => {
   }
 };
 
-export const shareZip = async (zipPath: string, title?: string) => {
+export const shareZip = async (
+  zipPath: string,
+  formattedTitle?: string,
+  title?: string,
+) => {
   const fileUrl = Platform.OS === 'android' ? `file://${zipPath}` : zipPath;
   const normalizedTitle = title || 'Song Journal Backup';
 
@@ -33,21 +37,25 @@ export const shareZip = async (zipPath: string, title?: string) => {
 
     if (result.message === 'CANCELED') {
       setTimeout(() => {
-        deleteFiles(zipPath, title);
+        deleteFiles(zipPath, formattedTitle);
       }, 1000);
     }
 
     if (result.success) {
-      deleteFiles(zipPath, title);
+      deleteFiles(zipPath, formattedTitle);
       Alert.alert(
-        'Backup Successful',
-        'Your backup has been created and shared.',
+        'Share Successful',
+        title
+          ? 'An error occurred while sharing your song folder.'
+          : 'Your backup has been created and shared.',
       );
     }
   } catch (error) {
     Alert.alert(
-      'Backup Failed',
-      'An error occurred while creating the backup.',
+      'Share Failed',
+      title
+        ? `${title} has been shared.`
+        : 'An error occurred while creating the backup.',
     );
   }
 };
@@ -72,21 +80,17 @@ export const shareAudio = async (path: string, title: string, date: string) => {
     if (result.message === 'CANCELED') {
       setTimeout(() => {
         deleteFiles(path);
-        Alert.alert(`Success`, `${title} has been shared.`);
       }, 100);
     }
 
     if (result.success) {
       deleteFiles(path);
-      Alert.alert(
-        'Backup Successful',
-        'Your backup has been created and shared.',
-      );
+      Alert.alert('Share Successful', `${title} has been shared.`);
     }
   } catch (error) {
     Alert.alert(
-      'Backup Failed',
-      'An error occurred while creating the backup.',
+      'Share Failed',
+      'An error occurred while sharing your audio file.',
     );
   }
 };
@@ -110,21 +114,17 @@ export const sharePdf = async (path: string, title: string) => {
     if (result.message === 'CANCELED') {
       setTimeout(() => {
         deleteFiles(path);
-        Alert.alert(`Success`, `${title} has been shared.`);
       }, 100);
     }
 
     if (result.success) {
       deleteFiles(path);
-      Alert.alert(
-        'Backup Successful',
-        'Your backup has been created and shared.',
-      );
+      Alert.alert(`Share Successful`, `${title} have been shared.`);
     }
   } catch (error) {
     Alert.alert(
-      'Backup Failed',
-      'An error occurred while creating the backup.',
+      'Share Failed',
+      'An error occurred while sharing your lyrics pdf.',
     );
   }
 };
