@@ -8,6 +8,7 @@ import { convertToSnakeCase } from '@src/utils/convertToSnakeCase';
 import { fetchPageBySongId } from '@src/data/repositories/PageRepository';
 import { generatePagePdf } from '@src/utils/generatePagePdf';
 import { useArtistName } from './useArtistName';
+import { shareZip, shareAudio, sharePdf } from '@src/utils/shareHelpers';
 
 // add Error handling on screen - have an error modal
 
@@ -57,23 +58,15 @@ const useFileShare = () => {
         fileUri,
         `${FileSystem.cacheDirectory}${formattedTitle}.zip`,
       );
-      // await Sharing.shareAsync(`file://${zipUri}`, {
-      //   mimeType: 'application/zip',
-      //   dialogTitle: 'Heres the tu.',
-      // });
 
-      FileSystem.deleteAsync(fileUri, { idempotent: true });
-      FileSystem.deleteAsync(
-        `${FileSystem.cacheDirectory}${formattedTitle}.zip`,
-        { idempotent: true },
-      );
+      await shareZip(zipUri, formattedTitle);
     } catch (err) {
       setError((err as Error).message);
     }
   }, []);
 
   const shareTake = useCallback(
-    async (takeUri: string, takeTitle: string, title: string) => {
+    async (takeUri: string, takeTitle: string, title: string, date: string) => {
       try {
         const formattedTakeTitle = convertToSnakeCase(takeTitle);
         const formattedTitle = convertToSnakeCase(title);
@@ -84,9 +77,11 @@ const useFileShare = () => {
           to: fileUri,
         });
 
-        // await Sharing.shareAsync(fileUri);
-
-        FileSystem.deleteAsync(fileUri, { idempotent: true });
+        await shareAudio(
+          fileUri,
+          `${formattedTitle} - ${formattedTakeTitle}`,
+          date,
+        );
       } catch (err) {
         setError((err as Error).message);
       }
@@ -105,9 +100,8 @@ const useFileShare = () => {
           from: pdfUri,
           to: fileUri,
         });
-        // await Sharing.shareAsync(fileUri, { mimeType: 'application/pdf' });
 
-        FileSystem.deleteAsync(fileUri, { idempotent: true });
+        await sharePdf(fileUri, `${formattedTitle} Lyrics`);
       } catch (err) {
         setError((err as Error).message);
       }

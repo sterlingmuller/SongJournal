@@ -1,6 +1,5 @@
 import * as FileSystem from 'expo-file-system';
 import { zip } from 'react-native-zip-archive';
-import { Alert } from 'react-native';
 
 import {
   AUDIO_DIR,
@@ -8,6 +7,7 @@ import {
   DB_NAME,
   DB_PATH,
 } from '@src/components/common/constants';
+import { shareZip } from './shareHelpers';
 
 export const createBackup = async () => {
   try {
@@ -48,26 +48,6 @@ export const createBackup = async () => {
 };
 
 export const createAndShareBackup = async () => {
-  try {
-    const zipPath = await createBackup();
-
-    // if (await Sharing.isAvailableAsync()) {
-    //   await Sharing.shareAsync(zipPath);
-    // } else {
-    //   throw new Error('Sharing is not available on this device');
-    // }
-
-    await FileSystem.deleteAsync(zipPath, { idempotent: true });
-
-    Alert.alert(
-      'Backup Successful',
-      'Your backup has been created and shared.',
-    );
-  } catch (error) {
-    console.error('Backup failed:', error);
-    Alert.alert(
-      'Backup Failed',
-      'An error occurred while creating the backup.',
-    );
-  }
+  const zipPath = await createBackup();
+  shareZip(zipPath);
 };

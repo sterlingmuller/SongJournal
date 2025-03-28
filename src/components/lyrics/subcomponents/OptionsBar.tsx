@@ -4,7 +4,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { LyricsScreenOption, Page } from '@src/components/common/types';
 import useOptionBarStyles from '@src/styles/optionBar';
 import { LYRIC_SCREEN_OPTIONS } from '@src/components/common/constants';
-// import useFileShare from '@src/hooks/useFileShare';
+import useFileShare from '@src/hooks/useFileShare';
 import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import {
   selectCurrentSongArtistId,
@@ -20,12 +20,12 @@ interface Props {
 
 const OptionsBar = ({ selectedOption, setSelectedOption, page }: Props) => {
   const styles = useOptionBarStyles();
-  // const { shareLyrics } = useFileShare();
+  const { shareLyrics } = useFileShare();
   const songTitle = useAppSelector(selectCurrentSongTitle);
   const artistId = useAppSelector(selectCurrentSongArtistId);
 
   const shareLyricsSync = async () => {
-    // await shareLyrics(songTitle, page, artistId);
+    await shareLyrics(songTitle, page, artistId);
     setSelectedOption(LyricsOption.NONE);
   };
 

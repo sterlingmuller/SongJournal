@@ -20,7 +20,7 @@ import { useSQLiteContext } from 'expo-sqlite';
 import useDoubleTap from '@src/hooks/useDoubleTap';
 import { TextInput } from 'react-native-gesture-handler';
 import { formatDateFromISOString } from '@src/utils/formateDateFromISOString';
-// import useFileShare from '@src/hooks/useFileShare';
+import useFileShare from '@src/hooks/useFileShare';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
 import PageIcon from '@src/icons/PageIcon';
 import { Screen } from '@src/components/common/enums';
@@ -41,7 +41,7 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
   const styles = useSongFolderStyles();
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
-  // const { shareSongFolder } = useFileShare();
+  const { shareSongFolder } = useFileShare();
   const { togglePlayback, clearPlayback } = useAudioPlayer();
 
   const { title, songId, takes, selectedTakeId, artistId, hasLyrics } = song;
@@ -69,9 +69,9 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
     [selectedTake?.duration, selectedTake?.uri],
   );
 
-  // const handleShare = useCallback(() => {
-  //   shareSongFolder(song);
-  // }, [shareSongFolder, song]);
+  const handleShare = useCallback(() => {
+    shareSongFolder(song);
+  }, [shareSongFolder, song]);
 
   const handlePressIn = useCallback(() => setIsPressed(true), []);
   const handlePressOut = useCallback(() => setIsPressed(false), []);
@@ -139,8 +139,7 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
             <PageIcon />
           </TouchableOpacity>
           <TouchableOpacity
-            // onPress={handleShare}
-            onPress={null}
+            onPress={handleShare}
             hitSlop={{ top: 10, bottom: 20, left: 10, right: 10 }}
             disabled={shareDisabled}
           >
