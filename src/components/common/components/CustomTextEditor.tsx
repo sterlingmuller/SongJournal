@@ -1,7 +1,12 @@
-import { TextInput, View } from 'react-native';
+import {
+  NativeSyntheticEvent,
+  TextInput,
+  TextInputSelectionChangeEventData,
+  View,
+} from 'react-native';
 import EditorToolbar from './EditorToolbar';
 import ChordWheelModal from '@src/components/lyrics/components/ChordWheelModal';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useTextEditorStyles from '@src/styles/textEditor';
 import useDebounce from '@src/hooks/useDebounce';
 import {
@@ -12,13 +17,6 @@ import {
 import { SongInfo } from '../types';
 import { LyricsSection } from '../enums';
 
-interface EditorToolbarProps {
-  onBold: () => void;
-  onItalic: () => void;
-  onTextSize: (size: 'small' | 'medium' | 'large') => void;
-  onAddChord: () => void;
-}
-
 interface CustomTextEditorProps {
   text: string;
   setText: (text: string) => void;
@@ -26,6 +24,7 @@ interface CustomTextEditorProps {
 
 const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
   const styles = useTextEditorStyles();
+  const textInputRef = useRef<TextInput>(null);
 
   const [isWheelOpen, setIsWheelOpen] = useState(false);
   const [localText, setLocalText] = useState(text);
@@ -44,22 +43,51 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
     debouncedInput(newText);
   };
 
-  // const handleInputChange = (_: keyof SongInfo, chord: string) => {
-  //   const newContent = insertChord(text, chord, selection);
-  //   handleTextChange(newContent);
-  // };
-
   const handleInputChange = (_: keyof SongInfo, chord: string) => {
     setLocalText(insertChord(localText, chord, selection));
+  };
+
+  const handleSectionInsertion = (section: LyricsSection) => {
+    let newText = insertSectionAtCursor(localText, selection.start, section);
+
+    if (!newText.endsWith('\n')) {
+      newText += '\n';
+    }
+
+    setLocalText(newText);
+
+    const lines = newText.split('\n');
+    let charCount = 0;
+
+    let insertedLineIndex = 0;
+    for (let i = 0; i < lines.length; i++) {
+      if (charCount + lines[i].length >= selection.start) {
+        insertedLineIndex = i;
+        break;
+      }
+      charCount += lines[i].length + 1;
+    }
+    const cursorPos = charCount + lines[insertedLineIndex].length + 1;
+
+    setTimeout(() => {
+      textInputRef.current?.focus();
+      setSelection({
+        start: cursorPos,
+        end: cursorPos,
+      });
+    }, 50);
   };
 
   return (
     <View style={styles.container}>
       <TextInput
+        ref={textInputRef}
         multiline
         value={localText}
         onChangeText={handleTextChange}
-        onSelectionChange={(e) => {
+        onSelectionChange={(
+          e: NativeSyntheticEvent<TextInputSelectionChangeEventData>,
+        ) => {
           setSelection({
             start: e.nativeEvent.selection.start,
             end: e.nativeEvent.selection.end,
@@ -75,11 +103,7 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
         onItalic={() => {
           setLocalText(insertAtCursor(localText, selection, '*', '*'));
         }}
-        onTextSection={(section: LyricsSection) =>
-          setLocalText(
-            insertSectionAtCursor(localText, selection.start, section),
-          )
-        }
+        onTextSection={handleSectionInsertion}
         onAddChord={() => setIsWheelOpen(true)}
       />
 
