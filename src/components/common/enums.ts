@@ -54,6 +54,15 @@ export enum LyricsOption {
   NONE = '',
 }
 
+export enum LyricsSection {
+  INTRO = '[Intro]',
+  VERSE = '[Verse]',
+  PRE_CHORUS = '[Pre-Chorus]',
+  CHORUS = '[Chorus]',
+  BRIDGE = '[Bridge]',
+  OUTRO = '[Outro]',
+}
+
 export enum ToggleableSettings {
   DISPLAY_TIPS = 'displayTips',
   IS_NUMBERED = 'isNumbered',
