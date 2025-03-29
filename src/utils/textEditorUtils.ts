@@ -1,8 +1,10 @@
+import { LyricsSection } from '@src/components/common/enums';
+
 export const insertAtCursor = (
   text: string,
+  selection: { start: number; end: number } | null = null,
   prefix: string,
   suffix: string = '',
-  selection: { start: number; end: number } | null = null,
 ): string => {
   // If no selection provided, assume cursor is at start position
   const { start, end } = selection;
@@ -21,27 +23,35 @@ export const insertAtCursor = (
   }
 };
 
-// export const insertChord = (
-//   text: string,
-//   chord: string,
-//   selection: { start: number; end?: number } | null = null,
-// ): string => {
-//   // If no selection provided, assume cursor is at start position
-//   const { start, end } = selection;
+export const insertSectionAtCursor = (
+  text: string,
+  start: number,
+  section: LyricsSection,
+): string => {
+  const lines = text.split('\n');
+  let currentLineIndex = 0;
+  let charCount = 0;
 
-//   // Handle wrapping selected text or inserting at cursor
-//   if (start !== end) {
-//     // Wrap the selected text
-//     const newText = `${text.slice(0, start)}**${text.slice(start, end)}**${text.slice(end)}`;
+  for (let i = 0; i < lines.length; i++) {
+    if (charCount + lines[i].length >= start) {
+      currentLineIndex = i;
+      break;
+    }
+    charCount += lines[i].length + 1;
+  }
 
-//     console.log('new text:', newText);
+  const currentLine = lines[currentLineIndex];
 
-//     return newText;
-//   } else {
-//     // Insert at cursor position
-//     return text.slice(0, start) + prefix + suffix + text.slice(start);
-//   }
-// };
+  if (currentLine.trim().length > 0) {
+    lines.splice(currentLineIndex, 0, section);
+  }
+  // Case 2: Current line is empty → replace it
+  else {
+    lines[currentLineIndex] = section;
+  }
+
+  return lines.join('\n');
+};
 
 export const insertChord = (
   text: string,
@@ -57,13 +67,14 @@ export const insertChord = (
   let currentLineIndex = 0;
   let charCount = 0;
 
-  // Determine which line the cursor is on
+  console.log('lines:', lines);
+  console.log('start:', start);
   for (let i = 0; i < lines.length; i++) {
     if (charCount + lines[i].length >= start) {
       currentLineIndex = i;
       break;
     }
-    charCount += lines[i].length + 1; // +1 for the newline character
+    charCount += lines[i].length + 1;
   }
 
   const currentLine = lines[currentLineIndex];

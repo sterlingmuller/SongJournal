@@ -4,8 +4,13 @@ import ChordWheelModal from '@src/components/lyrics/components/ChordWheelModal';
 import { useEffect, useState } from 'react';
 import useTextEditorStyles from '@src/styles/textEditor';
 import useDebounce from '@src/hooks/useDebounce';
-import { insertAtCursor, insertChord } from '@src/utils/textEditorUtils';
+import {
+  insertAtCursor,
+  insertChord,
+  insertSectionAtCursor,
+} from '@src/utils/textEditorUtils';
 import { SongInfo } from '../types';
+import { LyricsSection } from '../enums';
 
 interface EditorToolbarProps {
   onBold: () => void;
@@ -24,7 +29,6 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
 
   const [isWheelOpen, setIsWheelOpen] = useState(false);
   const [localText, setLocalText] = useState(text);
-  const [sectionPicker, setShowSectionPicker] = useState(false);
   const [selection, setSelection] = useState({ start: -1, end: -1 });
 
   useEffect(() => {
@@ -36,22 +40,18 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
   }, 400);
 
   const handleTextChange = (newText: string) => {
-    setLocalText(newText); // Update local state immediately
-    debouncedInput(newText); // Propagate to parent
+    setLocalText(newText);
+    debouncedInput(newText);
   };
 
-  // const handleTextChange = (text: string) => {
-  //   setText(text);
-  //   onChange(convertTextToHtml(text));
+  // const handleInputChange = (_: keyof SongInfo, chord: string) => {
+  //   const newContent = insertChord(text, chord, selection);
+  //   handleTextChange(newContent);
   // };
 
   const handleInputChange = (_: keyof SongInfo, chord: string) => {
     setLocalText(insertChord(localText, chord, selection));
-    // const newContent = insertChord(text, chord, cursorPosition);
-    // handleTextChange(newContent);
   };
-
-  console.log('local text:', localText);
 
   return (
     <View style={styles.container}>
@@ -70,11 +70,16 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
 
       <EditorToolbar
         onBold={() => {
-          setLocalText(insertAtCursor(localText, '**', '**', selection));
-          // console.log('bold');
+          setLocalText(insertAtCursor(localText, selection, '**', '**'));
         }}
-        onItalic={() => console.log('italic')}
-        onTextSection={() => setShowSectionPicker(true)}
+        onItalic={() => {
+          setLocalText(insertAtCursor(localText, selection, '*', '*'));
+        }}
+        onTextSection={(section: LyricsSection) =>
+          setLocalText(
+            insertSectionAtCursor(localText, selection.start, section),
+          )
+        }
         onAddChord={() => setIsWheelOpen(true)}
       />
 
