@@ -1,11 +1,24 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+  Keyboard,
+  Platform,
+} from 'react-native';
 import { LyricsSection } from '../enums';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  Easing,
+} from 'react-native-reanimated';
 
 interface EditorToolbarProps {
   onBold: () => void;
   onItalic: () => void;
-  onTextSection: (value: boolean) => void;
+  onTextSection: (section: LyricsSection) => void;
   onAddChord: () => void;
 }
 
@@ -15,14 +28,49 @@ const EditorToolbar = ({
   onTextSection,
   onAddChord,
 }: EditorToolbarProps) => {
-  const [showSizes, setShowSizes] = React.useState(false);
+  const [isSectionsOpen, setIsSectionsOpen] = React.useState(false);
+  const AnimatedView = Animated.createAnimatedComponent(View);
+  const translateY = useSharedValue(100);
+  const opacity = useSharedValue(0);
+
+  const animateSections = (show: boolean) => {
+    const duration = 250;
+    translateY.value = withTiming(show ? 0 : 100, {
+      duration,
+      easing: Easing.out(Easing.ease),
+    });
+    opacity.value = withTiming(show ? 1 : 0, { duration });
+  };
+
+  const toggleSections = () => {
+    if (isSectionsOpen) {
+      animateSections(false);
+      setIsSectionsOpen(false);
+    } else {
+      Keyboard.dismiss();
+      const delay = Platform.OS === 'ios' ? 250 : 150;
+      setTimeout(() => {
+        animateSections(true);
+        setIsSectionsOpen(true);
+      }, delay);
+    }
+  };
+
+  const handleSectionPress = (section: LyricsSection) => {
+    onTextSection(section);
+    animateSections(false);
+    setIsSectionsOpen(false);
+  };
+
+  const animatedStyles = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+    opacity: opacity.value,
+  }));
 
   return (
     <View style={styles.container}>
-      {/* Formatting Buttons */}
       <View style={styles.buttonGroup}>
         <TouchableOpacity onPress={onBold} style={styles.button}>
-          {/* <Bold width={24} height={24} color="#333" /> */}
           <Text>B</Text>
         </TouchableOpacity>
 
@@ -33,32 +81,24 @@ const EditorToolbar = ({
         <TouchableOpacity onPress={onAddChord} style={styles.button}>
           <Text>Chords</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => setShowSizes(!showSizes)}
-          style={styles.button}
-        >
+        <TouchableOpacity onPress={toggleSections} style={styles.button}>
           <Text>Sections</Text>
         </TouchableOpacity>
       </View>
-
-      {/* Text Size Picker (appears when activated) */}
-      {showSizes && (
-        <View style={styles.sizePicker}>
-          {Object.values(LyricsSection).map((section) => (
+      {isSectionsOpen && (
+        <AnimatedView style={[styles.sizePicker, animatedStyles]}>
+          {Object.values(LyricsSection).map((section: LyricsSection) => (
             <TouchableOpacity
               key={section}
               style={styles.sizeButton}
-              onPress={() => {
-                // onSelect(section);
-                // onClose();
-              }}
+              onPress={() => handleSectionPress(section)}
             >
               <Text style={styles.sizeText}>
                 {section.replace(/[\[\]]/g, '')}
               </Text>
             </TouchableOpacity>
           ))}
-        </View>
+        </AnimatedView>
       )}
     </View>
   );
@@ -88,7 +128,6 @@ const styles = StyleSheet.create({
   sizePicker: {
     position: 'absolute',
     bottom: 60,
-    // left: 0,
     right: 5,
     maxWidth: '40%',
     backgroundColor: 'white',
@@ -103,7 +142,7 @@ const styles = StyleSheet.create({
   sizeButton: {
     paddingVertical: 10,
     paddingHorizontal: 16,
-    width: '100%', // Make buttons take full width
+    width: '100%',
   },
   sizeText: {
     fontSize: 16,
