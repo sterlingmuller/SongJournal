@@ -11,12 +11,12 @@ import { selectCurrentSongPage } from '@src/state/selectors/pagesSelector';
 import LoadingIndicator from '@src/components/common/components/LoadingIndicator';
 import useLyricScreenStyles from '@styles/lyricsScreen';
 import OptionsBar from '@src/components/lyrics/subcomponents/OptionsBar';
-import EditLyricsSheet from '@src/components/lyrics/components/EditLyricsSheet';
 import { LyricsOption, Screen } from '@src/components/common/enums';
 import useLyricsSheetGenerator from '@src/hooks/useLyricsSheetGenerator';
 import { useDispatch } from 'react-redux';
 import { setCurrentSongId } from '@src/state/slice/currentSongSlice';
 import { RootStackParamList } from '@src/components/common/types';
+import TestEditLyricsSheet from '@src/components/lyrics/components/TestEditLyricsSheet';
 
 const LyricsScreen = () => {
   const styles = useLyricScreenStyles();
@@ -88,6 +88,28 @@ const LyricsScreen = () => {
     return <LoadingIndicator />;
   }
 
+  const renderSelectedOption = () => {
+    switch (selectedOption) {
+      case LyricsOption.EDIT:
+        return (
+          <TestEditLyricsSheet
+            newLyrics={newLyrics}
+            setNewLyrics={setNewLyrics}
+          />
+        );
+      case LyricsOption.CHORDS:
+        return (
+          <TestEditLyricsSheet
+            newLyrics={newLyrics}
+            setNewLyrics={setNewLyrics}
+            isChordMode={true}
+          />
+        );
+      default:
+        return <LyricsSheet lyrics={page.lyrics} />;
+    }
+  };
+
   return (
     <View style={styles.container}>
       <OptionsBar
@@ -95,11 +117,7 @@ const LyricsScreen = () => {
         setSelectedOption={setSelectedOption}
         page={page}
       />
-      {selectedOption === LyricsOption.EDIT ? (
-        <EditLyricsSheet newLyrics={newLyrics} setNewLyrics={setNewLyrics} />
-      ) : (
-        <LyricsSheet lyrics={page.lyrics} />
-      )}
+      {renderSelectedOption()}
       {!!page.info && (
         <InfoModal
           isInfoModalOpen={isInfoModalOpen}

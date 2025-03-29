@@ -34,10 +34,8 @@ const OptionsBar = ({ selectedOption, setSelectedOption, page }: Props) => {
       optionName === selectedOption ? LyricsOption.NONE : optionName,
     );
 
-    switch (optionName) {
-      case LyricsOption.SHARE: {
-        shareLyricsSync();
-      }
+    if (optionName === LyricsOption.SHARE) {
+      shareLyricsSync();
     }
   };
 
@@ -45,8 +43,8 @@ const OptionsBar = ({ selectedOption, setSelectedOption, page }: Props) => {
     <View style={styles.options}>
       {LYRIC_SCREEN_OPTIONS.map((option: LyricsScreenOption) => {
         const isDisabled =
-          option.name === LyricsOption.CHORDS ||
           option.name === LyricsOption.METRONOME ||
+          (option.name === LyricsOption.CHORDS && !page.lyrics) ||
           (option.name === LyricsOption.SHARE && !page.lyrics);
 
         return (
