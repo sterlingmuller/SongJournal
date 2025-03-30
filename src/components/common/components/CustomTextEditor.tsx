@@ -81,6 +81,7 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
   return (
     <View style={styles.container}>
       <TextInput
+        autoFocus={true}
         ref={textInputRef}
         multiline
         value={localText}
@@ -102,6 +103,12 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
         }}
         onItalic={() => {
           setLocalText(insertAtCursor(localText, selection, '*', '*'));
+        }}
+        onUnderline={() => {
+          setLocalText(insertAtCursor(localText, selection, '<u>', '</u>'));
+        }}
+        onHyphen={() => {
+          setLocalText(insertAtCursor(localText, selection, '-'));
         }}
         onTextSection={handleSectionInsertion}
         onAddChord={() => setIsWheelOpen(true)}

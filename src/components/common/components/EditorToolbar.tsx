@@ -18,6 +18,8 @@ import Animated, {
 interface EditorToolbarProps {
   onBold: () => void;
   onItalic: () => void;
+  onUnderline: () => void;
+  onHyphen: () => void;
   onTextSection: (section: LyricsSection) => void;
   onAddChord: () => void;
 }
@@ -25,6 +27,8 @@ interface EditorToolbarProps {
 const EditorToolbar = ({
   onBold,
   onItalic,
+  onUnderline,
+  onHyphen,
   onTextSection,
   onAddChord,
 }: EditorToolbarProps) => {
@@ -73,16 +77,20 @@ const EditorToolbar = ({
         <TouchableOpacity onPress={onBold} style={styles.button}>
           <Text>B</Text>
         </TouchableOpacity>
-
         <TouchableOpacity onPress={onItalic} style={styles.button}>
           <Text>I</Text>
         </TouchableOpacity>
-
+        <TouchableOpacity onPress={onUnderline} style={styles.button}>
+          <Text>U</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onHyphen} style={styles.button}>
+          <Text>-</Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={onAddChord} style={styles.button}>
           <Text>Chords</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={toggleSections} style={styles.button}>
-          <Text>Sections</Text>
+          <Text>Song Sections</Text>
         </TouchableOpacity>
       </View>
       {isSectionsOpen && (
@@ -92,10 +100,9 @@ const EditorToolbar = ({
               key={section}
               style={styles.sizeButton}
               onPress={() => handleSectionPress(section)}
+              hitSlop={10}
             >
-              <Text style={styles.sizeText}>
-                {section.replace(/[\[\]]/g, '')}
-              </Text>
+              <Text style={styles.sizeText}>{section.replace(/\|/g, '')}</Text>
             </TouchableOpacity>
           ))}
         </AnimatedView>
@@ -130,7 +137,7 @@ const styles = StyleSheet.create({
     bottom: 60,
     right: 5,
     maxWidth: '40%',
-    backgroundColor: 'white',
+    backgroundColor: '#f5f5f5',
     borderRadius: 8,
     padding: 8,
     shadowColor: '#000',

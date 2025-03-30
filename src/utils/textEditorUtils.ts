@@ -6,19 +6,17 @@ export const insertAtCursor = (
   prefix: string,
   suffix: string = '',
 ): string => {
-  // If no selection provided, assume cursor is at start position
   const { start, end } = selection;
 
-  // Handle wrapping selected text or inserting at cursor
   if (start !== end) {
-    // Wrap the selected text
-    const newText = `${text.slice(0, start)}**${text.slice(start, end)}**${text.slice(end)}`;
-
-    console.log('new text:', newText);
-
-    return newText;
+    return (
+      text.slice(0, start) +
+      prefix +
+      text.slice(start, end) +
+      suffix +
+      text.slice(end)
+    );
   } else {
-    // Insert at cursor position
     return text.slice(0, start) + prefix + suffix + text.slice(start);
   }
 };
@@ -44,9 +42,7 @@ export const insertSectionAtCursor = (
 
   if (currentLine.trim().length > 0) {
     lines.splice(currentLineIndex, 0, section);
-  }
-  // Case 2: Current line is empty → replace it
-  else {
+  } else {
     lines[currentLineIndex] = section;
   }
 
@@ -56,19 +52,14 @@ export const insertSectionAtCursor = (
 export const insertChord = (
   text: string,
   chord: string,
-  selection: { start: number; end: number } | null = null,
+  selection: { start: number; end: number },
 ): string => {
-  if (!selection) return text;
-
   const { start } = selection;
-
-  // Find the current line
   const lines = text.split('\n');
+
   let currentLineIndex = 0;
   let charCount = 0;
 
-  console.log('lines:', lines);
-  console.log('start:', start);
   for (let i = 0; i < lines.length; i++) {
     if (charCount + lines[i].length >= start) {
       currentLineIndex = i;
@@ -80,71 +71,103 @@ export const insertChord = (
   const currentLine = lines[currentLineIndex];
   const positionInLine = start - charCount;
 
-  // Check if there's already a chord line above
-  if (
-    currentLineIndex > 0 &&
-    lines[currentLineIndex - 1].trim().startsWith('[')
-  ) {
-    // Modify existing chord line
-    const chordLine = lines[currentLineIndex - 1];
-    const newChordLine = insertChordIntoLine(chordLine, chord, positionInLine);
-    lines[currentLineIndex - 1] = newChordLine;
-  } else {
-    // Insert new chord line
-    const newChordLine = createChordLine(
+  const isEmpty = currentLine.trim().length === 0;
+  const isChordOnly = isChordLine(currentLine) && !hasLyrics(currentLine);
+
+  if (isEmpty || isChordOnly) {
+    lines[currentLineIndex] = insertIntoChordLine(
+      currentLine,
       chord,
       positionInLine,
-      currentLine.length,
     );
-    lines.splice(currentLineIndex, 0, newChordLine);
+    return lines.join('\n');
+  }
+
+  const insertionPoint = getChordInsertPosition(currentLine, positionInLine);
+
+  if (currentLineIndex > 0 && isChordLine(lines[currentLineIndex - 1])) {
+    lines[currentLineIndex - 1] = updateChordLine(
+      lines[currentLineIndex - 1],
+      chord,
+      insertionPoint,
+    );
+  } else {
+    lines.splice(currentLineIndex, 0, createChordLine(chord, insertionPoint));
   }
 
   return lines.join('\n');
 };
 
-const insertChordIntoLine = (
-  chordLine: string,
-  chord: string,
-  position: number,
-): string => {
-  // Convert chord line to array for easier manipulation
-  const chordChars = [...chordLine];
-
-  // Find the appropriate position to insert the chord
-  let spaceCount = 0;
-  let i = 0;
-
-  while (i < chordChars.length && spaceCount < position) {
-    if (chordChars[i] === ' ') {
-      spaceCount++;
-    } else if (chordChars[i] === '[') {
-      // Skip existing chords
-      const chordEnd = chordChars.indexOf(']', i);
-      if (chordEnd === -1) break;
-      i = chordEnd;
-    }
-    i++;
-  }
-
-  // Insert the new chord
-  if (i < chordChars.length) {
-    chordChars.splice(i, 0, `[${chord}]`);
-  } else {
-    chordChars.push(`[${chord}]`);
-  }
-
-  return chordChars.join('');
+const hasLyrics = (line: string): boolean => {
+  return /[a-zA-Z]/.test(line.replace(/\[.*?\]/g, ''));
 };
 
-const createChordLine = (
+const insertIntoChordLine = (
+  line: string,
   chord: string,
   position: number,
-  lineLength: number,
 ): string => {
-  // Create a line with spaces and the chord at the right position
-  const spacesBefore = ' '.repeat(position);
-  const spacesAfter = ' '.repeat(
-    Math.max(0, lineLength - position - chord.length),
-  );
-  return `${spacesBefore}[${chord}]${spacesAfter}`;
+  const chordText = `[${chord}]`;
+  const newLine = [...line];
+
+  while (newLine.length <= position + chordText.length - 1) {
+    newLine.push(' ');
+  }
+
+  newLine.splice(position, chordText.length, ...chordText.split(''));
+  return newLine.join('');
+};
+
+const getChordInsertPosition = (line: string, position: number): number => {
+  if (position <= 0 || position >= line.length) return position;
+
+  if (isWordBoundary(line, position)) {
+    return position;
+  }
+
+  let wordStart = position;
+  while (wordStart > 0 && !isWordBoundary(line, wordStart)) {
+    wordStart--;
+  }
+  return wordStart;
+};
+
+const updateChordLine = (
+  chordLine: string,
+  newChord: string,
+  position: number,
+): string => {
+  const chordText = `[${newChord}]`;
+  const chordLength = chordText.length;
+  const chordLineChars = [...chordLine];
+
+  while (chordLineChars.length <= position + chordLength - 1) {
+    chordLineChars.push(' ');
+  }
+
+  let availableSpace = 0;
+  for (let i = position; i < chordLineChars.length; i++) {
+    if (chordLineChars[i] !== ' ') break;
+    availableSpace++;
+  }
+
+  const whitespaceToRemove = Math.min(chordLength, availableSpace);
+  chordLineChars.splice(position, whitespaceToRemove, ...chordText.split(''));
+
+  return chordLineChars.join('');
+};
+
+const isChordLine = (line: string): boolean => line.trim().startsWith('[');
+
+const createChordLine = (chord: string, position: number): string => {
+  return ' '.repeat(position) + `[${chord}]`;
+};
+const isWordBoundary = (text: string, pos: number): boolean => {
+  if (pos === 0 || pos === text.length) return true;
+  if (text[pos] === '-' || text[pos - 1] === '-') return true;
+
+  const prevIsWord = /[\w']/.test(text[pos - 1]);
+  const currentIsWord = /[\w']/.test(text[pos]);
+
+  return prevIsWord !== currentIsWord;
 };
