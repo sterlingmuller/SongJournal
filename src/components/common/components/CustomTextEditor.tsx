@@ -43,8 +43,10 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
     debouncedInput(newText);
   };
 
-  const handleInputChange = (_: keyof SongInfo, chord: string) => {
-    setLocalText(insertChord(localText, chord, selection));
+  const handleAddChord = (_: keyof SongInfo, chord: string) => {
+    const newText = insertChord(localText, chord, selection);
+    setLocalText(newText);
+    debouncedInput(newText);
   };
 
   const handleSectionInsertion = (section: LyricsSection) => {
@@ -55,6 +57,7 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
     }
 
     setLocalText(newText);
+    debouncedInput(newText);
 
     const lines = newText.split('\n');
     let charCount = 0;
@@ -117,7 +120,7 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
       <ChordWheelModal
         isWheelOpen={isWheelOpen}
         setIsWheelOpen={setIsWheelOpen}
-        handleInputChange={handleInputChange}
+        handleInputChange={handleAddChord}
         initialValue={''}
       />
     </View>

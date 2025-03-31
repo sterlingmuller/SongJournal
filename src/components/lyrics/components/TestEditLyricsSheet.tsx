@@ -23,6 +23,7 @@ const TestEditLyricsSheet = ({
   const initialLyricsRef = useRef(newLyrics);
 
   const handleLyricsChange = (lyrics: string) => {
+    console.log('lyrics:', lyrics);
     const normalizedLyrics = isTextEmpty(lyrics) ? '' : lyrics;
     setNewLyrics(normalizedLyrics);
   };
