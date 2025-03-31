@@ -15,7 +15,7 @@ export const convertToHtml = (markdownText: string): string => {
     }
 
     if (/^\[.*\]$/.test(line.trim())) {
-      htmlOutput += `<div class="section">${line}</div>`;
+      htmlOutput += `<div class="section"><strong>${line}</strong></div>`;
       previousWasChordLine = false;
       continue;
     }

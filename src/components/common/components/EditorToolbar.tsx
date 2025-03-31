@@ -102,7 +102,9 @@ const EditorToolbar = ({
               onPress={() => handleSectionPress(section)}
               hitSlop={10}
             >
-              <Text style={styles.sizeText}>{section.replace(/\|/g, '')}</Text>
+              <Text style={styles.sizeText}>
+                {section.replace(/[[\]]/g, '')}
+              </Text>
             </TouchableOpacity>
           ))}
         </AnimatedView>

@@ -25,7 +25,7 @@ export const insertSectionAtCursor = (
   text: string,
   start: number,
   section: LyricsSection,
-): string => {
+): { text: string; cursorPosition: number } => {
   const lines = text.split('\n');
   let currentLineIndex = 0;
   let charCount = 0;
@@ -39,14 +39,47 @@ export const insertSectionAtCursor = (
   }
 
   const currentLine = lines[currentLineIndex];
+  const positionInLine = start - charCount;
+  const isAtEndOfLine =
+    currentLine.length && positionInLine >= currentLine.length;
+  const hasEmptyLineBefore =
+    currentLineIndex > 0 && lines[currentLineIndex - 1].trim() === '';
+  const shouldSkipExtraLine = hasEmptyLineBefore;
 
-  if (currentLine.trim().length > 0) {
-    lines.splice(currentLineIndex, 0, `${section}`);
+  let sectionLineIndex = currentLineIndex;
+  let cursorPosition = start;
+
+  if (isAtEndOfLine) {
+    if (shouldSkipExtraLine) {
+      lines.splice(currentLineIndex + 1, 0, section);
+      sectionLineIndex = currentLineIndex + 1;
+      cursorPosition = charCount + currentLine.length + 1 + section.length + 1;
+    } else {
+      lines.splice(currentLineIndex + 1, 0, '', section);
+      sectionLineIndex = currentLineIndex + 2;
+      cursorPosition =
+        charCount + currentLine.length + 1 + 1 + section.length + 1;
+    }
+  } else if (currentLine.trim().length > 0) {
+    lines.splice(currentLineIndex, 0, section);
+    sectionLineIndex = currentLineIndex;
+    cursorPosition = charCount + section.length + 1;
   } else {
-    lines[currentLineIndex] = `${section}`;
+    lines[currentLineIndex] = section;
+    sectionLineIndex = currentLineIndex;
+    cursorPosition = charCount + section.length + 1;
   }
 
-  return lines.join('\n');
+  const isLastLine = sectionLineIndex === lines.length - 1;
+  if (isLastLine) {
+    lines.push('');
+    cursorPosition += section.length + 1;
+  }
+
+  return {
+    text: lines.join('\n'),
+    cursorPosition: cursorPosition,
+  };
 };
 
 export const insertChord = (

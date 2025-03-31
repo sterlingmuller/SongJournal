@@ -50,33 +50,20 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
   };
 
   const handleSectionInsertion = (section: LyricsSection) => {
-    let newText = insertSectionAtCursor(localText, selection.start, section);
-
-    if (!newText.endsWith('\n')) {
-      newText += '\n';
-    }
+    const { text: newText, cursorPosition } = insertSectionAtCursor(
+      localText,
+      selection.start,
+      section,
+    );
 
     setLocalText(newText);
     debouncedInput(newText);
 
-    const lines = newText.split('\n');
-    let charCount = 0;
-
-    let insertedLineIndex = 0;
-    for (let i = 0; i < lines.length; i++) {
-      if (charCount + lines[i].length >= selection.start) {
-        insertedLineIndex = i;
-        break;
-      }
-      charCount += lines[i].length + 1;
-    }
-    const cursorPos = charCount + lines[insertedLineIndex].length + 1;
-
     setTimeout(() => {
       textInputRef.current?.focus();
       setSelection({
-        start: cursorPos,
-        end: cursorPos,
+        start: cursorPosition,
+        end: cursorPosition,
       });
     }, 50);
   };
