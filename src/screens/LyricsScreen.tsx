@@ -102,7 +102,6 @@ const LyricsScreen = () => {
           <TestEditLyricsSheet
             newLyrics={newLyrics}
             setNewLyrics={setNewLyrics}
-            isChordMode={true}
           />
         );
       default:

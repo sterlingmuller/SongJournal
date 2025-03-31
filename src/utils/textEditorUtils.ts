@@ -41,9 +41,9 @@ export const insertSectionAtCursor = (
   const currentLine = lines[currentLineIndex];
 
   if (currentLine.trim().length > 0) {
-    lines.splice(currentLineIndex, 0, section);
+    lines.splice(currentLineIndex, 0, `${section}`);
   } else {
-    lines[currentLineIndex] = section;
+    lines[currentLineIndex] = `${section}`;
   }
 
   return lines.join('\n');
@@ -99,7 +99,7 @@ export const insertChord = (
 };
 
 const hasLyrics = (line: string): boolean => {
-  return /[a-zA-Z]/.test(line.replace(/\[.*?\]/g, ''));
+  return /[a-zA-Z]/.test(line.replace(/\{.*?\}/g, ''));
 };
 
 const insertIntoChordLine = (
@@ -107,7 +107,7 @@ const insertIntoChordLine = (
   chord: string,
   position: number,
 ): string => {
-  const chordText = `[${chord}]`;
+  const chordText = `{${chord}}`;
   const newLine = [...line];
 
   while (newLine.length <= position + chordText.length - 1) {
@@ -137,7 +137,7 @@ const updateChordLine = (
   newChord: string,
   position: number,
 ): string => {
-  const chordText = `[${newChord}]`;
+  const chordText = `{${newChord}}`;
   const chordLength = chordText.length;
   const chordLineChars = [...chordLine];
 
@@ -157,11 +157,13 @@ const updateChordLine = (
   return chordLineChars.join('');
 };
 
-const isChordLine = (line: string): boolean => line.trim().startsWith('[');
+export const isChordLine = (line: string): boolean =>
+  line.trim().startsWith('{');
 
 const createChordLine = (chord: string, position: number): string => {
-  return ' '.repeat(position) + `[${chord}]`;
+  return ' '.repeat(position) + `{${chord}}`;
 };
+
 const isWordBoundary = (text: string, pos: number): boolean => {
   if (pos === 0 || pos === text.length) return true;
   if (text[pos] === '-' || text[pos - 1] === '-') return true;

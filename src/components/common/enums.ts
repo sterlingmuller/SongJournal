@@ -55,12 +55,12 @@ export enum LyricsOption {
 }
 
 export enum LyricsSection {
-  INTRO = '|Intro|',
-  VERSE = '|Verse|',
-  PRE_CHORUS = '|Pre-Chorus|',
-  CHORUS = '|Chorus|',
-  BRIDGE = '|Bridge|',
-  OUTRO = '|Outro|',
+  INTRO = '**[Intro]**',
+  VERSE = '**[Verse]**',
+  PRE_CHORUS = '**[Pre-Chorus]**',
+  CHORUS = '**[Chorus]**',
+  BRIDGE = '**[Bridge]**',
+  OUTRO = '**[Outro]**',
 }
 
 export enum ToggleableSettings {

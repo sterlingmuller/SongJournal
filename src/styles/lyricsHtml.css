@@ -1,0 +1,25 @@
+/* For chord lines */
+.chord-line {
+  margin-bottom: 0;
+  color: orange;
+  font-weight: bold;
+}
+
+/* Lyrics immediately following chords */
+.lyric-line {
+  margin-top: 0;
+  color: white;
+}
+
+/* Regular lyrics */
+div:not(.chord-line):not(.lyric-line):not(.section) {
+  color: white;
+  margin: 0.5em 0;
+}
+
+/* Section markers */
+.section {
+  color: blue;
+  font-weight: bold;
+  margin: 1em 0;
+}

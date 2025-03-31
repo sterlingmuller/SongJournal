@@ -5,16 +5,17 @@ const useLyricSheetStyles = () => {
   const { theme } = useColorTheme();
 
   const lyricSheetStyles = StyleSheet.create({
-    p: {
+    div: {
       fontSize: 16,
       color: theme.primaryText,
+      fontFamily: 'monospace',
     },
-    h1: { color: theme.primaryText, fontWeight: 'bold', fontSize: 28 },
-    h2: { color: theme.primaryText, fontWeight: 'bold', fontSize: 24 },
-    h3: { color: theme.primaryText, fontWeight: 'bold', fontSize: 20 },
-    h4: { color: theme.primaryText, fontWeight: 'bold' },
-    h5: { color: theme.primaryText },
-    h6: { color: theme.primaryText },
+    span: {
+      fontSize: 16,
+      color: 'teal',
+      fontWeight: 'bold',
+      fontFamily: 'monospace',
+    },
   });
 
   return lyricSheetStyles;
