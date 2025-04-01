@@ -58,8 +58,8 @@ const Main = () => {
 
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <StatusBar translucent backgroundColor="transparent" />
-      <KeyboardProvider>
+      {/* <StatusBar translucent backgroundColor="transparent" /> */}
+      <KeyboardProvider statusBarTranslucent>
         <AppNavigator />
       </KeyboardProvider>
     </View>

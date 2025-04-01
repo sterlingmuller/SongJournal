@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { View, TextInput, KeyboardAvoidingView } from 'react-native';
+import {
+  View,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+  StatusBar,
+} from 'react-native';
 import Modal from 'react-native-modal';
 import { useSQLiteContext } from 'expo-sqlite';
 
@@ -21,9 +27,14 @@ import useEditOrAddArtistStyles from '@src/styles/editOrAddArtist';
 interface Props {
   isNewArtistOpen: boolean;
   setIsNewArtistOpen: (value: boolean) => void;
+  headerHeight: number;
 }
 
-const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
+const NewArtistModal = ({
+  isNewArtistOpen,
+  setIsNewArtistOpen,
+  headerHeight,
+}: Props) => {
   const db = useSQLiteContext();
   const dispatch = useAppDispatch();
   const styles = useEditOrAddArtistStyles();
@@ -52,12 +63,23 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
     }
   };
 
+  const statusBarHeight =
+    Platform.OS === 'android'
+      ? StatusBar.currentHeight || 0
+      : Platform.OS === 'ios'
+        ? 44
+        : 20;
+
   return (
-    <KeyboardAvoidingView>
-      <Modal
-        isVisible={isNewArtistOpen}
-        avoidKeyboard
-        onBackdropPress={onExitPress}
+    // <KeyboardAvoidingView>
+    <Modal
+      isVisible={isNewArtistOpen}
+      avoidKeyboard
+      onBackdropPress={onExitPress}
+    >
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={headerHeight + statusBarHeight + 10}
+        behavior="padding"
       >
         <View style={styles.modalContainer}>
           <StyledText style={styles.title}>Add or Edit Artist</StyledText>
@@ -95,8 +117,9 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
             />
           </View>
         </View>
-      </Modal>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </Modal>
+    // </KeyboardAvoidingView>
   );
 };
 

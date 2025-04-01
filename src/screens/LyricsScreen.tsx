@@ -128,6 +128,7 @@ const LyricsScreen = () => {
           setIsInfoModalOpen={setIsInfoModalOpen}
           info={page.info}
           songId={songId}
+          headerHeight={headerHeight}
         />
       )}
     </View>

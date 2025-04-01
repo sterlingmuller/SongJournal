@@ -14,7 +14,7 @@ const useGlobalStyles = () => {
     container: {
       flex: 1,
       backgroundColor: theme.primaryBackground,
-      height: '100%',
+      // height: '100%',
     },
     content: {
       flex: 1,
