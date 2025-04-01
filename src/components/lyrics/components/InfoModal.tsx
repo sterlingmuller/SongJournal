@@ -1,15 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  ScrollView,
-  Platform,
-  StatusBar,
-} from 'react-native';
+import { View, Text, TextInput, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
 import { useSQLiteContext } from 'expo-sqlite';
-import { useHeaderHeight } from '@react-navigation/elements';
 
 import CompletionStatus from '@src/components/lyrics/subcomponents/CompletionStatus';
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
@@ -31,18 +23,12 @@ import {
 import AboutArtist from '@src/components/lyrics/subcomponents/AboutArtist';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import useLyricsSheetGenerator from '@src/hooks/useLyricsSheetGenerator';
-import {
-  KeyboardAvoidingView,
-  KeyboardAwareScrollView,
-  useKeyboardController,
-} from 'react-native-keyboard-controller';
 
 interface Props {
   isInfoModalOpen: boolean;
   setIsInfoModalOpen: (value: boolean) => void;
   info: SongInfo;
   songId: number;
-  headerHeight: number;
 }
 
 const InfoModal = (props: Props) => {
@@ -51,7 +37,6 @@ const InfoModal = (props: Props) => {
     setIsInfoModalOpen,
     info: originalInfo,
     songId,
-    headerHeight,
   } = props;
   const styles = useInfoModalStyle();
   const dispatch = useAppDispatch();
@@ -141,94 +126,72 @@ const InfoModal = (props: Props) => {
     setIsInfoModalOpen(false);
   };
 
-  // const { setEnabled } = useKeyboardController();
-
-  // setEnabled(false);
-  // const headerHeight = useHeaderHeight();
-  const statusBarHeight =
-    Platform.OS === 'android'
-      ? StatusBar.currentHeight || 0
-      : Platform.OS === 'ios'
-        ? 44
-        : 20;
-
-  console.log('headerHeight:', headerHeight);
-
   return (
-    // <KeyboardAwareScrollView
-    // // keyboardVerticalOffset={headerHeight - statusBarHeight}
-    // >
     <Modal
       isVisible={isInfoModalOpen}
-      avoidKeyboard={false}
+      avoidKeyboard
       onBackdropPress={onExitPress}
       style={styles.modal}
     >
-      <KeyboardAvoidingView
-        keyboardVerticalOffset={headerHeight + statusBarHeight + 10}
-        behavior="padding"
-      >
-        <View style={styles.container}>
-          <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <Text style={styles.title}>About</Text>
-            <View style={styles.textbox}>
-              <TextInput
-                style={styles.input}
-                placeholder="Add details for the song..."
-                placeholderTextColor={theme.placeholderText}
-                value={newInfo.about}
-                onChangeText={(newAbout: string) =>
-                  handleInputChange('about', newAbout)
-                }
-                multiline={true}
-                textAlignVertical="top"
-              />
-            </View>
-            <View style={styles.details}>
-              {Object.entries(SONG_DETAILS).map(
-                ([key, label]: [SongDetailKey, string]) => {
-                  if (
-                    key === SongDetailKey.KEY_SIGNATURE ||
-                    key === SongDetailKey.TIME
-                  ) {
-                    return (
-                      <SongDetailSelect
-                        key={key}
-                        label={label}
-                        value={newInfo[key]}
-                        handleInputChange={handleInputChange}
-                      />
-                    );
-                  }
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <Text style={styles.title}>About</Text>
+          <View style={styles.textbox}>
+            <TextInput
+              style={styles.input}
+              placeholder="Add details for the song..."
+              placeholderTextColor={theme.placeholderText}
+              value={newInfo.about}
+              onChangeText={(newAbout: string) =>
+                handleInputChange('about', newAbout)
+              }
+              multiline={true}
+              textAlignVertical="top"
+            />
+          </View>
+          <View style={styles.details}>
+            {Object.entries(SONG_DETAILS).map(
+              ([key, label]: [SongDetailKey, string]) => {
+                if (
+                  key === SongDetailKey.KEY_SIGNATURE ||
+                  key === SongDetailKey.TIME
+                ) {
                   return (
-                    <BpmDetail
+                    <SongDetailSelect
                       key={key}
+                      label={label}
                       value={newInfo[key]}
                       handleInputChange={handleInputChange}
                     />
                   );
-                },
-              )}
-            </View>
-            <AboutArtist
-              selectedArtistId={selectedArtistId}
-              setSelectedArtistId={setSelectedArtistId}
-              headerHeight={headerHeight}
-            />
-            <CompletionStatus
-              isCompleted={newCompletionStatus}
-              handleInputChange={handleCompletionStatusChange}
-            />
-          </ScrollView>
-          <View style={styles.buttonContainer}>
-            <SaveAndCancelButtons
-              onPress={onSavePress}
-              onExitPress={onExitPress}
-              disabled={!isSaveButtonEnabled}
-            />
+                }
+                return (
+                  <BpmDetail
+                    key={key}
+                    value={newInfo[key]}
+                    handleInputChange={handleInputChange}
+                  />
+                );
+              },
+            )}
           </View>
+          <AboutArtist
+            selectedArtistId={selectedArtistId}
+            setSelectedArtistId={setSelectedArtistId}
+          />
+          <CompletionStatus
+            isCompleted={newCompletionStatus}
+            handleInputChange={handleCompletionStatusChange}
+          />
+        </ScrollView>
+        <View style={styles.buttonContainer}>
+          <SaveAndCancelButtons
+            onPress={onSavePress}
+            onExitPress={onExitPress}
+            disabled={!isSaveButtonEnabled}
+          />
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </Modal>
   );
 };

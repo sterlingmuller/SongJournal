@@ -25,10 +25,12 @@ const EditLyricsSheet = ({ newLyrics, setNewLyrics, headerHeight }: Props) => {
         ? 44
         : 20;
 
+  const vertOffset = headerHeight - statusBarHeight;
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={headerHeight - statusBarHeight}
+      keyboardVerticalOffset={vertOffset}
     >
       <CustomTextEditor
         text={initialLyricsRef.current}

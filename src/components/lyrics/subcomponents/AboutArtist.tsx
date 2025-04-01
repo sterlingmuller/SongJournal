@@ -11,14 +11,9 @@ import { useColorTheme } from '@src/state/context/ThemeContext';
 interface Props {
   selectedArtistId: number;
   setSelectedArtistId: (value: number) => void;
-  headerHeight: number;
 }
 
-const AboutArtist = ({
-  selectedArtistId,
-  setSelectedArtistId,
-  headerHeight,
-}: Props) => {
+const AboutArtist = ({ selectedArtistId, setSelectedArtistId }: Props) => {
   const styles = useInfoModalStyle();
   const { getArtistName, artistItems } = useArtistName();
   const { theme } = useColorTheme();
@@ -72,7 +67,6 @@ const AboutArtist = ({
       <NewArtistModal
         isNewArtistOpen={isNewArtistOpen}
         setIsNewArtistOpen={setIsNewArtistOpen}
-        headerHeight={headerHeight}
       />
     </>
   );
