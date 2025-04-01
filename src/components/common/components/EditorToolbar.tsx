@@ -18,7 +18,6 @@ import Animated, {
 interface EditorToolbarProps {
   onBold: () => void;
   onItalic: () => void;
-  onUnderline: () => void;
   onHyphen: () => void;
   onTextSection: (section: LyricsSection) => void;
   onAddChord: () => void;
@@ -27,7 +26,6 @@ interface EditorToolbarProps {
 const EditorToolbar = ({
   onBold,
   onItalic,
-  onUnderline,
   onHyphen,
   onTextSection,
   onAddChord,
@@ -80,9 +78,6 @@ const EditorToolbar = ({
         <TouchableOpacity onPress={onItalic} style={styles.button}>
           <Text>I</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={onUnderline} style={styles.button}>
-          <Text>U</Text>
-        </TouchableOpacity>
         <TouchableOpacity onPress={onHyphen} style={styles.button}>
           <Text>-</Text>
         </TouchableOpacity>
@@ -115,15 +110,12 @@ const EditorToolbar = ({
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
     backgroundColor: '#f5f5f5',
     borderTopWidth: 1,
     borderTopColor: '#ddd',
-    paddingVertical: 8,
-    borderRadius: 15,
+    paddingVertical: 6,
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
   },
   buttonGroup: {
     flexDirection: 'row',

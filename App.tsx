@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { SQLiteDatabase, SQLiteProvider, useSQLiteContext } from 'expo-sqlite';
 import { StatusBar, View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 
 import AppNavigator from '@src/navigation/AppNavigator';
 import {
@@ -58,7 +59,9 @@ const Main = () => {
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <StatusBar translucent backgroundColor="transparent" />
-      <AppNavigator />
+      <KeyboardProvider>
+        <AppNavigator />
+      </KeyboardProvider>
     </View>
   );
 };

@@ -70,32 +70,30 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        autoFocus={true}
-        ref={textInputRef}
-        multiline
-        value={localText}
-        onChangeText={handleTextChange}
-        onSelectionChange={(
-          e: NativeSyntheticEvent<TextInputSelectionChangeEventData>,
-        ) => {
-          setSelection({
-            start: e.nativeEvent.selection.start,
-            end: e.nativeEvent.selection.end,
-          });
-        }}
-        style={styles.editor}
-      />
-
+      <View style={{ flex: 1 }}>
+        <TextInput
+          autoFocus={true}
+          ref={textInputRef}
+          multiline
+          value={localText}
+          onChangeText={handleTextChange}
+          onSelectionChange={(
+            e: NativeSyntheticEvent<TextInputSelectionChangeEventData>,
+          ) => {
+            setSelection({
+              start: e.nativeEvent.selection.start,
+              end: e.nativeEvent.selection.end,
+            });
+          }}
+          style={styles.editor}
+        />
+      </View>
       <EditorToolbar
         onBold={() => {
           setLocalText(insertAtCursor(localText, selection, '**', '**'));
         }}
         onItalic={() => {
           setLocalText(insertAtCursor(localText, selection, '*', '*'));
-        }}
-        onUnderline={() => {
-          setLocalText(insertAtCursor(localText, selection, '<u>', '</u>'));
         }}
         onHyphen={() => {
           setLocalText(insertAtCursor(localText, selection, '-'));
@@ -113,5 +111,4 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
     </View>
   );
 };
-
 export default CustomTextEditor;

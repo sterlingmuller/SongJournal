@@ -16,7 +16,7 @@ import useLyricsSheetGenerator from '@src/hooks/useLyricsSheetGenerator';
 import { useDispatch } from 'react-redux';
 import { setCurrentSongId } from '@src/state/slice/currentSongSlice';
 import { RootStackParamList } from '@src/components/common/types';
-import TestEditLyricsSheet from '@src/components/lyrics/components/TestEditLyricsSheet';
+import EditLyricsSheet from '@src/components/lyrics/components/EditLyricsSheet';
 
 const LyricsScreen = () => {
   const styles = useLyricScreenStyles();
@@ -27,6 +27,8 @@ const LyricsScreen = () => {
   const page = useAppSelector(selectCurrentSongPage);
   const songId = useAppSelector(selectCurrentSongId);
   const { updateLyrics } = useLyricsSheetGenerator();
+
+  const [headerHeight, setHeaderHeight] = useState(0);
 
   useEffect(() => {
     navigation.addListener('beforeRemove', () => {
@@ -79,6 +81,7 @@ const LyricsScreen = () => {
           displaySave={displaySave}
           handleSaveLyrics={handleSaveLyrics}
           handleCancelEdit={handleCancelEdit}
+          setHeaderHeight={setHeaderHeight}
         />
       ),
     });
@@ -92,16 +95,18 @@ const LyricsScreen = () => {
     switch (selectedOption) {
       case LyricsOption.EDIT:
         return (
-          <TestEditLyricsSheet
+          <EditLyricsSheet
             newLyrics={newLyrics}
             setNewLyrics={setNewLyrics}
+            headerHeight={headerHeight}
           />
         );
       case LyricsOption.CHORDS:
         return (
-          <TestEditLyricsSheet
+          <EditLyricsSheet
             newLyrics={newLyrics}
             setNewLyrics={setNewLyrics}
+            headerHeight={headerHeight}
           />
         );
       default:

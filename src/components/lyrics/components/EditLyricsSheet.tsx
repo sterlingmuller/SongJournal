@@ -1,41 +1,39 @@
 import React, { useRef } from 'react';
-import { KeyboardAvoidingView, Platform, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, StatusBar } from 'react-native';
 
-import useLyricScreenStyles from '@src/styles/lyricsScreen';
-import TextEditor from '@src/components/common/components/TextEditor';
-import useDebounce from '@src/hooks/useDebounce';
-import { SCREEN_HEIGHT } from '@src/components/common/constants';
 import { isTextEmpty } from '@src/utils/isTextEmpty';
+import CustomTextEditor from '@src/components/common/components/CustomTextEditor';
 
 interface Props {
   newLyrics: string;
   setNewLyrics: (value: string) => void;
+  headerHeight: number;
 }
 
-const EditLyricsSheet = ({ newLyrics, setNewLyrics }: Props) => {
-  const styles = useLyricScreenStyles();
+const EditLyricsSheet = ({ newLyrics, setNewLyrics, headerHeight }: Props) => {
   const initialLyricsRef = useRef(newLyrics);
 
-  const debouncedLyrics = useDebounce((lyrics: string) => {
+  const handleLyricsChange = (lyrics: string) => {
     const normalizedLyrics = isTextEmpty(lyrics) ? '' : lyrics;
     setNewLyrics(normalizedLyrics);
-  }, 400);
-
-  const handleLyricsChange = (lyrics: string) => {
-    debouncedLyrics(lyrics);
   };
+
+  const statusBarHeight =
+    Platform.OS === 'android'
+      ? StatusBar.currentHeight || 0
+      : Platform.OS === 'ios'
+        ? 44
+        : 20;
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={SCREEN_HEIGHT * 0.05}
+      keyboardVerticalOffset={headerHeight - statusBarHeight}
     >
-      <View style={[styles.editTextContainer, { height: '90%' }]}>
-        <TextEditor
-          initialText={initialLyricsRef.current}
-          setText={handleLyricsChange}
-        />
-      </View>
+      <CustomTextEditor
+        text={initialLyricsRef.current}
+        setText={handleLyricsChange}
+      />
     </KeyboardAvoidingView>
   );
 };

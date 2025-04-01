@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, LayoutChangeEvent } from 'react-native';
 import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
@@ -16,6 +16,7 @@ interface Props {
   displaySave: boolean;
   handleSaveLyrics: () => void;
   handleCancelEdit: () => void;
+  setHeaderHeight: (value: number) => void;
 }
 
 const LyricsHeader = (props: Props) => {
@@ -25,11 +26,17 @@ const LyricsHeader = (props: Props) => {
     displaySave,
     handleSaveLyrics,
     handleCancelEdit,
+    setHeaderHeight,
   } = props;
 
   const styles = useLyricsHeaderStyles();
   const title = useSelector(selectCurrentSongTitle);
   const { goBack } = useNavigation();
+
+  const handleLayout = (event: LayoutChangeEvent) => {
+    const { height } = event.nativeEvent.layout;
+    setHeaderHeight(height);
+  };
 
   const renderIcon = () => {
     if (displaySave) {
@@ -56,7 +63,7 @@ const LyricsHeader = (props: Props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={handleLayout}>
       <View style={styles.titlePlusArrow}>
         <TouchableOpacity onPress={goBack}>
           <BackIcon />
