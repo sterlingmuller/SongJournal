@@ -19,12 +19,13 @@ export const insertAtCursor = (
     );
   }
 
-  const wordBoundaries = getWordBoundaries(text, start);
-  if (!wordBoundaries) {
+  const wordStart = findWordStart(text, start);
+  const wordEnd = findWordEnd(text, start);
+
+  if (wordStart === wordEnd) {
     return text.slice(0, start) + prefix + suffix + text.slice(start);
   }
 
-  const { wordStart, wordEnd } = wordBoundaries;
   return (
     text.slice(0, wordStart) +
     prefix +
@@ -32,21 +33,6 @@ export const insertAtCursor = (
     suffix +
     text.slice(wordEnd)
   );
-};
-
-const getWordBoundaries = (text: string, pos: number) => {
-  if (pos < 0 || pos > text.length) return null;
-  let wordStart = pos;
-  while (wordStart > 0 && !isWordBoundary(text, wordStart)) {
-    wordStart--;
-  }
-
-  let wordEnd = pos;
-  while (wordEnd < text.length && !isWordBoundary(text, wordEnd)) {
-    wordEnd++;
-  }
-
-  return { wordStart, wordEnd };
 };
 
 export const insertSectionAtCursor = (
@@ -144,7 +130,7 @@ export const insertChord = (
     return lines.join('\n');
   }
 
-  const insertionPoint = getChordInsertPosition(currentLine, positionInLine);
+  const insertionPoint = findWordStart(currentLine, positionInLine);
 
   if (currentLineIndex > 0 && isChordLine(lines[currentLineIndex - 1])) {
     lines[currentLineIndex - 1] = updateChordLine(
@@ -177,20 +163,6 @@ const insertIntoChordLine = (
 
   newLine.splice(position, chordText.length, ...chordText.split(''));
   return newLine.join('');
-};
-
-const getChordInsertPosition = (line: string, position: number): number => {
-  if (position <= 0 || position >= line.length + 1) return position;
-
-  if (isWordBoundary(line, position)) {
-    return position;
-  }
-
-  let wordStart = position;
-  while (wordStart > 0 && !isWordBoundary(line, wordStart)) {
-    wordStart--;
-  }
-  return wordStart;
 };
 
 const updateChordLine = (
@@ -248,35 +220,15 @@ const createChordLine = (chord: string, position: number): string => {
   return ' '.repeat(position) + `{${chord}}`;
 };
 
-const isWordBoundary = (text: string, pos: number): boolean => {
-  if (pos === 0 || pos === text.length + 1) return true;
-  if (text[pos] === '-' || text[pos - 1] === '-') return true;
-
-  const prevIsWord = /[\w']/.test(text[pos - 1]);
-  const currentIsWord = /[\w']/.test(text[pos]);
-
-  return prevIsWord !== currentIsWord;
-};
-
 export const convertGerundToIn = (
   text: string,
   cursorPosition: number,
 ): { text: string; newCursorPosition: number } => {
-  if (cursorPosition < 0) return { text, newCursorPosition: cursorPosition };
-
-  let wordStart = cursorPosition;
-  while (wordStart > 0 && !isWordBoundary(text, wordStart)) {
-    wordStart--;
-  }
-
-  let wordEnd = cursorPosition;
-  while (wordEnd < text.length && !isWordBoundary(text, wordEnd)) {
-    wordEnd++;
-  }
-
+  const wordStart = findWordStart(text, cursorPosition);
+  const wordEnd = findWordEnd(text, cursorPosition);
   const word = text.slice(wordStart, wordEnd);
 
-  if (!/ing$/i.test(word)) {
+  if (!word.toLowerCase().endsWith('ing')) {
     return { text, newCursorPosition: cursorPosition };
   }
 
@@ -287,4 +239,24 @@ export const convertGerundToIn = (
     text: newText,
     newCursorPosition: wordStart + newWord.length,
   };
+};
+
+const findWordStart = (text: string, pos: number): number => {
+  if (pos <= 0) return 0;
+
+  let start = pos - 1;
+  while (start >= 0 && !/[\s-]/.test(text[start])) {
+    start--;
+  }
+  return start + 1;
+};
+
+const findWordEnd = (text: string, pos: number): number => {
+  if (pos >= text.length) return text.length;
+
+  let end = pos;
+  while (end < text.length && !/[\s-]/.test(text[end])) {
+    end++;
+  }
+  return end;
 };

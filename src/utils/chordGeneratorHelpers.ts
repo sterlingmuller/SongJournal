@@ -35,8 +35,6 @@ export const getSelectionPosition = (text: string, start: number) => {
       }
     }
   }
-  // console.log('currentLine:', currentLine - 1);
-  // console.log('charIndex:', charIndex);
   return {
     currentLine: currentLine - 1,
     charIndex,
