@@ -17,7 +17,10 @@ const LyricsSheet = ({ lyrics }: Props) => {
   const htmlLyrics = convertToHtml(lyrics);
 
   return (
-    <ScrollView style={styles.lyricsContainer}>
+    <ScrollView
+      style={styles.lyricsContainer}
+      contentContainerStyle={styles.lyricsContent}
+    >
       <HTMLView value={htmlLyrics} stylesheet={lyricSheetStyles} />
     </ScrollView>
   );

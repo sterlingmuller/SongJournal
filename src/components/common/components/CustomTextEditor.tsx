@@ -11,7 +11,6 @@ import useTextEditorStyles from '@src/styles/textEditor';
 import useDebounce from '@src/hooks/useDebounce';
 import {
   convertGerundToIn,
-  insertAtCursor,
   insertChord,
   insertSectionAtCursor,
 } from '@src/utils/textEditorUtils';

@@ -4,6 +4,7 @@ import { useColorTheme } from '@src/state/context/ThemeContext';
 interface Styles {
   editTextContainer: ViewStyle;
   lyricsContainer: ViewStyle;
+  lyricsContent: ViewStyle;
   container: ViewStyle;
   details: ViewStyle;
 }
@@ -31,9 +32,10 @@ const useLyricScreenStyles = () => {
 
     lyricsContainer: {
       paddingHorizontal: 35,
-      marginBottom: 10,
     },
-
+    lyricsContent: {
+      paddingBottom: 50,
+    },
     details: {
       flexDirection: 'row',
       gap: 15,
