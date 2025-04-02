@@ -44,10 +44,10 @@ const EditorToolbar = ({
   };
 
   const onBold = () => {
-    setLocalText(insertAtCursor(localText, selection, '**', '**'));
+    setLocalText(insertAtCursor(localText, selection, '**', '**', true));
   };
   const onItalic = () => {
-    setLocalText(insertAtCursor(localText, selection, '*', '*'));
+    setLocalText(insertAtCursor(localText, selection, '*', '*', true));
   };
   const onHyphen = () => {
     setLocalText(insertAtCursor(localText, selection, '-'));

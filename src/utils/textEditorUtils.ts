@@ -2,13 +2,14 @@ import { LyricsSection } from '@src/components/common/enums';
 
 export const insertAtCursor = (
   text: string,
-  selection: { start: number; end: number } | null = null,
+  selection: { start: number; end: number },
   prefix: string,
   suffix: string = '',
+  wrapCurrentWord: boolean = false,
 ): string => {
   const { start, end } = selection;
 
-  if (start !== end) {
+  if (start !== end || !wrapCurrentWord) {
     return (
       text.slice(0, start) +
       prefix +
@@ -16,9 +17,37 @@ export const insertAtCursor = (
       suffix +
       text.slice(end)
     );
-  } else {
+  }
+
+  const wordBoundaries = getWordBoundaries(text, start);
+  if (!wordBoundaries) {
     return text.slice(0, start) + prefix + suffix + text.slice(start);
   }
+
+  const { wordStart, wordEnd } = wordBoundaries;
+  return (
+    text.slice(0, wordStart) +
+    prefix +
+    text.slice(wordStart, wordEnd) +
+    suffix +
+    text.slice(wordEnd)
+  );
+};
+
+const getWordBoundaries = (text: string, pos: number) => {
+  if (pos < 0 || pos > text.length) return null;
+
+  let wordStart = pos;
+  while (wordStart > 0 && !isWordBoundary(text, wordStart)) {
+    wordStart--;
+  }
+
+  let wordEnd = pos;
+  while (wordEnd < text.length && !isWordBoundary(text, wordEnd)) {
+    wordEnd++;
+  }
+
+  return { wordStart, wordEnd };
 };
 
 export const insertSectionAtCursor = (
