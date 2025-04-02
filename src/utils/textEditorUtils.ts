@@ -36,7 +36,6 @@ export const insertAtCursor = (
 
 const getWordBoundaries = (text: string, pos: number) => {
   if (pos < 0 || pos > text.length) return null;
-
   let wordStart = pos;
   while (wordStart > 0 && !isWordBoundary(text, wordStart)) {
     wordStart--;
@@ -121,7 +120,6 @@ export const insertChord = (
 
   let currentLineIndex = 0;
   let charCount = 0;
-
   for (let i = 0; i < lines.length; i++) {
     if (charCount + lines[i].length >= start) {
       currentLineIndex = i;
@@ -142,6 +140,7 @@ export const insertChord = (
       chord,
       positionInLine,
     );
+
     return lines.join('\n');
   }
 
@@ -181,7 +180,7 @@ const insertIntoChordLine = (
 };
 
 const getChordInsertPosition = (line: string, position: number): number => {
-  if (position <= 0 || position >= line.length) return position;
+  if (position <= 0 || position >= line.length + 1) return position;
 
   if (isWordBoundary(line, position)) {
     return position;
@@ -250,7 +249,7 @@ const createChordLine = (chord: string, position: number): string => {
 };
 
 const isWordBoundary = (text: string, pos: number): boolean => {
-  if (pos === 0 || pos === text.length) return true;
+  if (pos === 0 || pos === text.length + 1) return true;
   if (text[pos] === '-' || text[pos - 1] === '-') return true;
 
   const prevIsWord = /[\w']/.test(text[pos - 1]);
