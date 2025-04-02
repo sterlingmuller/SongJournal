@@ -9,6 +9,7 @@ import useLyricsHeaderStyles from '@src/styles/navigationHeader';
 import { selectCurrentSongTitle } from '@src/state/selectors/songsSelector';
 import CheckIcon from '@src/icons/CheckIcon';
 import CloseIcon from '@src/icons/CloseIcon';
+import { LyricsOption } from '@src/components/common/enums';
 
 interface Props {
   isInfoModalOpen: boolean;
@@ -16,7 +17,10 @@ interface Props {
   displaySave: boolean;
   handleSaveLyrics: () => void;
   handleCancelEdit: () => void;
+  headerHeight: number;
   setHeaderHeight: (value: number) => void;
+  selectedOption: LyricsOption;
+  setSelectedOption: (value: LyricsOption) => void;
 }
 
 const LyricsHeader = (props: Props) => {
@@ -26,16 +30,21 @@ const LyricsHeader = (props: Props) => {
     displaySave,
     handleSaveLyrics,
     handleCancelEdit,
+    headerHeight,
     setHeaderHeight,
+    selectedOption,
+    setSelectedOption,
   } = props;
 
   const styles = useLyricsHeaderStyles();
   const title = useSelector(selectCurrentSongTitle);
   const { goBack } = useNavigation();
 
-  const handleLayout = (event: LayoutChangeEvent) => {
+  const onLayoutHeader = (event: LayoutChangeEvent) => {
     const { height } = event.nativeEvent.layout;
-    setHeaderHeight(height);
+    if (height !== headerHeight) {
+      setHeaderHeight(height);
+    }
   };
 
   const renderIcon = () => {
@@ -54,7 +63,12 @@ const LyricsHeader = (props: Props) => {
 
     return (
       <TouchableOpacity
-        onPress={() => setIsInfoModalOpen(!isInfoModalOpen)}
+        onPress={() => {
+          if (selectedOption !== LyricsOption.NONE) {
+            setSelectedOption(LyricsOption.NONE);
+          }
+          setIsInfoModalOpen(!isInfoModalOpen);
+        }}
         hitSlop={20}
       >
         <InfoIcon />
@@ -63,7 +77,7 @@ const LyricsHeader = (props: Props) => {
   };
 
   return (
-    <View style={styles.container} onLayout={handleLayout}>
+    <View style={styles.container} onLayout={onLayoutHeader}>
       <View style={styles.titlePlusArrow}>
         <TouchableOpacity onPress={goBack}>
           <BackIcon />

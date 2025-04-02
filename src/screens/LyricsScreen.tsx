@@ -81,11 +81,20 @@ const LyricsScreen = () => {
           displaySave={displaySave}
           handleSaveLyrics={handleSaveLyrics}
           handleCancelEdit={handleCancelEdit}
+          headerHeight={headerHeight}
           setHeaderHeight={setHeaderHeight}
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption}
         />
       ),
     });
-  }, [isInfoModalOpen, setIsInfoModalOpen, displaySave, newLyrics]);
+  }, [
+    isInfoModalOpen,
+    setIsInfoModalOpen,
+    displaySave,
+    newLyrics,
+    selectedOption,
+  ]);
 
   if (!page) {
     return <LoadingIndicator />;
@@ -94,14 +103,6 @@ const LyricsScreen = () => {
   const renderSelectedOption = () => {
     switch (selectedOption) {
       case LyricsOption.EDIT:
-        return (
-          <EditLyricsSheet
-            newLyrics={newLyrics}
-            setNewLyrics={setNewLyrics}
-            headerHeight={headerHeight}
-          />
-        );
-      case LyricsOption.CHORDS:
         return (
           <EditLyricsSheet
             newLyrics={newLyrics}
@@ -128,7 +129,6 @@ const LyricsScreen = () => {
           setIsInfoModalOpen={setIsInfoModalOpen}
           info={page.info}
           songId={songId}
-          headerHeight={headerHeight}
         />
       )}
     </View>
