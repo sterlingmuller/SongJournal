@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import useTextEditorStyles from '@src/styles/textEditor';
 import useDebounce from '@src/hooks/useDebounce';
 import {
+  convertGerundToIn,
   insertAtCursor,
   insertChord,
   insertSectionAtCursor,
@@ -68,6 +69,25 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
     }, 50);
   };
 
+  const onGerundConvert = () => {
+    if (selection.start < 0) return;
+
+    const result = convertGerundToIn(localText, selection.start);
+
+    if (result.text !== localText) {
+      setLocalText(result.text);
+      debouncedInput(result.text);
+
+      setTimeout(() => {
+        textInputRef.current?.focus();
+        setSelection({
+          start: result.newCursorPosition,
+          end: result.newCursorPosition,
+        });
+      }, 50);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }}>
@@ -89,17 +109,12 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
         />
       </View>
       <EditorToolbar
-        onBold={() => {
-          setLocalText(insertAtCursor(localText, selection, '**', '**'));
-        }}
-        onItalic={() => {
-          setLocalText(insertAtCursor(localText, selection, '*', '*'));
-        }}
-        onHyphen={() => {
-          setLocalText(insertAtCursor(localText, selection, '-'));
-        }}
+        setLocalText={setLocalText}
+        localText={localText}
+        setIsWheelOpen={setIsWheelOpen}
+        selection={selection}
         onTextSection={handleSectionInsertion}
-        onAddChord={() => setIsWheelOpen(true)}
+        onGerundConvert={onGerundConvert}
       />
 
       <ChordWheelModal

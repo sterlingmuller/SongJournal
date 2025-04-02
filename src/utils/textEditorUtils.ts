@@ -206,3 +206,34 @@ const isWordBoundary = (text: string, pos: number): boolean => {
 
   return prevIsWord !== currentIsWord;
 };
+
+export const convertGerundToIn = (
+  text: string,
+  cursorPosition: number,
+): { text: string; newCursorPosition: number } => {
+  if (cursorPosition < 0) return { text, newCursorPosition: cursorPosition };
+
+  let wordStart = cursorPosition;
+  while (wordStart > 0 && !isWordBoundary(text, wordStart)) {
+    wordStart--;
+  }
+
+  let wordEnd = cursorPosition;
+  while (wordEnd < text.length && !isWordBoundary(text, wordEnd)) {
+    wordEnd++;
+  }
+
+  const word = text.slice(wordStart, wordEnd);
+
+  if (!/ing$/i.test(word)) {
+    return { text, newCursorPosition: cursorPosition };
+  }
+
+  const newWord = word.slice(0, -3) + "in'";
+  const newText = text.slice(0, wordStart) + newWord + text.slice(wordEnd);
+
+  return {
+    text: newText,
+    newCursorPosition: wordStart + newWord.length,
+  };
+};

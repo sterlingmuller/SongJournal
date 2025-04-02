@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  Keyboard,
-  Platform,
-} from 'react-native';
-import { LyricsSection } from '../enums';
+import { View, TouchableOpacity, Text, Keyboard, Platform } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -15,21 +7,28 @@ import Animated, {
   Easing,
 } from 'react-native-reanimated';
 
+import { LyricsSection } from '../enums';
+import useTextEditorStyles from '@src/styles/textEditor';
+import { insertAtCursor } from '@src/utils/textEditorUtils';
+
 interface EditorToolbarProps {
-  onBold: () => void;
-  onItalic: () => void;
-  onHyphen: () => void;
+  localText: string;
+  setLocalText: (value: string) => void;
+  setIsWheelOpen: (value: boolean) => void;
+  selection: { start: number; end: number };
   onTextSection: (section: LyricsSection) => void;
-  onAddChord: () => void;
+  onGerundConvert: () => void;
 }
 
 const EditorToolbar = ({
-  onBold,
-  onItalic,
-  onHyphen,
+  localText,
+  setLocalText,
+  setIsWheelOpen,
+  selection,
   onTextSection,
-  onAddChord,
+  onGerundConvert,
 }: EditorToolbarProps) => {
+  const styles = useTextEditorStyles();
   const [isSectionsOpen, setIsSectionsOpen] = React.useState(false);
   const AnimatedView = Animated.createAnimatedComponent(View);
   const translateY = useSharedValue(100);
@@ -43,6 +42,17 @@ const EditorToolbar = ({
     });
     opacity.value = withTiming(show ? 1 : 0, { duration });
   };
+
+  const onBold = () => {
+    setLocalText(insertAtCursor(localText, selection, '**', '**'));
+  };
+  const onItalic = () => {
+    setLocalText(insertAtCursor(localText, selection, '*', '*'));
+  };
+  const onHyphen = () => {
+    setLocalText(insertAtCursor(localText, selection, '-'));
+  };
+  const onAddChord = () => setIsWheelOpen(true);
 
   const toggleSections = () => {
     if (isSectionsOpen) {
@@ -70,7 +80,7 @@ const EditorToolbar = ({
   }));
 
   return (
-    <View style={styles.container}>
+    <View style={styles.toolbarContainer}>
       <View style={styles.buttonGroup}>
         <TouchableOpacity onPress={onBold} style={styles.button}>
           <Text>B</Text>
@@ -87,17 +97,20 @@ const EditorToolbar = ({
         <TouchableOpacity onPress={toggleSections} style={styles.button}>
           <Text>Song Sections</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={onGerundConvert} style={styles.button}>
+          <Text>-in'</Text>
+        </TouchableOpacity>
       </View>
       {isSectionsOpen && (
-        <AnimatedView style={[styles.sizePicker, animatedStyles]}>
+        <AnimatedView style={[styles.sectionPicker, animatedStyles]}>
           {Object.values(LyricsSection).map((section: LyricsSection) => (
             <TouchableOpacity
               key={section}
-              style={styles.sizeButton}
+              style={styles.sectionButton}
               onPress={() => handleSectionPress(section)}
               hitSlop={10}
             >
-              <Text style={styles.sizeText}>
+              <Text style={styles.sectionText}>
                 {section.replace(/[[\]]/g, '')}
               </Text>
             </TouchableOpacity>
@@ -107,48 +120,5 @@ const EditorToolbar = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#f5f5f5',
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
-    paddingVertical: 6,
-    borderBottomLeftRadius: 15,
-    borderBottomRightRadius: 15,
-  },
-  buttonGroup: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingHorizontal: 16,
-  },
-  button: {
-    padding: 8,
-    borderRadius: 4,
-  },
-  sizePicker: {
-    position: 'absolute',
-    bottom: 60,
-    right: 5,
-    maxWidth: '40%',
-    backgroundColor: '#f5f5f5',
-    borderRadius: 8,
-    padding: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  sizeButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    width: '100%',
-  },
-  sizeText: {
-    fontSize: 16,
-    textAlign: 'center',
-  },
-});
 
 export default EditorToolbar;
