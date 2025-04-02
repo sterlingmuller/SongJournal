@@ -37,6 +37,8 @@ const ChordWheelModal = (props: Props) => {
       handleInputChange(SongDetailKey.KEY_SIGNATURE, rootNote + chordExtension);
     }
 
+    setRootNote(initialValues.rootNote);
+    setChordExtension(initialValues.chordExtension);
     setIsWheelOpen(false);
   };
 
