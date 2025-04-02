@@ -33,13 +33,11 @@ const ChordWheelModal = (props: Props) => {
   );
 
   const onExitPress = () => {
-    let updatedChord = '';
     if (rootNote) {
-      updatedChord = rootNote + chordExtension;
+      handleInputChange(SongDetailKey.KEY_SIGNATURE, rootNote + chordExtension);
     }
 
     setIsWheelOpen(false);
-    handleInputChange(SongDetailKey.KEY_SIGNATURE, updatedChord);
   };
 
   const sections = useMemo((): WheelPickerProps[] => {
