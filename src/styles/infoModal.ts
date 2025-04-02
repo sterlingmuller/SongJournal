@@ -5,7 +5,7 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@src/components/common/constants';
 interface Styles {
   modal: ViewStyle;
   container: ViewStyle;
-  scrollContainer: ViewStyle;
+  mainInputContainer: ViewStyle;
   buttonContainer: ViewStyle;
   artistContainer: ViewStyle;
   artistSelectContainer: ViewStyle;
@@ -17,6 +17,7 @@ interface Styles {
   artistEditText: TextStyle;
   labelText: TextStyle;
   inputText: TextStyle;
+  warningText: TextStyle;
 }
 
 const useInfoModalStyle = () => {
@@ -31,14 +32,12 @@ const useInfoModalStyle = () => {
     container: {
       backgroundColor: theme.secondary,
       width: SCREEN_WIDTH * 0.8,
-      height: SCREEN_HEIGHT * 0.62,
+      maxHeight: SCREEN_HEIGHT * 0.62,
       borderRadius: 15,
       overflow: 'hidden',
       flexDirection: 'column',
     },
-    scrollContainer: {
-      flexGrow: 1,
-      justifyContent: 'flex-start',
+    mainInputContainer: {
       gap: 15,
     },
     title: {
@@ -62,13 +61,14 @@ const useInfoModalStyle = () => {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: 10,
+      gap: 5,
     },
     artistContainer: {
       alignItems: 'center',
       flexDirection: 'row',
       justifyContent: 'space-evenly',
-      paddingBottom: 5,
+      paddingTop: 10,
+      paddingBottom: 20,
     },
     artistTextbox: {
       backgroundColor: theme.inputBackground,
@@ -95,10 +95,18 @@ const useInfoModalStyle = () => {
       justifyContent: 'space-evenly',
     },
     buttonContainer: {
-      paddingBottom: 30,
+      paddingTop: 25,
+      paddingBottom: 15,
     },
     labelText: { fontSize: 14, color: theme.secondaryText, fontWeight: 600 },
     inputText: { fontSize: 14, color: theme.secondaryText, fontWeight: 600 },
+    warningText: {
+      fontSize: 14,
+      color: theme.error,
+      fontWeight: 600,
+      textAlign: 'center',
+      marginVertical: 10,
+    },
   });
 
   return infoModalStyle;

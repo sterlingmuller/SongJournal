@@ -25,7 +25,8 @@ const BpmDetail = (props: Props) => {
           styles.inputText,
           !value && { color: theme.placeholderText },
         ]}
-        value={value || '--'}
+        value={value}
+        placeholder="--"
         onChangeText={(newBpm: string) => handleInputChange('bpm', newBpm)}
         textAlign="center"
         keyboardType="numeric"

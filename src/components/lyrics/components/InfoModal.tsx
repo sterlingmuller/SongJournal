@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { View, Text, TextInput, ScrollView } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import Modal from 'react-native-modal';
 import { useSQLiteContext } from 'expo-sqlite';
 
@@ -23,6 +23,8 @@ import {
 import AboutArtist from '@src/components/lyrics/subcomponents/AboutArtist';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import useLyricsSheetGenerator from '@src/hooks/useLyricsSheetGenerator';
+import StyledText from '@src/components/common/components/StyledText';
+import useDebounce from '@src/hooks/useDebounce';
 
 interface Props {
   isInfoModalOpen: boolean;
@@ -51,8 +53,7 @@ const InfoModal = (props: Props) => {
     useState<boolean>(completionStatus);
   const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false);
   const [selectedArtistId, setSelectedArtistId] = useState(currentSongArtistId);
-
-  const bpmNum = Number(newInfo.bpm);
+  const [isBpmInvalid, setIsBpmInvalid] = useState(false);
 
   const onExitPress = () => {
     setIsInfoModalOpen(false);
@@ -86,6 +87,16 @@ const InfoModal = (props: Props) => {
     currentSongArtistId,
   ]);
 
+  const debouncedValidateBpm = useDebounce((value: string) => {
+    const bpmNum = Number(value);
+    setIsBpmInvalid(value && (bpmNum < 60 || bpmNum > 180));
+  }, 400);
+
+  const handleBpmChange = (key: keyof SongInfo, value: string) => {
+    setNewInfo({ ...newInfo, [key]: value });
+    debouncedValidateBpm(value);
+  };
+
   const handleInputChange = (key: keyof SongInfo, value: string | boolean) => {
     setNewInfo({ ...newInfo, [key]: value });
   };
@@ -95,7 +106,7 @@ const InfoModal = (props: Props) => {
   };
 
   const onSavePress = () => {
-    if (newInfo.bpm && (bpmNum < 60 || bpmNum > 180)) {
+    if (isBpmInvalid) {
       setNewInfo({ ...newInfo, bpm: originalInfo.bpm });
       return;
     }
@@ -134,7 +145,7 @@ const InfoModal = (props: Props) => {
       style={styles.modal}
     >
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.mainInputContainer}>
           <Text style={styles.title}>About</Text>
           <View style={styles.textbox}>
             <TextInput
@@ -169,21 +180,26 @@ const InfoModal = (props: Props) => {
                   <BpmDetail
                     key={key}
                     value={newInfo[key]}
-                    handleInputChange={handleInputChange}
+                    handleInputChange={handleBpmChange}
                   />
                 );
               },
             )}
           </View>
-          <AboutArtist
-            selectedArtistId={selectedArtistId}
-            setSelectedArtistId={setSelectedArtistId}
-          />
-          <CompletionStatus
-            isCompleted={newCompletionStatus}
-            handleInputChange={handleCompletionStatusChange}
-          />
-        </ScrollView>
+        </View>
+        {isBpmInvalid && (
+          <StyledText style={styles.warningText}>
+            *Bpm must be between 60 and 180
+          </StyledText>
+        )}
+        <AboutArtist
+          selectedArtistId={selectedArtistId}
+          setSelectedArtistId={setSelectedArtistId}
+        />
+        <CompletionStatus
+          isCompleted={newCompletionStatus}
+          handleInputChange={handleCompletionStatusChange}
+        />
         <View style={styles.buttonContainer}>
           <SaveAndCancelButtons
             onPress={onSavePress}
