@@ -29,7 +29,13 @@ export const convertToHtml = (markdownText: string): string => {
 
         const chordLength = match[0].length;
         const replacementLength = match[1].length;
-        const spacesNeeded = chordLength - replacementLength;
+
+        const nextChar = line.charAt(match.index + match[0].length);
+        const isAdjacentToNextChord = nextChar === '{';
+
+        const spacesNeeded = isAdjacentToNextChord
+          ? 1
+          : chordLength - replacementLength;
 
         chordHtml += `<span class="chord">${match[1]}</span>${' '.repeat(spacesNeeded)}`;
 
@@ -41,7 +47,6 @@ export const convertToHtml = (markdownText: string): string => {
       htmlOutput += `<span class="chord-line">${chordHtml}</span>`;
       continue;
     }
-
     const formattedLine = line
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.*?)\*/g, '<em>$1</em>')

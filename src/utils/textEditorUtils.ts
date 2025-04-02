@@ -200,21 +200,44 @@ const updateChordLine = (
   position: number,
 ): string => {
   const chordText = `{${newChord}}`;
-  const chordLength = chordText.length;
+
+  const chordPositions: { start: number; end: number }[] = [];
+  const chordRegex = /\{[^}]*\}/g;
+  let match;
+
+  while ((match = chordRegex.exec(chordLine)) !== null) {
+    chordPositions.push({
+      start: match.index,
+      end: match.index + match[0].length - 1,
+    });
+  }
+
+  let adjustedPosition = position;
+  for (const chord of chordPositions) {
+    if (position >= chord.start && position <= chord.end + 1) {
+      adjustedPosition = chord.end + 1;
+      break;
+    }
+  }
+
   const chordLineChars = [...chordLine];
 
-  while (chordLineChars.length <= position + chordLength - 1) {
+  while (chordLineChars.length <= adjustedPosition + chordText.length - 1) {
     chordLineChars.push(' ');
   }
 
   let availableSpace = 0;
-  for (let i = position; i < chordLineChars.length; i++) {
+  for (let i = adjustedPosition; i < chordLineChars.length; i++) {
     if (chordLineChars[i] !== ' ') break;
     availableSpace++;
   }
 
-  const whitespaceToRemove = Math.min(chordLength, availableSpace);
-  chordLineChars.splice(position, whitespaceToRemove, ...chordText.split(''));
+  const whitespaceToRemove = Math.min(chordText.length, availableSpace);
+  chordLineChars.splice(
+    adjustedPosition,
+    whitespaceToRemove,
+    ...chordText.split(''),
+  );
 
   return chordLineChars.join('');
 };
