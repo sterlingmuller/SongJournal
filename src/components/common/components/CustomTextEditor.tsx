@@ -25,28 +25,19 @@ interface CustomTextEditorProps {
 const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
   const styles = useTextEditorStyles();
   const textInputRef = useRef<TextInput>(null);
+  const debouncedInput = useDebounce(setText, 400);
 
   const [isWheelOpen, setIsWheelOpen] = useState(false);
   const [localText, setLocalText] = useState(text);
   const [selection, setSelection] = useState({ start: -1, end: -1 });
 
   useEffect(() => {
-    setLocalText(text);
-  }, [text]);
-
-  const debouncedInput = useDebounce((text: string) => {
-    setText(text);
-  }, 400);
-
-  const handleTextChange = (newText: string) => {
-    setLocalText(newText);
-    debouncedInput(newText);
-  };
+    debouncedInput(localText);
+  }, [localText]);
 
   const handleAddChord = (_: keyof SongInfo, chord: string) => {
     const newText = insertChord(localText, chord, selection);
     setLocalText(newText);
-    debouncedInput(newText);
   };
 
   const handleSectionInsertion = (section: LyricsSection) => {
@@ -57,7 +48,6 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
     );
 
     setLocalText(newText);
-    debouncedInput(newText);
 
     setTimeout(() => {
       textInputRef.current?.focus();
@@ -75,7 +65,6 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
 
     if (result.text !== localText) {
       setLocalText(result.text);
-      debouncedInput(result.text);
 
       setTimeout(() => {
         textInputRef.current?.focus();
@@ -95,7 +84,7 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
           ref={textInputRef}
           multiline
           value={localText}
-          onChangeText={handleTextChange}
+          onChangeText={setLocalText}
           onSelectionChange={(
             e: NativeSyntheticEvent<TextInputSelectionChangeEventData>,
           ) => {
