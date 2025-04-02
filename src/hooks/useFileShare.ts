@@ -92,8 +92,8 @@ const useFileShare = () => {
   const shareLyrics = useCallback(
     async (title: string, page: Page, artistId: number) => {
       try {
-        const formattedTitle = convertToSnakeCase(title);
-        const fileUri = `${FileSystem.cacheDirectory}${formattedTitle}.pdf`;
+        // const formattedTitle = convertToSnakeCase(title);
+        const fileUri = `${FileSystem.cacheDirectory}${title} Lyrics.pdf`;
         const pdfUri = await getPdfUri(title, page, artistId);
 
         await FileSystem.copyAsync({

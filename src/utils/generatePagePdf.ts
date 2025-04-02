@@ -3,6 +3,7 @@ import * as Print from 'expo-print';
 import { SONG_DETAILS } from '@src/components/common/constants';
 import { Page } from '@src/components/common/types';
 import { SongDetailKey } from '@src/components/common/enums';
+import { convertToHtml } from './convertToHtml';
 
 export const generatePagePdf = async (
   title: string,
@@ -10,6 +11,8 @@ export const generatePagePdf = async (
   artist: string,
 ) => {
   const { lyrics, info } = page;
+
+  const htmlLyrics = convertToHtml(lyrics);
 
   const renderInfo = () => {
     const infoToDisplay = Object.entries(SONG_DETAILS)
@@ -19,10 +22,14 @@ export const generatePagePdf = async (
       .filter((value: string | boolean) => value !== false);
 
     if (infoToDisplay.length) {
-      return `<p style="text-align: center;"><strong>${infoToDisplay.join(' &nbsp; &nbsp; ')}</strong></p>`;
+      return `
+      <div class="info-container">
+        ${infoToDisplay.map((item: string) => `<span class="info-item">${item}</span>`).join('')}
+      </div>
+    `;
     }
 
-    return '</>';
+    return '';
   };
 
   const renderAbout = () => {
@@ -31,7 +38,7 @@ export const generatePagePdf = async (
         <div class="about-section">
           <hr />
           <p>&nbsp;</p>
-          <p style="text-align: center;"><strong>About: </strong>${info.about}</p>
+          <div><strong>About: </strong>${info.about}</div>
         </div>
       `;
     }
@@ -47,7 +54,8 @@ export const generatePagePdf = async (
             margin: 10px;
           }
           body {
-            font-family: Arial, sans-serif;
+            font-family: monospace;
+            font-size: 14px;
             margin: 0;
             padding: 0;
             min-height: calc(100vh - 40px);
@@ -60,30 +68,71 @@ export const generatePagePdf = async (
           .header {
             background-color: #fdc883;
             text-align: center;
-            padding: 20px;
+            padding: 20px 20px 10px 20px;
+          }
+          .title {
+            font-size: 26px;
+            font-weight: bold;
+            margin: 0;
+          }
+          .artist{
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0;
+          }
+          .info {
+            font-weight: bold;
+            text-align: center;
+            font-size: 16px;
           }
           .content {
             flex-grow: 1;
-            padding: 20px 50px;
+            padding: 5px 30px 10px 50px;
+            white-space: pre;
           }
           .about-section {
             margin-top: auto;
-            padding: 30px 50px;
+            padding: 20px 50px;
+            text-align: center;
           }
           hr {
             margin: 20px 0;
+          }
+          .chord {
+            color: teal;
+            font-weight: bold;
+          }
+          .chord-line {
+            margin-top: 4px;
+          }
+          .lyric-line {
+            margin-bottom: 4px;
+          }
+          .section {
+            margin: 0 0 10px 0;
+          }
+          .info-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 0 0 10px 0;
+          }
+          .info-item {
+            white-space: nowrap;
+            font-weight: bold;
           }
         </style>
       </head>
       <body>
         <div class="container">
           <div class="header">
-            <p style="font-size: 24px; margin: 0;"><strong>${title}</strong></p>
-            ${artist ? `<p style="font-size: 18px; margin: 10px 0 0 0;"><strong>${artist}</strong></p>` : ''}
+            <p class="title">${title}</p>
+            ${artist && `<p class="artist">${artist}</p>`}
             ${renderInfo()}
           </div>
           <div class="content">
-            ${lyrics}
+            ${htmlLyrics}
           </div>
           ${renderAbout()}
         </div>

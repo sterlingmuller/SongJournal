@@ -5,18 +5,15 @@ export const convertToHtml = (markdownText: string): string => {
 
   const lines = markdownText.split('\n');
   let htmlOutput = '';
-  let previousWasChordLine = false;
 
   for (const line of lines) {
     if (!line.trim()) {
       htmlOutput += '<p>&nbsp;</p>';
-      previousWasChordLine = false;
       continue;
     }
 
     if (/^\[.*\]$/.test(line.trim())) {
       htmlOutput += `<div class="section"><strong>${line}</strong></div>`;
-      previousWasChordLine = false;
       continue;
     }
 
@@ -41,8 +38,7 @@ export const convertToHtml = (markdownText: string): string => {
 
       chordHtml += line.slice(lastIndex);
 
-      htmlOutput += `<span class="chord-line" style={'color': 'yellow}>${chordHtml}</span>`;
-      previousWasChordLine = true;
+      htmlOutput += `<span class="chord-line">${chordHtml}</span>`;
       continue;
     }
 
@@ -51,11 +47,7 @@ export const convertToHtml = (markdownText: string): string => {
       .replace(/\*(.*?)\*/g, '<em>$1</em>')
       .replace(/<u>(.*?)<\/u>/g, '<u>$1</u>');
 
-    htmlOutput += previousWasChordLine
-      ? `<div class="lyric-line">${formattedLine}</div>`
-      : `<div>${formattedLine}</div>`;
-
-    previousWasChordLine = false;
+    htmlOutput += `<div class="lyric-line">${formattedLine}</div>`;
   }
 
   return htmlOutput;

@@ -31,6 +31,7 @@ const useLyricScreenStyles = () => {
 
     lyricsContainer: {
       paddingHorizontal: 35,
+      marginBottom: 10,
     },
 
     details: {

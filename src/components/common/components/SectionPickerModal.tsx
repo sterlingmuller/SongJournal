@@ -35,7 +35,6 @@ export const SectionPickerModal = ({
 };
 
 const styles = StyleSheet.create({
-  // Section Picker
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -57,7 +56,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  // Section Header Display
   sectionHeader: {
     fontWeight: 'bold',
     fontSize: 18,
