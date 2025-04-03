@@ -36,7 +36,7 @@ const SettingsScreen = () => {
         <PrivacyPolicy />
         <About />
       </View>
-      <StyledText style={styles.version}>`Version ${APP_VERSION}</StyledText>
+      <StyledText style={styles.version}>{`Version ${APP_VERSION}`}</StyledText>
     </ScrollView>
   );
 };
