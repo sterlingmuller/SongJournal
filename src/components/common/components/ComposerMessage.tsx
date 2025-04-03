@@ -31,6 +31,8 @@ const ComposerMessage = ({ messageIntent }: props) => {
     'Tip: Visit Settings for the options to number your Songs List and disable future Tips';
   const songTip: string =
     'Tip: When there are multiple Takes of a Song, Double Tap a Take to set it as the new Starred Take';
+  const lyricsTip: string =
+    'Tip: Press the Info Button to add Song Details. All Song Details will be added to your Lyrics Pdf when exported.';
 
   const getStartedHomeInstructions = (
     <StyledText style={styles.text}>
@@ -45,6 +47,13 @@ const ComposerMessage = ({ messageIntent }: props) => {
     <StyledText style={styles.text}>
       Press the <StyledText style={styles.boldText}>Record</StyledText> button
       below to record your first Take!
+    </StyledText>
+  );
+
+  const getStartedLyricsInstructions = (
+    <StyledText style={styles.text}>
+      Press the <StyledText style={styles.boldText}>Edit</StyledText> button
+      above to start writing lyrics!
     </StyledText>
   );
 
@@ -87,6 +96,10 @@ const ComposerMessage = ({ messageIntent }: props) => {
     case MessageIntent.GET_STARTED_HOME:
       message = getStartedHomeInstructions;
       tip = homeTip;
+      break;
+    case MessageIntent.GET_STARTED_LYRICS:
+      message = getStartedLyricsInstructions;
+      tip = lyricsTip;
       break;
     case MessageIntent.GET_STARTED_SONG:
       message = getStartedSongInstructions;
