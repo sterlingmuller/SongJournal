@@ -66,7 +66,7 @@ export default ({ config }) => {
     },
     android: {
       softwareKeyboardLayoutMode: 'resize',
-      versionCode: 10,
+      versionCode: 11,
       package: IS_DEV
         ? 'com.sterling.silverado.songjournal.dev'
         : 'com.sterling.silverado.songjournal',
@@ -87,7 +87,7 @@ export default ({ config }) => {
       DROPBOX_CLIENT_SECRET: process.env.DROPBOX_CLIENT_SECRET,
     },
     owner: 'sterlo',
-    runtimeVersion: '0.2.0',
+    runtimeVersion: '0.2.1',
     updates: {
       url: 'https://u.expo.dev/782ab462-3c4f-4302-ae95-e24dfe286e87',
     },

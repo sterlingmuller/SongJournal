@@ -34,7 +34,6 @@ Additional details:\n`;
 Thank you!`;
 
   const deviceInfoFallback = `  - Device:
-  - OS:
   - App Version: ${APP_VERSION}
 
 Thank you!`;

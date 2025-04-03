@@ -25,7 +25,7 @@ import PersonIcon from '@src/icons/PersonIcon';
 import MaskIcon from '@src/icons/MaskIcon';
 import AddDetailsIcon from '@src/icons/AddDetailsIcon';
 
-export const APP_VERSION = '0.2.0';
+export const APP_VERSION = '0.2.1';
 
 export const DROPBOX_CLIENT_ID = Constants.expoConfig.extra.DROPBOX_CLIENT_ID;
 export const DROPBOX_CLIENT_SECRET =
