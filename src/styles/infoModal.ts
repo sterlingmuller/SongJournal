@@ -64,11 +64,15 @@ const useInfoModalStyle = () => {
       gap: 5,
     },
     artistContainer: {
+      width: '100%',
+      alignSelf: 'center',
       alignItems: 'center',
       flexDirection: 'row',
+      paddingHorizontal: 25,
       justifyContent: 'space-evenly',
       paddingTop: 10,
       paddingBottom: 20,
+      gap: 15,
     },
     artistTextbox: {
       backgroundColor: theme.inputBackground,
