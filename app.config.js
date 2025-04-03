@@ -66,7 +66,7 @@ export default ({ config }) => {
     },
     android: {
       softwareKeyboardLayoutMode: 'resize',
-      versionCode: 9,
+      versionCode: 10,
       package: IS_DEV
         ? 'com.sterling.silverado.songjournal.dev'
         : 'com.sterling.silverado.songjournal',
