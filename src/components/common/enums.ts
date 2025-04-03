@@ -49,6 +49,7 @@ export enum SongDetailKey {
 export enum LyricsOption {
   EDIT = 'Edit',
   CHORDS = 'Chords',
+  ADD_DETAILS = 'AddDetails',
   METRONOME = 'Metronome',
   SHARE = 'Share',
   NONE = '',

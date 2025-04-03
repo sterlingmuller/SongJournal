@@ -3,7 +3,6 @@ import { documentDirectory, cacheDirectory } from 'expo-file-system';
 import Constants from 'expo-constants';
 
 import EditIcon from '@src/icons/EditIcon';
-import ChordsIcon from '@src/icons/ChordsIcon';
 import MetronomeIcon from '@src/icons/MetronomeIcon';
 import ShareIcon from '@src/icons/ShareIcon';
 import PlaylistIcon from '@src/icons/PlaylistIcon';
@@ -24,6 +23,7 @@ import CacsusSelectIcon from '@src/icons/CacsusSelectIcon';
 import DeadAdimSelectIcon from '@src/icons/DeadAdimSelectIcon';
 import PersonIcon from '@src/icons/PersonIcon';
 import MaskIcon from '@src/icons/MaskIcon';
+import AddDetailsIcon from '@src/icons/AddDetailsIcon';
 
 export const APP_VERSION = '0.2.0';
 
@@ -55,7 +55,8 @@ export const SONG_DETAILS: Record<SongDetailKey, string> = {
 
 export const LYRIC_SCREEN_OPTIONS: t.LyricsScreenOption[] = [
   { name: LyricsOption.EDIT, icon: EditIcon },
-  { name: LyricsOption.CHORDS, icon: ChordsIcon },
+  // { name: LyricsOption.CHORDS, icon: ChordsIcon },
+  { name: LyricsOption.ADD_DETAILS, icon: AddDetailsIcon },
   { name: LyricsOption.METRONOME, icon: MetronomeIcon },
   { name: LyricsOption.SHARE, icon: ShareIcon },
 ];

@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 
 import LyricsHeader from '@src/components/lyrics/components/LyricsHeader';
-import InfoModal from '@src/components/lyrics/components/InfoModal';
+import SongDetailsModal from '@src/components/lyrics/components/SongDetailsModal';
 import LyricsSheet from '@src/components/lyrics/components/LyricsSheet';
 import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectCurrentSongId } from '@src/state/selectors/songsSelector';
@@ -17,6 +17,7 @@ import { useDispatch } from 'react-redux';
 import { setCurrentSongId } from '@src/state/slice/currentSongSlice';
 import { RootStackParamList } from '@src/components/common/types';
 import EditLyricsSheet from '@src/components/lyrics/components/EditLyricsSheet';
+import LyricsInfoModal from '@src/components/lyrics/components/LyricsInfoModal';
 
 const LyricsScreen = () => {
   const styles = useLyricScreenStyles();
@@ -29,6 +30,11 @@ const LyricsScreen = () => {
   const { updateLyrics } = useLyricsSheetGenerator();
 
   const [headerHeight, setHeaderHeight] = useState(0);
+  const { setOptions } = useNavigation();
+  const [isInfoModalOpen, setIsInfoModalOpen] = useState<boolean>(false);
+  const [isSongDetailsModalOpen, setIsSongDetailsModalOpen] =
+    useState<boolean>(false);
+  const [newLyrics, setNewLyrics] = useState<string>('');
 
   useEffect(() => {
     navigation.addListener('beforeRemove', () => {
@@ -42,15 +48,17 @@ const LyricsScreen = () => {
     LyricsOption.NONE,
   );
 
-  const { setOptions } = useNavigation();
-  const [isInfoModalOpen, setIsInfoModalOpen] = useState<boolean>(false);
-  const [newLyrics, setNewLyrics] = useState<string>('');
-
   useEffect(() => {
     if (page && newLyrics !== page.lyrics) {
       setNewLyrics(page.lyrics);
     }
   }, [page]);
+
+  useEffect(() => {
+    if (selectedOption === LyricsOption.ADD_DETAILS) {
+      setIsSongDetailsModalOpen(true);
+    }
+  }, [selectedOption]);
 
   const handleSaveLyrics = async () => {
     await updateLyrics(newLyrics);
@@ -122,13 +130,18 @@ const LyricsScreen = () => {
       />
       {renderSelectedOption()}
       {!!page.info && (
-        <InfoModal
-          isInfoModalOpen={isInfoModalOpen}
-          setIsInfoModalOpen={setIsInfoModalOpen}
+        <SongDetailsModal
+          isSongDetailsModalOpen={isSongDetailsModalOpen}
+          setIsSongDetailsModalOpen={setIsSongDetailsModalOpen}
           info={page.info}
           songId={songId}
+          setSelectedOption={setSelectedOption}
         />
       )}
+      <LyricsInfoModal
+        isInfoModalOpen={isInfoModalOpen}
+        setIsInfoModalOpen={setIsInfoModalOpen}
+      />
     </View>
   );
 };

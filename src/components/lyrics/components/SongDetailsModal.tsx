@@ -7,7 +7,7 @@ import CompletionStatus from '@src/components/lyrics/subcomponents/CompletionSta
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
 import { SongInfo } from '@src/components/common/types';
 import { SONG_DETAILS } from '@src/components/common/constants';
-import useInfoModalStyle from '@src/styles/infoModal';
+import useSongDetailsModalStyle from '@src/styles/songDetailsModal';
 import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import {
   updateSongArtistRequest,
@@ -15,7 +15,7 @@ import {
 } from '@src/state/sagas/actionCreators';
 import SongDetailSelect from '@src/components/lyrics/subcomponents/SongDetailSelect';
 import BpmDetail from '@src/components/lyrics/subcomponents/BpmDetail';
-import { SongDetailKey } from '@src/components/common/enums';
+import { LyricsOption, SongDetailKey } from '@src/components/common/enums';
 import {
   selectCurrentSongArtistId,
   selectCurrentSongCompletionStatus,
@@ -27,20 +27,22 @@ import StyledText from '@src/components/common/components/StyledText';
 import useDebounce from '@src/hooks/useDebounce';
 
 interface Props {
-  isInfoModalOpen: boolean;
-  setIsInfoModalOpen: (value: boolean) => void;
+  isSongDetailsModalOpen: boolean;
+  setIsSongDetailsModalOpen: (value: boolean) => void;
+  setSelectedOption: (valuer: LyricsOption) => void;
   info: SongInfo;
   songId: number;
 }
 
-const InfoModal = (props: Props) => {
+const SongDetailsModal = (props: Props) => {
   const {
-    isInfoModalOpen,
-    setIsInfoModalOpen,
+    isSongDetailsModalOpen,
+    setIsSongDetailsModalOpen,
+    setSelectedOption,
     info: originalInfo,
     songId,
   } = props;
-  const styles = useInfoModalStyle();
+  const styles = useSongDetailsModalStyle();
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
   const completionStatus = useAppSelector(selectCurrentSongCompletionStatus);
@@ -56,8 +58,9 @@ const InfoModal = (props: Props) => {
   const [isBpmInvalid, setIsBpmInvalid] = useState(false);
 
   const onExitPress = () => {
-    setIsInfoModalOpen(false);
     setNewInfo(originalInfo);
+    setSelectedOption(LyricsOption.NONE);
+    setIsSongDetailsModalOpen(false);
   };
 
   const changedInfo = useMemo(() => {
@@ -134,12 +137,12 @@ const InfoModal = (props: Props) => {
       );
     }
 
-    setIsInfoModalOpen(false);
+    setIsSongDetailsModalOpen(false);
   };
 
   return (
     <Modal
-      isVisible={isInfoModalOpen}
+      isVisible={isSongDetailsModalOpen}
       avoidKeyboard
       onBackdropPress={onExitPress}
       style={styles.modal}
@@ -212,4 +215,4 @@ const InfoModal = (props: Props) => {
   );
 };
 
-export default InfoModal;
+export default SongDetailsModal;

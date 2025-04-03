@@ -4,7 +4,7 @@ import { TouchableOpacity, View } from 'react-native';
 import SettingsWheel from '@src/components/common/components/SettingsWheel';
 import StyledText from '@src/components/common/components/StyledText';
 import NewArtistModal from '@src/components/settings/components/NewArtistModal';
-import useInfoModalStyle from '@src/styles/infoModal';
+import useInfoModalStyle from '@src/styles/songDetailsModal';
 import { useArtistName } from '@src/hooks/useArtistName';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 
