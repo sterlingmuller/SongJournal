@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import StyledText from '@src/components/common/components/StyledText';
-import useGetStartedHomeStyles from '@src/styles/getStartedHome';
+import useConductorMessageStyles from '@src/styles/conductorMessageStyles';
 import { Conductor, MessageIntent } from '@src/components/common/enums';
 import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import {
@@ -13,16 +13,14 @@ import EggIcon from '@src/icons/EggIcon';
 import BadEggIcon from '@src/icons/BadEggIcon';
 import CacsusIcon from '@src/icons/CacsusIcon';
 import DeadAdimIcon from '@src/icons/DeadAdimIcon';
-import useGlobalStyles from '@src/styles/global';
 
 interface props {
   messageIntent: MessageIntent;
 }
 const ComposerMessage = ({ messageIntent }: props) => {
-  const styles = useGetStartedHomeStyles();
+  const styles = useConductorMessageStyles();
   const conductor = useAppSelector(selectConductor);
   const displayTips = useAppSelector(selectDisplayTips);
-  const globalStyles = useGlobalStyles();
 
   let message: React.ReactElement;
   let tip: string;
@@ -32,7 +30,7 @@ const ComposerMessage = ({ messageIntent }: props) => {
   const songTip: string =
     'Tip: When there are multiple Takes of a Song, Double Tap a Take to set it as the new Starred Take';
   const lyricsTip: string =
-    'Tip: Press the Info Button to add Song Details. All Song Details will be added to your Lyrics Pdf when exported.';
+    'Tip: Add information about your Song by pressing the Details button, beside Edit. All Song Details will added to your Lyrics pdf when shared.';
 
   const getStartedHomeInstructions = (
     <StyledText style={styles.text}>
@@ -53,7 +51,9 @@ const ComposerMessage = ({ messageIntent }: props) => {
   const getStartedLyricsInstructions = (
     <StyledText style={styles.text}>
       Press the <StyledText style={styles.boldText}>Edit</StyledText> button
-      above to start writing lyrics!
+      above to start writing Lyrics. Press the{' '}
+      <StyledText style={styles.boldText}>Info</StyledText> button in the Header
+      for guidance on using the Toolbar Shortcuts.
     </StyledText>
   );
 
@@ -139,15 +139,14 @@ const ComposerMessage = ({ messageIntent }: props) => {
   };
 
   return (
-    <View style={globalStyles.container}>
-      <View style={styles.container}>
-        <View style={styles.eggContainer}>{renderConductor()}</View>
-        <View style={styles.textbox}>
-          {message}
-          <View style={styles.arrow} />
+    <View style={styles.container}>
+      <View style={styles.eggContainer}>{renderConductor()}</View>
+      <View style={styles.textbox}>{message}</View>
+      {displayTips && (
+        <View style={{ width: '100%' }}>
+          <StyledText style={styles.tipText}>{tip}</StyledText>
         </View>
-        {displayTips && <StyledText style={styles.tipText}>{tip}</StyledText>}
-      </View>
+      )}
     </View>
   );
 };

@@ -1,26 +1,24 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { useColorTheme } from '@src/state/context/ThemeContext';
+import { SCREEN_HEIGHT } from '@src/components/common/constants';
 
 interface Styles {
   container: ViewStyle;
   textbox: ViewStyle;
   eggContainer: ViewStyle;
-  arrow: ViewStyle;
   tipText: TextStyle;
   text: TextStyle;
   boldText: TextStyle;
   italicText: TextStyle;
 }
 
-const useGetStartedHomeStyles = () => {
+const useConductorMessageStyles = () => {
   const { theme } = useColorTheme();
 
-  const createNewSongButtonStyles: Styles = StyleSheet.create({
+  const conductorMessageStyles: Styles = StyleSheet.create({
     container: {
       alignItems: 'center',
-      justifyContent: 'center',
-      height: 520,
-      gap: 20,
+      paddingVertical: SCREEN_HEIGHT * 0.1,
       backgroundColor: theme.primaryBackground,
     },
     textbox: {
@@ -28,6 +26,9 @@ const useGetStartedHomeStyles = () => {
       padding: 18,
       backgroundColor: theme.secondary,
       borderRadius: 10,
+      marginBottom: 20,
+      marginTop: 10,
+      zIndex: 2,
     },
     text: {
       textAlign: 'center',
@@ -35,16 +36,6 @@ const useGetStartedHomeStyles = () => {
       fontWeight: '500',
       lineHeight: 26,
       color: theme.secondaryText,
-    },
-    arrow: {
-      position: 'absolute',
-      top: 0,
-      right: '20%',
-      width: 60,
-      height: 50,
-      backgroundColor: theme.secondary,
-      transform: [{ rotate: '45deg' }],
-      zIndex: -1,
     },
     eggContainer: {
       width: 170,
@@ -57,7 +48,7 @@ const useGetStartedHomeStyles = () => {
       marginBottom: 30,
     },
     boldText: {
-      fontWeight: 700,
+      fontWeight: '700',
       color: theme.secondaryText,
     },
     italicText: {
@@ -65,18 +56,19 @@ const useGetStartedHomeStyles = () => {
       color: theme.secondaryText,
     },
     tipText: {
-      position: 'absolute',
-      bottom: 20,
+      width: '100%',
       fontSize: 14,
       textAlign: 'center',
       paddingHorizontal: 30,
+      paddingBottom: 20,
       fontStyle: 'italic',
       color: theme.tipText,
       fontWeight: '600',
+      marginTop: 'auto',
     },
   });
 
-  return createNewSongButtonStyles;
+  return conductorMessageStyles;
 };
 
-export default useGetStartedHomeStyles;
+export default useConductorMessageStyles;
