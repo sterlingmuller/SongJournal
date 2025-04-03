@@ -25,25 +25,34 @@ I encountered the following issue:
 3. Actual behavior:
    - What actually happened
 
-Additional details:
-- Device: ${modelName}
-- OS: ${osName} ${osVersion}
-- App Version: ${APP_VERSION}
+Additional details:\n`;
 
-Thank you!
-    `;
+  const deviceInfo = `  - Device: ${modelName}
+  - OS: ${osName} ${osVersion}
+  - App Version: ${APP_VERSION}
 
-  const mailtoUrl = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(SUBJECT)}&body=${encodeURIComponent(BUG_EMAIL_BODY)}`;
+Thank you!`;
+
+  const deviceInfoFallback = `  - Device:
+  - OS:
+  - App Version: ${APP_VERSION}
+
+Thank you!`;
+
+  const mailtoUrl = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(SUBJECT)}&body=${encodeURIComponent(BUG_EMAIL_BODY + deviceInfo)}`;
+
+  const mailtoUrlFallback = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(SUBJECT)}&body=${encodeURIComponent(BUG_EMAIL_BODY + deviceInfoFallback)}`;
 
   try {
     const supported = await Linking.canOpenURL(mailtoUrl);
     if (supported) {
       await Linking.openURL(mailtoUrl);
     } else {
-      Alert.alert(
-        'Email Not Supported',
-        'Your device does not support opening the email client.',
-      );
+      // Alert.alert(
+      //   'Email Not Supported',
+      //   'Your device does not support opening the email client.',
+      // );
+      await Linking.openURL(mailtoUrlFallback);
     }
   } catch (error) {
     Alert.alert(
