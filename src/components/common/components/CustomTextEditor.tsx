@@ -31,9 +31,29 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
   const [localText, setLocalText] = useState(text);
   const [selection, setSelection] = useState({ start: -1, end: -1 });
 
+  const [history, setHistory] = useState<string[]>([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
+
   useEffect(() => {
+    if (historyIndex === -1 || localText !== history[historyIndex]) {
+      const newHistory = [...history.slice(0, historyIndex + 1), localText];
+      if (newHistory.length > 10) {
+        newHistory.shift();
+      } else {
+        setHistoryIndex(newHistory.length - 1);
+      }
+      setHistory(newHistory);
+    }
     debouncedInput(localText);
   }, [localText]);
+
+  const handleUndo = () => {
+    if (historyIndex > 0) {
+      const newIndex = historyIndex - 1;
+      setHistoryIndex(newIndex);
+      setLocalText(history[newIndex]);
+    }
+  };
 
   const handleAddChord = (_: keyof SongInfo, chord: string) => {
     const newText = insertChord(localText, chord, selection);
@@ -103,6 +123,8 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
         selection={selection}
         onTextSection={handleSectionInsertion}
         onGerundConvert={onGerundConvert}
+        onUndo={handleUndo}
+        canUndo={historyIndex > 0}
       />
 
       <ChordWheelModal

@@ -54,8 +54,8 @@ const LyricsScreen = () => {
     }
   }, [page]);
 
-  const handleSaveLyrics = () => {
-    updateLyrics(newLyrics);
+  const handleSaveLyrics = async () => {
+    await updateLyrics(newLyrics);
 
     if (newLyrics) {
       setSelectedOption(LyricsOption.NONE);

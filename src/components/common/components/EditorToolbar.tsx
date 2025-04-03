@@ -18,6 +18,8 @@ interface EditorToolbarProps {
   selection: { start: number; end: number };
   onTextSection: (section: LyricsSection) => void;
   onGerundConvert: () => void;
+  onUndo: () => void;
+  canUndo: boolean;
 }
 
 const EditorToolbar = ({
@@ -27,6 +29,8 @@ const EditorToolbar = ({
   selection,
   onTextSection,
   onGerundConvert,
+  onUndo,
+  canUndo,
 }: EditorToolbarProps) => {
   const styles = useTextEditorStyles();
   const [isSectionsOpen, setIsSectionsOpen] = React.useState(false);
@@ -82,6 +86,15 @@ const EditorToolbar = ({
   return (
     <View style={styles.toolbarContainer}>
       <View style={styles.buttonGroup}>
+        <TouchableOpacity
+          onPress={onUndo}
+          style={styles.button}
+          disabled={!canUndo}
+        >
+          <Text style={{ opacity: canUndo ? 1 : 0.3, fontWeight: 'bold' }}>
+            {'<--'}
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={onBold} style={styles.button}>
           <Text>B</Text>
         </TouchableOpacity>
