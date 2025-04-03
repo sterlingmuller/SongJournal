@@ -8,7 +8,7 @@ export default ({ config }) => {
     name: IS_DEV ? 'SJ (Dev)' : 'Song Journal',
     slug: 'SongJournal',
     scheme: IS_DEV ? 'songjournaldev' : 'songjournal',
-    version: '0.1.1',
+    version: '0.2.0',
     orientation: 'portrait',
     icon: './assets/Icon.png',
     userInterfaceStyle: 'light',
@@ -66,7 +66,7 @@ export default ({ config }) => {
     },
     android: {
       softwareKeyboardLayoutMode: 'resize',
-      versionCode: 8,
+      versionCode: 9,
       package: IS_DEV
         ? 'com.sterling.silverado.songjournal.dev'
         : 'com.sterling.silverado.songjournal',
@@ -87,7 +87,7 @@ export default ({ config }) => {
       DROPBOX_CLIENT_SECRET: process.env.DROPBOX_CLIENT_SECRET,
     },
     owner: 'sterlo',
-    runtimeVersion: '0.1.1',
+    runtimeVersion: '0.2.0',
     updates: {
       url: 'https://u.expo.dev/782ab462-3c4f-4302-ae95-e24dfe286e87',
     },
