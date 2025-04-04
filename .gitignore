@@ -30,3 +30,7 @@ web-build/
 # Misc
 *.log
 .env
+
+# builds
+*.apk
+*.aab
