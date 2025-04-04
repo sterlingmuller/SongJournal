@@ -53,9 +53,9 @@ const useWheelPickerModalStyles = () => {
     },
 
     title: {
-      paddingVertical: 15,
+      paddingVertical: 12,
       paddingLeft: 30,
-      fontSize: 16,
+      fontSize: 18,
       fontWeight: 'bold',
       color: theme.secondaryText,
     },

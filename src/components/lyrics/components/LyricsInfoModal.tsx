@@ -67,11 +67,17 @@ const LyricsInfoModal = (props: Props) => {
             Above the current line if cursor is elsewhere
           </HyphenPoint>
 
-          <Text style={styles.sectionTitle}>-in' Shortcut:</Text>
-          <BulletPoint>Replaces -ing endings with -in'.</BulletPoint>
+          <Text style={styles.sectionTitle}>
+            <Text style={styles.sectionTitle}>-in' Shortcut:</Text> Shortcut:
+          </Text>
+          <BulletPoint>
+            Replaces <Text style={styles.italic}>-ing</Text> endings with{' '}
+            <Text style={styles.italic}>-in'</Text>.
+          </BulletPoint>
           <Text style={styles.exampleText}>Running → Runnin'</Text>
           <BulletPoint>
-            Works when cursor is on any word ending with -ing.
+            Applies change when cursor is on any word ending with{' '}
+            <Text style={styles.italic}>-ing</Text>.
           </BulletPoint>
 
           <Text style={styles.sectionTitle}>Additional Features:</Text>

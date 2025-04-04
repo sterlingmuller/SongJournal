@@ -8,6 +8,7 @@ interface Styles {
   title: TextStyle;
   sectionTitle: TextStyle;
   exampleText: TextStyle;
+  italic: TextStyle;
 }
 
 const useInfoModalStyle = () => {
@@ -49,6 +50,9 @@ const useInfoModalStyle = () => {
       textAlign: 'center',
       paddingBottom: 5,
       fontWeight: 'bold',
+    },
+    italic: {
+      fontStyle: 'italic',
     },
   });
 

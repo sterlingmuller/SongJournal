@@ -59,6 +59,11 @@ export const insertSectionAtCursor = (
   const hasEmptyLineBefore =
     currentLineIndex > 0 && lines[currentLineIndex - 1].trim() === '';
   const shouldSkipExtraLine = hasEmptyLineBefore;
+  const hasChordLineAbove =
+    currentLineIndex > 0 && isChordLine(lines[currentLineIndex - 1]);
+  const insertionLineIndex = hasChordLineAbove
+    ? currentLineIndex - 1
+    : currentLineIndex;
 
   let sectionLineIndex = currentLineIndex;
   let cursorPosition = start;
@@ -75,12 +80,12 @@ export const insertSectionAtCursor = (
         charCount + currentLine.length + 1 + 1 + section.length + 1;
     }
   } else if (currentLine.trim().length > 0) {
-    lines.splice(currentLineIndex, 0, section);
-    sectionLineIndex = currentLineIndex;
+    lines.splice(insertionLineIndex, 0, section);
+    sectionLineIndex = insertionLineIndex;
     cursorPosition = charCount + section.length + 1;
   } else {
-    lines[currentLineIndex] = section;
-    sectionLineIndex = currentLineIndex;
+    lines[insertionLineIndex] = section;
+    sectionLineIndex = insertionLineIndex;
     cursorPosition = charCount + section.length + 1;
   }
 

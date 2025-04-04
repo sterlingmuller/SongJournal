@@ -80,7 +80,7 @@ const ChordWheelModal = (props: Props) => {
       hideModalContentWhileAnimating={true}
     >
       <View style={styles.container}>
-        <StyledText style={styles.title}>Key Signature</StyledText>
+        <StyledText style={styles.title}>Chord Generator</StyledText>
         <View style={styles.line} />
         <SectionsWheelPicker
           numberOfVisibleRows={5}
