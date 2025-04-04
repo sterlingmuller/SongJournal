@@ -27,6 +27,7 @@ const LyricsInfoModal = (props: Props) => {
       avoidKeyboard
       onBackdropPress={onExitPress}
       style={styles.modal}
+      hideModalContentWhileAnimating={true}
     >
       <View style={styles.container}>
         <Text style={styles.title}>Lyric Editor Shortcuts</Text>

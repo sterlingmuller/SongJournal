@@ -33,6 +33,7 @@ const AppNavigator = () => {
           name={Screen.SONG}
           component={SongScreenAudioContainer}
           options={{
+            animation: 'slide_from_right',
             header: () => <DefaultHeader title={title} screen={Screen.SONG} />,
           }}
         />
@@ -44,6 +45,7 @@ const AppNavigator = () => {
           }: {
             route: RouteProp<RootStackParamList, Screen.RECORDING>;
           }) => ({
+            presentation: 'transparentModal',
             animation: 'fade',
             header: () => <DefaultHeader title={route.params.title} />,
           })}
@@ -51,12 +53,13 @@ const AppNavigator = () => {
         <RootStack.Screen
           name={Screen.LYRICS}
           component={LyricsScreen}
-          options={{ ...styles }}
+          options={{ ...styles, animation: 'slide_from_right' }}
         />
         <RootStack.Screen
           name={Screen.SETTINGS}
           component={SettingsScreen}
           options={{
+            presentation: 'transparentModal',
             header: () => <DefaultHeader title={Screen.SETTINGS} />,
           }}
         />

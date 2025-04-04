@@ -73,6 +73,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
         isVisible={isNewSongOpen}
         avoidKeyboard
         onBackdropPress={onExitPress}
+        hideModalContentWhileAnimating={true}
       >
         <View style={styles.container}>
           <StyledText style={styles.title}>Song Title</StyledText>

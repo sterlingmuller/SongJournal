@@ -58,6 +58,7 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
         isVisible={isNewArtistOpen}
         avoidKeyboard
         onBackdropPress={onExitPress}
+        hideModalContentWhileAnimating={true}
       >
         <View style={styles.modalContainer}>
           <StyledText style={styles.title}>Add or Edit Artist</StyledText>

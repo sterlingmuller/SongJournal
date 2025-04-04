@@ -17,6 +17,7 @@ const useConductorMessageStyles = () => {
 
   const conductorMessageStyles: Styles = StyleSheet.create({
     container: {
+      flex: 1,
       alignItems: 'center',
       paddingVertical: SCREEN_HEIGHT * 0.1,
       backgroundColor: theme.primaryBackground,

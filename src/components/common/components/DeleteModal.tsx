@@ -99,7 +99,12 @@ const DeleteModal = (props: Props) => {
 
   return (
     <KeyboardAvoidingView>
-      <Modal isVisible={isVisible} avoidKeyboard onBackdropPress={onExitPress}>
+      <Modal
+        isVisible={isVisible}
+        avoidKeyboard
+        onBackdropPress={onExitPress}
+        hideModalContentWhileAnimating={true}
+      >
         <View style={styles.container}>
           <StyledText style={styles.title}>
             Delete {title} from device

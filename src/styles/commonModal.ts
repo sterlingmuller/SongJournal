@@ -69,7 +69,12 @@ const useCommonModalStyle = () => {
       paddingTop: 10,
     },
 
-    text: { textAlign: 'center', fontSize: 15, paddingHorizontal: 5 },
+    text: {
+      textAlign: 'center',
+      fontSize: 15,
+      paddingHorizontal: 5,
+      color: theme.secondaryText,
+    },
     boldText: { fontWeight: 'bold' },
 
     inputX: { fontWeight: 600, color: theme.secondaryText, fontSize: 14 },

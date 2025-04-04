@@ -39,6 +39,7 @@ const SortByModal = (props: Props) => {
         avoidKeyboard
         onBackdropPress={onExitPress}
         style={{ margin: 0 }}
+        hideModalContentWhileAnimating={true}
       >
         <View style={styles.container}>
           <Text style={styles.title}>Sort by</Text>

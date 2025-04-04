@@ -137,6 +137,7 @@ const SongDetailsModal = (props: Props) => {
       );
     }
 
+    setSelectedOption(LyricsOption.NONE);
     setIsSongDetailsModalOpen(false);
   };
 
@@ -146,6 +147,7 @@ const SongDetailsModal = (props: Props) => {
       avoidKeyboard
       onBackdropPress={onExitPress}
       style={styles.modal}
+      hideModalContentWhileAnimating={true}
     >
       <View style={styles.container}>
         <View style={styles.mainInputContainer}>

@@ -112,6 +112,7 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
         isVisible={!!originalSongTitle}
         avoidKeyboard
         onBackdropPress={onExitPress}
+        hideModalContentWhileAnimating={true}
       >
         <View style={styles.container}>
           <StyledText style={styles.title}>{modalTitle}</StyledText>

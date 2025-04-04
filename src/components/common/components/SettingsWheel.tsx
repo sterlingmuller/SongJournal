@@ -38,6 +38,7 @@ const SettingsWheel = (props: Props) => {
       avoidKeyboard
       onBackdropPress={onExitPress}
       style={{ margin: 0 }}
+      hideModalContentWhileAnimating={true}
     >
       <View style={styles.container}>
         <StyledText style={styles.title}>{label}</StyledText>

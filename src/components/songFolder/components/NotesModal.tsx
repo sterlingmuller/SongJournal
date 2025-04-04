@@ -46,6 +46,7 @@ const NotesModal = (props: Props) => {
       avoidKeyboard
       onBackdropPress={onExitPress}
       style={styles.modal}
+      hideModalContentWhileAnimating={true}
     >
       <View style={styles.container}>
         <Text style={styles.title}>{title} Notes</Text>

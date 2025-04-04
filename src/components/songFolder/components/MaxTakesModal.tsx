@@ -23,7 +23,11 @@ const MaxTakesModal = ({
   };
 
   return (
-    <Modal isVisible={isMaxTakesModalOpen} onBackdropPress={onExitPress}>
+    <Modal
+      isVisible={isMaxTakesModalOpen}
+      onBackdropPress={onExitPress}
+      hideModalContentWhileAnimating={true}
+    >
       <View style={styles.container}>
         <StyledText style={styles.title}>Max Take Limit</StyledText>
         <View>

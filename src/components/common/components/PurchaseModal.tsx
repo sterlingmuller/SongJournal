@@ -48,6 +48,7 @@ const PurchaseModal = ({
       isVisible={!!conductorToPurchase}
       avoidKeyboard
       onBackdropPress={onExitPress}
+      hideModalContentWhileAnimating={true}
     >
       <View style={styles.container}>
         <StyledText style={styles.title}>

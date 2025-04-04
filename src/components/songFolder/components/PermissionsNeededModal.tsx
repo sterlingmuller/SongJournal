@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Modal, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { openSettings } from 'expo-linking';
+import Modal from 'react-native-modal';
 
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
 import StyledText from '@src/components/common/components/StyledText';
-import usePermissionsNeededModalStyles from '@src/styles/permissionsNeededModal';
+import useCommonModalStyle from '@src/styles/commonModal';
 
 interface Props {
   isPermissionsNeededModalOpen: boolean;
@@ -15,7 +16,7 @@ const PermissionsNeededModal = ({
   isPermissionsNeededModalOpen,
   setIsPermissionsNeededModalOpen,
 }: Props) => {
-  const styles = usePermissionsNeededModalStyles();
+  const styles = useCommonModalStyle();
 
   const onPress = () => {
     openSettings();
@@ -25,27 +26,23 @@ const PermissionsNeededModal = ({
   };
 
   return (
-    <Modal transparent visible={isPermissionsNeededModalOpen}>
-      <TouchableOpacity
-        style={styles.modalContainer}
-        activeOpacity={1}
-        onPress={onExitPress}
-      >
-        <View style={styles.container}>
-          <StyledText style={styles.title}>Permission Needed</StyledText>
-          <StyledText style={styles.text}>
-            To record songs, SongJournal needs access to your microphone. Please
-            enable microphone access in your device settings.
-          </StyledText>
-          <View style={styles.buttons}>
-            <SaveAndCancelButtons
-              onPress={onPress}
-              onExitPress={onExitPress}
-              primaryLabel="Settings"
-            />
-          </View>
-        </View>
-      </TouchableOpacity>
+    <Modal
+      isVisible={isPermissionsNeededModalOpen}
+      onBackdropPress={onExitPress}
+      hideModalContentWhileAnimating={true}
+    >
+      <View style={styles.container}>
+        <StyledText style={styles.title}>Permission Needed</StyledText>
+        <StyledText style={styles.text}>
+          To record songs, Song Journal needs access to your microphone. Please
+          enable microphone access in your device settings.
+        </StyledText>
+        <SaveAndCancelButtons
+          onPress={onPress}
+          onExitPress={onExitPress}
+          primaryLabel="Settings"
+        />
+      </View>
     </Modal>
   );
 };
