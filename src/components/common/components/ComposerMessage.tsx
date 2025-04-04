@@ -30,7 +30,7 @@ const ComposerMessage = ({ messageIntent }: props) => {
   const songTip: string =
     'Tip: When there are multiple Takes of a Song, Double Tap a Take to set it as the new Starred Take';
   const lyricsTip: string =
-    'Tip: Add information about your Song by pressing the Details button, beside Edit. All Song Details will added to your Lyrics pdf when shared.';
+    'Tip: Add Details to your Song by pressing the Details Button, beside Edit. All Song Details will be added to your Lyrics pdf when shared.';
 
   const getStartedHomeInstructions = (
     <StyledText style={styles.text}>
@@ -50,9 +50,9 @@ const ComposerMessage = ({ messageIntent }: props) => {
 
   const getStartedLyricsInstructions = (
     <StyledText style={styles.text}>
-      Press the <StyledText style={styles.boldText}>Edit</StyledText> button
+      Press the <StyledText style={styles.boldText}>Edit</StyledText> Button
       above to start writing Lyrics. Press the{' '}
-      <StyledText style={styles.boldText}>Info</StyledText> button in the Header
+      <StyledText style={styles.boldText}>Info</StyledText> Button in the Header
       for guidance on using the Toolbar Shortcuts.
     </StyledText>
   );
