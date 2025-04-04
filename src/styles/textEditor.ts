@@ -6,10 +6,16 @@ interface Styles {
   editor: TextStyle;
   toolbarContainer: ViewStyle;
   buttonGroup: ViewStyle;
+  textButtons: ViewStyle;
+  shortcutButtons: ViewStyle;
   button: ViewStyle;
+  fixedWidthButton: ViewStyle;
+  smallFixedWidthButton: ViewStyle;
+  separatorBar: ViewStyle;
   sectionPicker: ViewStyle;
   sectionButton: ViewStyle;
   sectionText: TextStyle;
+  shortcutText: TextStyle;
 }
 
 const useTextEditorStyles = () => {
@@ -50,12 +56,37 @@ const useTextEditorStyles = () => {
     },
     buttonGroup: {
       flexDirection: 'row',
-      justifyContent: 'space-around',
-      paddingHorizontal: 16,
+      alignItems: 'center',
+    },
+    textButtons: {
+      flexDirection: 'row',
+      paddingRight: 5,
+      paddingLeft: 8,
+    },
+    shortcutButtons: {
+      flexDirection: 'row',
+      flex: 1,
+      paddingLeft: 5,
+      paddingRight: 8,
     },
     button: {
       padding: 8,
-      borderRadius: 4,
+    },
+    fixedWidthButton: {
+      padding: 2,
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    smallFixedWidthButton: {
+      flex: 0.7,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    separatorBar: {
+      width: 2,
+      backgroundColor: '#cccccc',
+      height: '100%',
     },
     sectionPicker: {
       position: 'absolute',
@@ -78,6 +109,11 @@ const useTextEditorStyles = () => {
     },
     sectionText: {
       fontSize: 16,
+      textAlign: 'center',
+    },
+    shortcutText: {
+      fontSize: 14,
+      fontWeight: 'bold',
       textAlign: 'center',
     },
   });

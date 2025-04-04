@@ -10,6 +10,10 @@ import Animated, {
 import { LyricsSection } from '../enums';
 import useTextEditorStyles from '@src/styles/textEditor';
 import { insertAtCursor } from '@src/utils/textEditorUtils';
+import UndoIcon from '@src/icons/UndoIcon';
+import BoldIcon from '@src/icons/BoldIcon';
+import ItalicIcon from '@src/icons/ItalicIcon';
+import HyphenIcon from '@src/icons/HyphenIcon';
 
 interface EditorToolbarProps {
   localText: string;
@@ -19,7 +23,7 @@ interface EditorToolbarProps {
   onTextSection: (section: LyricsSection) => void;
   onGerundConvert: () => void;
   onUndo: () => void;
-  canUndo: boolean;
+  isUndoDisabled: boolean;
 }
 
 const EditorToolbar = ({
@@ -30,7 +34,7 @@ const EditorToolbar = ({
   onTextSection,
   onGerundConvert,
   onUndo,
-  canUndo,
+  isUndoDisabled,
 }: EditorToolbarProps) => {
   const styles = useTextEditorStyles();
   const [isSectionsOpen, setIsSectionsOpen] = React.useState(false);
@@ -86,33 +90,48 @@ const EditorToolbar = ({
   return (
     <View style={styles.toolbarContainer}>
       <View style={styles.buttonGroup}>
-        <TouchableOpacity
-          onPress={onUndo}
-          style={styles.button}
-          disabled={!canUndo}
-        >
-          <Text style={{ opacity: canUndo ? 1 : 0.3, fontWeight: 'bold' }}>
-            {'<--'}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onBold} style={styles.button}>
-          <Text>B</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onItalic} style={styles.button}>
-          <Text>I</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onHyphen} style={styles.button}>
-          <Text>-</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onAddChord} style={styles.button}>
-          <Text>Chords</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={toggleSections} style={styles.button}>
-          <Text>Song Sections</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onGerundConvert} style={styles.button}>
-          <Text>-in'</Text>
-        </TouchableOpacity>
+        <View style={styles.textButtons}>
+          <TouchableOpacity
+            onPress={onUndo}
+            style={styles.button}
+            disabled={isUndoDisabled}
+          >
+            <UndoIcon isDisabled={isUndoDisabled} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onBold} style={styles.button}>
+            <BoldIcon />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onItalic} style={styles.button}>
+            <ItalicIcon />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.separatorBar} />
+        <View style={styles.shortcutButtons}>
+          <TouchableOpacity
+            onPress={onHyphen}
+            style={styles.smallFixedWidthButton}
+          >
+            <HyphenIcon />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={onGerundConvert}
+            style={styles.smallFixedWidthButton}
+          >
+            <Text style={styles.shortcutText}>-in'</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={onAddChord}
+            style={styles.fixedWidthButton}
+          >
+            <Text style={styles.shortcutText}>Chords</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={toggleSections}
+            style={styles.fixedWidthButton}
+          >
+            <Text style={styles.shortcutText}>Sections</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       {isSectionsOpen && (
         <AnimatedView style={[styles.sectionPicker, animatedStyles]}>
