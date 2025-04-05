@@ -89,6 +89,7 @@ export const generatePagePdf = async (
             flex-grow: 1;
             padding: 5px 30px 10px 50px;
             white-space: pre;
+            position: relative;
           }
           .about-section {
             margin-top: auto;
@@ -101,9 +102,13 @@ export const generatePagePdf = async (
           .chord {
             color: teal;
             font-weight: bold;
+             position: relative;
+          display: inline-block;
           }
           .chord-line {
             margin-top: 4px;
+          display: block;
+            position: relative;
           }
           .lyric-line {
             margin-bottom: 4px;

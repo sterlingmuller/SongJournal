@@ -124,7 +124,7 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
         onTextSection={handleSectionInsertion}
         onGerundConvert={onGerundConvert}
         onUndo={handleUndo}
-        isUndoDisabled={historyIndex === 0}
+        canUndo={historyIndex > 0}
       />
 
       <ChordWheelModal

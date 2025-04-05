@@ -45,18 +45,11 @@ export const shareZip = async (
       deleteFiles(zipPath, formattedTitle);
       Alert.alert(
         'Share Successful',
-        title
-          ? 'An error occurred while sharing your song folder.'
-          : 'Your backup has been created and shared.',
+        'Your backup has been created and shared.',
       );
     }
   } catch (error) {
-    Alert.alert(
-      'Share Failed',
-      title
-        ? `${title} has been shared.`
-        : 'An error occurred while creating the backup.',
-    );
+    Alert.alert('Share Failed', 'An error occurred while creating the backup.');
   }
 };
 
@@ -97,11 +90,12 @@ export const shareAudio = async (path: string, title: string, date: string) => {
 
 export const sharePdf = async (path: string, title: string) => {
   const fileUrl = Platform.OS === 'android' ? `file://${path}` : path;
+  const emailBody = `${title}\n\nShared from Song Journal`;
 
   const shareOptions = {
     title: title,
     subject: title,
-    message: title,
+    message: emailBody,
     url: fileUrl,
     type: 'application/pdf',
     failOnCancel: false,
@@ -114,7 +108,7 @@ export const sharePdf = async (path: string, title: string) => {
     if (result.message === 'CANCELED') {
       setTimeout(() => {
         deleteFiles(path);
-      }, 100);
+      }, 1000);
     }
 
     if (result.success) {

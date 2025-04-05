@@ -8,7 +8,7 @@ export default ({ config }) => {
     name: IS_DEV ? 'SJ (Dev)' : 'Song Journal',
     slug: 'SongJournal',
     scheme: IS_DEV ? 'songjournaldev' : 'songjournal',
-    version: '0.2.4',
+    version: '0.2.5',
     orientation: 'portrait',
     icon: './assets/Icon.png',
     userInterfaceStyle: 'light',
@@ -21,16 +21,43 @@ export default ({ config }) => {
             enableProguardInReleaseBuilds: true,
             enableShrinkResourcesInReleaseBuilds: true,
             extraProguardRules: `
-              -keep class com.facebook.react.uimanager.** { *; }
-              -keep class com.facebook.react.animated.** { *; }
-              -keep class android.view.animation.** { *; }
-              -keep class androidx.transition.** { *; }
-              -keepattributes *Annotation*
-              -keepclassmembers class ** {
-                public void onAnimationStart(android.view.animation.Animation);
-                public void onAnimationEnd(android.view.animation.Animation);
-              }
-            `,
+    # React Native core
+    -keep class com.facebook.react.** { *; }
+    -keep class com.facebook.hermes.unicode.** { *; }
+
+    # React Native UI and animations
+    -keep class com.facebook.react.uimanager.** { *; }
+    -keep class com.facebook.react.animated.** { *; }
+    -keep class android.view.animation.** { *; }
+    -keep class androidx.transition.** { *; }
+
+    # react-native-modal
+    -keep class com.reactnativecommunity.modal.** { *; }
+    -keepclassmembers class * extends android.view.View {
+      void set*(***);
+      *** get*();
+    }
+
+    # react-native-share (if using native modules)
+    -keep class com.reactnativecommunity.share.** { *; }
+
+    # JNI methods (critical for React Native)
+    -keepclasseswithmembernames class * {
+      native <methods>;
+    }
+
+    # Annotations and reflection (for libraries like react-native-reanimated)
+    -keepattributes *Annotation*, InnerClasses, Exceptions, Signature
+
+    # Animation callbacks (for modals/transitions)
+    -keepclassmembers class ** {
+      public void onAnimationStart(android.view.animation.Animation);
+      public void onAnimationEnd(android.view.animation.Animation);
+    }
+
+    -keep class com.reactnativecommunity.share.** { *; }
+-keep class androidx.core.content.** { *; }
+  `,
           },
         },
       ],
@@ -62,6 +89,7 @@ export default ({ config }) => {
             'com.twitter.android',
             'com.zhiliaoapp.musically',
           ],
+          enableBase64ShareAndroid: true,
         },
       ],
     ],
@@ -77,7 +105,7 @@ export default ({ config }) => {
     },
     android: {
       softwareKeyboardLayoutMode: 'pan',
-      versionCode: 15,
+      versionCode: 16,
       package: IS_DEV
         ? 'com.sterling.silverado.songjournal.dev'
         : 'com.sterling.silverado.songjournal',
@@ -98,7 +126,7 @@ export default ({ config }) => {
       DROPBOX_CLIENT_SECRET: process.env.DROPBOX_CLIENT_SECRET,
     },
     owner: 'sterlo',
-    runtimeVersion: '0.2.4',
+    runtimeVersion: '0.2.5',
     updates: {
       url: 'https://u.expo.dev/782ab462-3c4f-4302-ae95-e24dfe286e87',
     },
