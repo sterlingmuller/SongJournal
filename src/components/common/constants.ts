@@ -238,3 +238,18 @@ export const SWIPE_TRIGGER_THRESHOLD = -40;
 export const SUPPORT_EMAIL = 'SongJournalContact@gmail.com';
 
 export const PLACEHOLDER_TITLE = 'Cobra Strike Deluxe';
+
+export const startTip: string =
+  'Tip: Visit Settings for the options to number your Songs List and disable future Tips';
+export const homeTip: string =
+  'Tip: Long Press to Edit a Title on the Home or Song Takes Screen';
+export const songScreenTip: string =
+  'Tip: Your Starred Take is the Song version that will play on the Home Screen and be used when sharing. By default, your oldest Take is set as the Starred Take.';
+export const starTakeTip: string =
+  'Tip: When there are multiple Takes of a Song, Double Tap a Take to set it as the new Starred Take';
+export const editLyricsTip: string =
+  'Tip: Press Help in the Header for guidance on using the Lyric Shortcuts below.';
+export const lyricsTip: string =
+  'Tip: Song Details will be added to your Lyrics pdf when shared.';
+export const completedTip: string =
+  'Tip: Mark songs as "Completed" to filter them in Searches and Auto-Sync.';

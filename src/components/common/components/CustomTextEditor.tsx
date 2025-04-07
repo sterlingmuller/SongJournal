@@ -16,6 +16,7 @@ import {
 } from '@src/utils/textEditorUtils';
 import { SongInfo } from '../types';
 import { LyricsSection } from '../enums';
+import { editLyricsTip } from '../constants';
 
 interface CustomTextEditorProps {
   text: string;
@@ -100,6 +101,7 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
     <View style={styles.container}>
       <View style={{ flex: 1 }}>
         <TextInput
+          placeholder={editLyricsTip}
           autoFocus={true}
           ref={textInputRef}
           multiline

@@ -11,7 +11,7 @@ interface Styles {
   input: TextStyle;
   text: TextStyle;
   boldText: TextStyle;
-  tipText: TextStyle;
+  warningText: TextStyle;
   infoText: TextStyle;
   inputX: TextStyle;
 }
@@ -23,10 +23,10 @@ const useCommonModalStyle = () => {
     container: {
       alignSelf: 'center',
       width: '80%',
-      height: 300,
       borderRadius: 15,
       gap: 30,
       paddingTop: 25,
+      paddingBottom: 30,
       backgroundColor: theme.secondary,
       paddingHorizontal: 10,
     },
@@ -79,12 +79,12 @@ const useCommonModalStyle = () => {
 
     inputX: { fontWeight: 600, color: theme.secondaryText, fontSize: 14 },
 
-    tipText: {
+    warningText: {
       fontStyle: 'italic',
-      fontSize: 12,
+      fontSize: 14,
       textAlign: 'center',
       marginHorizontal: 20,
-      color: theme.secondaryTipText,
+      color: theme.error,
       fontWeight: '700',
     },
 

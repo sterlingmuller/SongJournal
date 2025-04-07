@@ -6,7 +6,7 @@ import { useSQLiteContext } from 'expo-sqlite';
 import CompletionStatus from '@src/components/lyrics/subcomponents/CompletionStatus';
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
 import { SongInfo } from '@src/components/common/types';
-import { SONG_DETAILS } from '@src/components/common/constants';
+import { completedTip, SONG_DETAILS } from '@src/components/common/constants';
 import useSongDetailsModalStyle from '@src/styles/songDetailsModal';
 import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import {
@@ -25,6 +25,7 @@ import { useColorTheme } from '@src/state/context/ThemeContext';
 import useLyricsSheetGenerator from '@src/hooks/useLyricsSheetGenerator';
 import StyledText from '@src/components/common/components/StyledText';
 import useDebounce from '@src/hooks/useDebounce';
+import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
 
 interface Props {
   isSongDetailsModalOpen: boolean;
@@ -56,6 +57,7 @@ const SongDetailsModal = (props: Props) => {
   const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false);
   const [selectedArtistId, setSelectedArtistId] = useState(currentSongArtistId);
   const [isBpmInvalid, setIsBpmInvalid] = useState(false);
+  const displayTips = useAppSelector(selectDisplayTips);
 
   const onExitPress = () => {
     setNewInfo(originalInfo);
@@ -141,6 +143,11 @@ const SongDetailsModal = (props: Props) => {
     setIsSongDetailsModalOpen(false);
   };
 
+  const defaultPlaceholder = 'About...';
+  const placeholder = displayTips
+    ? `${defaultPlaceholder}\n\n${completedTip}`
+    : defaultPlaceholder;
+
   return (
     <Modal
       isVisible={isSongDetailsModalOpen}
@@ -151,11 +158,11 @@ const SongDetailsModal = (props: Props) => {
     >
       <View style={styles.container}>
         <View style={styles.mainInputContainer}>
-          <Text style={styles.title}>About</Text>
+          <Text style={styles.title}>Details</Text>
           <View style={styles.textbox}>
             <TextInput
               style={styles.input}
-              placeholder="Add details for the song..."
+              placeholder={placeholder}
               placeholderTextColor={theme.placeholderText}
               value={newInfo.about}
               onChangeText={(newAbout: string) =>

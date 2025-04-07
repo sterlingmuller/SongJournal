@@ -17,6 +17,7 @@ interface Styles {
   editTitleText: TextStyle;
   warningText: TextStyle;
   trackSubtext: TextStyle;
+  tipText: TextStyle;
 }
 
 const useSongFolderStyles = () => {
@@ -111,6 +112,16 @@ const useSongFolderStyles = () => {
     },
 
     subtextContainer: { height: 40, flexDirection: 'column' },
+
+    tipText: {
+      paddingTop: 24,
+      fontSize: 14,
+      textAlign: 'center',
+      paddingHorizontal: 30,
+      fontStyle: 'italic',
+      color: theme.tipText,
+      fontWeight: '600',
+    },
   });
 
   return songFolderStyles;

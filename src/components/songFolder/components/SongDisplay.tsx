@@ -7,6 +7,10 @@ import { DeleteObject, Take, Takes } from '@src/components/common/types';
 import ComposerMessage from '@src/components/common/components/ComposerMessage';
 import SongTake from '@src/components/songFolder/components/SongTake';
 import { MessageIntent } from '@src/components/common/enums';
+import StyledText from '@src/components/common/components/StyledText';
+import { starTakeTip } from '@src/components/common/constants';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
+import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
 
 interface Props {
   takes: Takes;
@@ -23,6 +27,7 @@ interface Props {
 const SongDisplay = (props: Props) => {
   const { takes, setToDelete, setCurrentTake, setTitleToEdit } = props;
   const styles = useSongScreenStyles();
+  const displayTips = useAppSelector(selectDisplayTips);
 
   const orderedTakes: Take[] = [...takes].reverse();
 
@@ -39,7 +44,11 @@ const SongDisplay = (props: Props) => {
     [setToDelete, setCurrentTake, setTitleToEdit],
   );
 
-  const ListFooter = useMemo(() => () => <View style={styles.footer} />, []);
+  const ListFooter = () => {
+    if (!displayTips) return null;
+
+    return <StyledText style={styles.tipText}>{starTakeTip}</StyledText>;
+  };
 
   const ItemSeparator = useMemo(
     () => () => <View style={styles.takeSeperator} />,

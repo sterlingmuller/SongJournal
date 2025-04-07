@@ -13,6 +13,7 @@ import EggIcon from '@src/icons/EggIcon';
 import BadEggIcon from '@src/icons/BadEggIcon';
 import CacsusIcon from '@src/icons/CacsusIcon';
 import DeadAdimIcon from '@src/icons/DeadAdimIcon';
+import { lyricsTip, songScreenTip, startTip } from '../constants';
 
 interface props {
   messageIntent: MessageIntent;
@@ -24,13 +25,6 @@ const ComposerMessage = ({ messageIntent }: props) => {
 
   let message: React.ReactElement;
   let tip: string;
-
-  const homeTip: string =
-    'Tip: Long Press to edit a Title on the Home or Song Screen';
-  const songTip: string =
-    'Tip: When there are multiple Takes of a Song, Double Tap a Take to set it as the new Starred Take';
-  const lyricsTip: string =
-    'Tip: Add Details to your Song by pressing the Details Button, beside Edit. All Song Details will be added to your Lyrics pdf when shared.';
 
   const getStartedHomeInstructions = (
     <StyledText style={styles.text}>
@@ -50,10 +44,9 @@ const ComposerMessage = ({ messageIntent }: props) => {
 
   const getStartedLyricsInstructions = (
     <StyledText style={styles.text}>
-      Press the <StyledText style={styles.boldText}>Edit</StyledText> Button
-      above to start writing Lyrics. Press the{' '}
-      <StyledText style={styles.boldText}>Info</StyledText> Button in the Header
-      for guidance on using the Toolbar Shortcuts.
+      Press <StyledText style={styles.boldText}>Edit</StyledText> to write
+      Lyrics, or <StyledText style={styles.boldText}>Details</StyledText> to add
+      information about your Song.
     </StyledText>
   );
 
@@ -95,7 +88,7 @@ const ComposerMessage = ({ messageIntent }: props) => {
   switch (messageIntent) {
     case MessageIntent.GET_STARTED_HOME:
       message = getStartedHomeInstructions;
-      tip = homeTip;
+      tip = startTip;
       break;
     case MessageIntent.GET_STARTED_LYRICS:
       message = getStartedLyricsInstructions;
@@ -103,7 +96,7 @@ const ComposerMessage = ({ messageIntent }: props) => {
       break;
     case MessageIntent.GET_STARTED_SONG:
       message = getStartedSongInstructions;
-      tip = songTip;
+      tip = songScreenTip;
       break;
     case MessageIntent.HIDE_COVERS_SCREEN:
       message = coversPlansMessage;

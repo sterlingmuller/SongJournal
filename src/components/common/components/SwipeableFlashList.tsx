@@ -20,6 +20,7 @@ interface SwipeableFlashListProps<T> {
     rowKey: string,
     rowMap: Map<string, React.RefObject<SwipeableItemRef>>,
   ) => void;
+  footer?: React.ComponentType<any> | React.ReactElement | null;
 }
 
 const SwipeableFlashList = <T,>({
@@ -28,6 +29,7 @@ const SwipeableFlashList = <T,>({
   renderHiddenItem,
   keyExtractor,
   onRowDidOpen,
+  footer,
 }: SwipeableFlashListProps<T>) => {
   const styles = useHomeSwipeListStyles();
   const [openRowMap] = useState<Map<string, React.RefObject<SwipeableItemRef>>>(
@@ -71,6 +73,7 @@ const SwipeableFlashList = <T,>({
         keyExtractor={keyExtractor}
         estimatedItemSize={150}
         contentContainerStyle={{ paddingBottom: 200 }}
+        ListFooterComponent={footer}
       />
     </GestureHandlerRootView>
   );

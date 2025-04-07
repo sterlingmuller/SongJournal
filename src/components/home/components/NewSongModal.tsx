@@ -4,15 +4,13 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Modal from 'react-native-modal';
 import { useSQLiteContext } from 'expo-sqlite';
 
-import { RootStackParamList } from '@src/components/common/types';
+import { RootStackParamList, Song } from '@src/components/common/types';
 import StyledText from '@src/components/common/components/StyledText';
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
 import useCommonModalStyle from '@src/styles/commonModal';
 import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { createSongRequest } from '@src/state/sagas/actionCreators';
 import { Screen } from '@src/components/common/enums';
-import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
-import Gap from '@src/components/common/components/Gap';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import {
   MAX_TITLE_LENGTH,
@@ -20,6 +18,7 @@ import {
 } from '@src/components/common/constants';
 import { sanitizeInput } from '@src/utils/sanitizeInput';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
+import { selectSongs } from '@src/state/selectors/songsSelector';
 
 interface Props {
   isNewSongOpen: boolean;
@@ -32,24 +31,37 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
   const { navigate, addListener } =
     useNavigation<NavigationProp<RootStackParamList>>();
   const styles = useCommonModalStyle();
-  const displayTips = useAppSelector(selectDisplayTips);
   const { theme } = useColorTheme();
   const { clearPlayback } = useAudioPlayer();
+  const songs = useAppSelector(selectSongs);
 
   const [songTitle, setSongTitle] = useState('');
+  const [doesTitleExist, setDoesTitleExist] = useState(false);
+
   const onExitPress = () => {
     setIsNewSongOpen(false);
     setSongTitle('');
   };
 
-  const disabled: boolean = !songTitle;
+  useEffect(() => {
+    const normalizedTitle = songTitle?.trim().toLowerCase() || '';
+    const titleAlreadyExists = normalizedTitle
+      ? songs.some((song: Song) => song.title.toLowerCase() === normalizedTitle)
+      : false;
+
+    setDoesTitleExist(titleAlreadyExists);
+  }, [songTitle, songs]);
+
+  const disabled: boolean = !songTitle || doesTitleExist;
 
   const onSavePress = () => {
-    const sanitizedTitle = sanitizeInput(songTitle);
-    dispatch(createSongRequest({ db, title: sanitizedTitle }));
+    if (!doesTitleExist) {
+      const sanitizedTitle = sanitizeInput(songTitle);
+      dispatch(createSongRequest({ db, title: sanitizedTitle }));
 
-    clearPlayback();
-    navigate(Screen.SONG);
+      clearPlayback();
+      navigate(Screen.SONG);
+    }
   };
 
   useEffect(
@@ -96,12 +108,10 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
                 {songTitle.length}/{MAX_TITLE_LENGTH}
               </StyledText>
             </View>
-            {displayTips ? (
-              <StyledText style={styles.tipText}>
-                Tip: Double Tap the Title of a saved Song or Take to rename
+            {doesTitleExist && (
+              <StyledText style={styles.warningText}>
+                You already have a Song with this Title
               </StyledText>
-            ) : (
-              <Gap />
             )}
           </View>
           <SaveAndCancelButtons

@@ -88,6 +88,11 @@ const HomeScreen = () => {
           activeFilters={activeFilters}
           searchText={searchText}
         />
+        {/* {displayTips && (
+          <View style={{ width: '100%' }}>
+            <StyledText style={styles.tipText}>{homeTip}</StyledText>
+          </View>
+        )} */}
         <CreateNewSongButton setIsNewSongOpen={setIsNewSongOpen} />
         <SortByModal
           isSortOpen={isSortOpen}

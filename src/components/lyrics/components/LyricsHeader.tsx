@@ -3,13 +3,13 @@ import { View, TouchableOpacity, Text, LayoutChangeEvent } from 'react-native';
 import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
-import InfoIcon from '@src/icons/InfoIcon';
 import BackIcon from '@src/icons/BackIcon';
 import useLyricsHeaderStyles from '@src/styles/navigationHeader';
 import { selectCurrentSongTitle } from '@src/state/selectors/songsSelector';
 import CheckIcon from '@src/icons/CheckIcon';
 import CloseIcon from '@src/icons/CloseIcon';
 import { LyricsOption } from '@src/components/common/enums';
+import HelpIcon from '@src/icons/HelpIcon';
 
 interface Props {
   isInfoModalOpen: boolean;
@@ -71,7 +71,7 @@ const LyricsHeader = (props: Props) => {
         }}
         hitSlop={20}
       >
-        <InfoIcon />
+        <HelpIcon />
       </TouchableOpacity>
     );
   };

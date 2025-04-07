@@ -9,8 +9,14 @@ import { useProcessSongs } from '@src/hooks/useProcessSongs';
 import SwipeableFlashList from '@src/components/common/components/SwipeableFlashList';
 import { SwipeableItemRef } from '@src/components/common/components/SwipeableItem';
 import { useAppSelector } from '@src/hooks/typedReduxHooks';
-import { selectIsNumbered } from '@src/state/selectors/settingsSelector';
+import {
+  selectDisplayTips,
+  selectIsNumbered,
+} from '@src/state/selectors/settingsSelector';
 import ComposerMessage from '@src/components/common/components/ComposerMessage';
+import { homeTip } from '@src/components/common/constants';
+import StyledText from '@src/components/common/components/StyledText';
+import useSongFolderStyles from '@src/styles/songFolder';
 
 interface Props {
   setToDelete: (value: t.DeleteObject | null) => void;
@@ -39,6 +45,8 @@ const SongFolders = (props: Props) => {
   } = props;
 
   const isNumbered = useAppSelector(selectIsNumbered);
+  const displayTips = useAppSelector(selectDisplayTips);
+  const styles = useSongFolderStyles();
 
   const songsToDisplay = useProcessSongs(
     songs,
@@ -67,6 +75,12 @@ const SongFolders = (props: Props) => {
     }
   };
 
+  const ListFooter = () => {
+    if (!displayTips) return null;
+
+    return <StyledText style={styles.tipText}>{homeTip}</StyledText>;
+  };
+
   return (
     <View style={{ flex: 1 }}>
       {songsToDisplay.length ? (
@@ -84,6 +98,7 @@ const SongFolders = (props: Props) => {
               setToDelete={setToDelete}
             />
           )}
+          footer={ListFooter}
         />
       ) : (
         <ComposerMessage messageIntent={MessageIntent.EMPTY_SEARCH} />
