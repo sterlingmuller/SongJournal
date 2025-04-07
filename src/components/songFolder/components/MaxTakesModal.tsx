@@ -33,10 +33,14 @@ const MaxTakesModal = ({
         <View>
           <StyledText style={styles.text}>
             You cannot have more than{' '}
-            <StyledText style={styles.boldText}>seven</StyledText> takes of a
-            song. To continue recording,{' '}
-            <StyledText style={styles.boldText}>delete</StyledText> an unwanted
-            take.
+            <StyledText style={[styles.warningText, { fontSize: 16 }]}>
+              seven
+            </StyledText>{' '}
+            takes of a song. To continue recording,{' '}
+            <StyledText style={[styles.warningText, { fontSize: 16 }]}>
+              delete
+            </StyledText>{' '}
+            an unwanted take.
           </StyledText>
         </View>
         <View style={styles.button}>

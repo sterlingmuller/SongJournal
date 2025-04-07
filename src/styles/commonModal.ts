@@ -71,8 +71,9 @@ const useCommonModalStyle = () => {
 
     text: {
       textAlign: 'center',
-      fontSize: 15,
-      paddingHorizontal: 5,
+      fontSize: 16,
+      fontWeight: 500,
+      paddingHorizontal: 10,
       color: theme.secondaryText,
     },
     boldText: { fontWeight: 'bold' },
