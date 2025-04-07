@@ -1,6 +1,7 @@
 import React, { useRef, useState, useMemo, useCallback } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import * as Haptics from 'expo-haptics';
 
 import StyledText from '@src/components/common/components/StyledText';
 import ShareIcon from '@src/icons/ShareIcon';
@@ -17,7 +18,6 @@ import {
 } from '@src/state/selectors/playbackSelector';
 import { fetchPageRequest } from '@src/state/sagas/actionCreators';
 import { useSQLiteContext } from 'expo-sqlite';
-import useDoubleTap from '@src/hooks/useDoubleTap';
 import { TextInput } from 'react-native-gesture-handler';
 import { formatDateFromISOString } from '@src/utils/formateDateFromISOString';
 import useFileShare from '@src/hooks/useFileShare';
@@ -95,10 +95,15 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
     }
   }, [selectedTake, togglePlayback, songId]);
 
-  const onDoubleTap: () => void = useDoubleTap(() => {
+  const handleTitleEdit = () => {
     setTitleToEdit({ songTitle: title, songId: songId, artistId, hasLyrics });
-    setTimeout(() => inputRef.current?.focus(), 100);
-  });
+    inputRef.current?.focus();
+  };
+
+  const handleLongPress = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    handleTitleEdit();
+  };
 
   const renderTitle = () => {
     if (song.orderNumber) {
@@ -117,7 +122,9 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
     >
       <View style={styles.contents}>
         <TouchableOpacity
-          onPress={onDoubleTap}
+          onPress={() => handleOnPressNavigation(Screen.SONG)}
+          onLongPress={handleLongPress}
+          delayLongPress={250}
           testID="Song_Folder-Title"
           style={styles.titleContainer}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}

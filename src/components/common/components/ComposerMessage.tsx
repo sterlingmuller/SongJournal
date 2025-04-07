@@ -26,7 +26,7 @@ const ComposerMessage = ({ messageIntent }: props) => {
   let tip: string;
 
   const homeTip: string =
-    'Tip: Visit Settings for the options to number your Songs List and disable future Tips';
+    'Tip: Long Press to edit a Title on the Home or Song Screen';
   const songTip: string =
     'Tip: When there are multiple Takes of a Song, Double Tap a Take to set it as the new Starred Take';
   const lyricsTip: string =

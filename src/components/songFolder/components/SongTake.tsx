@@ -1,5 +1,6 @@
-import React, { useMemo, useRef } from 'react';
-import { View, TouchableOpacity, TextInput } from 'react-native';
+import React, { useMemo } from 'react';
+import { View, TouchableOpacity } from 'react-native';
+import * as Haptics from 'expo-haptics';
 
 import ShareIcon from '@src/icons/ShareIcon';
 import PlayIcon from '@src/icons/PlayIcon';
@@ -52,17 +53,10 @@ const SongTake = (props: Props) => {
   const selectedTakeId = useAppSelector(selectCurrentSongSelectedTakeId);
   const songTitle = useAppSelector(selectCurrentSongTitle);
 
-  const inputRef = useRef<TextInput | null>(null);
-
   const onDoubleTap: () => void = useDoubleTap(async () => {
     if (takeId !== selectedTakeId) {
       updateAndUploadStarredTake(takeId, songId, uri, title);
     }
-  });
-
-  const onTitleDoubleTap: () => void = useDoubleTap(() => {
-    setTitleToEdit({ songTitle, takeTitle: title, songId, takeId });
-    setTimeout(() => inputRef.current?.focus(), 100);
   });
 
   const isStarred = take.takeId === selectedTakeId;
@@ -75,12 +69,23 @@ const SongTake = (props: Props) => {
     shareTake(uri, title, songTitle, date);
   };
 
+  const handleTitleEdit = () => {
+    setTitleToEdit({ songTitle, takeTitle: title, songId, takeId });
+  };
+
+  const handleLongPress = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    handleTitleEdit();
+  };
+
   return (
     <TouchableOpacity style={styles.container} onPress={onDoubleTap}>
       <View style={styles.contents}>
         <View style={styles.titleRow}>
           <TouchableOpacity
-            onPress={onTitleDoubleTap}
+            onPress={onDoubleTap}
+            onLongPress={handleLongPress}
+            delayLongPress={300}
             hitSlop={{ top: 20, bottom: 20, left: 20, right: 30 }}
           >
             <StyledText style={styles.title}>{title}</StyledText>
