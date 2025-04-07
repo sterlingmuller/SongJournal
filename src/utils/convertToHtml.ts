@@ -5,15 +5,19 @@ export const convertToHtml = (markdownText: string): string => {
 
   const lines = markdownText.split('\n');
   let htmlOutput = '';
+  let isFirstLine = true;
 
   for (const line of lines) {
     if (!line.trim()) {
-      htmlOutput += '<p>&nbsp;</p>';
+      htmlOutput += '<div class="gap-line">&nbsp;</div>';
+      isFirstLine = false;
       continue;
     }
 
     if (/^\[.*\]$/.test(line.trim())) {
-      htmlOutput += `<div class="section"><strong>${line}</strong></div>`;
+      const sectionClass = isFirstLine ? 'first-section' : 'section';
+      htmlOutput += `<div class="${sectionClass}"><strong>${line}</strong></div>`;
+      isFirstLine = false;
       continue;
     }
 
@@ -45,6 +49,8 @@ export const convertToHtml = (markdownText: string): string => {
       chordHtml += line.slice(lastIndex);
 
       htmlOutput += `<span class="chord-line">${chordHtml}</span>`;
+      isFirstLine = false;
+
       continue;
     }
     const formattedLine = line

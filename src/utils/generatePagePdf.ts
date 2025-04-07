@@ -55,7 +55,7 @@ export const generatePagePdf = async (
           }
           body {
             font-family: monospace;
-            font-size: 14px;
+            font-size: 12px;
             margin: 0;
             padding: 0;
             min-height: calc(100vh - 40px);
@@ -68,10 +68,10 @@ export const generatePagePdf = async (
           .header {
             background-color: #fdc883;
             text-align: center;
-            padding: 20px 20px 10px 20px;
+            padding: 15px 20px 10px 20px;
           }
           .title {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: bold;
             margin: 0;
           }
@@ -87,7 +87,7 @@ export const generatePagePdf = async (
           }
           .content {
             flex-grow: 1;
-            padding: 5px 30px 10px 50px;
+            padding: 0 30px 10px 50px;
             white-space: pre;
             position: relative;
           }
@@ -102,19 +102,22 @@ export const generatePagePdf = async (
           .chord {
             color: teal;
             font-weight: bold;
-             position: relative;
-          display: inline-block;
+            position: relative;
+            display: inline-block;
           }
           .chord-line {
             margin-top: 4px;
-          display: block;
+            display: block;
             position: relative;
           }
           .lyric-line {
             margin-bottom: 4px;
           }
-          .section {
+          .first-section {
             margin: 0 0 10px 0;
+          }
+          .section {
+            margin: 20px 0 10px 0;
           }
           .info-container {
             display: flex;
@@ -122,6 +125,10 @@ export const generatePagePdf = async (
             gap: 20px;
             flex-wrap: wrap;
             margin: 0 0 10px 0;
+          }
+          .gap-line {
+            margin: 0;
+            padding-vertical: 10;
           }
           .info-item {
             white-space: nowrap;
