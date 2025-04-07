@@ -1,4 +1,10 @@
-import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { View } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 
@@ -60,26 +66,25 @@ const LyricsScreen = () => {
     }
   }, [selectedOption]);
 
-  const handleSaveLyrics = async () => {
+  const handleSaveLyrics = useCallback(async () => {
     await updateLyrics(newLyrics);
-
     if (newLyrics) {
       setSelectedOption(LyricsOption.NONE);
     }
-  };
+  }, [newLyrics, updateLyrics]);
 
-  const handleCancelEdit = () => {
+  const handleCancelEdit = useCallback(() => {
     setNewLyrics(page?.lyrics || '');
     setSelectedOption(LyricsOption.NONE);
-  };
+  }, [page?.lyrics]);
 
   const displaySave = useMemo(
     () => selectedOption === LyricsOption.EDIT && newLyrics !== page?.lyrics,
     [selectedOption, newLyrics, page?.lyrics],
   );
 
-  useLayoutEffect(() => {
-    setOptions({
+  const headerOptions = useMemo(
+    () => ({
       header: () => (
         <LyricsHeader
           isInfoModalOpen={isInfoModalOpen}
@@ -93,14 +98,19 @@ const LyricsScreen = () => {
           setSelectedOption={setSelectedOption}
         />
       ),
-    });
-  }, [
-    isInfoModalOpen,
-    setIsInfoModalOpen,
-    displaySave,
-    newLyrics,
-    selectedOption,
-  ]);
+    }),
+    [
+      displaySave,
+      handleSaveLyrics,
+      handleCancelEdit,
+      headerHeight,
+      selectedOption,
+    ],
+  );
+
+  useLayoutEffect(() => {
+    setOptions(headerOptions);
+  }, [headerOptions, setOptions]);
 
   if (!page) {
     return <LoadingIndicator />;

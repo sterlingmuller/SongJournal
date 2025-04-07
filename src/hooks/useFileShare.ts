@@ -3,22 +3,24 @@ import * as FileSystem from 'expo-file-system';
 import { zip } from 'react-native-zip-archive';
 import { useSQLiteContext } from 'expo-sqlite';
 
-import { Page, Song, Take } from '@src/components/common/types';
+import { Artist, Page, Song, Take } from '@src/components/common/types';
 import { convertToSnakeCase } from '@src/utils/convertToSnakeCase';
 import { fetchPageBySongId } from '@src/data/repositories/PageRepository';
 import { generatePagePdf } from '@src/utils/generatePagePdf';
-import { useArtistName } from './useArtistName';
 import { shareZip, shareAudio, sharePdf } from '@src/utils/shareHelpers';
+import { useAppSelector } from './typedReduxHooks';
+import { selectArtists } from '@src/state/selectors/artistsSelector';
 
 // add Error handling on screen - have an error modal
 
 const useFileShare = () => {
   const [error, setError] = useState<string | null>(null);
   const db = useSQLiteContext();
-  const { getArtistName } = useArtistName();
+  const artists = useAppSelector(selectArtists);
 
   const getPdfUri = async (title: string, page: Page, artistId: number) => {
-    const artist = getArtistName(artistId);
+    const artist =
+      artists.find((a: Artist) => a.artistId === artistId)?.name || '';
     const pdfUri = await generatePagePdf(title, page, artist);
 
     return pdfUri;
@@ -106,7 +108,7 @@ const useFileShare = () => {
         setError((err as Error).message);
       }
     },
-    [],
+    [artists],
   );
 
   return { shareSongFolder, shareTake, shareLyrics, error };
