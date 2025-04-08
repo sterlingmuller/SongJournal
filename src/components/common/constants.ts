@@ -189,6 +189,7 @@ export const SORT_SELECT = [
   { label: SortBy.LENGTH, value: SortBy.LENGTH },
 ];
 
+export const MINIMUM_DURATION = 3;
 export const PLAYBACK_START_DELAY = 100;
 export const MAX_AUDIO_WAVE_BARS = 40;
 export const AUDIO_WAVE_MIDPOINT = 12;

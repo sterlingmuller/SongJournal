@@ -9,6 +9,8 @@ interface Styles {
   buttonText: TextStyle;
   recordButtonContainer: ViewStyle;
   timerContainer: ViewStyle;
+  warningContainer: ViewStyle;
+  warningText: TextStyle;
   timer: TextStyle;
 }
 
@@ -52,7 +54,19 @@ const useRecordingStyles = () => {
       justifyContent: 'center',
       alignSelf: 'center',
       position: 'absolute',
-      bottom: 220,
+      bottom: 240,
+    },
+    warningContainer: {
+      position: 'absolute',
+      width: '80%',
+      alignSelf: 'center',
+      bottom: 180,
+    },
+    warningText: {
+      textAlign: 'center',
+      color: theme.error,
+      fontWeight: 'bold',
+      fontSize: 16,
     },
     timer: { fontSize: 92 },
   });

@@ -12,6 +12,8 @@ import useTakeGenerator from '@src/hooks/useTakeGenerator';
 import { Screen } from '@src/components/common/enums';
 import { useRecording } from '@src/state/context/RecordingContext';
 import { useAudioPlayer } from '@src/state/context/AudioContext';
+import { MINIMUM_DURATION } from '@src/components/common/constants';
+import StyledText from '@src/components/common/components/StyledText';
 
 const RecordingControls = () => {
   const { goBack } = useNavigation();
@@ -22,6 +24,8 @@ const RecordingControls = () => {
   const { title } = route.params;
   const [uri, setUri] = useState<string | null>(null);
   const [localDuration, setLocalDuration] = useState<number | null>(null);
+  const [isDurationWarningVisible, setIsDurationWarningVisible] =
+    useState(false);
 
   const {
     isRecording,
@@ -39,7 +43,11 @@ const RecordingControls = () => {
       const { uri, duration } = await stopRecording();
       setUri(uri);
       setLocalDuration(duration);
+      if (duration < MINIMUM_DURATION) {
+        setIsDurationWarningVisible(true);
+      }
     } else {
+      setIsDurationWarningVisible(false);
       setUri(null);
       setLocalDuration(null);
       await startRecording();
@@ -50,6 +58,7 @@ const RecordingControls = () => {
     handleRecordPress();
 
     return () => {
+      setIsDurationWarningVisible(false);
       clearRecording();
     };
   }, []);
@@ -58,6 +67,7 @@ const RecordingControls = () => {
     await clearPlayback();
     await clearRecording();
     setUri(null);
+    setIsDurationWarningVisible(false);
   };
 
   const onSavePress = async () => {
@@ -70,51 +80,68 @@ const RecordingControls = () => {
       newDuration = duration;
     }
 
-    if (newUri && newDuration) {
+    if (newUri && newDuration >= MINIMUM_DURATION) {
       generateTake(newUri, title, newDuration);
+      goBack();
     }
 
-    goBack();
+    setIsDurationWarningVisible(true);
   };
 
   return (
-    <View style={styles.recordingRow}>
-      <TouchableOpacity
-        onPress={onClearPress}
-        style={styles.sideButton}
-        hitSlop={20}
-        disabled={isClearSaveDisabled}
-      >
-        <Text
-          style={
-            isClearSaveDisabled ? styles.disabledButtonText : styles.buttonText
-          }
+    <>
+      {isDurationWarningVisible && (
+        <View style={styles.warningContainer}>
+          <StyledText style={styles.warningText}>
+            Warning: Recording must be at least 3 seconds long
+          </StyledText>
+        </View>
+      )}
+      <View style={styles.recordingRow}>
+        <TouchableOpacity
+          onPress={onClearPress}
+          style={styles.sideButton}
+          hitSlop={20}
+          disabled={isClearSaveDisabled}
         >
-          Clear
-        </Text>
-      </TouchableOpacity>
-      <View style={styles.recordButtonContainer}>
-        {uri ? (
-          <PlaybackButton uri={uri} songId={songId} />
-        ) : (
-          <RecordButton onPress={handleRecordPress} isRecording={isRecording} />
-        )}
+          <Text
+            style={
+              isClearSaveDisabled
+                ? styles.disabledButtonText
+                : styles.buttonText
+            }
+          >
+            Clear
+          </Text>
+        </TouchableOpacity>
+        <View style={styles.recordButtonContainer}>
+          {uri ? (
+            <PlaybackButton uri={uri} songId={songId} />
+          ) : (
+            <RecordButton
+              onPress={handleRecordPress}
+              isRecording={isRecording}
+            />
+          )}
+        </View>
+        <TouchableOpacity
+          onPress={onSavePress}
+          style={styles.sideButton}
+          hitSlop={20}
+          disabled={isClearSaveDisabled}
+        >
+          <Text
+            style={
+              isClearSaveDisabled
+                ? styles.disabledButtonText
+                : styles.buttonText
+            }
+          >
+            Save
+          </Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        onPress={onSavePress}
-        style={styles.sideButton}
-        hitSlop={20}
-        disabled={isClearSaveDisabled}
-      >
-        <Text
-          style={
-            isClearSaveDisabled ? styles.disabledButtonText : styles.buttonText
-          }
-        >
-          Save
-        </Text>
-      </TouchableOpacity>
-    </View>
+    </>
   );
 };
 
