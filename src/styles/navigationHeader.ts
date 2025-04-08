@@ -1,4 +1,4 @@
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { StatusBar, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Styles {
@@ -16,12 +16,11 @@ const useNavigationHeaderStyles = () => {
     container: {
       display: 'flex',
       flexDirection: 'row',
-      paddingTop: 50,
+      paddingTop: StatusBar.currentHeight,
       paddingBottom: 10,
       alignItems: 'center',
       justifyContent: 'space-between',
       backgroundColor: theme.primary,
-      zIndex: 10,
       paddingHorizontal: 20,
     },
 

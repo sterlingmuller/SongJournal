@@ -28,6 +28,7 @@ const useTextEditorStyles = () => {
       borderColor: 'black',
       borderWidth: 1,
       borderRadius: 15,
+      justifyContent: 'flex-end',
     },
     inputContainer: {
       height: '90%',
@@ -53,6 +54,7 @@ const useTextEditorStyles = () => {
       paddingVertical: 6,
       borderBottomLeftRadius: 15,
       borderBottomRightRadius: 15,
+      bottom: 0,
     },
     buttonGroup: {
       flexDirection: 'row',

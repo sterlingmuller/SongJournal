@@ -23,9 +23,14 @@ import { useAppSelector } from '@src/hooks/typedReduxHooks';
 interface CustomTextEditorProps {
   text: string;
   setText: (text: string) => void;
+  setToolbarHeight: (height: number) => void;
 }
 
-const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
+const CustomTextEditor = ({
+  text,
+  setText,
+  setToolbarHeight,
+}: CustomTextEditorProps) => {
   const styles = useTextEditorStyles();
   const textInputRef = useRef<TextInput>(null);
   const debouncedInput = useDebounce(setText, 400);
@@ -135,6 +140,7 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
         onGerundConvert={onGerundConvert}
         onUndo={handleUndo}
         isUndoDisabled={historyIndex === 0}
+        setToolbarHeight={setToolbarHeight}
       />
 
       <ChordWheelModal

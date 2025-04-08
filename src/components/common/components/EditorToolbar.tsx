@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, Keyboard, Platform } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  Keyboard,
+  Platform,
+  LayoutChangeEvent,
+} from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -24,6 +31,7 @@ interface EditorToolbarProps {
   onGerundConvert: () => void;
   onUndo: () => void;
   isUndoDisabled: boolean;
+  setToolbarHeight: (height: number) => void;
 }
 
 const EditorToolbar = ({
@@ -35,6 +43,7 @@ const EditorToolbar = ({
   onGerundConvert,
   onUndo,
   isUndoDisabled,
+  setToolbarHeight,
 }: EditorToolbarProps) => {
   const styles = useTextEditorStyles();
   const [isSectionsOpen, setIsSectionsOpen] = React.useState(false);
@@ -87,8 +96,13 @@ const EditorToolbar = ({
     opacity: opacity.value,
   }));
 
+  const onLayoutHeader = (event: LayoutChangeEvent) => {
+    const { height } = event.nativeEvent.layout;
+    setToolbarHeight(height);
+  };
+
   return (
-    <View style={styles.toolbarContainer}>
+    <View style={styles.toolbarContainer} onLayout={onLayoutHeader}>
       <View style={styles.buttonGroup}>
         <View style={styles.textButtons}>
           <TouchableOpacity

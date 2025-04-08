@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { KeyboardAvoidingView, Platform, StatusBar } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 
 import { isTextEmpty } from '@src/utils/isTextEmpty';
 import CustomTextEditor from '@src/components/common/components/CustomTextEditor';
@@ -12,20 +12,14 @@ interface Props {
 
 const EditLyricsSheet = ({ newLyrics, setNewLyrics, headerHeight }: Props) => {
   const initialLyricsRef = useRef(newLyrics);
+  const [toolbarHeight, setToolbarHeight] = useState(0);
 
   const handleLyricsChange = (lyrics: string) => {
     const normalizedLyrics = isTextEmpty(lyrics) ? '' : lyrics;
     setNewLyrics(normalizedLyrics);
   };
 
-  const statusBarHeight =
-    Platform.OS === 'android'
-      ? StatusBar.currentHeight || 0
-      : Platform.OS === 'ios'
-        ? 44
-        : 20;
-
-  const vertOffset = headerHeight - statusBarHeight;
+  const vertOffset = headerHeight - toolbarHeight;
 
   return (
     <KeyboardAvoidingView
@@ -35,6 +29,7 @@ const EditLyricsSheet = ({ newLyrics, setNewLyrics, headerHeight }: Props) => {
       <CustomTextEditor
         text={initialLyricsRef.current}
         setText={handleLyricsChange}
+        setToolbarHeight={setToolbarHeight}
       />
     </KeyboardAvoidingView>
   );
