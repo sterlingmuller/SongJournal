@@ -17,6 +17,8 @@ import {
 import { SongInfo } from '../types';
 import { LyricsSection } from '../enums';
 import { editLyricsTip } from '../constants';
+import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 
 interface CustomTextEditorProps {
   text: string;
@@ -34,6 +36,7 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
 
   const [history, setHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
+  const displayTips = useAppSelector(selectDisplayTips);
 
   useEffect(() => {
     if (historyIndex === -1 || localText !== history[historyIndex]) {
@@ -97,11 +100,16 @@ const CustomTextEditor = ({ text, setText }: CustomTextEditorProps) => {
     }
   };
 
+  const defaultPlaceholder = 'Lyrics...';
+  const placeholder = displayTips
+    ? `${defaultPlaceholder}\n\n${editLyricsTip}`
+    : defaultPlaceholder;
+
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }}>
         <TextInput
-          placeholder={editLyricsTip}
+          placeholder={placeholder}
           autoFocus={true}
           ref={textInputRef}
           multiline

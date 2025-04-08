@@ -49,7 +49,7 @@ const useInfoModalStyle = () => {
       color: theme.secondaryTipText,
       textAlign: 'center',
       paddingBottom: 5,
-      fontWeight: 'bold',
+      fontWeight: 800,
     },
     italic: {
       fontStyle: 'italic',

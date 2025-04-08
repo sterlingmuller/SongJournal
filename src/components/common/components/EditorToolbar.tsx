@@ -108,16 +108,16 @@ const EditorToolbar = ({
         <View style={styles.separatorBar} />
         <View style={styles.shortcutButtons}>
           <TouchableOpacity
-            onPress={onHyphen}
-            style={styles.smallFixedWidthButton}
-          >
-            <HyphenIcon />
-          </TouchableOpacity>
-          <TouchableOpacity
             onPress={onGerundConvert}
             style={styles.smallFixedWidthButton}
           >
             <Text style={styles.shortcutText}>-in'</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={onHyphen}
+            style={styles.smallFixedWidthButton}
+          >
+            <HyphenIcon />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={onAddChord}

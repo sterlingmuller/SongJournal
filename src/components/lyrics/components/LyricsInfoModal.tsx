@@ -35,6 +35,16 @@ const LyricsInfoModal = (props: Props) => {
           style={{ width: '80%' }}
           contentContainerStyle={{ paddingRight: 10, paddingBottom: 30 }}
         >
+          <Text style={styles.sectionTitle}>-in' Shortcut:</Text>
+          <BulletPoint>
+            Replaces <Text style={styles.italic}>-ing</Text> endings with{' '}
+            <Text style={styles.italic}>-in'</Text>.
+          </BulletPoint>
+          <Text style={styles.exampleText}>Running → Runnin'</Text>
+          <BulletPoint>
+            Applies change when cursor is on any word, ending with{' '}
+            <Text style={styles.italic}>-ing</Text>.
+          </BulletPoint>
           <Text style={styles.sectionTitle}>Hyphen Shortcut:</Text>
           <BulletPoint>Inserts a hyphen at your cursor.</BulletPoint>
           <BulletPoint>
@@ -66,19 +76,6 @@ const LyricsInfoModal = (props: Props) => {
           <HyphenPoint>
             Above the current line if cursor is elsewhere
           </HyphenPoint>
-
-          <Text style={styles.sectionTitle}>
-            <Text style={styles.sectionTitle}>-in' Shortcut:</Text> Shortcut:
-          </Text>
-          <BulletPoint>
-            Replaces <Text style={styles.italic}>-ing</Text> endings with{' '}
-            <Text style={styles.italic}>-in'</Text>.
-          </BulletPoint>
-          <Text style={styles.exampleText}>Running → Runnin'</Text>
-          <BulletPoint>
-            Applies change when cursor is on any word ending with{' '}
-            <Text style={styles.italic}>-ing</Text>.
-          </BulletPoint>
 
           <Text style={styles.sectionTitle}>Additional Features:</Text>
           <BulletPoint>Undo inputs</BulletPoint>
