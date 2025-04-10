@@ -16,7 +16,7 @@ const useNavigationHeaderStyles = () => {
     container: {
       display: 'flex',
       flexDirection: 'row',
-      paddingTop: StatusBar.currentHeight,
+      paddingTop: StatusBar.currentHeight + 10,
       paddingBottom: 10,
       alignItems: 'center',
       justifyContent: 'space-between',

@@ -119,6 +119,8 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       onPress={() => handleOnPressNavigation(Screen.SONG)}
+      onLongPress={handleLongPress}
+      delayLongPress={250}
     >
       <View style={styles.contents}>
         <TouchableOpacity

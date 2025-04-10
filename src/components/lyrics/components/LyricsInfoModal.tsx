@@ -7,6 +7,7 @@ import {
   BulletPoint,
   HyphenPoint,
 } from '@src/components/common/components/TextFormatting';
+import HyphenIcon from '@src/icons/HyphenIcon';
 
 interface Props {
   isInfoModalOpen: boolean;
@@ -35,7 +36,7 @@ const LyricsInfoModal = (props: Props) => {
           style={{ width: '80%' }}
           contentContainerStyle={{ paddingRight: 10, paddingBottom: 30 }}
         >
-          <Text style={styles.sectionTitle}>-in' Shortcut:</Text>
+          <Text style={styles.sectionTitle}>-in'</Text>
           <BulletPoint>
             Replaces <Text style={styles.italic}>-ing</Text> endings with{' '}
             <Text style={styles.italic}>-in'</Text>.
@@ -45,7 +46,9 @@ const LyricsInfoModal = (props: Props) => {
             Applies change when cursor is on any word, ending with{' '}
             <Text style={styles.italic}>-ing</Text>.
           </BulletPoint>
-          <Text style={styles.sectionTitle}>Hyphen Shortcut:</Text>
+          <View style={styles.hyphenContainer}>
+            <HyphenIcon />
+          </View>
           <BulletPoint>Inserts a hyphen at your cursor.</BulletPoint>
           <BulletPoint>
             Helpful when adding multiple chords to a single word.
@@ -55,7 +58,7 @@ const LyricsInfoModal = (props: Props) => {
           >{`   Em  C  G  D\n`}</Text>
           <Text style={styles.exampleText}>{`but not me ba-by`}</Text>
 
-          <Text style={styles.sectionTitle}>Chords:</Text>
+          <Text style={styles.sectionTitle}>Chords</Text>
           <BulletPoint>Opens the Chord Generator Wheel.</BulletPoint>
           <BulletPoint>The chord will be inserted:</BulletPoint>
           <HyphenPoint>
@@ -65,7 +68,7 @@ const LyricsInfoModal = (props: Props) => {
             At the cursor if no lyrics exist on the current line
           </HyphenPoint>
 
-          <Text style={styles.sectionTitle}>Song Sections:</Text>
+          <Text style={styles.sectionTitle}>Sections</Text>
           <BulletPoint>
             Allows you to insert sections such as Verse, Chorus, or Bridge.
           </BulletPoint>

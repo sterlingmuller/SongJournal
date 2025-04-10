@@ -33,6 +33,8 @@ interface Props {
   setSelectedOption: (valuer: LyricsOption) => void;
   info: SongInfo;
   songId: number;
+  setHasDetailChanges: (value: boolean) => void;
+  hasDetailChanges: boolean;
 }
 
 const SongDetailsModal = (props: Props) => {
@@ -42,6 +44,8 @@ const SongDetailsModal = (props: Props) => {
     setSelectedOption,
     info: originalInfo,
     songId,
+    setHasDetailChanges,
+    hasDetailChanges,
   } = props;
   const styles = useSongDetailsModalStyle();
   const dispatch = useAppDispatch();
@@ -54,15 +58,18 @@ const SongDetailsModal = (props: Props) => {
   const [newInfo, setNewInfo] = useState<SongInfo>(originalInfo);
   const [newCompletionStatus, setNewCompletionStatus] =
     useState<boolean>(completionStatus);
-  const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false);
   const [selectedArtistId, setSelectedArtistId] = useState(currentSongArtistId);
   const [isBpmInvalid, setIsBpmInvalid] = useState(false);
   const displayTips = useAppSelector(selectDisplayTips);
 
   const onExitPress = () => {
-    setNewInfo(originalInfo);
     setSelectedOption(LyricsOption.NONE);
     setIsSongDetailsModalOpen(false);
+  };
+
+  const onCancelPress = () => {
+    onExitPress();
+    setNewInfo(originalInfo);
   };
 
   const changedInfo = useMemo(() => {
@@ -78,7 +85,7 @@ const SongDetailsModal = (props: Props) => {
   }, [newInfo, originalInfo]);
 
   useEffect(() => {
-    setIsSaveButtonEnabled(
+    setHasDetailChanges(
       Object.keys(changedInfo).length > 0 ||
         newCompletionStatus !== completionStatus ||
         selectedArtistId !== currentSongArtistId,
@@ -215,8 +222,8 @@ const SongDetailsModal = (props: Props) => {
         <View style={styles.buttonContainer}>
           <SaveAndCancelButtons
             onPress={onSavePress}
-            onExitPress={onExitPress}
-            disabled={!isSaveButtonEnabled}
+            onExitPress={onCancelPress}
+            disabled={!hasDetailChanges}
           />
         </View>
       </View>

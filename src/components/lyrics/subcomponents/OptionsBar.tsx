@@ -44,7 +44,6 @@ const OptionsBar = ({ selectedOption, setSelectedOption, page }: Props) => {
       {LYRIC_SCREEN_OPTIONS.map((option: LyricsScreenOption) => {
         const isDisabled =
           option.name === LyricsOption.METRONOME ||
-          option.name === LyricsOption.CHORDS ||
           (option.name === LyricsOption.SHARE && !page.lyrics);
 
         return (

@@ -79,13 +79,18 @@ const SongTake = (props: Props) => {
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={onDoubleTap}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={onDoubleTap}
+      onLongPress={handleLongPress}
+      delayLongPress={250}
+    >
       <View style={styles.contents}>
         <View style={styles.titleRow}>
           <TouchableOpacity
             onPress={onDoubleTap}
             onLongPress={handleLongPress}
-            delayLongPress={300}
+            delayLongPress={250}
             hitSlop={{ top: 20, bottom: 20, left: 20, right: 30 }}
           >
             <StyledText style={styles.title}>{title}</StyledText>

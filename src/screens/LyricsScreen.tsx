@@ -5,10 +5,15 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { View } from 'react-native';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { Alert, View } from 'react-native';
+import {
+  EventArg,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 
-import LyricsHeader from '@src/components/lyrics/components/LyricsHeader';
+import LyricsHeader from '@src/components/lyrics/subcomponents/LyricsHeader';
 import SongDetailsModal from '@src/components/lyrics/components/SongDetailsModal';
 import LyricsSheet from '@src/components/lyrics/components/LyricsSheet';
 import { useAppSelector } from '@src/hooks/typedReduxHooks';
@@ -40,25 +45,60 @@ const LyricsScreen = () => {
   const [isInfoModalOpen, setIsInfoModalOpen] = useState<boolean>(false);
   const [isSongDetailsModalOpen, setIsSongDetailsModalOpen] =
     useState<boolean>(false);
+  const [hasDetailChanges, setHasDetailChanges] = useState<boolean>(false);
+  const [hasLyricChanges, setHasLyricChanges] = useState<boolean>(false);
   const [newLyrics, setNewLyrics] = useState<string>('');
 
   useEffect(() => {
-    navigation.addListener('beforeRemove', () => {
-      if (route.params?.previousScreen === Screen.HOME) {
-        dispatch(setCurrentSongId(-1));
-      }
-    });
-  }, [navigation]);
+    const unsubscribe = navigation.addListener(
+      'beforeRemove',
+      (e: EventArg<'beforeRemove', true, undefined>) => {
+        if (!hasDetailChanges && !hasLyricChanges) {
+          if (route.params?.previousScreen === Screen.HOME) {
+            dispatch(setCurrentSongId(-1));
+          }
+          return;
+        }
+
+        e.preventDefault();
+
+        Alert.alert(
+          'You have unsaved changes',
+          ' If you leave now, your changes will be lost. Would you like to continue editing?',
+          [
+            {
+              text: 'Leave',
+              style: 'destructive',
+              onPress: () => navigation.dispatch(e.data.action),
+            },
+            {
+              text: 'Continue Editing',
+              style: 'cancel',
+              onPress: () => {},
+            },
+          ],
+        );
+      },
+    );
+
+    return unsubscribe;
+  }, [
+    navigation,
+    hasLyricChanges,
+    hasDetailChanges,
+    route.params?.previousScreen,
+    dispatch,
+  ]);
 
   const [selectedOption, setSelectedOption] = useState<LyricsOption>(
     LyricsOption.NONE,
   );
 
   useEffect(() => {
-    if (page && newLyrics !== page.lyrics) {
+    if (page && (newLyrics === '' || selectedOption !== LyricsOption.EDIT)) {
       setNewLyrics(page.lyrics);
     }
-  }, [page]);
+  }, [page?.lyrics]);
 
   useEffect(() => {
     if (selectedOption === LyricsOption.ADD_DETAILS) {
@@ -76,12 +116,14 @@ const LyricsScreen = () => {
   const handleCancelEdit = useCallback(() => {
     setNewLyrics(page?.lyrics || '');
     setSelectedOption(LyricsOption.NONE);
+    setHasLyricChanges(false);
   }, [page?.lyrics]);
 
-  const displaySave = useMemo(
-    () => selectedOption === LyricsOption.EDIT && newLyrics !== page?.lyrics,
-    [selectedOption, newLyrics, page?.lyrics],
-  );
+  useEffect(() => {
+    if (page?.lyrics) {
+      setHasLyricChanges(newLyrics !== page.lyrics);
+    }
+  }, [newLyrics, page?.lyrics]);
 
   const headerOptions = useMemo(
     () => ({
@@ -89,7 +131,7 @@ const LyricsScreen = () => {
         <LyricsHeader
           isInfoModalOpen={isInfoModalOpen}
           setIsInfoModalOpen={setIsInfoModalOpen}
-          displaySave={displaySave}
+          displaySave={hasLyricChanges}
           handleSaveLyrics={handleSaveLyrics}
           handleCancelEdit={handleCancelEdit}
           headerHeight={headerHeight}
@@ -100,7 +142,7 @@ const LyricsScreen = () => {
       ),
     }),
     [
-      displaySave,
+      hasLyricChanges,
       handleSaveLyrics,
       handleCancelEdit,
       headerHeight,
@@ -146,6 +188,8 @@ const LyricsScreen = () => {
           info={page.info}
           songId={songId}
           setSelectedOption={setSelectedOption}
+          setHasDetailChanges={setHasDetailChanges}
+          hasDetailChanges={hasDetailChanges}
         />
       )}
       <LyricsInfoModal

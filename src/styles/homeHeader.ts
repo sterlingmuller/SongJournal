@@ -1,4 +1,4 @@
-import { StyleSheet, ViewStyle } from 'react-native';
+import { StatusBar, StyleSheet, ViewStyle } from 'react-native';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Styles {
@@ -12,8 +12,8 @@ const useHomeHeaderStyles = () => {
     container: {
       display: 'flex',
       flexDirection: 'row',
-      height: 105,
-      paddingTop: 45,
+      paddingTop: StatusBar.currentHeight + 10,
+      paddingBottom: 12,
       alignItems: 'center',
       backgroundColor: theme.primary,
       zIndex: 10,

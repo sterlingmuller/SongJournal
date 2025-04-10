@@ -7,6 +7,7 @@ interface Styles {
   container: ViewStyle;
   title: TextStyle;
   sectionTitle: TextStyle;
+  hyphenContainer: ViewStyle;
   exampleText: TextStyle;
   italic: TextStyle;
 }
@@ -43,6 +44,10 @@ const useInfoModalStyle = () => {
       fontSize: 16,
       fontWeight: 'bold',
       marginTop: 16,
+    },
+    hyphenContainer: {
+      marginTop: 16,
+      alignContent: 'center',
     },
     exampleText: {
       fontFamily: 'monospace',
