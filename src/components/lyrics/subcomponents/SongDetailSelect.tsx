@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 
 import useSongDetailStyles from '@src/styles/songDetail';
@@ -24,22 +24,23 @@ const SongDetailSelect = (props: Props) => {
   const [isChordWheelOpen, setIsChordWheelOpen] = useState(false);
   const [isTimeWheelOpen, setIsTimeWheelOpen] = useState(false);
 
-  const songDetailPress = () => {
+  const songDetailPress = useCallback(() => {
     if (label === SONG_DETAILS[SongDetailKey.KEY_SIGNATURE]) {
       setIsChordWheelOpen(true);
     } else {
       setIsTimeWheelOpen(true);
     }
-  };
+  }, [label]);
+
+  const textStyle = useMemo(
+    () => [styles.inputText, !value && { color: theme.placeholderText }],
+    [styles.inputText, value, theme.placeholderText],
+  );
 
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={songDetailPress} style={styles.textbox}>
-        <StyledText
-          style={[styles.inputText, !value && { color: theme.placeholderText }]}
-        >
-          {value || '--'}
-        </StyledText>
+        <StyledText style={textStyle}>{value || '--'}</StyledText>
       </TouchableOpacity>
       <StyledText style={styles.labelText}>{label}</StyledText>
       <ChordWheelModal
@@ -58,4 +59,4 @@ const SongDetailSelect = (props: Props) => {
   );
 };
 
-export default SongDetailSelect;
+export default React.memo(SongDetailSelect);

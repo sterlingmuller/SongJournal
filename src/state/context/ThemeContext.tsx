@@ -7,6 +7,7 @@ import React, {
   useEffect,
 } from 'react';
 import { useSQLiteContext } from 'expo-sqlite';
+import * as NavigationBar from 'expo-navigation-bar';
 
 import themes, { Theme } from '@src/theme/themes';
 import { ColorTheme } from '@src/components/common/enums';
@@ -56,11 +57,11 @@ export const ColorThemeProvider = ({ children }: Props) => {
 
   const switchTheme = async (newTheme: ColorTheme) => {
     setThemeName(newTheme);
-
     try {
       await db.runAsync(`UPDATE Settings SET theme = ? WHERE id = 1`, [
         newTheme,
       ]);
+      NavigationBar.setBackgroundColorAsync(themes[newTheme].primary);
     } catch (error) {
       console.error('Error saving theme preference:', error);
     }

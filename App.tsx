@@ -40,16 +40,16 @@ const Main = () => {
 
   useEffect(() => {
     if (!isThemeLoading && !isDbLoading) {
-      setTimeout(async () => {
-        await NavigationBar.setPositionAsync('absolute');
-        await NavigationBar.setBackgroundColorAsync('#ffffff01');
+      setTimeout(() => {
         setIsAppReady(true);
       }, 100);
     }
   }, [isThemeLoading, isDbLoading]);
 
-  const onLayoutRootView = useCallback(() => {
+  const onLayoutRootView = useCallback(async () => {
     if (isAppReady) {
+      await NavigationBar.setPositionAsync('absolute');
+      await NavigationBar.setBackgroundColorAsync(theme.primary);
       SplashScreen.hide();
     }
   }, [isAppReady]);

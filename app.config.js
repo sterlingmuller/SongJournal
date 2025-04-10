@@ -118,6 +118,9 @@ export default ({ config }) => {
     androidStatusBar: {
       translucent: true,
     },
+    androidNavigationBar: {
+      backgroundColor: '#FFFFFF00',
+    },
     extra: {
       eas: {
         projectId: '782ab462-3c4f-4302-ae95-e24dfe286e87',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, Text } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import CloudStorage from '@src/components/settings/components/CloudStorage';
 import Theme from '@src/components/settings/components/Theme';

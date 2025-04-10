@@ -36,12 +36,11 @@ const TabNavigator = () => {
           flexDirection: 'row',
           backgroundColor: theme.primary,
           height: '7%',
-          borderTopWidth: 0,
         },
         tabBarItemStyle: {
           flexDirection: 'row',
           alignSelf: 'center',
-          paddingTop: '1%',
+          paddingTop: '2%',
         },
         tabBarLabelStyle: {
           fontSize: 10,
