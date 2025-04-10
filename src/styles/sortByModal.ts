@@ -15,6 +15,7 @@ interface Styles {
   filterRow: ViewStyle;
   filterToggle: ViewStyle;
   toggleLabel: TextStyle;
+  tipText: TextStyle;
 }
 
 const useSortByModalStyles = () => {
@@ -25,7 +26,6 @@ const useSortByModalStyles = () => {
       position: 'absolute',
       backgroundColor: theme.secondary,
       width: '100%',
-      height: '45%',
       borderBottomWidth: 1,
       borderBottomColor: c.black,
       bottom: 0,
@@ -83,6 +83,22 @@ const useSortByModalStyles = () => {
     filterToggle: { flexDirection: 'row', alignItems: 'center', width: '42%' },
 
     toggleLabel: { fontSize: 16, fontWeight: 'bold', flex: 1 },
+
+    tipText: {
+      width: '100%',
+      fontSize: 14,
+      textAlign: 'center',
+      paddingHorizontal: 30,
+      paddingTop: 10,
+      paddingBottom: 5,
+      fontStyle: 'italic',
+      color: theme.secondaryTipText,
+      fontWeight: '600',
+    },
+
+    bold: {
+      fontWeight: 800,
+    },
   });
 
   return sortByModalStyles;

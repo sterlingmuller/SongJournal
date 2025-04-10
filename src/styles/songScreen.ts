@@ -1,10 +1,10 @@
+import { SCREEN_HEIGHT } from '@src/components/common/constants';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 interface Styles {
   takes: ViewStyle;
   takeSeperator: ViewStyle;
-  footer: ViewStyle;
   recordingButton: ViewStyle;
   tipText: TextStyle;
 }
@@ -15,19 +15,19 @@ const useSongScreenStyles = () => {
   const songScreenStyles: Styles = StyleSheet.create({
     takes: {
       paddingTop: 25,
+      paddingBottom: SCREEN_HEIGHT * 0.2,
     },
     takeSeperator: { height: 20 },
-    footer: { height: 180 },
     recordingButton: {
       position: 'absolute',
       flex: 5,
       alignSelf: 'center',
-      bottom: 50,
+      bottom: SCREEN_HEIGHT * 0.05,
     },
     tipText: {
       paddingTop: 40,
       paddingBottom: 10,
-      paddingHorizontal: 30,
+      paddingHorizontal: 50,
       fontSize: 14,
       textAlign: 'center',
       fontStyle: 'italic',

@@ -14,7 +14,7 @@ import {
   selectIsNumbered,
 } from '@src/state/selectors/settingsSelector';
 import ComposerMessage from '@src/components/common/components/ComposerMessage';
-import { homeTip } from '@src/components/common/constants';
+import { HOME_TIP } from '@src/components/common/constants';
 import StyledText from '@src/components/common/components/StyledText';
 import useSongFolderStyles from '@src/styles/songFolder';
 
@@ -78,7 +78,7 @@ const SongFolders = (props: Props) => {
   const ListFooter = () => {
     if (!displayTips) return null;
 
-    return <StyledText style={styles.tipText}>{homeTip}</StyledText>;
+    return <StyledText style={styles.tipText}>{HOME_TIP}</StyledText>;
   };
 
   return (

@@ -6,6 +6,10 @@ import SortByCategories from '@src/components/home/subcomponents/SortCategories'
 import useSortByModalStyles from '@src/styles/sortByModal';
 import { Filter, SortBy } from '@src/components/common/enums';
 import FilterSection from '../subcomponents/FilterSection';
+import StyledText from '@src/components/common/components/StyledText';
+import { SORT_TIP } from '@src/components/common/constants';
+import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
+import { useAppSelector } from '@src/hooks/typedReduxHooks';
 
 interface Props {
   sortedCategory: SortBy;
@@ -31,6 +35,7 @@ const SortByModal = (props: Props) => {
   } = props;
   const styles = useSortByModalStyles();
   const onExitPress = () => setIsSortOpen(false);
+  const displayTips = useAppSelector(selectDisplayTips);
 
   return (
     <KeyboardAvoidingView>
@@ -50,6 +55,9 @@ const SortByModal = (props: Props) => {
             isSortAscending={isSortAscending}
             setIsSortAscending={setIsSortAscending}
           />
+          {displayTips && (
+            <StyledText style={styles.tipText}>{SORT_TIP}</StyledText>
+          )}
           <Text style={styles.title}>Filter</Text>
           <View style={styles.line} />
           <FilterSection

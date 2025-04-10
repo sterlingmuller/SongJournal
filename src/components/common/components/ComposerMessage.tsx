@@ -13,7 +13,7 @@ import EggIcon from '@src/icons/EggIcon';
 import BadEggIcon from '@src/icons/BadEggIcon';
 import CacsusIcon from '@src/icons/CacsusIcon';
 import DeadAdimIcon from '@src/icons/DeadAdimIcon';
-import { lyricsTip, songScreenTip, startTip } from '../constants';
+import { LYRICS_TIP, SONG_SCREEN_TIP, START_TIP } from '../constants';
 
 interface props {
   messageIntent: MessageIntent;
@@ -38,15 +38,15 @@ const ComposerMessage = ({ messageIntent }: props) => {
   const getStartedSongInstructions = (
     <StyledText style={styles.text}>
       Press the <StyledText style={styles.boldText}>Record</StyledText> button
-      below to record your first Take!
+      below to record your first take!
     </StyledText>
   );
 
   const getStartedLyricsInstructions = (
     <StyledText style={styles.text}>
       Press <StyledText style={styles.boldText}>Edit</StyledText> to write
-      Lyrics, or <StyledText style={styles.boldText}>Details</StyledText> to add
-      information about your Song.
+      lyrics, or <StyledText style={styles.boldText}>Details</StyledText> to add
+      information about your song.
     </StyledText>
   );
 
@@ -88,15 +88,15 @@ const ComposerMessage = ({ messageIntent }: props) => {
   switch (messageIntent) {
     case MessageIntent.GET_STARTED_HOME:
       message = getStartedHomeInstructions;
-      tip = startTip;
+      tip = START_TIP;
       break;
     case MessageIntent.GET_STARTED_LYRICS:
       message = getStartedLyricsInstructions;
-      tip = lyricsTip;
+      tip = LYRICS_TIP;
       break;
     case MessageIntent.GET_STARTED_SONG:
       message = getStartedSongInstructions;
-      tip = songScreenTip;
+      tip = SONG_SCREEN_TIP;
       break;
     case MessageIntent.HIDE_COVERS_SCREEN:
       message = coversPlansMessage;
@@ -136,7 +136,7 @@ const ComposerMessage = ({ messageIntent }: props) => {
       <View style={styles.eggContainer}>{renderConductor()}</View>
       <View style={styles.textbox}>{message}</View>
       {displayTips && (
-        <View style={{ width: '100%' }}>
+        <View style={styles.tipContainer}>
           <StyledText style={styles.tipText}>{tip}</StyledText>
         </View>
       )}

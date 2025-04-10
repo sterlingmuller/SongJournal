@@ -6,7 +6,7 @@ import { useSQLiteContext } from 'expo-sqlite';
 import CompletionStatus from '@src/components/lyrics/subcomponents/CompletionStatus';
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
 import { SongInfo } from '@src/components/common/types';
-import { completedTip, SONG_DETAILS } from '@src/components/common/constants';
+import { COMPLETED_TIP, SONG_DETAILS } from '@src/components/common/constants';
 import useSongDetailsModalStyle from '@src/styles/songDetailsModal';
 import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import {
@@ -152,7 +152,7 @@ const SongDetailsModal = (props: Props) => {
 
   const defaultPlaceholder = 'About';
   const placeholder = displayTips
-    ? `${defaultPlaceholder}\n\n${completedTip}`
+    ? `${defaultPlaceholder}\n\n${COMPLETED_TIP}`
     : defaultPlaceholder;
 
   return (

@@ -6,6 +6,7 @@ interface Styles {
   container: ViewStyle;
   textbox: ViewStyle;
   eggContainer: ViewStyle;
+  tipContainer: ViewStyle;
   tipText: TextStyle;
   text: TextStyle;
   boldText: TextStyle;
@@ -56,11 +57,12 @@ const useConductorMessageStyles = () => {
       fontStyle: 'italic',
       color: theme.secondaryText,
     },
+    tipContainer: { width: '100%', paddingTop: 10 },
     tipText: {
       width: '100%',
       fontSize: 14,
       textAlign: 'center',
-      paddingHorizontal: 30,
+      paddingHorizontal: 60,
       paddingBottom: 20,
       fontStyle: 'italic',
       color: theme.tipText,

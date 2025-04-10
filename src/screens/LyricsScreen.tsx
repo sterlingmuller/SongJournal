@@ -120,7 +120,7 @@ const LyricsScreen = () => {
   }, [page?.lyrics]);
 
   useEffect(() => {
-    if (page?.lyrics) {
+    if (page) {
       setHasLyricChanges(newLyrics !== page.lyrics);
     }
   }, [newLyrics, page?.lyrics]);

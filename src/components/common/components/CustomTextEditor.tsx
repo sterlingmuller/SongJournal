@@ -16,7 +16,7 @@ import {
 } from '@src/utils/textEditorUtils';
 import { SongInfo } from '../types';
 import { LyricsSection } from '../enums';
-import { editLyricsTip } from '../constants';
+import { EDIT_LYRICS_TIP } from '../constants';
 import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
 import { useAppSelector } from '@src/hooks/typedReduxHooks';
 
@@ -107,7 +107,7 @@ const CustomTextEditor = ({
 
   const defaultPlaceholder = 'Add lyrics';
   const placeholder = displayTips
-    ? `${defaultPlaceholder}\n\n${editLyricsTip}`
+    ? `${defaultPlaceholder}\n\n${EDIT_LYRICS_TIP}`
     : defaultPlaceholder;
 
   return (

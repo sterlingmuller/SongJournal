@@ -8,7 +8,7 @@ import ComposerMessage from '@src/components/common/components/ComposerMessage';
 import SongTake from '@src/components/songFolder/components/SongTake';
 import { MessageIntent } from '@src/components/common/enums';
 import StyledText from '@src/components/common/components/StyledText';
-import { starTakeTip } from '@src/components/common/constants';
+import { STAR_TAKE_TIP } from '@src/components/common/constants';
 import { useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
 
@@ -47,7 +47,7 @@ const SongDisplay = (props: Props) => {
   const ListFooter = () => {
     if (!displayTips) return null;
 
-    return <StyledText style={styles.tipText}>{starTakeTip}</StyledText>;
+    return <StyledText style={styles.tipText}>{STAR_TAKE_TIP}</StyledText>;
   };
 
   const ItemSeparator = useMemo(

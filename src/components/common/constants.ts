@@ -5,8 +5,6 @@ import Constants from 'expo-constants';
 import EditIcon from '@src/icons/EditIcon';
 import MetronomeIcon from '@src/icons/MetronomeIcon';
 import ShareIcon from '@src/icons/ShareIcon';
-import PlaylistIcon from '@src/icons/PlaylistIcon';
-import SettingIcon from '@src/icons/SettingIcon';
 import * as t from '@src/components/common/types';
 import {
   ColorTheme,
@@ -15,14 +13,11 @@ import {
   Filter,
   LyricsOption,
   Conductor,
-  Screen,
 } from '@src/components/common/enums';
 import EggSelectIcon from '@src/icons/EggSelectIcon';
 import BadEggSelectIcon from '@src/icons/BadEggSelectIcon';
 import CacsusSelectIcon from '@src/icons/CacsusSelectIcon';
 import DeadAdimSelectIcon from '@src/icons/DeadAdimSelectIcon';
-import PersonIcon from '@src/icons/PersonIcon';
-import MaskIcon from '@src/icons/MaskIcon';
 import AddDetailsIcon from '@src/icons/AddDetailsIcon';
 
 export const APP_VERSION = '0.2.7';
@@ -60,13 +55,6 @@ export const LYRIC_SCREEN_OPTIONS: t.LyricsScreenOption[] = [
   { name: LyricsOption.ADD_DETAILS, icon: AddDetailsIcon },
   { name: LyricsOption.METRONOME, icon: MetronomeIcon },
   { name: LyricsOption.SHARE, icon: ShareIcon },
-];
-
-export const TABS: t.Tab[] = [
-  { name: Screen.SETLIST, icon: PlaylistIcon },
-  { name: Screen.HOME, icon: PersonIcon },
-  { name: Screen.COVERS, icon: MaskIcon },
-  { name: Screen.SETTINGS, icon: SettingIcon },
 ];
 
 export const CONDUCTOR_ICONS = {
@@ -240,17 +228,19 @@ export const SUPPORT_EMAIL = 'SongJournalContact@gmail.com';
 
 export const PLACEHOLDER_TITLE = 'Cobra Strike Deluxe';
 
-export const startTip: string =
+export const START_TIP: string =
   'Tip: Visit Settings for the options to number your songs list and disable future tips';
-export const homeTip: string =
+export const HOME_TIP: string =
   'Tip: Long press to edit a title on the Home or Song screen';
-export const songScreenTip: string =
-  'Tip: Your Starred Take is the version of the song that will play on the Home screen and be used when sharing. By default, your oldest take is set as the Starred Take.';
-export const starTakeTip: string =
+export const SONG_SCREEN_TIP: string =
+  'Tip: Your Starred Take is the song version that will play on the Home screen and be used when sharing. By default, your oldest take is starred.';
+export const STAR_TAKE_TIP: string =
   'Tip: When there are multiple takes of a song, Double tap a take to set it as the new Starred Take';
-export const editLyricsTip: string =
+export const EDIT_LYRICS_TIP: string =
   'Tip: Press Help in the header for guidance on using the lyric shortcuts below.';
-export const lyricsTip: string =
+export const LYRICS_TIP: string =
   'Tip: Song Details will be added to your Lyrics pdf when shared.';
-export const completedTip: string =
+export const COMPLETED_TIP: string =
   'Tip: Mark songs as "Completed" to filter for them in searches and auto-Sync.';
+export const SORT_TIP: string =
+  'Tip: Press a selected sort option to toggle between Descending and Ascending';
