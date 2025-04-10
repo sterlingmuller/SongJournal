@@ -3,6 +3,7 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 interface Styles {
   container: ViewStyle;
+  close: ViewStyle;
   input: TextStyle;
 }
 
@@ -20,7 +21,7 @@ const useSearchBarStyle = () => {
       borderColor: '#ccc',
       marginLeft: 35,
     },
-
+    close: { alignSelf: 'center' },
     input: {
       flex: 1,
       fontSize: 14,

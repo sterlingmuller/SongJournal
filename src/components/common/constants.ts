@@ -241,16 +241,16 @@ export const SUPPORT_EMAIL = 'SongJournalContact@gmail.com';
 export const PLACEHOLDER_TITLE = 'Cobra Strike Deluxe';
 
 export const startTip: string =
-  'Tip: Visit Settings for the options to number your Songs List and disable future Tips';
+  'Tip: Visit Settings for the options to number your songs list and disable future tips';
 export const homeTip: string =
-  'Tip: Long Press to Edit a Title on the Home or Song Takes Screen';
+  'Tip: Long press to edit a title on the Home or Song screen';
 export const songScreenTip: string =
-  'Tip: Your Starred Take is the Song version that will play on the Home Screen and be used when sharing. By default, your oldest Take is set as the Starred Take.';
+  'Tip: Your Starred Take is the version of the song that will play on the Home screen and be used when sharing. By default, your oldest take is set as the Starred Take.';
 export const starTakeTip: string =
-  'Tip: When there are multiple Takes of a Song, Double Tap a Take to set it as the new Starred Take';
+  'Tip: When there are multiple takes of a song, Double tap a take to set it as the new Starred Take';
 export const editLyricsTip: string =
-  'Tip: Press Help in the Header for guidance on using the Lyric Shortcuts below.';
+  'Tip: Press Help in the header for guidance on using the lyric shortcuts below.';
 export const lyricsTip: string =
   'Tip: Song Details will be added to your Lyrics pdf when shared.';
 export const completedTip: string =
-  'Tip: Mark songs as "Completed" to filter them in Searches and Auto-Sync.';
+  'Tip: Mark songs as "Completed" to filter for them in searches and auto-Sync.';

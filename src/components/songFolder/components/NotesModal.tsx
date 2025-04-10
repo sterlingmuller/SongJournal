@@ -53,7 +53,7 @@ const NotesModal = (props: Props) => {
         <View style={styles.textbox}>
           <TextInput
             style={styles.input}
-            placeholder="Add notes for the current take..."
+            placeholder="Add notes for the current take"
             placeholderTextColor={theme.placeholderText}
             value={newNote}
             onChangeText={(text: string) => setNewNote(text)}

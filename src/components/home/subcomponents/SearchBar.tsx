@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { TextInput, View } from 'react-native';
+import { TextInput, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import useSearchBarStyle from '@src/styles/search';
 import useDebounce from '@src/hooks/useDebounce';
 import { useColorTheme } from '@src/state/context/ThemeContext';
+import CloseIcon from '@src/icons/CloseIcon';
 
 interface Props {
   searchText: string;
@@ -29,17 +30,26 @@ const SearchBar = ({ searchText, setSearchText }: Props) => {
     debouncedSearch(text);
   };
 
+  const clearSearch = () => {
+    setSearchText('');
+  };
+
   return (
     <View style={styles.container}>
+      <Ionicons name="search" size={22} color={theme.placeholderText} />
       <TextInput
         style={styles.input}
-        placeholder="Search songs..."
+        placeholder="Search songs"
         placeholderTextColor={theme.placeholderText}
         value={localSearchText}
         onChangeText={handleTextChange}
         autoCapitalize="words"
       />
-      <Ionicons name="search" size={24} color="black" />
+      {localSearchText && (
+        <TouchableOpacity style={styles.close} onPress={clearSearch}>
+          <CloseIcon color={theme.placeholderText} size={20} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

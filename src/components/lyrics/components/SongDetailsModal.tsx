@@ -150,7 +150,7 @@ const SongDetailsModal = (props: Props) => {
     setIsSongDetailsModalOpen(false);
   };
 
-  const defaultPlaceholder = 'About...';
+  const defaultPlaceholder = 'About';
   const placeholder = displayTips
     ? `${defaultPlaceholder}\n\n${completedTip}`
     : defaultPlaceholder;

@@ -80,8 +80,8 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
             </View>
             {displayTips ? (
               <StyledText style={{ ...styles.tipText, paddingBottom: 0 }}>
-                Tip: New Songs will be credited to the Default Artist. A Song's
-                Artist can be changed on the Lyrics Screen.
+                Tip: New songs will be credited to the Default Artist. A song's
+                artist can be changed on the Lyrics screen.
               </StyledText>
             ) : (
               <Gap />

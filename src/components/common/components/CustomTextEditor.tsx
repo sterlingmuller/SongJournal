@@ -105,7 +105,7 @@ const CustomTextEditor = ({
     }
   };
 
-  const defaultPlaceholder = 'Lyrics...';
+  const defaultPlaceholder = 'Add lyrics';
   const placeholder = displayTips
     ? `${defaultPlaceholder}\n\n${editLyricsTip}`
     : defaultPlaceholder;
