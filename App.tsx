@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { SQLiteDatabase, SQLiteProvider, useSQLiteContext } from 'expo-sqlite';
 import { StatusBar, View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
+import * as NavigationBar from 'expo-navigation-bar';
 
 import AppNavigator from '@src/navigation/AppNavigator';
 import {
@@ -13,7 +14,7 @@ import {
 import { NetworkProvider } from '@src/state/context/NetworkContext';
 import store from '@src/state/store/index';
 import { migrateDbIfNeeded } from '@src/data/database/db';
-import { DB_NAME } from '@src/components/common/constants';
+import { DB_NAME, SCREEN_HEIGHT } from '@src/components/common/constants';
 import { useAppDispatch, useAppSelector } from '@src/hooks/typedReduxHooks';
 import { selectIsDbLoading } from '@src/state/selectors/asyncSelectors';
 import { fetchStartupDataRequest } from '@src/state/sagas/actionCreators';
@@ -26,7 +27,7 @@ SplashScreen.setOptions({
 });
 
 const Main = () => {
-  const { isThemeLoading } = useColorTheme();
+  const { isThemeLoading, theme } = useColorTheme();
   const isDbLoading = useAppSelector(selectIsDbLoading);
   const [isAppReady, setIsAppReady] = useState(false);
 
@@ -39,7 +40,9 @@ const Main = () => {
 
   useEffect(() => {
     if (!isThemeLoading && !isDbLoading) {
-      setTimeout(() => {
+      setTimeout(async () => {
+        await NavigationBar.setPositionAsync('absolute');
+        await NavigationBar.setBackgroundColorAsync('#ffffff01');
         setIsAppReady(true);
       }, 100);
     }
@@ -56,7 +59,14 @@ const Main = () => {
   }
 
   return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+    <View
+      style={{
+        flex: 1,
+        paddingBottom: SCREEN_HEIGHT * 0.03,
+        backgroundColor: theme.primary,
+      }}
+      onLayout={onLayoutRootView}
+    >
       <StatusBar translucent backgroundColor="transparent" />
       <AppNavigator />
     </View>
