@@ -61,6 +61,7 @@ export default ({ config }) => {
           },
         },
       ],
+      ['expo-web-browser'],
       [
         'expo-secure-store',
         {
@@ -104,6 +105,7 @@ export default ({ config }) => {
         : 'com.sterling.silverado.songjournal',
     },
     android: {
+      edgeToEdgeEnabled: true,
       softwareKeyboardLayoutMode: 'pan',
       versionCode: 21,
       package: IS_DEV

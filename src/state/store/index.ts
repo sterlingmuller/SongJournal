@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import devToolsEnhancer from 'redux-devtools-expo-dev-plugin';
-import createSagaMiddleware from 'redux-saga';
 
 import rootReducer from '@src/state/store/rootReducer';
 import rootSaga from '@src/state/sagas/rootSaga';
 
-const sagaMiddleware = createSagaMiddleware();
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const createSagaMiddleware = require('redux-saga');
+const sagaMiddleware = createSagaMiddleware.default();
 
 const store = configureStore({
   reducer: rootReducer,
