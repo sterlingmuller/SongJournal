@@ -13,6 +13,9 @@ export default ({ config }) => {
     icon: './assets/Icon.png',
     userInterfaceStyle: 'light',
     newArchEnabled: true,
+    experiments: {
+      reactCompiler: true,
+    },
     plugins: [
       [
         'expo-build-properties',

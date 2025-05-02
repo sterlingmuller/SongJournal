@@ -96,6 +96,11 @@ const DropboxAuth = () => {
   }, [response]);
 
   const handlePress = async () => {
+    if (!request) {
+      console.error('Authentication request is not ready');
+      return;
+    }
+
     const { codeVerifier, codeChallenge } = await generateChallange();
     setCodeVerifier(codeVerifier);
 

@@ -6,7 +6,7 @@ import useAudioWaveStyles from '@src/styles/audioWave';
 import RecordingWave from '@src/components/recording/subcomponents/RecordingWave';
 import { useRecording } from '@src/state/context/RecordingContext';
 
-const RecordingWaveDisplay = React.memo(() => {
+const RecordingWaveDisplayComponent = () => {
   const { displayWaveShared } = useRecording();
   const styles = useAudioWaveStyles();
   const [localWave, setLocalWave] = useState([]);
@@ -26,6 +26,8 @@ const RecordingWaveDisplay = React.memo(() => {
       </View>
     </View>
   );
-});
+};
+
+const RecordingWaveDisplay = React.memo(RecordingWaveDisplayComponent);
 
 export default RecordingWaveDisplay;

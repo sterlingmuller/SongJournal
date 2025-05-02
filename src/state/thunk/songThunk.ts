@@ -11,7 +11,7 @@ export const updateSongTitleRequest = createAsyncThunk(
   ) => {
     try {
       await updateSongTitle(payload);
-    } catch (error) {
+    } catch {
       return rejectWithValue(RequestStatus.FAILURE);
     }
   },

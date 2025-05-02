@@ -17,7 +17,7 @@ import { CloudFileType } from '@src/components/common/enums';
 import { fetchPageBySongId } from '@src/data/repositories/PageRepository';
 import { useArtistName } from '@src/hooks/useArtistName';
 
-export const useRenameUpdateAndUpload = () => {
+const useRenameUpdateAndUpload = () => {
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
   const { generateSongRename, generateTakeRename } = useDropboxFileGenerator();

@@ -36,12 +36,12 @@ const LyricsInfoModal = (props: Props) => {
           style={{ width: '80%' }}
           contentContainerStyle={{ paddingRight: 10, paddingBottom: 30 }}
         >
-          <Text style={styles.sectionTitle}>-in'</Text>
+          <Text style={styles.sectionTitle}>-in&apos;</Text>
           <BulletPoint>
             Replaces <Text style={styles.italic}>-ing</Text> endings with{' '}
-            <Text style={styles.italic}>-in'</Text>.
+            <Text style={styles.italic}>-in&apos;</Text>.
           </BulletPoint>
-          <Text style={styles.exampleText}>Running → Runnin'</Text>
+          <Text style={styles.exampleText}>Running → Runnin&apos;</Text>
           <BulletPoint>
             Applies change when cursor is on any word, ending with{' '}
             <Text style={styles.italic}>-ing</Text>.

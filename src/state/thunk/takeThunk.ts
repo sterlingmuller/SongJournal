@@ -20,7 +20,7 @@ export const createTakeRequest = createAsyncThunk(
     try {
       const take = await createTake(payload);
       return take;
-    } catch (error) {
+    } catch {
       return rejectWithValue(RequestStatus.FAILURE);
     }
   },
@@ -34,7 +34,7 @@ export const updateSelectedTakeRequest = createAsyncThunk(
   ) => {
     try {
       await updateSelectedTakeId(payload);
-    } catch (error) {
+    } catch {
       return rejectWithValue(RequestStatus.FAILURE);
     }
   },
@@ -48,7 +48,7 @@ export const updateTakeTitleRequest = createAsyncThunk(
   ) => {
     try {
       await updateTakeTitle(payload);
-    } catch (error) {
+    } catch {
       return rejectWithValue(RequestStatus.FAILURE);
     }
   },

@@ -11,7 +11,7 @@ import { CloudFileType } from '@src/components/common/enums';
 import { createTakeRequest } from '@src/state/thunk/takeThunk';
 import { createTakeSuccess } from '@src/state/slice/songsSlice';
 
-export const useTakeGenerator = () => {
+const useTakeGenerator = () => {
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
   const { generateAndUploadFile } = useDropboxFileGenerator();

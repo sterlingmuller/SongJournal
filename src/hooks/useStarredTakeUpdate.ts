@@ -14,7 +14,7 @@ import { CloudFileType } from '@src/components/common/enums';
 import { updateSelectedTakeRequest } from '@src/state/thunk/takeThunk';
 import { updateSelectedTakeIdSuccess } from '@src/state/slice/songsSlice';
 
-export const useStarredTakeUpdateAndUpload = () => {
+const useStarredTakeUpdateAndUpload = () => {
   const { currentTakeUri, currentTakeTitle } =
     useAppSelector(selectCurrentTakeUri);
   const isAutoSyncEnabled = useAppSelector(selectIsAutoSyncEnabled);

@@ -12,7 +12,7 @@ export const updateArtistRequest = createAsyncThunk(
   ) => {
     try {
       await updateArtist(payload);
-    } catch (error) {
+    } catch {
       return rejectWithValue(RequestStatus.FAILURE);
     }
   },

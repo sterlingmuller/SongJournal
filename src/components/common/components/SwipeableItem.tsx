@@ -50,7 +50,7 @@ const SwipeableItem = forwardRef<SwipeableItemRef, SwipeableItemProps>(
       () => ({
         closeRow,
       }),
-      [],
+      [closeRow],
     );
 
     const panGesture = Gesture.Pan()

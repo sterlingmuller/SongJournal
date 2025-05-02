@@ -52,7 +52,7 @@ const ComposerMessage = ({ messageIntent }: props) => {
 
   const emptySearchMessage = (
     <StyledText style={styles.text}>
-      Hmmm, I got nothin'. It might be time to record a new{' '}
+      Hmmm, I got nothin&apos;. It might be time to record a new{' '}
       <StyledText style={styles.boldText}>Song</StyledText> or refine your{' '}
       <StyledText style={styles.boldText}>Search</StyledText>.
     </StyledText>

@@ -27,9 +27,11 @@ const SortByCategory = (props: Props) => {
   const isSelected: boolean = sortedCategory === label;
 
   const onPress = () => {
-    isSelected
-      ? setIsSortAscending(!isSortAscending)
-      : setSortedCategory(label);
+    if (isSelected) {
+      setIsSortAscending(!isSortAscending);
+    } else {
+      setSortedCategory(label);
+    }
   };
 
   return (

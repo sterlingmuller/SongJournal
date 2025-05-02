@@ -125,7 +125,7 @@ const EditorToolbar = ({
             onPress={onGerundConvert}
             style={styles.smallFixedWidthButton}
           >
-            <Text style={styles.shortcutText}>-in'</Text>
+            <Text style={styles.shortcutText}>-in&apos;</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={onHyphen}

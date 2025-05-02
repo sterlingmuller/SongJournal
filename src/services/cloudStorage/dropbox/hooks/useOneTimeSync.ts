@@ -95,6 +95,7 @@ const useOneTimeSync = () => {
     isUnstarredTakeConditionEnabled,
     isOnline,
     addToUploadQueue,
+    generateFilesToUpload,
   ]);
 
   return performBackup;

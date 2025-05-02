@@ -54,7 +54,7 @@ const CustomTextEditor = ({
       setHistory(newHistory);
     }
     debouncedInput(localText);
-  }, [localText]);
+  }, [localText, debouncedInput, history, historyIndex]);
 
   const handleUndo = () => {
     if (historyIndex > 0) {

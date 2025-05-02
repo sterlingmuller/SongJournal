@@ -28,8 +28,8 @@ interface RecordingContextType {
   isRecording: boolean;
   duration: number;
   displayWaveShared: SharedValue<number[]>;
-  fullWaveRef: React.MutableRefObject<number[]>;
-  recordingRef: React.MutableRefObject<Audio.Recording | null>;
+  fullWaveRef: React.RefObject<number[]>;
+  recordingRef: React.RefObject<Audio.Recording | null>;
 }
 
 const RecordingContext: Context<RecordingContextType> =

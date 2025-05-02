@@ -1,4 +1,10 @@
-import React, { Suspense, useCallback, useEffect, useState } from 'react';
+import React, {
+  StrictMode,
+  Suspense,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import { SQLiteDatabase, SQLiteProvider, useSQLiteContext } from 'expo-sqlite';
@@ -82,21 +88,23 @@ const App = () => {
   };
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <Suspense fallback={null}>
-        <SQLiteProvider
-          databaseName={DB_NAME}
-          onInit={handleDbInit}
-          useSuspense
-        >
-          <ColorThemeProvider>
-            <Provider store={store}>
-              <NetworkProvider>{dbInitialized && <Main />}</NetworkProvider>
-            </Provider>
-          </ColorThemeProvider>
-        </SQLiteProvider>
-      </Suspense>
-    </GestureHandlerRootView>
+    <StrictMode>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <Suspense fallback={null}>
+          <SQLiteProvider
+            databaseName={DB_NAME}
+            onInit={handleDbInit}
+            useSuspense
+          >
+            <ColorThemeProvider>
+              <Provider store={store}>
+                <NetworkProvider>{dbInitialized && <Main />}</NetworkProvider>
+              </Provider>
+            </ColorThemeProvider>
+          </SQLiteProvider>
+        </Suspense>
+      </GestureHandlerRootView>
+    </StrictMode>
   );
 };
 

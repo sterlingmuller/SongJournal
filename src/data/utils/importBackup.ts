@@ -75,7 +75,7 @@ export const importBackup = async () => {
   } catch (error) {
     Alert.alert(
       'Import Failed',
-      'An error occurred while importing the backup.',
+      `An error occurred while importing the backup: ${error}`,
     );
     return false;
   }

@@ -17,7 +17,7 @@ export const updateLyricsRequest = createAsyncThunk(
   ) => {
     try {
       await updateLyrics(payload);
-    } catch (error) {
+    } catch {
       return rejectWithValue(RequestStatus.FAILURE);
     }
   },
@@ -31,7 +31,7 @@ export const updateInfoRequest = createAsyncThunk(
   ) => {
     try {
       await updatePageInfo(payload);
-    } catch (error) {
+    } catch {
       return rejectWithValue(RequestStatus.FAILURE);
     }
   },

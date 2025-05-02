@@ -19,7 +19,7 @@ import { useArtistName } from '@src/hooks/useArtistName';
 import { updateSongHasLyrics } from '@src/state/slice/songsSlice';
 import { selectCurrentSongPage } from '@src/state/selectors/pagesSelector';
 
-export const useLyricsSheetGenerator = () => {
+const useLyricsSheetGenerator = () => {
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
   const { generateAndUploadFile } = useDropboxFileGenerator();

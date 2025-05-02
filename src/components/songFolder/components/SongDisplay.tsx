@@ -50,10 +50,7 @@ const SongDisplay = (props: Props) => {
     return <StyledText style={styles.tipText}>{STAR_TAKE_TIP}</StyledText>;
   };
 
-  const ItemSeparator = useMemo(
-    () => () => <View style={styles.takeSeperator} />,
-    [],
-  );
+  const ItemSeparator = () => <View style={styles.takeSeperator} />;
 
   if (takes.length > 0) {
     return (

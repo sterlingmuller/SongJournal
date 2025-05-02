@@ -13,7 +13,7 @@ interface BarProps {
   isOverlay?: boolean;
 }
 
-const Bar = React.memo(({ waveHeight, isOverlay = false }: BarProps) => {
+const BarComponent = ({ waveHeight, isOverlay = false }: BarProps) => {
   const styles = useAudioWaveStyles();
 
   return (
@@ -36,7 +36,9 @@ const Bar = React.memo(({ waveHeight, isOverlay = false }: BarProps) => {
       </View>
     </View>
   );
-});
+};
+
+const Bar = React.memo(BarComponent);
 
 interface WaveFormProps {
   waveForm: number[];

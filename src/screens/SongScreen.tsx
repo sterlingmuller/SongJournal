@@ -68,9 +68,11 @@ const SongScreen = () => {
 
       clearPlayback();
 
-      isPermissionGranted === 'granted'
-        ? recording()
-        : setIsPermissionsNeededModalOpen(true);
+      if (isPermissionGranted === 'granted') {
+        recording();
+      } else {
+        setIsPermissionsNeededModalOpen(true);
+      }
     } else {
       setIsMaxTakesModalOpen(true);
     }

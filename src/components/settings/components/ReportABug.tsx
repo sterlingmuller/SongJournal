@@ -1,6 +1,5 @@
 import React from 'react';
-import { Linking, TouchableOpacity } from 'react-native';
-import { Alert } from 'react-native';
+import { Linking, TouchableOpacity, Alert } from 'react-native';
 import { modelName, osVersion, osName } from 'expo-device';
 
 import StyledText from '@src/components/common/components/StyledText';
@@ -47,13 +46,9 @@ Thank you!`;
     if (supported) {
       await Linking.openURL(mailtoUrl);
     } else {
-      // Alert.alert(
-      //   'Email Not Supported',
-      //   'Your device does not support opening the email client.',
-      // );
       await Linking.openURL(mailtoUrlFallback);
     }
-  } catch (error) {
+  } catch {
     Alert.alert(
       'Error',
       'An error occurred while trying to open the email client.',

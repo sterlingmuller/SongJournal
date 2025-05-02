@@ -1,5 +1,4 @@
 import { StyleSheet, ViewStyle } from 'react-native';
-import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Styles {
   container: ViewStyle;
@@ -7,8 +6,6 @@ interface Styles {
 }
 
 const useDeleteRowStyle = () => {
-  const { theme } = useColorTheme();
-
   const deleteRowStyle: Styles = StyleSheet.create({
     container: {
       flexDirection: 'row',

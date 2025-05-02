@@ -60,10 +60,12 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
   const modalTitle = takeId ? 'Edit Take Title' : 'Edit Song Title';
 
   useEffect(() => {
-    takeId
-      ? setUpdatedTitle(originalTakeTitle)
-      : setUpdatedTitle(originalSongTitle);
-  }, [titleToEdit]);
+    if (takeId) {
+      setUpdatedTitle(originalTakeTitle);
+    } else {
+      setUpdatedTitle(originalSongTitle);
+    }
+  }, [titleToEdit, takeId, originalTakeTitle, originalSongTitle]);
 
   const onExitPress = () => {
     setTitleToEdit({ songTitle: '', takeTitle: '', songId: -1, takeId: -1 });
@@ -98,7 +100,10 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
     onExitPress();
   };
 
-  useEffect(() => addListener('blur', () => onExitPress()), [navigate]);
+  useEffect(
+    () => addListener('blur', () => onExitPress()),
+    [navigate, addListener, onExitPress],
+  );
 
   const handleTitleChange = (title: string) => {
     if (title.length <= MAX_TITLE_LENGTH) {

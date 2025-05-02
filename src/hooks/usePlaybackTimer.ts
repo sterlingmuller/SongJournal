@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Audio } from 'expo-av';
 
 const usePlaybackTimer = (
-  soundRef: React.MutableRefObject<Audio.Sound | null>,
+  soundRef: React.RefObject<Audio.Sound | null>,
   isPlaying: boolean,
   onUpdate?: (currentTime: number) => void,
 ): number | null => {

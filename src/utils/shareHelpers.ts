@@ -49,7 +49,10 @@ export const shareZip = async (
       );
     }
   } catch (error) {
-    Alert.alert('Share Failed', 'An error occurred while creating the backup.');
+    Alert.alert(
+      'Share Failed',
+      `An error occurred while creating the backup: ${error}`,
+    );
   }
 };
 
@@ -83,7 +86,7 @@ export const shareAudio = async (path: string, title: string, date: string) => {
   } catch (error) {
     Alert.alert(
       'Share Failed',
-      'An error occurred while sharing your audio file.',
+      `An error occurred while sharing your audio file: ${error}`,
     );
   }
 };
@@ -118,7 +121,7 @@ export const sharePdf = async (path: string, title: string) => {
   } catch (error) {
     Alert.alert(
       'Share Failed',
-      'An error occurred while sharing your lyrics pdf.',
+      `An error occurred while sharing your lyrics pdf: ${error}`,
     );
   }
 };
