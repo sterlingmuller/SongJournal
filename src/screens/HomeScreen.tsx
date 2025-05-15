@@ -22,7 +22,7 @@ import { useAudioPlayer } from '@src/state/context/AudioContext';
 import { selectPlaybackUri } from '@src/state/selectors/playbackSelector';
 
 const HomeScreen = () => {
-  const { setOptions } = useNavigation();
+  const { setOptions, addListener } = useNavigation();
   const styles = useGlobalStyles();
   const defaultSort: Sort = useAppSelector(selectDefaultSort);
   const { clearPlayback } = useAudioPlayer();
@@ -69,13 +69,15 @@ const HomeScreen = () => {
     });
   }, [setOptions, isSortOpen, setIsSortOpen, searchText, setSearchText]);
 
-  useFocusEffect(() => {
-    return () => {
-      if (playbackUri) {
-        clearPlayback();
-      }
-    };
+useEffect(() => {
+  const unsubscribe = addListener('blur', () => {
+    if (playbackUri) {
+      clearPlayback();
+    }
   });
+
+  return unsubscribe;
+}, [addListener, playbackUri]);
 
   return (
     <View style={styles.container}>

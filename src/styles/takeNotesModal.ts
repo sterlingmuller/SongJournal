@@ -37,7 +37,7 @@ const useTakeNotesModalStyles = () => {
     textbox: {
       backgroundColor: theme.inputBackground,
       borderRadius: 10,
-      padding: 8,
+      paddingHorizontal: 8,
       width: '85%',
       height: SCREEN_HEIGHT * 0.3,
       borderWidth: 1,

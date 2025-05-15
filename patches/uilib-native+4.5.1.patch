@@ -1,0 +1,37 @@
+diff --git a/node_modules/uilib-native/android/src/main/java/com/wix/reactnativeuilib/keyboardinput/utils/RuntimeUtils.java b/node_modules/uilib-native/android/src/main/java/com/wix/reactnativeuilib/keyboardinput/utils/RuntimeUtils.java
+index 95c5e8e..05c5893 100644
+--- a/node_modules/uilib-native/android/src/main/java/com/wix/reactnativeuilib/keyboardinput/utils/RuntimeUtils.java
++++ b/node_modules/uilib-native/android/src/main/java/com/wix/reactnativeuilib/keyboardinput/utils/RuntimeUtils.java
+@@ -5,13 +5,26 @@ import com.wix.reactnativeuilib.keyboardinput.ReactContextHolder;
+ 
+ public class RuntimeUtils {
+ 
+-    // TODO Switch to GuardedRunnable when upgrading RN's minimal ver
+-    private static final Runnable sUIUpdateClosure = new Runnable() {
+-        @Override
+-        public void run() {
+-            ReactContextHolder.getContext().getNativeModule(UIManagerModule.class).onBatchComplete();
++private static final Runnable sUIUpdateClosure = new Runnable() {
++    @Override
++    public void run() {
++        try {
++            if (ReactContextHolder.getContext() != null) {
++                UIManagerModule uiManager = ReactContextHolder.getContext()
++                        .getNativeModule(UIManagerModule.class);
++                if (uiManager != null) {
++                    uiManager.onBatchComplete();
++                } else {
++                    System.err.println("UIManagerModule is null, cannot call onBatchComplete");
++                }
++            } else {
++                System.err.println("ReactContextHolder.getContext() is null");
++            }
++        } catch (Exception e) {
++            e.printStackTrace();
+         }
+-    };
++    }
++};
+ 
+     public static void runOnUIThread(Runnable runnable) {
+         if (ReactContextHolder.getContext() != null) {

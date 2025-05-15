@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, TextInput, KeyboardAvoidingView } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Modal from 'react-native-modal';
@@ -26,6 +26,7 @@ interface Props {
 }
 
 const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
+  const textInputRef = useRef<TextInput>(null);
   const db = useSQLiteContext();
   const dispatch = useAppDispatch();
   const { navigate, addListener } =
@@ -42,6 +43,14 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
     setIsNewSongOpen(false);
     setSongTitle('');
   };
+
+  useEffect(() => {
+  if (isNewSongOpen) {
+    setTimeout(() => {
+      textInputRef?.current?.focus();
+    }, 200); // Delay to ensure modal is fully mounted
+  }
+}, [isNewSongOpen]);
 
   useEffect(() => {
     const normalizedTitle = songTitle?.trim().toLowerCase() || '';
@@ -101,6 +110,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
                 value={songTitle}
                 onChangeText={handleTitleChange}
                 autoCapitalize="words"
+                ref={textInputRef}
               />
             </View>
             <View style={styles.infoContainer}>

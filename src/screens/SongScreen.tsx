@@ -38,7 +38,7 @@ import { selectPlaybackUri } from '@src/state/selectors/playbackSelector';
 const SongScreen = () => {
   const styles = useSongScreenStyles();
   const globalStyles = useGlobalStyles();
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const {navigate, addListener} = useNavigation<NavigationProp<RootStackParamList>>();
   const totalTakes = useAppSelector(selectCurrentSongTotalTakes);
   const takes = useAppSelector(selectCurrentSongTakes);
   const playbackUri = useAppSelector(selectPlaybackUri);
@@ -63,7 +63,7 @@ const SongScreen = () => {
       const recording = () => {
         const newTakeTitle = `Take ${totalTakes + 1}`;
 
-        navigation.navigate(Screen.RECORDING, { title: newTakeTitle });
+        navigate(Screen.RECORDING, { title: newTakeTitle });
       };
 
       clearPlayback();
@@ -88,13 +88,15 @@ const SongScreen = () => {
     setIsPermissionsNeededModalOpen,
   ]);
 
-  useFocusEffect(() => {
-    return () => {
-      if (playbackUri) {
-        clearPlayback();
-      }
-    };
+useEffect(() => {
+  const unsubscribe = addListener('blur', () => {
+    if (playbackUri) {
+      clearPlayback();
+    }
   });
+
+  return unsubscribe;
+}, [addListener, playbackUri]);
 
   return (
     <View style={globalStyles.container}>

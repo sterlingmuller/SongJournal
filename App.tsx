@@ -104,7 +104,7 @@ const App = () => {
           </SQLiteProvider>
         </Suspense>
       </GestureHandlerRootView>
-    </StrictMode>
+   </StrictMode>
   );
 };
 

@@ -38,6 +38,7 @@ const SearchBar = ({ searchText, setSearchText }: Props) => {
     <View style={styles.container}>
       <Ionicons name="search" size={22} color={theme.placeholderText} />
       <TextInput
+      textAlignVertical='top'
         style={styles.input}
         placeholder="Search songs"
         placeholderTextColor={theme.placeholderText}
@@ -47,7 +48,7 @@ const SearchBar = ({ searchText, setSearchText }: Props) => {
       />
       {localSearchText && (
         <TouchableOpacity style={styles.close} onPress={clearSearch}>
-          <CloseIcon color={theme.placeholderText} size={20} />
+          <CloseIcon color={theme.placeholderText} size={18} />
         </TouchableOpacity>
       )}
     </View>

@@ -4,9 +4,9 @@ import devToolsEnhancer from 'redux-devtools-expo-dev-plugin';
 import rootReducer from '@src/state/store/rootReducer';
 import rootSaga from '@src/state/sagas/rootSaga';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const createSagaMiddleware = require('redux-saga');
-const sagaMiddleware = createSagaMiddleware.default();
+const createSagaMiddleware = require('redux-saga').default;
+
+const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
   reducer: rootReducer,

@@ -16,6 +16,7 @@ import { useColorTheme } from '@src/state/context/ThemeContext';
 import useRenameUpdateAndUpload from '@src/hooks/useRenameUpdateAndUpload';
 import { MAX_TITLE_LENGTH } from '@src/components/common/constants';
 import { sanitizeInput } from '@src/utils/sanitizeInput';
+import { on } from 'events';
 
 interface Props {
   titleToEdit: {
@@ -100,10 +101,10 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
     onExitPress();
   };
 
-  useEffect(
-    () => addListener('blur', () => onExitPress()),
-    [navigate, addListener, onExitPress],
-  );
+useEffect(() => {
+  const unsubscribe = addListener('blur', () => onExitPress());
+  return () => unsubscribe();
+}, [navigate, onExitPress, addListener]);
 
   const handleTitleChange = (title: string) => {
     if (title.length <= MAX_TITLE_LENGTH) {

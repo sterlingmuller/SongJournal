@@ -42,7 +42,7 @@ const useCommonModalStyle = () => {
       flexDirection: 'row',
       backgroundColor: theme.inputBackground,
       borderRadius: 10,
-      padding: 6,
+      paddingHorizontal: 6,
       width: '75%',
       borderWidth: 1,
       borderColor: '#ccc',
