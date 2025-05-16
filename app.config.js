@@ -110,7 +110,7 @@ export default ({ config }) => {
     android: {
       edgeToEdgeEnabled: true,
       softwareKeyboardLayoutMode: 'pan',
-      versionCode: 22,
+      versionCode: 23,
       package: IS_DEV
         ? 'com.sterling.silverado.songjournal.dev'
         : 'com.sterling.silverado.songjournal',
