@@ -244,3 +244,6 @@ export const COMPLETED_TIP: string =
   'Tip: Mark songs as "Completed" to filter for them in searches and auto-Sync.';
 export const SORT_TIP: string =
   'Tip: Press a selected sort option to toggle between Descending and Ascending';
+
+
+  export const MIN_TOUCH_SIZE = 48;
