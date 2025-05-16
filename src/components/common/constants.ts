@@ -20,7 +20,7 @@ import CacsusSelectIcon from '@src/icons/CacsusSelectIcon';
 import DeadAdimSelectIcon from '@src/icons/DeadAdimSelectIcon';
 import AddDetailsIcon from '@src/icons/AddDetailsIcon';
 
-export const APP_VERSION = '0.3.2';
+export const APP_VERSION = '0.3.3';
 export const applicationId = 'com.sterling.silverado.songjournal';
 
 export const DROPBOX_CLIENT_ID = Constants.expoConfig.extra.DROPBOX_CLIENT_ID;
