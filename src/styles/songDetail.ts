@@ -25,7 +25,7 @@ const useSongDetailStyles = () => {
       backgroundColor: theme.inputBackground,
       borderRadius: 5,
       width: 65,
-      height: 30,
+      height: 40,
       borderWidth: 1,
       borderColor: '#ccc',
       alignItems: 'center',
@@ -52,7 +52,7 @@ const useSongDetailStyles = () => {
     },
 
     labelText: { fontSize: 14, color: theme.secondaryText, fontWeight: 600 },
-    inputText: { fontSize: 14, color: theme.secondaryText, fontWeight: 700 },
+    inputText: { fontSize: 14, color: theme.secondaryText, fontWeight: 700, },
 
     select: {
       fontSize: 14,
