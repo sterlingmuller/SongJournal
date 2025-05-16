@@ -19,7 +19,7 @@ const DefaultHeader = ({ title, screen }: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.titlePlusArrow}>
-        <TouchableOpacity onPress={goBack}>
+        <TouchableOpacity onPress={goBack} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
           <BackIcon />
         </TouchableOpacity>
         <View style={styles.titleContainer}>

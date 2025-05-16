@@ -23,7 +23,7 @@ const HeaderPageButton = () => {
   };
 
   return (
-    <TouchableOpacity onPress={onNavigationPress} hitSlop={20}>
+    <TouchableOpacity onPress={onNavigationPress} hitSlop={12}>
       <PageIcon />
     </TouchableOpacity>
   );

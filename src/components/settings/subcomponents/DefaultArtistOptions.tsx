@@ -75,7 +75,7 @@ const DefaultArtistOptions = ({ defaultArtistId }: Props) => {
             </StyledText>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => setIsNewArtistOpen(true)} hitSlop={20}>
+        <TouchableOpacity onPress={() => setIsNewArtistOpen(true)}  hitSlop={10}>
           <StyledText style={styles.addArtistText}>
             + Add or Edit Artist
           </StyledText>

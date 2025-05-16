@@ -27,6 +27,7 @@ import PlaybackBar from '@src/components/home/subcomponents/PlaybackBar';
 import formatDuration from '@src/utils/formatDuration';
 import StyledText from '@src/components/common/components/StyledText';
 import useStarredTakeUpdateAndUpload from '@src/hooks/useStarredTakeUpdate';
+import { calculateHitSlop } from '@src/utils/calculateHitSlope';
 
 interface Props {
   take: Take;
@@ -91,7 +92,7 @@ const SongTake = (props: Props) => {
             onPress={onDoubleTap}
             onLongPress={handleLongPress}
             delayLongPress={250}
-            hitSlop={{ top: 20, bottom: 20, left: 20, right: 30 }}
+            hitSlop={{ top: 15, bottom: 20, left: 20, right: 30 }}
           >
             <StyledText style={styles.title}>{title}</StyledText>
           </TouchableOpacity>
@@ -108,18 +109,18 @@ const SongTake = (props: Props) => {
             onPress={() => {
               setCurrentTake(take);
             }}
-            hitSlop={20}
+           hitSlop={calculateHitSlop({ width: 32, height: 32 })}
           >
             <NotesIcon />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleShare} hitSlop={20}>
+          <TouchableOpacity onPress={handleShare}      hitSlop={calculateHitSlop({ width: 32, height: 32 })}>
             <ShareIcon />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
               setToDelete({ type: 'take', songId, takeId, title });
             }}
-            hitSlop={20}
+            hitSlop={calculateHitSlop({ width: 32, height: 32 })}
           >
             <TrashIcon size={32} />
           </TouchableOpacity>
@@ -133,7 +134,7 @@ const SongTake = (props: Props) => {
       <TouchableOpacity
         style={styles.playIcon}
         onPress={() => togglePlayback(take.uri, take.takeId)}
-        hitSlop={{ left: 40, top: 30, right: 20, bottom: 20 }}
+        hitSlop={{ left: 40, top: 30, right: 20, bottom: 0 }}
       >
         {isCurrentTakePlaying ? <PauseIcon /> : <PlayIcon />}
       </TouchableOpacity>

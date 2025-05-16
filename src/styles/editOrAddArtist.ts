@@ -69,7 +69,6 @@ const useEditOrAddArtistStyles = () => {
       flexDirection: 'row',
       backgroundColor: theme.inputBackground,
       borderRadius: 10,
-      marginVertical: 2,
       width: '100%',
       borderWidth: 1,
       borderColor: '#ccc',
@@ -106,6 +105,7 @@ const useEditOrAddArtistStyles = () => {
     iconsContainer: {
       flexDirection: 'row',
       alignItems: 'center',
+      gap: 6,
     },
 
     buttons: { paddingBottom: '10%' },

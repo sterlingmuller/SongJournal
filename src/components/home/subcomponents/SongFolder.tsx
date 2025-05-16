@@ -141,14 +141,14 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
         <View style={styles.iconRow}>
           <TouchableOpacity
             onPress={() => handleOnPressNavigation(Screen.LYRICS)}
-            style={{ paddingBottom: 4 }}
-            hitSlop={{ top: 10, bottom: 20, left: 10, right: 10 }}
+            style={{ paddingBottom: 4, }}
+            hitSlop={{ top: 10, bottom: 15, left: 10, right: 10 }}
           >
             <PageIcon />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={handleShare}
-            hitSlop={{ top: 10, bottom: 20, left: 10, right: 10 }}
+            hitSlop={{ top: 15, bottom: 20, left: 10, right: 10 }}
             disabled={shareDisabled}
           >
             {!shareDisabled && <ShareIcon size={34} />}
@@ -167,7 +167,7 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
         <TouchableOpacity
           style={styles.playIcon}
           onPress={onTogglePlayback}
-          hitSlop={{ top: 30, bottom: 10, left: 20, right: 30 }}
+          hitSlop={{ top: 30, bottom: 0, left: 20, right: 30 }}
         >
           {isCurrentSongPlaying ? <PauseIcon /> : <PlayIcon />}
         </TouchableOpacity>

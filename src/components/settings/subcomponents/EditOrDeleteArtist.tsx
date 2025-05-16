@@ -20,6 +20,7 @@ import CloseIcon from '@src/icons/CloseIcon';
 import { MAX_TITLE_LENGTH } from '@src/components/common/constants';
 import { updateArtistRequest } from '@src/state/thunk/artistThunk';
 import { updateArtistSuccess } from '@src/state/slice/artistsSlice';
+import { calculateHitSlop } from '@src/utils/calculateHitSlope';
 
 const EditOrDeleteArtist = () => {
   const styles = useEditOrAddArtistStyles();
@@ -115,28 +116,30 @@ const EditOrDeleteArtist = () => {
                 style={styles.editButton}
                 onPress={() =>
                   isEditingArtist
-                    ? handleSaveEdit(name)
+                    ? handleArtistEditClose()
                     : handleEditPress({ artistId, name })
                 }
+                hitSlop={calculateHitSlop({width: 32, height: 28})}
               >
                 {isEditingArtist ? (
-                  <CheckIcon size={20} />
+                  <CloseIcon size={22} />
                 ) : (
-                  <EditIcon size={20} />
+                  <EditIcon size={24} />
                 )}
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.deleteButton}
                 onPress={() =>
                   isEditingArtist
-                    ? handleArtistEditClose()
+                    ? handleSaveEdit(name)
                     : handleDeletePress(artistId)
                 }
+                hitSlop={calculateHitSlop({width: 32, height: 28})}
               >
                 {isEditingArtist ? (
-                  <CloseIcon size={20} />
+                  <CheckIcon size={24} isPrimaryText/>
                 ) : (
-                  <TrashIcon size={20} />
+                  <TrashIcon size={24} />
                 )}
               </TouchableOpacity>
             </View>

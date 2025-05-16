@@ -65,7 +65,7 @@ const PlaybackBar = ({ duration, fromSongTakes }: Props) => {
             }}
             sliderHeight={15}
             heartbeat
-            panHitSlop={calculateHitSlop({width: MIN_TOUCH_SIZE, height: 15})}
+            panHitSlop={calculateHitSlop({width: MIN_TOUCH_SIZE, height: 10})}
           />
         </View>
       </TouchableWithoutFeedback>

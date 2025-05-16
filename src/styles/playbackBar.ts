@@ -24,10 +24,12 @@ const usePlaybackBarStyles = () => {
       marginLeft: 2,
     },
     sliderContainer: {
+      zIndex:1,
       width: SCREEN_WIDTH * 0.5,
       marginRight: 10,
     },
     takesSliderContainer: {
+      zIndex:1,
       width: SCREEN_WIDTH * 0.35,
       marginRight: 10,
     },

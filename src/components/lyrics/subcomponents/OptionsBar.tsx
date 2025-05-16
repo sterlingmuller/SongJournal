@@ -11,6 +11,7 @@ import {
   selectCurrentSongTitle,
 } from '@src/state/selectors/songsSelector';
 import { LyricsOption } from '@src/components/common/enums';
+import { calculateHitSlop } from '@src/utils/calculateHitSlope';
 
 interface Props {
   selectedOption: LyricsOption;
@@ -55,7 +56,7 @@ const OptionsBar = ({ selectedOption, setSelectedOption, page }: Props) => {
             ]}
             onPress={() => handleOptionPress(option.name)}
             disabled={isDisabled}
-            hitSlop={20}
+            hitSlop={calculateHitSlop({width: 38, height: 20})}
           >
             {<option.icon isDisabled={isDisabled} />}
           </TouchableOpacity>

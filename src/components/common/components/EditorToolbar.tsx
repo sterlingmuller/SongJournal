@@ -109,13 +109,14 @@ const EditorToolbar = ({
             onPress={onUndo}
             style={styles.button}
             disabled={isUndoDisabled}
+            hitSlop={{ top: 5, bottom: 5, left: 0, right: 0 }}
           >
             <UndoIcon isDisabled={isUndoDisabled} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={onBold} style={styles.button}>
+          <TouchableOpacity onPress={onBold} style={styles.button} hitSlop={{ top: 5, bottom: 5, left: 0, right: 0 }}>
             <BoldIcon />
           </TouchableOpacity>
-          <TouchableOpacity onPress={onItalic} style={styles.button}>
+          <TouchableOpacity onPress={onItalic} style={styles.button} hitSlop={{ top: 5, bottom: 5, left: 0, right: 0 }}>
             <ItalicIcon />
           </TouchableOpacity>
         </View>
@@ -124,24 +125,28 @@ const EditorToolbar = ({
           <TouchableOpacity
             onPress={onGerundConvert}
             style={styles.smallFixedWidthButton}
+            hitSlop={{ top: 10, bottom: 10, left: 0, right: 0 }}
           >
             <Text style={styles.shortcutText}>-in&apos;</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={onHyphen}
             style={styles.smallFixedWidthButton}
+            hitSlop={{ top: 10, bottom: 10, left: 0, right: 0 }}
           >
             <HyphenIcon />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={onAddChord}
             style={styles.fixedWidthButton}
+            hitSlop={{ top: 10, bottom: 10, left: 0, right: 0 }}
           >
             <Text style={styles.shortcutText}>Chords</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={toggleSections}
             style={styles.fixedWidthButton}
+            hitSlop={{ top: 10, bottom: 10, left: 0, right: 0 }}
           >
             <Text style={styles.shortcutText}>Sections</Text>
           </TouchableOpacity>
@@ -154,7 +159,7 @@ const EditorToolbar = ({
               key={section}
               style={styles.sectionButton}
               onPress={() => handleSectionPress(section)}
-              hitSlop={10}
+              hitSlop={{ top: 0, bottom: 0, left: 5, right: 5 }}
             >
               <Text style={styles.sectionText}>
                 {section.replace(/[[\]]/g, '')}

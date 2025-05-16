@@ -16,7 +16,7 @@ const PrivacyPolicy = () => {
     <TouchableOpacity
       onPress={handlePress}
       style={styles.privacyPolicyContainer}
-      hitSlop={20}
+      hitSlop={{ top: 10, bottom: 10, left: 20, right: 20 }}
     >
       <StyledText style={styles.sectionTitle}>Privacy Policy</StyledText>
       <LinkIcon />
