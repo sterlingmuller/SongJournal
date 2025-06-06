@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "expo-shake": ["../src/index"],
+      "expo-shake/*": ["../src/*"]
+    }
+  }
+}

@@ -7,7 +7,8 @@
     "paths": {
       "@src/*": ["src/*"],
       "@styles/*": ["src/styles/*"],
-      "@dropbox/*": ["src/services/cloudStorage/dropbox/*"]
+      "@dropbox/*": ["src/services/cloudStorage/dropbox/*"],
+      "@modules/*": ["modules/*"]
     }
   }
 }

@@ -11,6 +11,7 @@ module.exports = function (api) {
             '@src': './src/',
             '@styles': './src/styles',
             '@dropbox': './src/services/cloudStorage/dropbox',
+            '@modules': './modules/'
           },
         },
       ],

@@ -48,6 +48,9 @@ const LyricsScreen = () => {
   const [hasDetailChanges, setHasDetailChanges] = useState<boolean>(false);
   const [hasLyricChanges, setHasLyricChanges] = useState<boolean>(false);
   const [newLyrics, setNewLyrics] = useState<string>('');
+  const [selectedOption, setSelectedOption] = useState<LyricsOption>(
+    LyricsOption.NONE,
+  );
 
   useEffect(() => {
     const unsubscribe = navigation.addListener(
@@ -90,10 +93,6 @@ const LyricsScreen = () => {
     dispatch,
   ]);
 
-  const [selectedOption, setSelectedOption] = useState<LyricsOption>(
-    LyricsOption.NONE,
-  );
-
   useEffect(() => {
     if (page && (newLyrics === '' || selectedOption !== LyricsOption.EDIT)) {
       setNewLyrics(page.lyrics);
@@ -105,6 +104,12 @@ const LyricsScreen = () => {
       setIsSongDetailsModalOpen(true);
     }
   }, [selectedOption]);
+
+  useEffect(() => {
+    if (page) {
+      setHasLyricChanges(newLyrics !== page.lyrics);
+    }
+  }, [newLyrics, page?.lyrics]);
 
   const handleSaveLyrics = useCallback(async () => {
     await updateLyrics(newLyrics);
@@ -118,12 +123,6 @@ const LyricsScreen = () => {
     setSelectedOption(LyricsOption.NONE);
     setHasLyricChanges(false);
   }, [page?.lyrics]);
-
-  useEffect(() => {
-    if (page) {
-      setHasLyricChanges(newLyrics !== page.lyrics);
-    }
-  }, [newLyrics, page?.lyrics]);
 
   const headerOptions = useMemo(
     () => ({
