@@ -88,7 +88,7 @@ const App = () => {
   };
 
   return (
-    <StrictMode>
+    // <StrictMode>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Suspense fallback={null}>
           <SQLiteProvider
@@ -104,7 +104,7 @@ const App = () => {
           </SQLiteProvider>
         </Suspense>
       </GestureHandlerRootView>
-   </StrictMode>
+  //  </StrictMode>
   );
 };
 

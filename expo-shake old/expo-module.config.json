@@ -1,9 +1,0 @@
-{
-  "platforms": ["apple", "android", "web"],
-  "apple": {
-    "modules": ["ExpoShakeModule"]
-  },
-  "android": {
-    "modules": ["expo.modules.shake.ExpoShakeModule"]
-  }
-}

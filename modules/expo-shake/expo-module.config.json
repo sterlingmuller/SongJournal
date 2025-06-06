@@ -1,9 +1,15 @@
 {
-  "platforms": ["apple", "android"],
-  "apple": {
-    "modules": ["ExpoShakeModule"]
+  "platforms": ["ios", "android"],
+  "ios": {
+    "modules": ["ExpoShakeModule"],
+    "appDelegateSubscribers": [],
+    "reactDelegateHandlers": []
   },
   "android": {
-    "modules": ["expo.modules.shake.ExpoShakeModule"]
-  }
+    "modules": ["expo.modules.shake.ExpoShakeModule"],
+    "gradlePlugins": [],
+    "modulesPaths": []
+  },
+  "androidPackage": "expo.modules.shake",
+  "iosPackage": "ExpoShake"
 }

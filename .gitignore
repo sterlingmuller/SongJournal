@@ -5,10 +5,10 @@
 coverage/
 
 # Android
-android/
+/android/
 
 # iOS
-ios/
+/ios/
 
 # Node modules (if not already ignored)
 node_modules/
