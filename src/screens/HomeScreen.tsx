@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Alert } from 'react-native';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-
-import { addShakeListener, startShakeDetection, stopShakeDetection } from '@modules/expo-shake';
+import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import HomeHeader from '@src/components/home/components/HomeHeader';
 import CreateNewSongButton from '@src/components/home/components/CreateNewSongButton';
@@ -45,20 +43,6 @@ const HomeScreen = () => {
     songId: number;
   }>({ songTitle: '', songId: -1 });
   const [toDelete, setToDelete] = useState<DeleteObject>(EMPTY_DELETE_OBJECT);
-
-  useEffect(() => {
-    // Shake detection setup
-    const subscription = addShakeListener(() => {
-      Alert.alert("Shake Detected", "Ow, you shook me!");
-    });
-
-    startShakeDetection();
-
-    return () => {
-      subscription.remove();
-      stopShakeDetection();
-    };
-  }, []);
 
   useEffect(() => {
     const { sortType: defaultSortType, isAscending: defaultIsAscending } =

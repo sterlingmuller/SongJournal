@@ -81,6 +81,7 @@ const LyricsInfoModal = (props: Props) => {
           </HyphenPoint>
 
           <Text style={styles.sectionTitle}>Additional Features:</Text>
+          <BulletPoint>Shake your phone to revert your lyrics sheet to its last save</BulletPoint>
           <BulletPoint>Undo inputs</BulletPoint>
           <BulletPoint>Bold or italicize text</BulletPoint>
         </ScrollView>

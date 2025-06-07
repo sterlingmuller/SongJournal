@@ -4,6 +4,8 @@ import {
   TextInputSelectionChangeEventData,
   View,
 } from 'react-native';
+
+import { addShakeListener, startShakeDetection, stopShakeDetection } from '@modules/expo-shake';
 import EditorToolbar from './EditorToolbar';
 import ChordWheelModal from '@src/components/lyrics/components/ChordWheelModal';
 import { useEffect, useRef, useState } from 'react';
@@ -55,6 +57,19 @@ const CustomTextEditor = ({
     }
     debouncedInput(localText);
   }, [localText, debouncedInput, history, historyIndex]);
+
+    useEffect(() => {
+      const subscription = addShakeListener(() => {
+        setLocalText(text);
+      });
+
+      startShakeDetection();
+
+      return () => {
+        subscription.remove();
+        stopShakeDetection();
+      };
+    }, []);
 
   const handleUndo = () => {
     if (historyIndex > 0) {

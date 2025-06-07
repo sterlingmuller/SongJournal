@@ -10,7 +10,7 @@ import expo.modules.kotlin.modules.ModuleDefinition
 
 class ExpoShakeModule : Module(), SensorEventListener {
     private var sensorManager: SensorManager? = null
-    private val SHAKE_THRESHOLD = 2.4f
+    private val SHAKE_THRESHOLD = 2.0f
 
     override fun definition() = ModuleDefinition {
         Name("ExpoShake")
