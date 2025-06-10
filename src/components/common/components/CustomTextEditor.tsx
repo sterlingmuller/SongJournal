@@ -44,6 +44,8 @@ const CustomTextEditor = ({
   const [history, setHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const displayTips = useAppSelector(selectDisplayTips);
+  const textRef = useRef(text);
+  textRef.current = text;
 
   useEffect(() => {
     if (historyIndex === -1 || localText !== history[historyIndex]) {
@@ -60,7 +62,7 @@ const CustomTextEditor = ({
 
     useEffect(() => {
       const subscription = addShakeListener(() => {
-        setLocalText(text);
+        setLocalText(textRef.current);
       });
 
       startShakeDetection();

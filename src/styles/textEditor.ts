@@ -46,6 +46,7 @@ const useTextEditorStyles = () => {
       paddingBottom: 10,
       paddingHorizontal: 20,
       fontFamily: 'monospace',
+      color: 'black'
     },
     toolbarContainer: {
       backgroundColor: '#f5f5f5',
