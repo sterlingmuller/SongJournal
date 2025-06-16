@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, KeyboardAvoidingView } from 'react-native';
+import { Platform, View, TextInput, KeyboardAvoidingView } from 'react-native';
 import Modal from 'react-native-modal';
 import { useSQLiteContext } from 'expo-sqlite';
 
@@ -71,6 +71,7 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
                 value={newArtist}
                 onChangeText={handleArtistChange}
                 autoCapitalize="words"
+                autoCorrect={false}
               />
             </View>
             <View style={styles.infoContainer}>

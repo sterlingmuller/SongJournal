@@ -111,6 +111,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
                 onChangeText={handleTitleChange}
                 autoCapitalize="words"
                 ref={textInputRef}
+                autoCorrect={false}
               />
             </View>
             <View style={styles.infoContainer}>

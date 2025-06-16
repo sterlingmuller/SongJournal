@@ -90,6 +90,7 @@ const useSongDetailsModalStyle = () => {
       fontWeight: 'bold',
     },
     input: {
+      paddingVertical: 10,
       flex: 1,
       fontSize: 14,
       fontWeight: 500,

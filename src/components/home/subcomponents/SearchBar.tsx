@@ -38,13 +38,13 @@ const SearchBar = ({ searchText, setSearchText }: Props) => {
     <View style={styles.container}>
       <Ionicons name="search" size={22} color={theme.placeholderText} />
       <TextInput
-      textAlignVertical='top'
         style={styles.input}
         placeholder="Search songs"
         placeholderTextColor={theme.placeholderText}
         value={localSearchText}
         onChangeText={handleTextChange}
         autoCapitalize="words"
+        autoCorrect={false}
       />
       {localSearchText && (
         <TouchableOpacity style={styles.close} onPress={clearSearch}>

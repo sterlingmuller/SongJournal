@@ -51,6 +51,8 @@ const useCommonModalStyle = () => {
     },
 
     input: {
+      includeFontPadding: false,
+      paddingVertical: 8,
       flex: 1,
       fontSize: 14,
       marginLeft: 8,

@@ -105,6 +105,7 @@ const EditOrDeleteArtist = () => {
                     style={styles.editArtistInput}
                     autoFocus
                     autoCapitalize="words"
+                    autoCorrect={false}
                   />
                 </View>
               ) : (

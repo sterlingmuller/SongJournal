@@ -53,7 +53,7 @@ const useEditOrAddArtistStyles = () => {
       alignItems: 'center',
       justifyContent: 'space-between',
     },
-    artistNameContainer: { width: '50%' },
+    artistNameContainer: { width: '50%', },
     textbox: {
       flexDirection: 'row',
       backgroundColor: theme.inputBackground,
@@ -85,6 +85,8 @@ const useEditOrAddArtistStyles = () => {
       borderRadius: 5,
     },
     newArtistInput: {
+      includeFontPadding: false,
+      paddingVertical: 8,
       flex: 1,
       fontSize: 14,
       marginLeft: 8,
@@ -92,6 +94,8 @@ const useEditOrAddArtistStyles = () => {
       color: theme.secondaryText,
     },
     editArtistInput: {
+      includeFontPadding: false,
+      paddingVertical: 2,
       fontSize: 14,
       marginLeft: 6,
       fontWeight: 600,

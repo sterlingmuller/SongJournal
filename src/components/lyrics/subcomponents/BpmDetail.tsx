@@ -23,13 +23,13 @@ const BpmDetail = (props: Props) => {
         style={[
           styles.textbox,
           styles.inputText,
-          !value && { color: theme.placeholderText },
         ]}
         value={value}
         placeholder="--"
+        placeholderTextColor={theme.placeholderText}
         onChangeText={(newBpm: string) => handleInputChange('bpm', newBpm)}
         textAlign="center"
-        keyboardType="numeric"
+        keyboardType="number-pad"
         caretHidden
       />
       <StyledText style={styles.labelText}>{SONG_DETAILS.bpm}</StyledText>
