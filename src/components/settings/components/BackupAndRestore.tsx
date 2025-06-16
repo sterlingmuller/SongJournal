@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, View } from 'react-native';
+import { View } from 'react-native';
 import { reloadAsync } from 'expo-updates';
 
 import StyledText from '@src/components/common/components/StyledText';
@@ -7,6 +7,7 @@ import useSettingsStyle from '@src/styles/settings';
 import { createAndShareBackup } from '@src/utils/createAndShareBackup';
 import { importBackup } from '@src/data/utils/importBackup';
 import { useColorTheme } from '@src/state/context/ThemeContext';
+import StyledButton from '@src/components/common/components/StyledButton';
 
 const BackupAndRestore = () => {
   const styles = useSettingsStyle();
@@ -29,20 +30,20 @@ const BackupAndRestore = () => {
           can restore your data from a backup file at any time.
         </StyledText>
         <View style={styles.backupButtons}>
-          <View style={styles.button}>
-            <Button
-              title="Export Backup"
+            <StyledButton
+              label="Export Backup"
               onPress={onExportPress}
-              color={theme.settingsEmphasis}
+              backgroundColor={theme.settingsEmphasis}
+              textColor={'white'}
+              buttonsStyle={{boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)'}}
             />
-          </View>
-          <View style={styles.button}>
-            <Button
-              title="Import Backup"
+            <StyledButton
+              label="Import Backup"
               onPress={onImportPress}
-              color={theme.primary}
+              backgroundColor={theme.primary}
+              textColor={'white'}
+              buttonsStyle={{boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)'}}
             />
-          </View>
         </View>
       </View>
     </View>

@@ -10,6 +10,9 @@
       "env": { "APP_ENV": "development" },
       "android": {
         "buildType": "apk"
+      },
+      "ios": {
+        "deploymentTarget": "15.5"
       }
     },
     "preview": {

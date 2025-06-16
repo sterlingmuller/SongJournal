@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Button, View } from 'react-native';
+import { View } from 'react-native';
 
 import StyledText from '@src/components/common/components/StyledText';
 import { useAppSelector } from '@src/hooks/typedReduxHooks';
@@ -11,6 +11,7 @@ import { useToggleSetting } from '@src/hooks/useToggleSettings';
 import { ToggleableSettings } from '@src/components/common/enums';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import useOneTimeSync from '@src/services/cloudStorage/dropbox/hooks/useOneTimeSync';
+import StyledButton from '@src/components/common/components/StyledButton';
 
 const AutoSyncSettings = () => {
   const { theme } = useColorTheme();
@@ -30,7 +31,7 @@ const AutoSyncSettings = () => {
 
   return (
     <View>
-      <StyledText style={styles.sectionTitle}>Auto Sync Settings</StyledText>
+      <StyledText style={styles.sectionTitle}>Sync Settings</StyledText>
       <View style={styles.togglesContainer}>
         <SettingsToggle
           label="Sync Unstarred Takes"
@@ -50,23 +51,23 @@ const AutoSyncSettings = () => {
           }
         />
         <Separator />
-        <View style={styles.buttons}>
-          <Button
-            title="One-Time Sync"
-            onPress={handleBackup}
-            color={theme.settingsEmphasis}
-          />
-        </View>
         <SettingsToggle
-          label="Auto Sync"
+          label="Enable Auto Sync"
           isActive={isAutoSyncEnabled}
           onToggle={() =>
             toggleSetting(ToggleableSettings.IS_AUTO_SYNC_ENABLED)
           }
         />
       </View>
+      <StyledButton
+            label="One-Time Sync"
+            onPress={handleBackup}
+            backgroundColor={theme.settingsEmphasis}
+            textColor={'white'}
+            buttonsStyle={{width: '50%', alignSelf: 'center', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)', marginBottom: 10}}
+          />
       {displayTips && (
-        <StyledText style={styles.tipText}>
+        <StyledText style={[styles.tipText, {marginTop: 5}]}>
           Tip: Enabling auto sync will upload the lyrics and Starred Take for
           each song, upon creation. You can customize sync filters above.
         </StyledText>

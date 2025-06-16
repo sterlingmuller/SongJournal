@@ -11,6 +11,7 @@ interface Styles {
   addArtistText: TextStyle;
   labelText: TextStyle;
   inputText: TextStyle;
+  optionText: TextStyle;
 }
 
 const usePreferencesStyle = () => {
@@ -30,7 +31,7 @@ const usePreferencesStyle = () => {
       flexDirection: 'column',
     },
 
-    toggleContainer: { flexDirection: 'row', justifyContent: 'space-between' },
+    toggleContainer: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
 
     sortSettingsContainer: {
       flexDirection: 'row',
@@ -65,6 +66,7 @@ const usePreferencesStyle = () => {
     },
     labelText: { fontSize: 14, color: theme.primaryText, fontWeight: 600 },
     inputText: { fontSize: 12, color: theme.secondaryText, fontWeight: 600 },
+    optionText: { fontSize: 14, color: theme.primaryText, fontWeight: 600, width: 100 },
   });
 
   return preferencesStyle;

@@ -20,16 +20,17 @@ const useSaveAndCancelButtonsStyle = () => {
       borderRadius: 10,
     },
     buttonContainer: {
-      width: 100,
+      minWidth: 100,
       paddingVertical: 7,
       paddingHorizontal: 20,
+      marginVertical: 7,
       borderRadius: 5,
       alignItems: 'center',
       justifyContent: 'center',
     },
     buttonText: {
       fontSize: 16,
-      fontWeight: '500',
+      fontWeight: '600',
     },
     disabledButton: {
       opacity: 0.6,

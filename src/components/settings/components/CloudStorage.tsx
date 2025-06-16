@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, View, Alert } from 'react-native';
+import { View, Alert } from 'react-native';
 
 import { clearTokens } from '@src/data/utils/tokenStorage';
 import StyledText from '@src/components/common/components/StyledText';
@@ -12,6 +12,7 @@ import useCloudStorageStyle from '@src/styles/cloudStorage';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import { selectDisplayTips } from '@src/state/selectors/settingsSelector';
 import useDropboxFileGenerator from '@src/services/cloudStorage/dropbox/hooks/useDropboxFileGenerator';
+import StyledButton from '@src/components/common/components/StyledButton';
 
 interface Props {
   cloudConnection: CloudConnection;
@@ -66,17 +67,21 @@ const CloudStorage = ({ cloudConnection }: Props) => {
           </StyledText>
           <View style={{ ...styles.buttons }}>
             <View style={styles.button}>
-              <Button
-                title={'Disconnect'}
-                color={theme.error}
+              <StyledButton
+                label={'Disconnect'}
+                backgroundColor={theme.error}
                 onPress={handleDisconnect}
+                textColor={'white'}
+                buttonsStyle={{boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)'}}
               />
             </View>
             <View style={styles.button}>
-              <Button
-                title={'Sync Backup'}
+              <StyledButton
+                label={'Sync Backup'}
                 onPress={handleAppBackup}
-                color={theme.settingsEmphasis}
+                backgroundColor={theme.settingsEmphasis}
+                textColor={'white'}
+                buttonsStyle={{boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)'}}
               />
             </View>
           </View>

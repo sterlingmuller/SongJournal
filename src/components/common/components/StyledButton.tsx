@@ -26,11 +26,11 @@ const StyledButton = (props: Props) => {
   const styles = useSaveAndCancelButtonsStyle();
 
   return (
-    <View style={[styles.buttonContainer, buttonsStyle]}>
       <TouchableOpacity
         onPress={onPress}
         disabled={disabled}
         style={[
+          buttonsStyle,
           styles.buttonContainer,
           { backgroundColor: backgroundColor },
           disabled && styles.disabledButton,
@@ -40,7 +40,6 @@ const StyledButton = (props: Props) => {
           {label}
         </StyledText>
       </TouchableOpacity>
-    </View>
   );
 };
 export default StyledButton;

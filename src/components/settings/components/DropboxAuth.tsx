@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
-import { Button, View } from 'react-native';
+import { View } from 'react-native';
 import {
   storeAccessToken,
   storeRefreshToken,
@@ -16,6 +16,7 @@ import {
   DROPBOX_CLIENT_ID,
   DROPBOX_CLIENT_SECRET,
 } from '@src/components/common/constants';
+import StyledButton from '@src/components/common/components/StyledButton';
 
 const exchangeCodeForToken = async (code: string, codeVerifier: string) => {
   const tokenEndpoint = 'https://api.dropboxapi.com/oauth2/token';
@@ -113,11 +114,13 @@ const DropboxAuth = () => {
 
   return (
     <View style={styles.connectButton}>
-      <Button
+      <StyledButton
         disabled={!request}
-        title="Connect to Dropbox"
+        label="Connect to Dropbox"
         onPress={handlePress}
-        color={theme.settingsEmphasis}
+        backgroundColor={theme.settingsEmphasis}
+        textColor='white'
+        buttonsStyle={{boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)'}}
       />
     </View>
   );

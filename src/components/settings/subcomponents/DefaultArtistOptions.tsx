@@ -60,7 +60,7 @@ const DefaultArtistOptions = ({ defaultArtistId }: Props) => {
     <>
       <View style={styles.sortSettingsContainer}>
         <View style={styles.selectContainer}>
-          <StyledText style={styles.labelText}>Default Artist:</StyledText>
+          <StyledText style={styles.optionText}>Default Artist:</StyledText>
           <TouchableOpacity
             onPress={() => setIsSettingsWheelOpen(true)}
             style={styles.textbox}

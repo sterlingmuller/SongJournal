@@ -1,10 +1,11 @@
 import React from 'react';
-import { Button, View } from 'react-native';
+import { View } from 'react-native';
 import Modal from 'react-native-modal';
 
 import StyledText from '@src/components/common/components/StyledText';
 import useCommonModalStyle from '@src/styles/commonModal';
 import { useColorTheme } from '@src/state/context/ThemeContext';
+import StyledButton from '@src/components/common/components/StyledButton';
 
 interface Props {
   isMaxTakesModalOpen: boolean;
@@ -44,10 +45,12 @@ const MaxTakesModal = ({
           </StyledText>
         </View>
         <View style={styles.button}>
-          <Button
-            title="Got it"
+          <StyledButton
+            label="Got it"
             onPress={onExitPress}
-            color={theme.settingsEmphasis}
+            backgroundColor={theme.settingsEmphasis}
+            textColor='white'
+            buttonsStyle={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)', marginBottom: 10 }}
           />
         </View>
       </View>
