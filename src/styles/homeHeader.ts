@@ -12,7 +12,7 @@ const useHomeHeaderStyles = () => {
     container: {
       display: 'flex',
       flexDirection: 'row',
-      paddingTop: StatusBar.currentHeight + 12,
+      paddingTop: StatusBar.currentHeight + 2,
       paddingBottom: 12,
       alignItems: 'center',
       backgroundColor: theme.primary,

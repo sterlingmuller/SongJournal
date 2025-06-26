@@ -28,7 +28,10 @@ const DefaultHeader = ({ title, screen }: Props) => {
           </Text>
         </View>
       </View>
-      {screen === Screen.SONG && <HeaderPageButton />}
+      {screen === Screen.SONG &&
+      <View style={{marginTop: -4}}>
+        <HeaderPageButton />
+        </View>}
     </View>
   );
 };

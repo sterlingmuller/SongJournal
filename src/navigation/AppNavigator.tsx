@@ -45,8 +45,7 @@ const AppNavigator = () => {
           }: {
             route: RouteProp<RootStackParamList, Screen.RECORDING>;
           }) => ({
-            presentation: 'transparentModal',
-            animation: 'fade',
+            animation: 'none',
             header: () => <DefaultHeader title={route.params.title} />,
           })}
         />
@@ -59,7 +58,7 @@ const AppNavigator = () => {
           name={Screen.SETTINGS}
           component={SettingsScreen}
           options={{
-            presentation: 'transparentModal',
+            animation: 'slide_from_right',
             header: () => <DefaultHeader title={Screen.SETTINGS} />,
           }}
         />

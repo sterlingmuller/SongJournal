@@ -43,22 +43,12 @@ const TabNavigator = () => {
           paddingTop: '2%',
         },
         tabBarLabelStyle: {
-          fontSize: 10,
+          fontSize: 12,
           marginTop: 5,
           fontWeight: 700,
         },
       }}
     >
-      <Tab.Screen
-        name={Screen.SETLIST}
-        component={SetlistScreen}
-        options={{
-          tabBarIcon: ({ focused }: { focused: boolean }) => (
-            <PlaylistIcon focused={focused} />
-          ),
-          header: () => <DefaultHeader title={Screen.SETLIST} />,
-        }}
-      />
       <Tab.Screen
         name={Screen.HOME}
         component={HomeScreenAudioContainer}
@@ -78,7 +68,16 @@ const TabNavigator = () => {
           header: () => <DefaultHeader title={Screen.COVERS} />,
         }}
       />
-
+      <Tab.Screen
+        name={Screen.SETLIST}
+        component={SetlistScreen}
+        options={{
+          tabBarIcon: ({ focused }: { focused: boolean }) => (
+            <PlaylistIcon focused={focused} />
+          ),
+          header: () => <DefaultHeader title={Screen.SETLIST} />,
+        }}
+      />
       <Tab.Screen
         name={Screen.SETTINGS}
         listeners={{

@@ -8,7 +8,7 @@ import React, {
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import { SQLiteDatabase, SQLiteProvider, useSQLiteContext } from 'expo-sqlite';
-import { StatusBar, View } from 'react-native';
+import { SafeAreaView, StatusBar, View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import * as NavigationBar from 'expo-navigation-bar';
 
@@ -74,7 +74,9 @@ const Main = () => {
       onLayout={onLayoutRootView}
     >
       <StatusBar translucent backgroundColor="transparent" />
+      <SafeAreaView style={{ flex: 1, backgroundColor: theme.primary }}>
       <AppNavigator />
+      </SafeAreaView>
     </View>
   );
 };

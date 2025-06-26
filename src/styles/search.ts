@@ -24,7 +24,7 @@ const useSearchBarStyle = () => {
     },
     close: { alignSelf: 'center' },
     input: {
-      paddingVertical: 10,
+      paddingVertical: 12,
       flex: 1,
       fontSize: 14,
       marginLeft: 8,
