@@ -42,7 +42,7 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
   const { shareSongFolder } = useFileShare();
-  const { togglePlayback, clearPlayback } = useAudioPlayer();
+  const { togglePlayback } = useAudioPlayer();
 
   const { title, songId, takes, selectedTakeId, artistId, hasLyrics } = song;
   const [isPressed, setIsPressed] = useState(false);

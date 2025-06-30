@@ -62,6 +62,9 @@ export default ({ config }) => {
     -keep class androidx.core.content.** { *; }
   `,
           },
+          ios: {
+            deploymentTarget: '15.5',
+          },
         },
       ],
       ['expo-web-browser'],
@@ -102,18 +105,18 @@ export default ({ config }) => {
       supportsTablet: true,
       infoPlist: {
         UIBackgroundModes: ['audio'],
+        ITSAppUsesNonExemptEncryption: false,
+        NSPhotoLibraryUsageDescription: "This app does not access your photo library. This permission is required due to third-party libraries.",
+        NSMicrophoneUsageDescription: "This app requires access to your microphone to record audio for songs.",
       },
-      bundleIdentifier: IS_DEV
-        ? 'com.sterling.silverado.songjournal.dev'
-        : 'com.sterling.silverado.songjournal',
+      bundleIdentifier: 'com.sterling.silverado.songjournal',
+      buildNumber: "5",
     },
     android: {
       edgeToEdgeEnabled: true,
       softwareKeyboardLayoutMode: 'pan',
       versionCode: 26,
-      package: IS_DEV
-        ? 'com.sterling.silverado.songjournal.dev'
-        : 'com.sterling.silverado.songjournal',
+      package: 'com.sterling.silverado.songjournal',
       adaptiveIcon: {
         foregroundImage: './assets/adaptive-icon.png',
         backgroundColor: '#ee865b',

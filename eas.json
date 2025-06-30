@@ -12,7 +12,6 @@
         "buildType": "apk"
       },
       "ios": {
-        "deploymentTarget": "15.5"
       }
     },
     "preview": {
@@ -26,6 +25,7 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {},
+    "development": {}
   }
 }

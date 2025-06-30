@@ -44,6 +44,9 @@ const AudioProvider = ({ children }: Props) => {
     const setAudioMode = async () => {
       await Audio.setAudioModeAsync({
         staysActiveInBackground: true,
+        playsInSilentModeIOS: true,
+        shouldDuckAndroid: true,
+        playThroughEarpieceAndroid: false,
       });
     };
     setAudioMode();
