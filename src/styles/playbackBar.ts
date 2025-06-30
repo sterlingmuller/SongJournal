@@ -1,4 +1,4 @@
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { Platform, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { SCREEN_WIDTH } from '@src/components/common/constants';
 
 interface Styles {
@@ -21,7 +21,7 @@ const usePlaybackBarStyles = () => {
     takesContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginLeft: 2,
+      marginLeft: Platform.OS === 'ios' ? 0 : 10,
     },
     sliderContainer: {
       zIndex:1,

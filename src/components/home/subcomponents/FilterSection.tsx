@@ -40,7 +40,7 @@ const FilterSection = (props: Props) => {
   };
 
   return (
-    <View style={styles.categories}>
+    <View style={styles.filterContainer}>
       <View style={styles.filterRow}>
         {FILTER_OPTIONS.filter(
           (option: Filter) =>

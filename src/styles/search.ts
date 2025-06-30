@@ -1,5 +1,5 @@
 import { useColorTheme } from '@src/state/context/ThemeContext';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { Platform, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 interface Styles {
   container: ViewStyle;
@@ -16,6 +16,7 @@ const useSearchBarStyle = () => {
       backgroundColor: theme.inputBackground,
       borderRadius: 10,
       paddingHorizontal: 8,
+      marginTop: Platform.OS === 'ios' ? 3 : 5,
       width: '75%',
       borderWidth: 1,
       borderColor: '#ccc',
@@ -24,7 +25,7 @@ const useSearchBarStyle = () => {
     },
     close: { alignSelf: 'center' },
     input: {
-      paddingVertical: 12,
+      paddingVertical: 10,
       flex: 1,
       fontSize: 14,
       marginLeft: 8,

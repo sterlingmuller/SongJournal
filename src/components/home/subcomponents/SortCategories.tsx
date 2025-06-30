@@ -23,7 +23,7 @@ const SortByCategories = (props: Props) => {
   const styles = useSortByModalStyles();
 
   return (
-    <View style={styles.categories}>
+    <View style={styles.sortContainer}>
       {SORT_BY_OPTIONS.map((categoryName: SortBy) => (
         <SortByCategory
           key={categoryName}

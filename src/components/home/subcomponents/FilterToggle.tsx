@@ -1,4 +1,4 @@
-import { Switch, TouchableOpacity, View } from 'react-native';
+import { Platform, Switch, TouchableOpacity, View } from 'react-native';
 
 import useSortByModalStyles from '@src/styles/sortByModal';
 import StyledText from '@src/components/common/components/StyledText';
@@ -22,10 +22,12 @@ const FilterToggle = ({ label, isActive, onPress }: Props) => {
         hitSlop={{ top: 20, bottom: 20, left: 30, right: 30 }}
       >
         <Switch
+          style={{ transform: [{ scale: Platform.OS === 'ios' ? .9 : 1 }] }}
           value={isActive}
           onValueChange={onPress}
-          trackColor={{ false: theme.highlight, true: theme.mutedPrimary }}
-          thumbColor={isActive ? theme.primary : '#f4f3f4'}
+          trackColor={{ false: theme.highlight, true: Platform.OS === 'ios' ? theme.primary : theme.mutedPrimary }}
+            ios_backgroundColor={theme.disabled}
+          thumbColor={Platform.OS === 'ios' ? '#fff' : isActive ? theme.primary : '#f4f3f4'}
         />
       </TouchableOpacity>
     </View>

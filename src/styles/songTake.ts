@@ -1,4 +1,4 @@
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { Platform, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from '@src/components/common/constants';
 
@@ -21,7 +21,7 @@ const useSongTakeStyles = () => {
       flexDirection: 'row',
       backgroundColor: theme.secondaryBackground,
       paddingVertical: 12,
-      paddingLeft: 25,
+      paddingLeft: Platform.OS === 'ios' ? 15 : 20,
       paddingRight: 30,
       width: '90%',
       borderWidth: 2,
@@ -51,7 +51,8 @@ const useSongTakeStyles = () => {
     iconRow: {
       paddingTop: 5,
       flexDirection: 'row',
-      gap: 18,
+      gap: 16,
+      marginLeft: -2
     },
 
     playIcon: {
@@ -69,7 +70,7 @@ const useSongTakeStyles = () => {
       height: 15,
       width: SCREEN_WIDTH * 0.35,
       backgroundColor: theme.primary,
-      marginLeft: 2,
+      marginLeft: Platform.OS === 'ios' ? 0 : 10,
       alignSelf: 'center',
       borderRadius: 8,
     },

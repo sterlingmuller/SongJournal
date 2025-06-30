@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, KeyboardAvoidingView } from 'react-native';
+import { View, Text } from 'react-native';
 import Modal from 'react-native-modal';
 
 import SortByCategories from '@src/components/home/subcomponents/SortCategories';
@@ -38,7 +38,6 @@ const SortByModal = (props: Props) => {
   const displayTips = useAppSelector(selectDisplayTips);
 
   return (
-    <KeyboardAvoidingView>
       <Modal
         isVisible={isSortOpen}
         avoidKeyboard
@@ -66,7 +65,6 @@ const SortByModal = (props: Props) => {
           />
         </View>
       </Modal>
-    </KeyboardAvoidingView>
   );
 };
 

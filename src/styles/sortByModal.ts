@@ -1,4 +1,4 @@
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { Platform, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import { colors as c } from '@src/theme/colors';
@@ -6,12 +6,12 @@ import { colors as c } from '@src/theme/colors';
 interface Styles {
   container: ViewStyle;
   line: ViewStyle;
-  categories: ViewStyle;
+  sortContainer: ViewStyle;
+  filterContainer: ViewStyle;
   selectedCategory: ViewStyle;
   label: ViewStyle;
   arrow: ViewStyle;
   title: TextStyle;
-  filterContainer: ViewStyle;
   filterRow: ViewStyle;
   filterToggle: ViewStyle;
   toggleLabel: TextStyle;
@@ -47,9 +47,16 @@ const useSortByModalStyles = () => {
       borderColor: theme.primaryText,
     },
 
-    categories: {
+    sortContainer: {
       paddingTop: 4,
       paddingLeft: 10,
+    },
+
+    filterContainer: {
+      gap: 20,
+      margin: 15,
+      paddingHorizontal: 5,
+      paddingBottom: Platform.OS === 'ios' ? 30 : 10
     },
 
     selectedCategory: {
@@ -60,6 +67,7 @@ const useSortByModalStyles = () => {
     },
 
     label: {
+      fontSize: 15,
       paddingVertical: 4,
       marginLeft: 55,
       color: theme.primaryText,
@@ -70,19 +78,14 @@ const useSortByModalStyles = () => {
       position: 'absolute',
     },
 
-    filterContainer: {
-      flexDirection: 'column',
-    },
-
     filterRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      margin: 20,
     },
 
-    filterToggle: { flexDirection: 'row', alignItems: 'center', width: '42%' },
+    filterToggle: { flexDirection: 'row', alignItems: 'center', width: '40%' },
 
-    toggleLabel: { fontSize: 16, fontWeight: 'bold', flex: 1 },
+    toggleLabel: { fontSize: 15, fontWeight: 500, flex: 1 },
 
     tipText: {
       width: '100%',

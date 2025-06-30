@@ -1,4 +1,4 @@
-import { Switch, View } from 'react-native';
+import { Platform, Switch, View } from 'react-native';
 import { useState, useEffect } from 'react';
 
 import StyledText from '@src/components/common/components/StyledText';
@@ -42,7 +42,7 @@ const SettingsToggle = ({
         value={localActive}
         onValueChange={handleToggle}
         trackColor={{ false: theme.highlight, true: theme.toggleShadow }}
-        thumbColor={localActive ? theme.toggleOn : '#f4f3f4'}
+        thumbColor={Platform.OS === 'ios' ? '#fff' : localActive ? theme.toggleOn : '#f4f3f4'}
       />
     </View>
   );

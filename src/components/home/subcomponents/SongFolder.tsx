@@ -134,7 +134,7 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
         </TouchableOpacity>
         <View style={styles.subtextContainer}>
           <StyledText style={styles.trackSubtext}>
-            {formatDateFromISOString(song.creationDate)}
+          {formatDateFromISOString(song.creationDate)}
           </StyledText>
           <StyledText style={styles.trackSubtext}>{durationText}</StyledText>
         </View>
