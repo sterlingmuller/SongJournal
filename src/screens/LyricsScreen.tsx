@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { Alert, View } from 'react-native';
+import { Alert, Keyboard, Pressable, View } from 'react-native';
 import {
   EventArg,
   RouteProp,
@@ -173,7 +173,7 @@ const LyricsScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onPress={Keyboard.dismiss}>
       <OptionsBar
         selectedOption={selectedOption}
         setSelectedOption={setSelectedOption}
@@ -195,7 +195,7 @@ const LyricsScreen = () => {
         isInfoModalOpen={isInfoModalOpen}
         setIsInfoModalOpen={setIsInfoModalOpen}
       />
-    </View>
+    </Pressable>
   );
 };
 

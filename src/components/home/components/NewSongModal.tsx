@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, TextInput, KeyboardAvoidingView } from 'react-native';
+import { View, TextInput, KeyboardAvoidingView, Pressable, Keyboard } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Modal from 'react-native-modal';
 import { useSQLiteContext } from 'expo-sqlite';
@@ -48,7 +48,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
   if (isNewSongOpen) {
     setTimeout(() => {
       textInputRef?.current?.focus();
-    }, 200); // Delay to ensure modal is fully mounted
+    }, 200);
   }
 }, [isNewSongOpen]);
 
@@ -99,7 +99,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
         backdropTransitionOutTiming={0}
         animationInTiming={200}
       >
-        <View style={styles.container}>
+        <Pressable style={styles.container} onPress={Keyboard.dismiss}>
           <StyledText style={styles.title}>Song Title</StyledText>
           <View>
             <View style={styles.textbox}>
@@ -130,7 +130,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
             onExitPress={onExitPress}
             disabled={disabled}
           />
-        </View>
+        </Pressable>
       </Modal>
     </KeyboardAvoidingView>
   );

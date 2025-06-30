@@ -33,6 +33,7 @@ interface Props {
   take: Take;
   setToDelete: (value: DeleteObject) => void;
   setCurrentTake: (value: Take) => void;
+  setIsNotesOpen: (value: boolean) => void;
   setTitleToEdit: (value: {
     songTitle: string;
     songId: number;
@@ -42,7 +43,7 @@ interface Props {
 }
 
 const SongTake = (props: Props) => {
-  const { take, setToDelete, setCurrentTake, setTitleToEdit } = props;
+  const { take, setToDelete, setCurrentTake, setIsNotesOpen, setTitleToEdit } = props;
   const { takeId, songId, title, uri, duration, date } = take;
   const styles = useSongTakeStyles();
   const { shareTake } = useFileShare();
@@ -108,6 +109,7 @@ const SongTake = (props: Props) => {
           <TouchableOpacity
             onPress={() => {
               setCurrentTake(take);
+              setIsNotesOpen(true);
             }}
            hitSlop={calculateHitSlop({ width: 32, height: 32 })}
           >

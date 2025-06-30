@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, TextInput, Pressable, Keyboard } from 'react-native';
 import Modal from 'react-native-modal';
 
 import SaveAndCancelButtons from '@src/components/common/components/SaveAndCancelButtons';
@@ -14,10 +14,13 @@ import { useColorTheme } from '@src/state/context/ThemeContext';
 interface Props {
   setCurrentTake: (value: Take) => void;
   currentTake: Take;
+  setIsNotesOpen: (value: boolean) => void;
+  isNotesOpen: boolean;
 }
 
 const NotesModal = (props: Props) => {
-  const { setCurrentTake, currentTake } = props;
+  const { setCurrentTake, currentTake, setIsNotesOpen, isNotesOpen } = props;
+  const textInputRef = useRef<TextInput>(null);
   const dispatch = useAppDispatch();
   const db = useSQLiteContext();
   const styles = useTakeNotesModalStyles();
@@ -28,27 +31,31 @@ const NotesModal = (props: Props) => {
 
   useEffect(() => {
     setNewNote(notes);
+
+    if (isNotesOpen) {
+      setTimeout(() => {
+        textInputRef?.current?.focus();
+      }, 200);
+  }
   }, [currentTake]);
 
   const onSavePress = () => {
     dispatch(updateTakeNotesRequest({ db, takeId, songId, notes: newNote }));
-    setCurrentTake(EMPTY_TAKE);
+    setIsNotesOpen(false);
   };
 
-  const onExitPress = () => {
-    setCurrentTake(EMPTY_TAKE);
-  };
   const disabled: boolean = newNote === notes;
 
   return (
     <Modal
-      isVisible={!!title}
+      isVisible={isNotesOpen}
       avoidKeyboard
-      onBackdropPress={onExitPress}
+      onBackdropPress={() => setIsNotesOpen(false)}
       style={styles.modal}
       hideModalContentWhileAnimating={true}
+      onModalHide={() => setCurrentTake(EMPTY_TAKE)}
     >
-      <View style={styles.container}>
+      <Pressable style={styles.container} onPress={Keyboard.dismiss}>
         <Text style={styles.title}>{title} Notes</Text>
         <View style={styles.textbox}>
           <TextInput
@@ -59,16 +66,17 @@ const NotesModal = (props: Props) => {
             onChangeText={(text: string) => setNewNote(text)}
             multiline={true}
             textAlignVertical="top"
+            ref={textInputRef}
           />
         </View>
         <View style={styles.buttonContainer}>
           <SaveAndCancelButtons
             onPress={onSavePress}
-            onExitPress={onExitPress}
+            onExitPress={() => setIsNotesOpen(false)}
             disabled={disabled}
           />
         </View>
-      </View>
+      </Pressable>
     </Modal>
   );
 };

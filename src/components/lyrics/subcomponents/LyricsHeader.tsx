@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, LayoutChangeEvent } from 'react-native';
+import { View, TouchableOpacity, Text, LayoutChangeEvent, Pressable, Keyboard } from 'react-native';
 import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
@@ -77,7 +77,7 @@ const LyricsHeader = (props: Props) => {
   };
 
   return (
-    <View style={styles.container} onLayout={onLayoutHeader}>
+    <Pressable style={styles.container} onLayout={onLayoutHeader} onPress={Keyboard.dismiss}>
       <View style={styles.titlePlusArrow}>
         <TouchableOpacity onPress={goBack}>
           <BackIcon />
@@ -89,7 +89,7 @@ const LyricsHeader = (props: Props) => {
         </View>
       </View>
       {renderIcon()}
-    </View>
+    </Pressable>
   );
 };
 

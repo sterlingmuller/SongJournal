@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, Pressable, Keyboard } from 'react-native';
 import Modal from 'react-native-modal';
 import { useSQLiteContext } from 'expo-sqlite';
 
@@ -163,7 +163,7 @@ const SongDetailsModal = (props: Props) => {
       style={styles.modal}
       hideModalContentWhileAnimating={true}
     >
-      <View style={styles.container}>
+      <Pressable style={styles.container} onPress={Keyboard.dismiss}>
         <View style={styles.mainInputContainer}>
           <Text style={styles.title}>Details</Text>
           <View style={styles.textbox}>
@@ -226,7 +226,7 @@ const SongDetailsModal = (props: Props) => {
             disabled={!hasDetailChanges}
           />
         </View>
-      </View>
+      </Pressable>
     </Modal>
   );
 };

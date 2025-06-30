@@ -16,6 +16,7 @@ interface Props {
   takes: Takes;
   setToDelete: (value: DeleteObject) => void;
   setCurrentTake: (value: Take) => void;
+  setIsNotesOpen: (value: boolean) => void;
   setTitleToEdit: (value: {
     songTitle: string;
     songId: number;
@@ -25,7 +26,7 @@ interface Props {
 }
 
 const SongDisplay = (props: Props) => {
-  const { takes, setToDelete, setCurrentTake, setTitleToEdit } = props;
+  const { takes, setToDelete, setCurrentTake, setIsNotesOpen, setTitleToEdit } = props;
   const styles = useSongScreenStyles();
   const displayTips = useAppSelector(selectDisplayTips);
 
@@ -38,6 +39,7 @@ const SongDisplay = (props: Props) => {
         take={item}
         setToDelete={setToDelete}
         setCurrentTake={setCurrentTake}
+        setIsNotesOpen={setIsNotesOpen}
         setTitleToEdit={setTitleToEdit}
       />
     ),

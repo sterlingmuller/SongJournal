@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Platform, View, TextInput, KeyboardAvoidingView } from 'react-native';
+import { Platform, View, TextInput, KeyboardAvoidingView, Keyboard, Pressable } from 'react-native';
 import Modal from 'react-native-modal';
 import { useSQLiteContext } from 'expo-sqlite';
 
@@ -60,7 +60,7 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
         onBackdropPress={onExitPress}
         hideModalContentWhileAnimating={true}
       >
-        <View style={styles.modalContainer}>
+        <Pressable style={styles.modalContainer} onPress={Keyboard.dismiss}>
           <StyledText style={styles.title}>Add or Edit Artist</StyledText>
           <View>
             <View style={styles.textbox}>
@@ -96,7 +96,7 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
               disabled={disabled}
             />
           </View>
-        </View>
+        </Pressable>
       </Modal>
     </KeyboardAvoidingView>
   );

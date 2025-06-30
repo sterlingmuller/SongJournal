@@ -47,6 +47,7 @@ const SongScreen = () => {
 
   const [toDelete, setToDelete] = useState<DeleteObject>(EMPTY_DELETE_OBJECT);
   const [currentTake, setCurrentTake] = useState<Take>(EMPTY_TAKE);
+  const [isNotesOpen, setIsNotesOpen] = useState(false);
   const [isPermissionsNeededModalOpen, setIsPermissionsNeededModalOpen] =
     useState<boolean>(false);
   const [isMaxTakesModalOpen, setIsMaxTakesModalOpen] =
@@ -104,6 +105,7 @@ useEffect(() => {
         takes={takes}
         setToDelete={setToDelete}
         setCurrentTake={setCurrentTake}
+        setIsNotesOpen={setIsNotesOpen}
         setTitleToEdit={setTitleToEdit}
       />
       <RecordButton
@@ -116,7 +118,7 @@ useEffect(() => {
         toDelete={toDelete}
         setToDelete={setToDelete}
       />
-      <NotesModal setCurrentTake={setCurrentTake} currentTake={currentTake} />
+      <NotesModal setCurrentTake={setCurrentTake} currentTake={currentTake} setIsNotesOpen={setIsNotesOpen} isNotesOpen={isNotesOpen}/>
       <PermissionsNeededModal
         isPermissionsNeededModalOpen={isPermissionsNeededModalOpen}
         setIsPermissionsNeededModalOpen={setIsPermissionsNeededModalOpen}
