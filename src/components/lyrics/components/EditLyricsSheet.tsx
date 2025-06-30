@@ -19,12 +19,12 @@ const EditLyricsSheet = ({ newLyrics, setNewLyrics, headerHeight }: Props) => {
     setNewLyrics(normalizedLyrics);
   };
 
-  const vertOffset = headerHeight - toolbarHeight;
+  const keyboardOffset = Platform.OS === 'ios' ? headerHeight + (toolbarHeight * 0.5) : headerHeight - (toolbarHeight * 0.8);
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={vertOffset}
+      behavior={'height'}
+      keyboardVerticalOffset={keyboardOffset}
     >
       <CustomTextEditor
         text={initialLyricsRef.current}
