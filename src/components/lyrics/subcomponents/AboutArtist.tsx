@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
 import SettingsWheel from '@src/components/common/components/SettingsWheel';
@@ -36,6 +36,12 @@ const AboutArtist = ({ selectedArtistId, setSelectedArtistId }: Props) => {
     setIsSettingsWheelOpen(false);
   };
 
+   const textStyle = useMemo(
+    () => [styles.inputText, !displayedArtistName && { color: theme.placeholderText }],
+    [styles.inputText, displayedArtistName, theme.placeholderText],
+  );
+
+
   return (
     <>
       <View style={styles.artistContainer}>
@@ -45,7 +51,7 @@ const AboutArtist = ({ selectedArtistId, setSelectedArtistId }: Props) => {
             style={styles.artistTextbox}
           >
             <StyledText
-              style={[styles.inputText, { color: theme.placeholderText }]}
+              style={textStyle}
             >
               {displayedArtistName || '--'}
             </StyledText>

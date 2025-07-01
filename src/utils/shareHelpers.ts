@@ -28,7 +28,6 @@ export const shareZip = async (
     url: fileUrl,
     type: 'application/zip',
     failOnCancel: false,
-    saveToFiles: true,
     excludedActivityTypes: ['com.facebook.orca'],
   };
 
@@ -67,7 +66,6 @@ export const shareAudio = async (path: string, title: string, date: string) => {
     url: fileUrl,
     type: 'audio/mp4',
     failOnCancel: false,
-    saveToFiles: true,
   };
 
   try {
@@ -102,7 +100,6 @@ export const sharePdf = async (path: string, title: string) => {
     url: fileUrl,
     type: 'application/pdf',
     failOnCancel: false,
-    saveToFiles: true,
   };
 
   try {

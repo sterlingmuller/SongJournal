@@ -36,6 +36,8 @@ const useFileShare = () => {
       const page = await fetchPageBySongId({ songId: song.songId, db });
 
       const fileUri = `${FileSystem.cacheDirectory}${formattedTitle}`;
+      await FileSystem.makeDirectoryAsync(fileUri, { intermediates: true });
+
       const starredTake = song.takes.find(
         (take: Take) => take.takeId === song.selectedTakeId,
       );
@@ -45,6 +47,7 @@ const useFileShare = () => {
           from: starredTake.uri,
           to: `${fileUri}/${formattedTitle}.m4a`,
         });
+
       }
 
       if (page.lyrics) {
