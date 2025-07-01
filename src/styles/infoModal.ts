@@ -1,4 +1,4 @@
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { Platform, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@src/components/common/constants';
 
@@ -50,7 +50,7 @@ const useInfoModalStyle = () => {
       alignContent: 'center',
     },
     exampleText: {
-      fontFamily: 'monospace',
+      fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
       color: theme.secondaryTipText,
       textAlign: 'center',
       paddingBottom: 5,

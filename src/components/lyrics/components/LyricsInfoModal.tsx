@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Platform } from 'react-native';
 import Modal from 'react-native-modal';
 
 import useInfoModalStyle from '@src/styles/infoModal';
@@ -57,7 +57,7 @@ const LyricsInfoModal = (props: Props) => {
             style={[styles.exampleText, { paddingTop: 4, paddingBottom: 0 }]}
           >{`   Em  C  G  D\n`}</Text>
           <Text style={styles.exampleText}>{`but not me ba-by`}</Text>
-
+          {Platform.OS === 'ios' && <BulletPoint>Long-pressing the text will bring up a magnifier, you can then drag to place your cursor exactly where you want.</BulletPoint>}
           <Text style={styles.sectionTitle}>Chords</Text>
           <BulletPoint>Opens the Chord Generator Wheel.</BulletPoint>
           <BulletPoint>The chord will be inserted:</BulletPoint>
@@ -81,7 +81,7 @@ const LyricsInfoModal = (props: Props) => {
           </HyphenPoint>
 
           <Text style={styles.sectionTitle}>Additional Features:</Text>
-          <BulletPoint>Shake your phone to revert your lyrics sheet to its last save</BulletPoint>
+          {Platform.OS === 'android' && <BulletPoint>Shake your phone to revert your lyrics sheet to its last save</BulletPoint>}
           <BulletPoint>Undo inputs</BulletPoint>
           <BulletPoint>Bold or italicize text</BulletPoint>
         </ScrollView>

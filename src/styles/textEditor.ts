@@ -1,4 +1,4 @@
-import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { StyleSheet, ViewStyle, TextStyle, Platform } from 'react-native';
 
 interface Styles {
   container: ViewStyle;
@@ -45,7 +45,7 @@ const useTextEditorStyles = () => {
       paddingTop: 15,
       paddingBottom: 10,
       paddingHorizontal: 20,
-      fontFamily: 'monospace',
+      fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
       color: 'black'
     },
     toolbarContainer: {
