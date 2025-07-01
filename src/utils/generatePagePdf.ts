@@ -4,6 +4,7 @@ import { SONG_DETAILS } from '@src/components/common/constants';
 import { Page } from '@src/components/common/types';
 import { SongDetailKey } from '@src/components/common/enums';
 import { convertToHtml } from './convertToHtml';
+import { Platform } from 'react-native';
 
 export const generatePagePdf = async (
   title: string,
@@ -32,19 +33,17 @@ export const generatePagePdf = async (
     return '';
   };
 
-  const renderAbout = () => {
-    if (info.about) {
-      return `
-        <div class="about-section">
-          <hr />
-          <p>&nbsp;</p>
-          <div><strong>About: </strong>${info.about}</div>
-        </div>
-      `;
-    }
-
-    return '';
+  const renderFooter = () => {
+    return `
+      <div class="footer">
+        <hr />
+        ${info.about ? `<div><strong>About: </strong>${info.about}</div> <p>&nbsp;</p>` : ''}
+        <div class="generated-footer">Created with Song Journal</div>
+      </div>
+    `;
   };
+
+  const isIOS = Platform.OS === 'ios';
 
   const html = `
     <html>
@@ -56,19 +55,21 @@ export const generatePagePdf = async (
           body {
             font-family: monospace;
             font-size: 12px;
-            margin: 0;
+            ${isIOS ? 'margin: 10px;' : 'margin: 0;'}
             padding: 0;
-            min-height: calc(100vh - 40px);
           }
-          .container {
-            display: flex;
-            flex-direction: column;
-            min-height: calc(100vh - 20px);
-          }
+        .container {
+          ${isIOS
+            ? ''
+            : 'display: flex; flex-direction: column; min-height: calc(100vh - 20px);'}
+        }
           .header {
-            background-color: #fdc883;
+            background-color: #ffb07a;
             text-align: center;
             padding: 15px 20px 10px 20px;
+            print-color-adjust: exact;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
           }
           .title {
             font-size: 28px;
@@ -85,17 +86,16 @@ export const generatePagePdf = async (
             text-align: center;
             font-size: 16px;
           }
-          .content {
-            flex-grow: 1;
-            padding: 0 30px 10px 50px;
-            white-space: pre;
-            position: relative;
-          }
-          .about-section {
-            margin-top: auto;
-            padding: 20px 50px;
-            text-align: center;
-          }
+        .content {
+          ${isIOS
+            ? 'padding: 0 30px 10px 50px; white-space: pre; position: relative;'
+            : 'flex-grow: 1; padding: 0 30px 10px 50px; white-space: pre; position: relative;'}
+        }
+        .footer {
+          ${isIOS
+            ? 'padding: 20px 50px; text-align: center; page-break-inside: avoid;'
+            : 'margin-top: auto; padding: 20px 50px; text-align: center;'}
+        }
           hr {
             margin: 20px 0;
           }
@@ -146,7 +146,7 @@ export const generatePagePdf = async (
           <div class="content">
             ${htmlLyrics}
           </div>
-          ${renderAbout()}
+          ${renderFooter()}
         </div>
       </body>
     </html>

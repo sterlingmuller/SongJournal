@@ -15,8 +15,7 @@ Hello,
 I encountered the following issue:
 
 1. Steps to reproduce:
-   - Step 1
-   - Step 2
+   -
 
 2. Expected behavior:
    - What should happen
