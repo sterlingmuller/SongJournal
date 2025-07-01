@@ -102,7 +102,7 @@ export default ({ config }) => {
     ],
     assetBundlePatterns: ['**/*'],
     ios: {
-      supportsTablet: true,
+      supportsTablet: false,
       infoPlist: {
         UIBackgroundModes: ['audio'],
         ITSAppUsesNonExemptEncryption: false,
@@ -110,7 +110,7 @@ export default ({ config }) => {
         NSMicrophoneUsageDescription: "This app requires access to your microphone to record audio for songs.",
       },
       bundleIdentifier: 'com.sterling.silverado.songjournal',
-      buildNumber: "6",
+      buildNumber: "7",
     },
     android: {
       edgeToEdgeEnabled: true,
