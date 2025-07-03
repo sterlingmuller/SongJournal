@@ -110,7 +110,7 @@ export default ({ config }) => {
         NSMicrophoneUsageDescription: "This app requires access to your microphone to record audio for songs.",
       },
       bundleIdentifier: 'com.sterling.silverado.songjournal',
-      buildNumber: "7",
+      buildNumber: "8",
     },
     android: {
       edgeToEdgeEnabled: true,

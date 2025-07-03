@@ -1,6 +1,6 @@
 {
   "name": "songjournal",
-  "version": "1.0.0",
+  "version": "0.3.7",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -10,7 +10,9 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "lint": "expo lint",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "build:dev": "eas workflow:run .eas/workflows/create-development-builds.yml",
+    "build:prod": "eas workflow:run .eas/workflows/create-production-builds.yml"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.1.2",
