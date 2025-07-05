@@ -3,7 +3,7 @@ import React from 'react';
 import SongFolders from '@src/components/home/components/SongFolders';
 import { DeleteObject } from '@src/components/common/types';
 import { useAppSelector } from '@src/hooks/typedReduxHooks';
-import { selectOriginalSongs } from '@src/state/selectors/songsSelector';
+import { selectCoverSongs } from '@src/state/selectors/songsSelector';
 import ComposerMessage from '@src/components/common/components/ComposerMessage';
 import { Filter, MessageIntent, SortBy } from '@src/components/common/enums';
 
@@ -16,7 +16,7 @@ interface Props {
   searchText: string;
 }
 
-const HomeDisplay = (props: Props) => {
+const CoversDisplay = (props: Props) => {
   const {
     setToDelete,
     setTitleToEdit,
@@ -25,8 +25,7 @@ const HomeDisplay = (props: Props) => {
     activeFilters,
     searchText,
   } = props;
-  const songs = useAppSelector(selectOriginalSongs);
-  console.log('songs', songs[songs.length - 1]);
+  const songs = useAppSelector(selectCoverSongs);
 
   if (songs.length > 0) {
     return (
@@ -45,4 +44,4 @@ const HomeDisplay = (props: Props) => {
   return <ComposerMessage messageIntent={MessageIntent.GET_STARTED_HOME} />;
 };
 
-export default HomeDisplay;
+export default CoversDisplay;

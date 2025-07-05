@@ -6,7 +6,7 @@ import { Screen } from '@src/components/common/enums';
 import { RootStackParamList } from '@src/components/common/types';
 import HomeScreenAudioContainer from '@src/screens/HomeScreenAudioContainer';
 import SetlistScreen from '@src/screens/SetlistScreen';
-import CoversScreen from '@src/screens/CoversScreen';
+import CoversScreenAudioContainer from '@src/screens/CoversScreenAudioContainer';
 import DefaultHeader from './subcomponents/DefaultHeader';
 import PlaylistIcon from '@src/icons/PlaylistIcon';
 import PersonIcon from '@src/icons/PersonIcon';
@@ -60,7 +60,7 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name={Screen.COVERS}
-        component={CoversScreen}
+        component={CoversScreenAudioContainer}
         options={{
           tabBarIcon: ({ focused }: { focused: boolean }) => (
             <CoversIcon focused={focused} />

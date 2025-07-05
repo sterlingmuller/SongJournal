@@ -5,6 +5,16 @@ import { RootState } from '@src/state/store';
 
 export const selectSongs = (state: RootState) => state.songs.items;
 
+export const selectOriginalSongs = createSelector(
+  [selectSongs],
+  (songs: Songs) => songs.filter((song: Song) => song.isOriginal)
+);
+
+export const selectCoverSongs = createSelector(
+  [selectSongs],
+  (songs: Songs) => songs.filter((song: Song) => !song.isOriginal)
+);
+
 export const selectCurrentSongId = (state: RootState) => state.currentSong;
 
 export const selectCurrentSong = createSelector(

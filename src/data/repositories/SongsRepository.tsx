@@ -2,10 +2,18 @@ import { SQLiteDatabase } from 'expo-sqlite';
 
 import * as t from '@src/components/common/types';
 
-export const fetchSongsWithArtists = async (db: SQLiteDatabase) =>
-  db.getAllSync(
+export const fetchSongsWithArtists = async (db: SQLiteDatabase) => {
+  const songs = db.getAllSync<t.DbSong>(
     'SELECT songId, creationDate, title, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal, artistId FROM Songs',
   );
+
+  return songs.map(song => ({
+    ...song,
+    completed: Boolean(song.completed),
+    hasLyrics: Boolean(song.hasLyrics),
+    isOriginal: Boolean(song.isOriginal)
+  }));
+};
 
 export const getTakesAndPageBySongId = (db: SQLiteDatabase, songId: number) => {
   const takes: t.Takes = db.getAllSync('SELECT * FROM Takes WHERE songId = ?', [
@@ -19,18 +27,18 @@ export const getTakesAndPageBySongId = (db: SQLiteDatabase, songId: number) => {
   return { takes, page };
 };
 
-export const createSong = async ({ db, title }: t.CreateSongPayload) => {
+export const createSong = async ({ db, title, isOriginal = true, artistId }: t.CreateSongPayload) => {
   try {
     const settings: { defaultArtistId: number } = await db.getFirstAsync(
       'SELECT defaultArtistId FROM Settings',
     );
 
-    const defaultArtistId = settings.defaultArtistId;
+    const currentArtistId = artistId || settings.defaultArtistId;
     const creationDate = new Date().toISOString();
 
     const result = await db.runAsync(
       'INSERT INTO Songs (title, artistId, creationDate, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      [title, defaultArtistId, creationDate, -1, 0, false, false, true],
+      [title, currentArtistId, creationDate, -1, 0, false, false, isOriginal],
     );
     const songId = result.lastInsertRowId;
 

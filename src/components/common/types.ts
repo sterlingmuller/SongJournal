@@ -186,6 +186,8 @@ export type UpdateTakeNotesSuccessPayload = {
 export type CreateSongPayload = {
   title: string;
   db: SQLiteDatabase;
+  isOriginal?: boolean;
+  artistId?: number;
 };
 
 export type DeleteSongPayload = {

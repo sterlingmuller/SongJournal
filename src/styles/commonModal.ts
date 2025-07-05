@@ -1,3 +1,4 @@
+import { SCREEN_WIDTH } from '@src/components/common/constants';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
@@ -22,7 +23,7 @@ const useCommonModalStyle = () => {
   const commonModalStyle: Styles = StyleSheet.create({
     container: {
       alignSelf: 'center',
-      width: '80%',
+      width: SCREEN_WIDTH * 0.8,
       borderRadius: 15,
       gap: 20,
       paddingTop: 25,

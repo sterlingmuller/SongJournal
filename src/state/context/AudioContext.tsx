@@ -192,3 +192,9 @@ export const HomeSongsAudioProvider = ({
 }: {
   children: ReactNode;
 }) => <AudioProvider>{children}</AudioProvider>;
+
+export const CoverSongsAudioProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => <AudioProvider>{children}</AudioProvider>;
