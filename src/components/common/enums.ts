@@ -96,6 +96,7 @@ export enum CloudFileType {
 
 export enum MessageIntent {
   GET_STARTED_HOME = 'get started home',
+  COVERS_INSTRUCTIONS = 'covers instructions',
   GET_STARTED_LYRICS = 'get started lyrics',
   GET_STARTED_SONG = 'get started song',
   HIDE_COVERS_SCREEN = 'hide covers screen',

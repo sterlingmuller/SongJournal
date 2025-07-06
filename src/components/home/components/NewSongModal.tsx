@@ -151,18 +151,15 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
                 {songTitle.length}/{MAX_TITLE_LENGTH}
               </StyledText>
             </View>
-            {/* {doesTitleExist && (
-              <StyledText style={styles.warningText}>
-                You already have a Song with this Title
-              </StyledText>
-            )} */}
           </View>
-
           {isCoversScreen && (
               <View style={styles.artistContainer}>
                 <View style={styles.artistSelectContainer}>
                   <TouchableOpacity
-                    onPress={() => setIsSettingsWheelOpen(true)}
+                    onPress={() => {
+                      textInputRef.current?.blur();
+                      setIsSettingsWheelOpen(true);
+                    }}
                     style={styles.artistTextbox}
                   >
                     <StyledText style={textStyle}>

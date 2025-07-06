@@ -26,7 +26,7 @@ const ArtistCard = ({ artist, isExpanded, onPress }: Props) => {
             {artist.name}
           </StyledText>
           <StyledText style={styles.coverCount}>
-            {artist.coverCount} {artist.coverCount === 1 ? 'song' : 'songs'}
+            {artist.coverCount} {artist.coverCount === 1 ? 'Song' : 'Songs'}
           </StyledText>
         </View>
         {isExpanded ? (

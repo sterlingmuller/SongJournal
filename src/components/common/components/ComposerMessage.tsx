@@ -35,6 +35,13 @@ const ComposerMessage = ({ messageIntent }: props) => {
     </StyledText>
   );
 
+    const coversInstructions = (
+    <StyledText style={styles.text}>
+      Press the{' '}
+      <StyledText style={styles.boldText}>New Song</StyledText> button below to add your first cover!
+    </StyledText>
+  );
+
   const getStartedSongInstructions = (
     <StyledText style={styles.text}>
       Press the <StyledText style={styles.boldText}>Record</StyledText> button
@@ -89,6 +96,10 @@ const ComposerMessage = ({ messageIntent }: props) => {
     case MessageIntent.GET_STARTED_HOME:
       message = getStartedHomeInstructions;
       tip = START_TIP;
+      break;
+    case MessageIntent.COVERS_INSTRUCTIONS:
+      message = coversInstructions;
+      tip = '';
       break;
     case MessageIntent.GET_STARTED_LYRICS:
       message = getStartedLyricsInstructions;

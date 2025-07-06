@@ -29,12 +29,14 @@ const CoversScreen = () => {
     songId: number;
   }>({ songTitle: '', songId: -1 });
   const [toDelete, setToDelete] = useState<DeleteObject>(EMPTY_DELETE_OBJECT);
+  const [expandedArtistId, setExpandedArtistId] = useState<number>(-1);
 
   useEffect(() => {
     const unsubscribe = addListener('blur', () => {
       if (playbackUri) {
         clearPlayback();
       }
+      setExpandedArtistId(-1);
     });
 
     return unsubscribe;
@@ -46,6 +48,8 @@ const CoversScreen = () => {
         <CoversDisplay
           setToDelete={setToDelete}
           setTitleToEdit={setTitleToEdit}
+          expandedArtistId={expandedArtistId}
+          setExpandedArtistId={setExpandedArtistId}
         />
         <CreateNewSongButton setIsNewSongOpen={setIsNewSongOpen} />
         <NewSongModal

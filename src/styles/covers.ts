@@ -30,7 +30,7 @@ const useCoversStyle = () => {
       paddingBottom: 0,
     },
     artistSection: {
-      marginBottom: 10,
+      marginBottom: 5,
     },
     separator: {
       borderBottomWidth: 1,
@@ -41,7 +41,7 @@ const useCoversStyle = () => {
       backgroundColor: theme.secondaryBackground,
       borderRadius: 10,
       marginHorizontal: 15,
-      marginTop: 15,
+      marginTop: 10,
       paddingHorizontal: 15,
       paddingVertical: 10,
       elevation: 2,

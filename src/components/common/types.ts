@@ -344,3 +344,18 @@ export type UpdatePurchasesDbPayload = {
 };
 
 export type FileToUpload = { path: string; uri: string };
+
+export type ArtistWithCoverCount ={
+  artistId: number;
+  name: string;
+  coverCount: number;
+}
+
+export type ArtistItemProps = {
+  artist: ArtistWithCoverCount;
+  songs: Array<any>;
+  isExpanded: boolean;
+  onPress: (artistId: number) => void;
+  setToDelete: (value: DeleteObject | null) => void;
+  setTitleToEdit: (value: { songTitle: string; songId: number }) => void;
+}

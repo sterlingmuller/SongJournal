@@ -5,6 +5,7 @@ import {
   ScrollView,
   TextInput,
   Alert,
+  Pressable,
 } from 'react-native';
 import StyledText from '@src/components/common/components/StyledText';
 import useEditOrAddArtistStyles from '@src/styles/editOrAddArtist';
@@ -21,6 +22,7 @@ import { MAX_TITLE_LENGTH } from '@src/components/common/constants';
 import { updateArtistRequest } from '@src/state/thunk/artistThunk';
 import { updateArtistSuccess } from '@src/state/slice/artistsSlice';
 import { calculateHitSlop } from '@src/utils/calculateHitSlope';
+import { compareArtistNames } from '@src/utils/artistSort';
 
 const EditOrDeleteArtist = () => {
   const styles = useEditOrAddArtistStyles();
@@ -88,73 +90,75 @@ const EditOrDeleteArtist = () => {
   };
 
   const renderArtistList = () =>
-    artists.map(({ artistId, name }: Artist, index: number) => {
-      const isEditingArtist = editingArtistId === artistId;
-      const isLastItem = index === artists.length - 1;
+    [...artists]
+      .sort((a: Artist, b: Artist) => compareArtistNames(a.name, b.name))
+      .map(({ artistId, name }: Artist, index: number) => {
+        const isEditingArtist = editingArtistId === artistId;
+        const isLastItem = index === artists.length - 1;
 
-      return (
-        <View key={artistId}>
-          <View style={styles.artistRow}>
-            <View style={styles.artistNameContainer}>
-              {isEditingArtist ? (
-                <View style={styles.editTextbox}>
-                  <TextInput
-                    value={newArtistName}
-                    onChangeText={handleArtistChange}
-                    placeholder={name}
-                    style={styles.editArtistInput}
-                    autoFocus
-                    autoCapitalize="words"
-                    autoCorrect={false}
-                  />
-                </View>
-              ) : (
-                <StyledText>{name}</StyledText>
-              )}
-            </View>
-            <View style={styles.iconsContainer}>
-              <TouchableOpacity
-                style={styles.editButton}
-                onPress={() =>
-                  isEditingArtist
-                    ? handleArtistEditClose()
-                    : handleEditPress({ artistId, name })
-                }
-                hitSlop={calculateHitSlop({width: 32, height: 28})}
-              >
+        return (
+          <View key={artistId}>
+            <Pressable style={styles.artistRow}>
+              <View style={styles.artistNameContainer}>
                 {isEditingArtist ? (
-                  <CloseIcon size={22} />
+                  <View style={styles.editTextbox}>
+                    <TextInput
+                      value={newArtistName}
+                      onChangeText={handleArtistChange}
+                      placeholder={name}
+                      style={styles.editArtistInput}
+                      autoFocus
+                      autoCapitalize="words"
+                      autoCorrect={false}
+                    />
+                  </View>
                 ) : (
-                  <EditIcon size={24} />
+                  <StyledText>{name}</StyledText>
                 )}
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.deleteButton}
-                onPress={() =>
-                  isEditingArtist
-                    ? handleSaveEdit(name)
-                    : handleDeletePress(artistId)
-                }
-                hitSlop={calculateHitSlop({width: 32, height: 28})}
-              >
-                {isEditingArtist ? (
-                  <CheckIcon size={24} isPrimaryText/>
-                ) : (
-                  <TrashIcon size={24} />
-                )}
-              </TouchableOpacity>
-            </View>
+              </View>
+              <View style={styles.iconsContainer}>
+                <TouchableOpacity
+                  style={styles.editButton}
+                  onPress={() =>
+                    isEditingArtist
+                      ? handleArtistEditClose()
+                      : handleEditPress({ artistId, name })
+                  }
+                  hitSlop={calculateHitSlop({width: 32, height: 28})}
+                >
+                  {isEditingArtist ? (
+                    <CloseIcon size={22} />
+                  ) : (
+                    <EditIcon size={24} />
+                  )}
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.deleteButton}
+                  onPress={() =>
+                    isEditingArtist
+                      ? handleSaveEdit(name)
+                      : handleDeletePress(artistId)
+                  }
+                  hitSlop={calculateHitSlop({width: 32, height: 28})}
+                >
+                  {isEditingArtist ? (
+                    <CheckIcon size={24} isPrimaryText/>
+                  ) : (
+                    <TrashIcon size={24} />
+                  )}
+                </TouchableOpacity>
+              </View>
+            </Pressable>
+            {!isLastItem && <View style={styles.separator} />}
           </View>
-          {!isLastItem && <View style={styles.separator} />}
-        </View>
-      );
-    });
+        );
+      });
 
   return (
     <>
       {artists.length > 0 && (
         <View style={styles.container}>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView  showsVerticalScrollIndicator={false}>
             {renderArtistList()}
           </ScrollView>
         </View>
