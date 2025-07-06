@@ -27,6 +27,7 @@ import { Screen } from '@src/components/common/enums';
 import formatDuration from '@src/utils/formatDuration';
 
 interface Props {
+  isCover?: boolean;
   song: Song;
   setTitleToEdit: (value: {
     songTitle: string;
@@ -36,7 +37,7 @@ interface Props {
   }) => void;
 }
 
-const SongFolder = ({ song, setTitleToEdit }: Props) => {
+const SongFolder = ({ song, setTitleToEdit, isCover = false}: Props) => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   const styles = useSongFolderStyles();
   const dispatch = useAppDispatch();
@@ -130,12 +131,12 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
           style={styles.titleContainer}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
         >
-          <StyledText style={styles.title}>{renderTitle()}</StyledText>
+          <StyledText style={isCover ? styles.coverTitle : styles.title}>{renderTitle()}</StyledText>
         </TouchableOpacity>
         <View style={styles.subtextContainer}>
-          <StyledText style={styles.trackSubtext}>
+          {<StyledText style={styles.trackSubtext}>
           {formatDateFromISOString(song.creationDate)}
-          </StyledText>
+          </StyledText>}
           <StyledText style={styles.trackSubtext}>{durationText}</StyledText>
         </View>
         <View style={styles.iconRow}>
@@ -157,9 +158,10 @@ const SongFolder = ({ song, setTitleToEdit }: Props) => {
             (selectedPlayingSongId === songId ? (
               <PlaybackBar
                 duration={selectedTake ? selectedTake.duration : 0}
+                isCover={isCover}
               />
             ) : (
-              <View style={styles.staticPlaybackBar} />
+              <View style={isCover ? styles.coverStaticPlaybackBar : styles.staticPlaybackBar} />
             ))}
         </View>
       </View>

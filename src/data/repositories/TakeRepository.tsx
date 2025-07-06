@@ -15,13 +15,21 @@ export const createTake = async (
 
     const takeId = result.lastInsertRowId;
 
+    const { totalTakes } = await db.getFirstAsync<{ totalTakes: number }>(
+      'SELECT totalTakes FROM Songs WHERE songId = ?',
+      [songId],
+    );
+
+    if (totalTakes === 0) {
+      await db.runAsync(
+        'UPDATE Songs SET selectedTakeId = ? WHERE songId = ?',
+        [takeId, songId],
+      );
+    }
+
     await db.runAsync(
       'UPDATE Songs SET totalTakes = totalTakes + 1 WHERE songId = ?;',
       [songId],
-    );
-    await db.runAsync(
-      'UPDATE Songs SET selectedTakeId = ? WHERE selectedTakeId = -1;',
-      [takeId],
     );
 
     const take: t.Take = db.getFirstSync(

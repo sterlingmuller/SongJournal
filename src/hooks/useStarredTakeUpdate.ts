@@ -15,8 +15,9 @@ import { updateSelectedTakeRequest } from '@src/state/thunk/takeThunk';
 import { updateSelectedTakeIdSuccess } from '@src/state/slice/songsSlice';
 
 const useStarredTakeUpdateAndUpload = () => {
-  const { currentTakeUri, currentTakeTitle } =
-    useAppSelector(selectCurrentTakeUri);
+  const currentTakeData = useAppSelector(selectCurrentTakeUri);
+  const currentTakeUri = currentTakeData?.currentTakeUri;
+  const currentTakeTitle = currentTakeData?.currentTakeTitle;
   const isAutoSyncEnabled = useAppSelector(selectIsAutoSyncEnabled);
   const { isUnstarredTakeConditionEnabled } = useAppSelector(selectSyncFilters);
   const song = useAppSelector(selectCurrentSong);
@@ -46,7 +47,7 @@ const useStarredTakeUpdateAndUpload = () => {
         if (isAutoSyncEnabled) {
           generateAndUploadFile(songTitle, newUri, CloudFileType.STARRED_TAKE);
 
-          if (isUnstarredTakeConditionEnabled) {
+          if (isUnstarredTakeConditionEnabled && currentTakeUri && currentTakeTitle) {
             generateFileDeletion(songTitle, newStarredTakeTitle);
             generateAndUploadFile(
               songTitle,

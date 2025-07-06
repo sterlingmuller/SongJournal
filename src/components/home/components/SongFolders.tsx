@@ -17,6 +17,7 @@ import ComposerMessage from '@src/components/common/components/ComposerMessage';
 import { HOME_TIP } from '@src/components/common/constants';
 import StyledText from '@src/components/common/components/StyledText';
 import useSongFolderStyles from '@src/styles/songFolder';
+import { Song } from '@src/components/common/types';
 
 interface Props {
   setToDelete: (value: t.DeleteObject | null) => void;
@@ -81,6 +82,12 @@ const SongFolders = (props: Props) => {
     return <StyledText style={styles.tipText}>{HOME_TIP}</StyledText>;
   };
 
+  const renderItem = ({ item }: ListRenderItemInfo<Song>) => (
+       <View style={styles.separator}>
+        <SongFolder song={item} setTitleToEdit={setTitleToEdit} />
+      </View>
+  );
+
   return (
     <View style={{ flex: 1 }}>
       {songsToDisplay.length ? (
@@ -88,9 +95,7 @@ const SongFolders = (props: Props) => {
           data={songsToDisplay}
           keyExtractor={(item: t.Song) => item.songId.toString()}
           onRowDidOpen={onRowDidOpen}
-          renderItem={({ item }: ListRenderItemInfo<t.Song>) => (
-            <SongFolder song={item} setTitleToEdit={setTitleToEdit} />
-          )}
+          renderItem={renderItem}
           renderHiddenItem={({ item }: ListRenderItemInfo<t.Song>) => (
             <DeleteRow
               title={item.title}

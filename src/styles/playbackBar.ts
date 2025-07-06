@@ -5,6 +5,7 @@ interface Styles {
   container: ViewStyle;
   takesContainer: ViewStyle;
   takesSliderContainer: ViewStyle;
+  coverSliderContainer: ViewStyle;
   sliderContainer: ViewStyle;
   slider: ViewStyle;
   track: ViewStyle;
@@ -31,6 +32,11 @@ const usePlaybackBarStyles = () => {
     takesSliderContainer: {
       zIndex:1,
       width: SCREEN_WIDTH * 0.35,
+      marginRight: 10,
+    },
+    coverSliderContainer: {
+      zIndex:1,
+      width: SCREEN_WIDTH * 0.4,
       marginRight: 10,
     },
     slider: {

@@ -6,9 +6,11 @@ import SwipeableItem, {
   SwipeableItemRef,
 } from '@src/components/common/components/SwipeableItem';
 import useHomeSwipeListStyles from '@src/styles/homeSwipeList';
+import { ViewStyle } from 'react-native';
 
 interface SwipeableFlashListProps<T> {
   data: T[];
+  contentContainerStyle?: ViewStyle;
   renderItem: (
     info: Partial<ListRenderItemInfo<T>>,
   ) => React.ReactElement | null;
@@ -25,6 +27,7 @@ interface SwipeableFlashListProps<T> {
 
 const SwipeableFlashList = <T,>({
   data,
+  contentContainerStyle,
   renderItem,
   renderHiddenItem,
   keyExtractor,
@@ -72,7 +75,7 @@ const SwipeableFlashList = <T,>({
         renderItem={renderSwipeableItem}
         keyExtractor={keyExtractor}
         estimatedItemSize={150}
-        contentContainerStyle={{ paddingBottom: 200 }}
+        contentContainerStyle={contentContainerStyle || { paddingBottom: 200 }}
         ListFooterComponent={footer}
       />
     </GestureHandlerRootView>

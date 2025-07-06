@@ -6,18 +6,21 @@ interface Styles {
   rowContainer: ViewStyle;
   rowPressed: ViewStyle;
   contents: ViewStyle;
+  coverTitle: TextStyle;
   title: TextStyle;
   titleContainer: ViewStyle;
   iconRow: ViewStyle;
   playIcon: ViewStyle;
   deleteRow: ViewStyle;
   deleteButton: ViewStyle;
+  separator: ViewStyle;
   staticPlaybackBar: ViewStyle;
   subtextContainer: ViewStyle;
   editTitleText: TextStyle;
   warningText: TextStyle;
   trackSubtext: TextStyle;
   tipText: TextStyle;
+  coverStaticPlaybackBar: ViewStyle;
 }
 
 const useSongFolderStyles = () => {
@@ -31,43 +34,39 @@ const useSongFolderStyles = () => {
       paddingLeft: 25,
       paddingRight: 30,
       width: '100%',
-      borderBottomWidth: 1,
-      borderBottomColor: theme.primaryText,
       justifyContent: 'space-between',
       alignContent: 'center',
     },
-
     rowPressed: { backgroundColor: theme.mutedPrimary },
-
     contents: {
       flexDirection: 'column',
     },
-
+    coverTitle: {
+      fontSize: 20,
+      color: theme.primaryText,
+      fontWeight: 'bold',
+    },
     title: {
       fontSize: 24,
       color: theme.primaryText,
       fontWeight: 'bold',
     },
-
     titleContainer: {
       alignSelf: 'flex-start',
       maxWidth: '80%',
     },
-
     iconRow: {
       flexDirection: 'row',
       gap: 16,
       alignItems: 'center',
       paddingTop: 5,
     },
-
     playIcon: {
       position: 'absolute',
       alignSelf: 'center',
       paddingBottom: 40,
       right: 40,
     },
-
     deleteRow: {
       alignItems: 'center',
       backgroundColor: theme.error,
@@ -78,11 +77,13 @@ const useSongFolderStyles = () => {
       borderBottomWidth: 1,
       borderBottomColor: theme.primaryText,
     },
-
+    separator: {
+      borderBottomWidth: 1,
+      borderBottomColor: theme.primaryText,
+    },
     deleteButton: {
       right: 30,
     },
-
     editTitleText: {
       borderBottomColor: theme.highlight,
       backgroundColor: theme.secondaryBackground,
@@ -93,7 +94,6 @@ const useSongFolderStyles = () => {
       color: theme.primaryText,
       fontWeight: 'bold',
     },
-
     staticPlaybackBar: {
       height: 15,
       width: SCREEN_WIDTH * 0.5,
@@ -101,18 +101,21 @@ const useSongFolderStyles = () => {
       marginLeft: 14,
       borderRadius: 8,
     },
-
+    coverStaticPlaybackBar: {
+      height: 15,
+      width: SCREEN_WIDTH * 0.45,
+      backgroundColor: theme.primary,
+      marginLeft: 14,
+      borderRadius: 8,
+    },
     warningText: {
       fontStyle: 'italic',
       alignSelf: 'center',
     },
-
     trackSubtext: {
       fontStyle: 'italic',
     },
-
     subtextContainer: { height: 40, flexDirection: 'column' },
-
     tipText: {
       paddingTop: 24,
       fontSize: 14,

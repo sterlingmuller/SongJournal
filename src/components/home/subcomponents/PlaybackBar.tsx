@@ -17,9 +17,10 @@ import { MIN_TOUCH_SIZE } from '@src/components/common/constants';
 interface Props {
   duration: number;
   fromSongTakes?: boolean;
+  isCover?: boolean;
 }
 
-const PlaybackBar = ({ duration, fromSongTakes }: Props) => {
+const PlaybackBar = ({ duration, fromSongTakes, isCover = false }: Props) => {
   const styles = usePlaybackBarStyles();
   const { seekTo, soundRef } = useAudioPlayer();
   const isPlaying = useAppSelector(selectIsPlaying);
@@ -45,7 +46,7 @@ const PlaybackBar = ({ duration, fromSongTakes }: Props) => {
       <TouchableWithoutFeedback onPressIn={(e) => e.stopPropagation()}>
         <View
           style={
-            fromSongTakes ? styles.takesSliderContainer : styles.sliderContainer
+            fromSongTakes ? styles.takesSliderContainer : isCover ? styles.coverSliderContainer : styles.sliderContainer
           }
         >
           <Slider

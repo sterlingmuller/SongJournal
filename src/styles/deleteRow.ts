@@ -1,32 +1,30 @@
-import { StyleSheet, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 interface Styles {
   container: ViewStyle;
-  contents: ViewStyle;
+  deleteContainer: ViewStyle;
+  deleteText: TextStyle;
 }
 
-const useDeleteRowStyle = () => {
-  const deleteRowStyle: Styles = StyleSheet.create({
+const useDeleteRowStyles = () =>
+  StyleSheet.create<Styles>({
     container: {
+      flex: 1,
       flexDirection: 'row',
-      backgroundColor: 'red',
-      paddingVertical: 12,
-      paddingLeft: 25,
-      paddingRight: 30,
-      width: '100%',
-      borderBottomWidth: 1,
-      borderBottomColor: '#000',
-      justifyContent: 'space-between',
-      alignContent: 'center',
+      justifyContent: 'flex-end',
+      alignItems: 'center',
+      paddingHorizontal: 20,
     },
-
-    contents: {
-      flexDirection: 'column',
-      gap: 10,
+    deleteContainer: {
+      width: 80,
+      height: '100%',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    deleteText: {
+      fontSize: 16,
+      fontWeight: '600',
     },
   });
 
-  return deleteRowStyle;
-};
-
-export default useDeleteRowStyle;
+export default useDeleteRowStyles;
