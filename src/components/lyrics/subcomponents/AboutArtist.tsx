@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { TextInput, TouchableOpacity, View, Keyboard } from 'react-native';
 
 import SettingsWheel from '@src/components/common/components/SettingsWheel';
 import StyledText from '@src/components/common/components/StyledText';
@@ -11,9 +11,10 @@ import { useColorTheme } from '@src/state/context/ThemeContext';
 interface Props {
   selectedArtistId: number;
   setSelectedArtistId: (value: number) => void;
+  textInputRef?: React.RefObject<TextInput>;
 }
 
-const AboutArtist = ({ selectedArtistId, setSelectedArtistId }: Props) => {
+const AboutArtist = ({ selectedArtistId, setSelectedArtistId, textInputRef }: Props) => {
   const styles = useInfoModalStyle();
   const { getArtistName, artistItems } = useArtistName();
   const { theme } = useColorTheme();
@@ -47,7 +48,10 @@ const AboutArtist = ({ selectedArtistId, setSelectedArtistId }: Props) => {
       <View style={styles.artistContainer}>
         <View style={styles.artistSelectContainer}>
           <TouchableOpacity
-            onPress={() => setIsSettingsWheelOpen(true)}
+            onPress={() => {
+              textInputRef?.current?.blur();
+              setIsSettingsWheelOpen(true);
+            }}
             style={styles.artistTextbox}
           >
             <StyledText

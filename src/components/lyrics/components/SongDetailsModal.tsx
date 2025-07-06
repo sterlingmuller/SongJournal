@@ -211,10 +211,12 @@ const SongDetailsModal = (props: Props) => {
             *Bpm must be between 60 and 180
           </StyledText>
         )}
+        <View style={{paddingHorizontal: 25}}>
         <AboutArtist
           selectedArtistId={selectedArtistId}
           setSelectedArtistId={setSelectedArtistId}
         />
+        </View>
         <CompletionStatus
           isCompleted={newCompletionStatus}
           handleInputChange={handleCompletionStatusChange}

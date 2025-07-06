@@ -68,7 +68,6 @@ const useSongDetailsModalStyle = () => {
       alignSelf: 'center',
       alignItems: 'center',
       flexDirection: 'row',
-      paddingHorizontal: 25,
       justifyContent: 'space-evenly',
       paddingTop: 10,
       paddingBottom: 20,
@@ -81,7 +80,7 @@ const useSongDetailsModalStyle = () => {
       paddingVertical: 8,
       borderWidth: 1,
       borderColor: '#ccc',
-      minWidth: 150,
+      width: 150,
       alignItems: 'center',
     },
     artistEditText: {

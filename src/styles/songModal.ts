@@ -10,10 +10,6 @@ interface Styles {
   infoContainer: ViewStyle;
   infoText: TextStyle;
   warningText: TextStyle;
-  artistSelectContainer: ViewStyle;
-  artistContainer: ViewStyle;
-  artistTextbox: ViewStyle;
-  artistEditText: TextStyle;
   labelText: TextStyle;
   inputText: TextStyle;
 }
@@ -62,37 +58,6 @@ const useSongModalStyle = () => {
       fontWeight: '600',
       textAlign: 'center',
       marginBottom: 15,
-    },
-    artistSelectContainer: {
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: 5,
-    },
-    artistContainer: {
-      width: '100%',
-      alignSelf: 'center',
-      alignItems: 'center',
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      marginTop: 5,
-      marginBottom: 15,
-    },
-    artistTextbox: {
-      backgroundColor: theme.inputBackground,
-      borderRadius: 5,
-      paddingHorizontal: 10,
-      paddingVertical: 8,
-      borderWidth: 1,
-      borderColor: '#ccc',
-      minWidth: 150,
-      alignItems: 'center',
-    },
-    artistEditText: {
-      fontStyle: 'italic',
-      color: theme.secondaryTipText,
-      fontWeight: '700',
-      fontSize: 16,
     },
     labelText: {
       fontSize: 16,

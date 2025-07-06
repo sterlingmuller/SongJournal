@@ -22,10 +22,6 @@ const CoversDisplay = ({ setToDelete, setTitleToEdit, expandedArtistId, setExpan
   const artists = useAppSelector(selectArtistsWithCovers);
   const allCoverSongs = useAppSelector(selectCoverSongs);
 
-  if (artists.length === 0) {
-    return <ComposerMessage messageIntent={MessageIntent.GET_STARTED_HOME} />;
-  }
-
   const handleArtistPress = useCallback((artistId: number) => {
     setExpandedArtistId(artistId === expandedArtistId ? -1 : artistId);
   }, [setExpandedArtistId, expandedArtistId]);
@@ -46,7 +42,10 @@ const CoversDisplay = ({ setToDelete, setTitleToEdit, expandedArtistId, setExpan
     );
   }, [allCoverSongs, expandedArtistId, handleArtistPress, setToDelete, setTitleToEdit]);
 
-  if(artists.length > 0) {
+  if (artists.length === 0) {
+    return <ComposerMessage messageIntent={MessageIntent.COVERS_INSTRUCTIONS} />;
+  }
+
   return (
     <View style={styles.container}>
       <FlashList
@@ -59,9 +58,6 @@ const CoversDisplay = ({ setToDelete, setTitleToEdit, expandedArtistId, setExpan
       />
     </View>
   );
-}
-
-  return <ComposerMessage messageIntent={MessageIntent.COVERS_INSTRUCTIONS} />;
 };
 
-export default CoversDisplay;
+export default memo(CoversDisplay);

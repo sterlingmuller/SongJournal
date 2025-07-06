@@ -8,7 +8,7 @@ export default ({ config }) => {
     name: IS_DEV ? 'SJ (Dev)' : 'Song Journal',
     slug: 'SongJournal',
     scheme: IS_DEV ? 'songjournaldev' : 'songjournal',
-    version: '0.4.0',
+    version: '0.4.1',
     orientation: 'portrait',
     icon: './assets/Icon.png',
     userInterfaceStyle: 'light',
