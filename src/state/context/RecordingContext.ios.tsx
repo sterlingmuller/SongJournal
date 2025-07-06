@@ -64,7 +64,6 @@ export const RecordingProvider = ({ children }: Props) => {
   }, []);
 
   useEffect(() => {
-    console.log('is recording', isRecording);
     if (isRecording) {
       activateKeepAwakeAsync();
     } else {

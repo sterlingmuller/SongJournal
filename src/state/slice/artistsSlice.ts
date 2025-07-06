@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { Artist, Artists } from '@src/components/common/types';
+import { compareArtistNames } from '@src/utils/artistSort';
 
 type ArtistsSliceState = {
   items: Artists;
@@ -7,6 +8,10 @@ type ArtistsSliceState = {
 
 const initialState: ArtistsSliceState = {
   items: [],
+};
+
+const sortArtists = (artists: Artists): Artists => {
+  return [...artists].sort((a: Artist, b: Artist) => compareArtistNames(a.name, b.name));
 };
 
 const artistSlice = createSlice({
@@ -18,31 +23,40 @@ const artistSlice = createSlice({
       action: PayloadAction<Artist>,
     ) => {
       state.items.push(action.payload);
+      sortArtists(state.items);
     },
     fetchArtistsSuccess: (
       state: ArtistsSliceState,
       action: PayloadAction<Artist[]>,
     ) => {
-      state.items = action.payload;
+      state.items = sortArtists(action.payload);
     },
     updateArtistSuccess: (
       state: ArtistsSliceState,
       action: PayloadAction<Artist>,
     ) => {
       const index = state.items.findIndex(
-        (artist: Artist) => artist.artistId === action.payload.artistId,
+        (artist: Artist) => artist.artistId === action.payload.artistId
       );
+
       if (index !== -1) {
         state.items[index] = action.payload;
+        sortArtists(state.items);
+      } else {
+        state.items.push(action.payload);
+        sortArtists(state.items);
       }
     },
     removeArtistSuccess: (
       state: ArtistsSliceState,
       action: PayloadAction<number>,
     ) => {
-      state.items = state.items.filter(
-        (artist: Artist) => artist.artistId !== action.payload,
+      const index = state.items.findIndex(
+        (artist: Artist) => artist.artistId === action.payload
       );
+      if (index !== -1) {
+        state.items.splice(index, 1);
+      }
     },
   },
 });

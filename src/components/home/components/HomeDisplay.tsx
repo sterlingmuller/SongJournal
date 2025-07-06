@@ -26,7 +26,6 @@ const HomeDisplay = (props: Props) => {
     searchText,
   } = props;
   const songs = useAppSelector(selectOriginalSongs);
-  console.log('songs', songs[songs.length - 1]);
 
   if (songs.length > 0) {
     return (

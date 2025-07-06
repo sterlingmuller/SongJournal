@@ -10,11 +10,11 @@ import { useArtistName } from '@src/hooks/useArtistName';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 
 const LazySettingsWheel = lazy(
-  async () => await import('@src/components/common/components/SettingsWheel'),
+ () => import('@src/components/common/components/SettingsWheel'),
 );
 const LazyDefaultArtistModal = lazy(
-  async () =>
-    await import('@src/components/settings/components/NewArtistModal'),
+   () =>
+   import('@src/components/settings/components/NewArtistModal'),
 );
 
 interface Props {

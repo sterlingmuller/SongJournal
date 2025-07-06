@@ -49,7 +49,6 @@ export const migrateDbIfNeeded = async (db: SQLiteDatabase) => {
   let currentDbVersion = result.user_version;
 
   if (currentDbVersion >= DATABASE_VERSION) {
-    console.log('Database is up to date. No migration needed.');
     return;
   }
   if (currentDbVersion === 0) {
