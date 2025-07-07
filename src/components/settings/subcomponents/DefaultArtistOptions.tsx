@@ -1,4 +1,4 @@
-import { useState, lazy } from 'react';
+import { useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { useSQLiteContext } from 'expo-sqlite';
 
@@ -8,14 +8,8 @@ import { useAppDispatch } from '@src/hooks/typedReduxHooks';
 import { updateSettingsRequest } from '@src/state/sagas/actionCreators';
 import { useArtistName } from '@src/hooks/useArtistName';
 import { useColorTheme } from '@src/state/context/ThemeContext';
-
-const LazySettingsWheel = lazy(
- () => import('@src/components/common/components/SettingsWheel'),
-);
-const LazyDefaultArtistModal = lazy(
-   () =>
-   import('@src/components/settings/components/NewArtistModal'),
-);
+import SettingsWheel from '@src/components/common/components/SettingsWheel';
+import NewArtistModal from '../components/NewArtistModal';
 
 interface Props {
   defaultArtistId: number;
@@ -81,18 +75,16 @@ const DefaultArtistOptions = ({ defaultArtistId }: Props) => {
           </StyledText>
         </TouchableOpacity>
       </View>
-      <LazySettingsWheel
-        isWheelOpen={isSettingsWheelOpen}
+      {isSettingsWheelOpen && <SettingsWheel
         onExitPress={onExitPress}
         handleInputChange={handleInputChange}
         initialValue={defaultArtistId}
         label={'Default Artist'}
         items={artistItems}
-      />
-      <LazyDefaultArtistModal
-        isNewArtistOpen={isNewArtistOpen}
+      />}
+      {isNewArtistOpen && <NewArtistModal
         setIsNewArtistOpen={setIsNewArtistOpen}
-      />
+      />}
     </>
   );
 };

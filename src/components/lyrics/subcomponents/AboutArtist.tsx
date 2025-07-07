@@ -66,18 +66,16 @@ const AboutArtist = ({ selectedArtistId, setSelectedArtistId, textInputRef }: Pr
           <StyledText style={styles.artistEditText}>+ Add or Edit</StyledText>
         </TouchableOpacity>
       </View>
-      <SettingsWheel
-        isWheelOpen={isSettingsWheelOpen}
+      {isSettingsWheelOpen && <SettingsWheel
         onExitPress={onExitPress}
         handleInputChange={handleInputChange}
         initialValue={selectedArtistId}
         label={'Default Artist'}
         items={artistItems}
-      />
-      <NewArtistModal
-        isNewArtistOpen={isNewArtistOpen}
+      />}
+      {isNewArtistOpen && <NewArtistModal
         setIsNewArtistOpen={setIsNewArtistOpen}
-      />
+      />}
     </>
   );
 };

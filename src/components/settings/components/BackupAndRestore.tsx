@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import { reloadAsync } from 'expo-updates';
 
@@ -8,16 +8,32 @@ import { createAndShareBackup } from '@src/utils/createAndShareBackup';
 import { importBackup } from '@src/data/utils/importBackup';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 import StyledButton from '@src/components/common/components/StyledButton';
+import LoadingIndicator from '@src/components/common/components/LoadingIndicator';
 
 const BackupAndRestore = () => {
   const styles = useSettingsStyle();
   const { theme } = useColorTheme();
+  const [isExporting, setIsExporting] = useState(false);
+  const [isImporting, setIsImporting] = useState(false);
 
-  const onExportPress = () => createAndShareBackup();
+  const onExportPress = async () => {
+    setIsExporting(true);
+    try {
+      await createAndShareBackup();
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   const onImportPress = async () => {
-    const didImport = await importBackup();
-    if (didImport) {
-      reloadAsync();
+    setIsImporting(true);
+    try {
+      const didImport = await importBackup();
+      if (didImport) {
+        reloadAsync();
+      }
+    } finally {
+      setIsImporting(false);
     }
   };
 
@@ -31,20 +47,27 @@ const BackupAndRestore = () => {
         </StyledText>
         <View style={styles.backupButtons}>
             <StyledButton
-              label="Export Backup"
+              label={isExporting ? "Exporting..." : "Export Backup"}
               onPress={onExportPress}
               backgroundColor={theme.settingsEmphasis}
               textColor={'white'}
               buttonsStyle={{boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)'}}
+              disabled={isExporting || isImporting}
             />
             <StyledButton
-              label="Import Backup"
+              label={isImporting ? "Importing..." : "Import Backup"}
               onPress={onImportPress}
               backgroundColor={theme.primary}
               textColor={'white'}
               buttonsStyle={{boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)'}}
+              disabled={isExporting || isImporting}
             />
         </View>
+        {(isExporting || isImporting) && (
+          <View style={{ marginTop: 10, alignItems: 'center' }}>
+            <LoadingIndicator />
+          </View>
+        )}
       </View>
     </View>
   );

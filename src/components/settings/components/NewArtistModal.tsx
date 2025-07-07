@@ -19,11 +19,10 @@ import EditOrDeleteArtist from '../subcomponents/EditOrDeleteArtist';
 import useEditOrAddArtistStyles from '@src/styles/editOrAddArtist';
 
 interface Props {
-  isNewArtistOpen: boolean;
   setIsNewArtistOpen: (value: boolean) => void;
 }
 
-const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
+const NewArtistModal = ({ setIsNewArtistOpen }: Props) => {
   const db = useSQLiteContext();
   const dispatch = useAppDispatch();
   const styles = useEditOrAddArtistStyles();
@@ -55,7 +54,7 @@ const NewArtistModal = ({ isNewArtistOpen, setIsNewArtistOpen }: Props) => {
   return (
     <KeyboardAvoidingView>
       <Modal
-        isVisible={isNewArtistOpen}
+        isVisible
         avoidKeyboard
         onBackdropPress={onExitPress}
         hideModalContentWhileAnimating={true}

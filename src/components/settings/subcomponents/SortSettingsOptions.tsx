@@ -62,14 +62,13 @@ const SortSettingsOptions = ({ defaultSort, isAscending }: Props) => {
           isAscendingToggle
         />
       </View>
-      <SettingsWheel
-        isWheelOpen={isSettingsWheelOpen}
+      {isSettingsWheelOpen && <SettingsWheel
         onExitPress={onExitPress}
         handleInputChange={handleInputChange}
         initialValue={defaultSort}
         label={'Default Sort'}
         items={SORT_SELECT}
-      />
+      />}
     </>
   );
 };

@@ -9,6 +9,20 @@ import {
 } from '@src/components/common/constants';
 import { shareZip } from './shareHelpers';
 
+const BATCH_SIZE = 10;
+
+const copyAudioFilesBatch = async (audioFiles: string[], startIdx: number) => {
+  const batch = audioFiles.slice(startIdx, startIdx + BATCH_SIZE);
+  await Promise.all(
+    batch.map(file =>
+      FileSystem.copyAsync({
+        from: `${AUDIO_DIR}${file}`,
+        to: `${BACKUP_DIR}Audio/${file}`,
+      })
+    )
+  );
+};
+
 export const createBackup = async () => {
   try {
     await FileSystem.makeDirectoryAsync(BACKUP_DIR, { intermediates: true });
@@ -26,11 +40,9 @@ export const createBackup = async () => {
         await FileSystem.makeDirectoryAsync(`${BACKUP_DIR}Audio`, {
           intermediates: true,
         });
-        for (const file of audioFiles) {
-          await FileSystem.copyAsync({
-            from: `${AUDIO_DIR}${file}`,
-            to: `${BACKUP_DIR}Audio/${file}`,
-          });
+
+        for (let i = 0; i < audioFiles.length; i += BATCH_SIZE) {
+          await copyAudioFilesBatch(audioFiles, i);
         }
       }
     }

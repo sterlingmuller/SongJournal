@@ -43,9 +43,10 @@ const PurchaseModal = ({
     setConductorToPurchase(null);
   };
 
+  console.log('purchase')
+
   return (
     <Modal
-      isVisible={!!conductorToPurchase}
       avoidKeyboard
       onBackdropPress={onExitPress}
       hideModalContentWhileAnimating={true}

@@ -15,10 +15,7 @@ import {
   PURCHASE_KEYS,
 } from '@src/components/common/constants';
 import { selectConductor } from '@src/state/selectors/settingsSelector';
-
-const LazyPurchasesModal = lazy(
-  async () => await import('@src/components/common/components/PurchaseModal'),
-);
+import PurchaseModal from '@src/components/common/components/PurchaseModal';
 
 const ChooseComposer = () => {
   const styles = useSettingsStyle();
@@ -85,10 +82,10 @@ const ChooseComposer = () => {
       <View style={styles.conductorRow}>
         {conductorsArray.slice(2, 4).map(renderConductor)}
       </View>
-      <LazyPurchasesModal
+      {conductorToPurchase && <PurchaseModal
         conductorToPurchase={conductorToPurchase}
         setConductorToPurchase={setConductorToPurchase}
-      />
+      />}
     </View>
   );
 };

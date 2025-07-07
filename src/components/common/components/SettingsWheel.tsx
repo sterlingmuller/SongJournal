@@ -12,7 +12,6 @@ import StyledText from '@src/components/common/components/StyledText';
 import { useColorTheme } from '@src/state/context/ThemeContext';
 
 interface Props {
-  isWheelOpen: boolean;
   onExitPress: () => void;
   handleInputChange: (value: string | number) => void;
   initialValue: string | number;
@@ -22,7 +21,6 @@ interface Props {
 
 const SettingsWheel = (props: Props) => {
   const {
-    isWheelOpen,
     onExitPress,
     handleInputChange,
     initialValue,
@@ -34,7 +32,7 @@ const SettingsWheel = (props: Props) => {
 
   return (
     <Modal
-      isVisible={isWheelOpen}
+    isVisible
       avoidKeyboard
       onBackdropPress={onExitPress}
       style={{ margin: 0 }}

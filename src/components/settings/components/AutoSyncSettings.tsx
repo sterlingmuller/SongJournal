@@ -29,6 +29,8 @@ const AutoSyncSettings = () => {
     performBackup();
   }, [performBackup]);
 
+  console.log('hrm')
+
   return (
     <View>
       <StyledText style={styles.sectionTitle}>Sync Settings</StyledText>
