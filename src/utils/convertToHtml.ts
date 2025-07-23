@@ -24,6 +24,9 @@ export const convertToHtml = (markdownText: string): string => {
     if (isChordLine(line)) {
       let chordHtml = '';
       let lastIndex = 0;
+      const currentLineIndex = lines.indexOf(line);
+      const nextLine =
+        currentLineIndex + 1 < lines.length ? lines[currentLineIndex + 1] : '';
 
       const chordRegex = /\{(.*?)\}/g;
       let match;
@@ -33,13 +36,33 @@ export const convertToHtml = (markdownText: string): string => {
 
         const chordLength = match[0].length;
         const replacementLength = match[1].length;
+        const chordPosition = match.index;
 
+        const isAboveHyphen =
+          nextLine.length > chordPosition &&
+          nextLine[chordPosition - 1] === '-';
         const nextChar = line.charAt(match.index + match[0].length);
         const isAdjacentToNextChord = nextChar === '{';
 
-        const spacesNeeded = isAdjacentToNextChord
-          ? 1
-          : chordLength - replacementLength;
+        let nextChordAboveHyphen = false;
+        if (isAdjacentToNextChord) {
+          const nextChordMatch = line
+            .substring(match.index + match[0].length)
+            .match(/^\{.*?\}/);
+          if (nextChordMatch) {
+            const nextChordPosition = match.index + match[0].length;
+            nextChordAboveHyphen =
+              nextLine.length > nextChordPosition &&
+              nextLine[nextChordPosition - 1] === '-';
+          }
+        }
+
+        const spacesNeeded =
+          isAdjacentToNextChord && nextChordAboveHyphen
+            ? chordLength - replacementLength
+            : isAdjacentToNextChord
+              ? 1
+              : chordLength - replacementLength;
 
         chordHtml += `<span class="chord">${match[1]}</span>${' '.repeat(spacesNeeded)}`;
 
@@ -47,10 +70,8 @@ export const convertToHtml = (markdownText: string): string => {
       }
 
       chordHtml += line.slice(lastIndex);
-
       htmlOutput += `<span class="chord-line">${chordHtml}</span>`;
       isFirstLine = false;
-
       continue;
     }
     const formattedLine = line
