@@ -4,14 +4,14 @@ import * as t from '@src/components/common/types';
 
 export const fetchSongsWithArtists = async (db: SQLiteDatabase) => {
   const songs = db.getAllSync<t.DbSong>(
-    'SELECT songId, creationDate, title, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal, artistId FROM Songs',
+    'SELECT songId, creationDate, title, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal, artistId FROM Songs'
   );
 
   return songs.map(song => ({
     ...song,
     completed: Boolean(song.completed),
     hasLyrics: Boolean(song.hasLyrics),
-    isOriginal: Boolean(song.isOriginal)
+    isOriginal: Boolean(song.isOriginal),
   }));
 };
 
@@ -27,10 +27,15 @@ export const getTakesAndPageBySongId = (db: SQLiteDatabase, songId: number) => {
   return { takes, page };
 };
 
-export const createSong = async ({ db, title, isOriginal = true, artistId }: t.CreateSongPayload) => {
+export const createSong = async ({
+  db,
+  title,
+  isOriginal = true,
+  artistId,
+}: t.CreateSongPayload) => {
   try {
     const settings: { defaultArtistId: number } = await db.getFirstAsync(
-      'SELECT defaultArtistId FROM Settings',
+      'SELECT defaultArtistId FROM Settings'
     );
 
     const currentArtistId = artistId || settings.defaultArtistId;
@@ -38,23 +43,23 @@ export const createSong = async ({ db, title, isOriginal = true, artistId }: t.C
 
     const result = await db.runAsync(
       'INSERT INTO Songs (title, artistId, creationDate, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      [title, currentArtistId, creationDate, -1, 0, false, false, isOriginal],
+      [title, currentArtistId, creationDate, -1, 0, false, false, isOriginal]
     );
     const songId = result.lastInsertRowId;
 
     await db.runAsync(
       'INSERT INTO Page (songId, lyrics, bpm, keySignature, time, about) VALUES (?, ?, ?, ?, ?, ?)',
-      [songId, '', '', '', '', ''],
+      [songId, '', '', '', '', '']
     );
 
     const song: t.DbSong = await db.getFirstAsync(
       'SELECT songId, creationDate, title, selectedTakeId, totalTakes, completed, hasLyrics, isOriginal, artistId FROM Songs WHERE songId = ?',
-      [songId],
+      [songId]
     );
 
     const page: t.Page = db.getFirstSync(
       'SELECT * FROM Page WHERE songId = ?',
-      [songId],
+      [songId]
     );
 
     return { ...song, page, takes: [] };
@@ -65,7 +70,7 @@ export const createSong = async ({ db, title, isOriginal = true, artistId }: t.C
 
 export const deleteSong = async ({ db, songId }: t.DeleteSongPayload) => {
   const statement = await db.prepareAsync(
-    'DELETE FROM Songs WHERE songId = $songId; DELETE FROM Takes WHERE songId = $songId; DELETE FROM Page WHERE songId = $songId;',
+    'DELETE FROM Songs WHERE songId = $songId; DELETE FROM Takes WHERE songId = $songId; DELETE FROM Page WHERE songId = $songId;'
   );
 
   try {

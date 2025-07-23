@@ -39,11 +39,11 @@ const CloudStorage = ({ cloudConnection }: Props) => {
       updateSettingsRequest({
         db,
         updatedSettings: { cloudConnection: CloudConnection.NONE },
-      }),
+      })
     );
     Alert.alert(
       'Disconnected',
-      'You have been disconnected from the cloud service.',
+      'You have been disconnected from the cloud service.'
     );
   };
 
@@ -72,7 +72,7 @@ const CloudStorage = ({ cloudConnection }: Props) => {
                 backgroundColor={theme.error}
                 onPress={handleDisconnect}
                 textColor={'white'}
-                buttonsStyle={{boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)'}}
+                buttonsStyle={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)' }}
               />
             </View>
             <View style={styles.button}>
@@ -81,7 +81,7 @@ const CloudStorage = ({ cloudConnection }: Props) => {
                 onPress={handleAppBackup}
                 backgroundColor={theme.settingsEmphasis}
                 textColor={'white'}
-                buttonsStyle={{boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)'}}
+                buttonsStyle={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)' }}
               />
             </View>
           </View>

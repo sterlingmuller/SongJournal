@@ -15,19 +15,19 @@ const songsSlice = createSlice({
   reducers: {
     fetchSongsWithTakesSuccess: (
       state: SongsSliceState,
-      action: PayloadAction<t.Songs>,
+      action: PayloadAction<t.Songs>
     ) => {
       state.items = action.payload;
     },
     createSongSuccess: (
       state: SongsSliceState,
-      action: PayloadAction<t.Song>,
+      action: PayloadAction<t.Song>
     ) => {
       state.items.push(action.payload);
     },
     updateSongTitleSuccess: (
       state: SongsSliceState,
-      action: PayloadAction<t.UpdateSongTitleStatePayload>,
+      action: PayloadAction<t.UpdateSongTitleStatePayload>
     ) => {
       const { songId, title: newTitle } = action.payload;
       const song = state.items.find((song: t.Song) => song.songId === songId);
@@ -37,27 +37,27 @@ const songsSlice = createSlice({
     },
     removeSongSuccess: (
       state: SongsSliceState,
-      action: PayloadAction<number>,
+      action: PayloadAction<number>
     ) => {
       state.items = state.items.filter(
-        (song: t.Song) => song.songId !== action.payload,
+        (song: t.Song) => song.songId !== action.payload
       );
     },
     removeTakeSuccess: (
       state: SongsSliceState,
-      action: PayloadAction<t.DeleteTakeSuccessPayload>,
+      action: PayloadAction<t.DeleteTakeSuccessPayload>
     ) => {
       const { songId, takeId } = action.payload;
       const song = state.items.find((song: t.Song) => song.songId === songId);
       if (song) {
         song.takes = song.takes.filter(
-          (take: t.Take) => take.takeId !== takeId,
+          (take: t.Take) => take.takeId !== takeId
         );
       }
     },
     updateTakeNotesSuccess: (
       state: SongsSliceState,
-      action: PayloadAction<t.UpdateTakeNotesSuccessPayload>,
+      action: PayloadAction<t.UpdateTakeNotesSuccessPayload>
     ) => {
       const { songId, takeId, notes } = action.payload;
       const song = state.items.find((song: t.Song) => song.songId === songId);
@@ -70,7 +70,7 @@ const songsSlice = createSlice({
     },
     createTakeSuccess: (
       state: SongsSliceState,
-      action: PayloadAction<t.Take>,
+      action: PayloadAction<t.Take>
     ) => {
       const { songId } = action.payload;
       const song = state.items.find((song: t.Song) => song.songId === songId);
@@ -84,7 +84,7 @@ const songsSlice = createSlice({
     },
     updateSelectedTakeIdSuccess: (
       state: SongsSliceState,
-      action: PayloadAction<t.SetSelectedTakeIdPayload>,
+      action: PayloadAction<t.SetSelectedTakeIdPayload>
     ) => {
       const { songId, takeId } = action.payload;
       const song = state.items.find((song: t.Song) => song.songId === songId);
@@ -94,7 +94,7 @@ const songsSlice = createSlice({
     },
     updateTakeTitleSuccess: (
       state: SongsSliceState,
-      action: PayloadAction<t.UpdateTakeTitleStatePayload>,
+      action: PayloadAction<t.UpdateTakeTitleStatePayload>
     ) => {
       const { songId, takeId, title: newTitle } = action.payload;
       const song = state.items.find((song: t.Song) => song.songId === songId);
@@ -107,7 +107,7 @@ const songsSlice = createSlice({
     },
     updateSongCompletionSuccess: (
       state: SongsSliceState,
-      action: PayloadAction<t.UpdateSongCompletionStatePayload>,
+      action: PayloadAction<t.UpdateSongCompletionStatePayload>
     ) => {
       const { songId, completed } = action.payload;
       const song = state.items.find((song: t.Song) => song.songId === songId);
@@ -117,7 +117,7 @@ const songsSlice = createSlice({
     },
     updateSongArtistSuccess: (
       state: SongsSliceState,
-      action: PayloadAction<t.UpdateSongArtistStatePayload>,
+      action: PayloadAction<t.UpdateSongArtistStatePayload>
     ) => {
       const { songId, artistId } = action.payload;
       const song = state.items.find((song: t.Song) => song.songId === songId);
@@ -127,7 +127,7 @@ const songsSlice = createSlice({
     },
     updateSongHasLyrics: (
       state: SongsSliceState,
-      action: PayloadAction<t.UpdateSongHasLyricsStatePayload>,
+      action: PayloadAction<t.UpdateSongHasLyricsStatePayload>
     ) => {
       const { songId, lyrics } = action.payload;
       const song = state.items.find((song: t.Song) => song.songId === songId);

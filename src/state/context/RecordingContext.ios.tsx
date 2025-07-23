@@ -102,13 +102,13 @@ export const RecordingProvider = ({ children }: Props) => {
         ({ metering }: RecordingStatus) => {
           if (metering > SILENCE_THRESHOLD) {
             const normalizedLevel = (metering + 160) / 160;
-            const scaledLevel = Math.log10(normalizedLevel * 9 + .2) * 100;
+            const scaledLevel = Math.log10(normalizedLevel * 9 + 0.2) * 100;
 
             levelSum.current += scaledLevel;
             levelCount.current++;
           }
         },
-        50,
+        50
       );
 
       audioWaveIntervalId = setInterval(() => {
@@ -149,9 +149,9 @@ export const RecordingProvider = ({ children }: Props) => {
 
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: false,
-        staysActiveInBackground: true,
-        playsInSilentModeIOS: true,
-      });
+      staysActiveInBackground: true,
+      playsInSilentModeIOS: true,
+    });
 
     return { uri, duration: finalDurationSec };
   }, []);
@@ -174,11 +174,11 @@ export const RecordingProvider = ({ children }: Props) => {
     setDuration(null);
     setIsRecording(false);
 
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: false,
-        staysActiveInBackground: true,
-        playsInSilentModeIOS: true,
-      });
+    await Audio.setAudioModeAsync({
+      allowsRecordingIOS: false,
+      staysActiveInBackground: true,
+      playsInSilentModeIOS: true,
+    });
   }, [isRecording]);
 
   return (

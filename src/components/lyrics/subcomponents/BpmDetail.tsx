@@ -20,10 +20,7 @@ const BpmDetail = (props: Props) => {
   return (
     <View style={styles.container}>
       <TextInput
-        style={[
-          styles.textbox,
-          styles.inputText,
-        ]}
+        style={[styles.textbox, styles.inputText]}
         value={value}
         placeholder="--"
         placeholderTextColor={theme.placeholderText}

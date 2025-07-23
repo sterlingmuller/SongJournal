@@ -49,7 +49,7 @@ const LyricsScreen = () => {
   const [hasLyricChanges, setHasLyricChanges] = useState<boolean>(false);
   const [newLyrics, setNewLyrics] = useState<string>('');
   const [selectedOption, setSelectedOption] = useState<LyricsOption>(
-    LyricsOption.NONE,
+    LyricsOption.NONE
   );
 
   useEffect(() => {
@@ -79,9 +79,9 @@ const LyricsScreen = () => {
               style: 'cancel',
               onPress: () => {},
             },
-          ],
+          ]
         );
-      },
+      }
     );
 
     return unsubscribe;
@@ -146,7 +146,7 @@ const LyricsScreen = () => {
       handleCancelEdit,
       headerHeight,
       selectedOption,
-    ],
+    ]
   );
 
   useLayoutEffect(() => {

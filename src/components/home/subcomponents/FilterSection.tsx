@@ -17,7 +17,7 @@ const FilterSection = (props: Props) => {
 
   const handleCompletionToggle = (filterToUpdate: Filter) => {
     const newFilters: Filter[] = activeFilters.filter(
-      (f: Filter) => f !== Filter.COMPLETED && f !== Filter.IN_PROGRESS,
+      (f: Filter) => f !== Filter.COMPLETED && f !== Filter.IN_PROGRESS
     );
 
     if (!activeFilters.includes(filterToUpdate)) {
@@ -29,7 +29,7 @@ const FilterSection = (props: Props) => {
 
   const handleLyricsToggle = (filterToUpdate: Filter) => {
     const newFilters: Filter[] = activeFilters.filter(
-      (f: Filter) => f !== Filter.LYRICS && f !== Filter.LYRICLESS,
+      (f: Filter) => f !== Filter.LYRICS && f !== Filter.LYRICLESS
     );
 
     if (!activeFilters.includes(filterToUpdate)) {
@@ -44,7 +44,7 @@ const FilterSection = (props: Props) => {
       <View style={styles.filterRow}>
         {FILTER_OPTIONS.filter(
           (option: Filter) =>
-            option === Filter.COMPLETED || option === Filter.IN_PROGRESS,
+            option === Filter.COMPLETED || option === Filter.IN_PROGRESS
         ).map((option: Filter) => (
           <FilterToggle
             key={option}
@@ -57,7 +57,7 @@ const FilterSection = (props: Props) => {
       <View style={styles.filterRow}>
         {FILTER_OPTIONS.filter(
           (option: Filter) =>
-            option === Filter.LYRICS || option === Filter.LYRICLESS,
+            option === Filter.LYRICS || option === Filter.LYRICLESS
         ).map((option: Filter) => (
           <FilterToggle
             key={option}

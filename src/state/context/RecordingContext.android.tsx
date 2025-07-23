@@ -96,13 +96,13 @@ export const RecordingProvider = ({ children }: Props) => {
         ({ metering }: RecordingStatus) => {
           if (metering > SILENCE_THRESHOLD) {
             const normalizedLevel = (metering + 160) / 160;
-            const scaledLevel = Math.log10(normalizedLevel * 9 + .7) * 100;
+            const scaledLevel = Math.log10(normalizedLevel * 9 + 0.7) * 100;
 
             levelSum.current += scaledLevel;
             levelCount.current++;
           }
         },
-        50,
+        50
       );
 
       audioWaveIntervalId = setInterval(() => {

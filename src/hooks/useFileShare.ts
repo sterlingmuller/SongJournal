@@ -39,7 +39,7 @@ const useFileShare = () => {
       await FileSystem.makeDirectoryAsync(fileUri, { intermediates: true });
 
       const starredTake = song.takes.find(
-        (take: Take) => take.takeId === song.selectedTakeId,
+        (take: Take) => take.takeId === song.selectedTakeId
       );
 
       if (starredTake) {
@@ -47,7 +47,6 @@ const useFileShare = () => {
           from: starredTake.uri,
           to: `${fileUri}/${formattedTitle}.m4a`,
         });
-
       }
 
       if (page.lyrics) {
@@ -61,7 +60,7 @@ const useFileShare = () => {
 
       const zipUri = await zip(
         fileUri,
-        `${FileSystem.cacheDirectory}${formattedTitle}.zip`,
+        `${FileSystem.cacheDirectory}${formattedTitle}.zip`
       );
 
       await shareZip(zipUri, formattedTitle, song.title);
@@ -85,13 +84,13 @@ const useFileShare = () => {
         await shareAudio(
           fileUri,
           `${formattedTitle} - ${formattedTakeTitle}`,
-          date,
+          date
         );
       } catch (err) {
         setError((err as Error).message);
       }
     },
-    [],
+    []
   );
 
   const shareLyrics = useCallback(
@@ -111,7 +110,7 @@ const useFileShare = () => {
         setError((err as Error).message);
       }
     },
-    [artists],
+    [artists]
   );
 
   return { shareSongFolder, shareTake, shareLyrics, error };

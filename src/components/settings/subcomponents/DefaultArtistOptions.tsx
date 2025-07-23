@@ -27,7 +27,7 @@ const DefaultArtistOptions = ({ defaultArtistId }: Props) => {
   const [isNewArtistOpen, setIsNewArtistOpen] = useState(false);
 
   const [displayedArtistName, setDisplayedArtistName] = useState(
-    getArtistName(defaultArtistId),
+    getArtistName(defaultArtistId)
   );
 
   const handleInputChange = (value: number) => {
@@ -43,7 +43,7 @@ const DefaultArtistOptions = ({ defaultArtistId }: Props) => {
         updateSettingsRequest({
           db,
           updatedSettings: { defaultArtistId: selectedArtistId },
-        }),
+        })
       );
     }
 
@@ -69,22 +69,22 @@ const DefaultArtistOptions = ({ defaultArtistId }: Props) => {
             </StyledText>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => setIsNewArtistOpen(true)}  hitSlop={10}>
-          <StyledText style={styles.addArtistText}>
-            + Add or Edit
-          </StyledText>
+        <TouchableOpacity onPress={() => setIsNewArtistOpen(true)} hitSlop={10}>
+          <StyledText style={styles.addArtistText}>+ Add or Edit</StyledText>
         </TouchableOpacity>
       </View>
-      {isSettingsWheelOpen && <SettingsWheel
-        onExitPress={onExitPress}
-        handleInputChange={handleInputChange}
-        initialValue={defaultArtistId}
-        label={'Default Artist'}
-        items={artistItems}
-      />}
-      {isNewArtistOpen && <NewArtistModal
-        setIsNewArtistOpen={setIsNewArtistOpen}
-      />}
+      {isSettingsWheelOpen && (
+        <SettingsWheel
+          onExitPress={onExitPress}
+          handleInputChange={handleInputChange}
+          initialValue={defaultArtistId}
+          label={'Default Artist'}
+          items={artistItems}
+        />
+      )}
+      {isNewArtistOpen && (
+        <NewArtistModal setIsNewArtistOpen={setIsNewArtistOpen} />
+      )}
     </>
   );
 };

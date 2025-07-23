@@ -35,7 +35,7 @@ function* deleteTakeSaga(action: PayloadAction<DeleteTakeSagaPayload>) {
 }
 
 function* updateTakeNotesSaga(
-  action: PayloadAction<UpdateTakeNotesSagaPayload>,
+  action: PayloadAction<UpdateTakeNotesSagaPayload>
 ) {
   const { db, takeId, songId, notes } = action.payload;
   yield put(startLoading());

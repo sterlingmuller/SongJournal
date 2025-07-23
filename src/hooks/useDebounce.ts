@@ -2,7 +2,7 @@ import { useRef, useCallback, useEffect } from 'react';
 
 const useDebounce = <T extends unknown[]>(
   callbackFn: (...args: T) => void,
-  delay: number = 300,
+  delay: number = 300
 ) => {
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -15,7 +15,7 @@ const useDebounce = <T extends unknown[]>(
         callbackFn(...args);
       }, delay);
     },
-    [callbackFn, delay],
+    [callbackFn, delay]
   );
 
   useEffect(() => {

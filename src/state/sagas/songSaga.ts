@@ -53,7 +53,7 @@ function* deleteSongSaga(action: PayloadAction<DeleteSongPayload>) {
 }
 
 function* updateSongArtistSaga(
-  action: PayloadAction<UpdateSongArtistSagaPayload>,
+  action: PayloadAction<UpdateSongArtistSagaPayload>
 ) {
   const { songId, artistId } = action.payload;
   yield put(startLoading());
@@ -69,7 +69,7 @@ function* updateSongArtistSaga(
 }
 
 function* updateSongCompletionSaga(
-  action: PayloadAction<UpdateSongCompletionSagaPayload>,
+  action: PayloadAction<UpdateSongCompletionSagaPayload>
 ) {
   const { songId, completed } = action.payload;
   yield put(startLoading());

@@ -1,6 +1,6 @@
-import {NativeModules, NativeEventEmitter} from 'react-native';
+import { NativeModules, NativeEventEmitter } from 'react-native';
 
-const {ShakeModule} = NativeModules;
+const { ShakeModule } = NativeModules;
 const shakeEmitter = new NativeEventEmitter(ShakeModule);
 
 const ShakeModuleWrapper = {

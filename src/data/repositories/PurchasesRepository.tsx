@@ -5,7 +5,7 @@ import {
 import { SQLiteDatabase } from 'expo-sqlite';
 
 export const fetchPurchases = async (
-  db: SQLiteDatabase,
+  db: SQLiteDatabase
 ): Promise<Purchases> => {
   try {
     return db.getFirstSync('SELECT * FROM Purchases', []);

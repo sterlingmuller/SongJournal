@@ -16,24 +16,15 @@ const ArtistCard = ({ artist, isExpanded, onPress }: Props) => {
   const styles = useCoversStyle();
 
   return (
-    <TouchableOpacity
-      style={styles.cardContainer}
-      onPress={onPress}
-    >
+    <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
       <View style={styles.cardContent}>
         <View style={styles.titleSection}>
-          <StyledText style={styles.artistName}>
-            {artist.name}
-          </StyledText>
+          <StyledText style={styles.artistName}>{artist.name}</StyledText>
           <StyledText style={styles.coverCount}>
             {artist.coverCount} {artist.coverCount === 1 ? 'Song' : 'Songs'}
           </StyledText>
         </View>
-        {isExpanded ? (
-          <ArrowUpIcon />
-        ) : (
-          <ArrowDownIcon />
-        )}
+        {isExpanded ? <ArrowUpIcon /> : <ArrowDownIcon />}
       </View>
     </TouchableOpacity>
   );

@@ -39,7 +39,7 @@ export const ColorThemeProvider = ({ children }: Props) => {
     const loadThemePreference = () => {
       try {
         const result: SettingsResult = db.getFirstSync(
-          `SELECT theme FROM Settings WHERE id = 1`,
+          `SELECT theme FROM Settings WHERE id = 1`
         );
 
         if (result) {

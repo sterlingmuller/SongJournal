@@ -28,17 +28,17 @@ const ComposerMessage = ({ messageIntent }: props) => {
 
   const getStartedHomeInstructions = (
     <StyledText style={styles.text}>
-      {`Lookdfbdfbdfbdurnal is empty.\nTo get started, visit `}
+      {`Looks like your Song Journal is empty.\nTo get started, visit `}
       <StyledText style={styles.boldText}>Settings 4/4</StyledText> help
       importing a journal or press the{' '}
       <StyledText style={styles.boldText}>New Song</StyledText> button below.
     </StyledText>
   );
 
-    const coversInstructions = (
+  const coversInstructions = (
     <StyledText style={styles.text}>
-      Press the{' '}
-      <StyledText style={styles.boldText}>New Song</StyledText> button below to add your first cover!
+      Press the <StyledText style={styles.boldText}>New Song</StyledText> button
+      below to add your first cover!
     </StyledText>
   );
 

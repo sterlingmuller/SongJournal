@@ -70,7 +70,7 @@ const ChooseComposer = () => {
         </TouchableOpacity>
       );
     },
-    [purchases, selectedConductor, theme],
+    [purchases, selectedConductor, theme]
   );
 
   return (
@@ -82,10 +82,12 @@ const ChooseComposer = () => {
       <View style={styles.conductorRow}>
         {conductorsArray.slice(2, 4).map(renderConductor)}
       </View>
-      {conductorToPurchase && <PurchaseModal
-        conductorToPurchase={conductorToPurchase}
-        setConductorToPurchase={setConductorToPurchase}
-      />}
+      {conductorToPurchase && (
+        <PurchaseModal
+          conductorToPurchase={conductorToPurchase}
+          setConductorToPurchase={setConductorToPurchase}
+        />
+      )}
     </View>
   );
 };

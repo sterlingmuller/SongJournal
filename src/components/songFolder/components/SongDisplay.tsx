@@ -26,7 +26,8 @@ interface Props {
 }
 
 const SongDisplay = (props: Props) => {
-  const { takes, setToDelete, setCurrentTake, setIsNotesOpen, setTitleToEdit } = props;
+  const { takes, setToDelete, setCurrentTake, setIsNotesOpen, setTitleToEdit } =
+    props;
   const styles = useSongScreenStyles();
   const displayTips = useAppSelector(selectDisplayTips);
 
@@ -43,7 +44,7 @@ const SongDisplay = (props: Props) => {
         setTitleToEdit={setTitleToEdit}
       />
     ),
-    [setToDelete, setCurrentTake, setTitleToEdit],
+    [setToDelete, setCurrentTake, setTitleToEdit]
   );
 
   const ListFooter = () => {

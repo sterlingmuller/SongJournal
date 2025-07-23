@@ -20,19 +20,13 @@ interface Props {
 }
 
 const SettingsWheel = (props: Props) => {
-  const {
-    onExitPress,
-    handleInputChange,
-    initialValue,
-    label,
-    items,
-  } = props;
+  const { onExitPress, handleInputChange, initialValue, label, items } = props;
   const styles = useWheelPickerModalStyles();
   const { theme } = useColorTheme();
 
   return (
     <Modal
-    isVisible
+      isVisible
       avoidKeyboard
       onBackdropPress={onExitPress}
       style={{ margin: 0 }}

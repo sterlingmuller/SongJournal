@@ -34,7 +34,7 @@ const SongDetailSelect = (props: Props) => {
 
   const textStyle = useMemo(
     () => [styles.inputText, !value && { color: theme.placeholderText }],
-    [styles.inputText, value, theme.placeholderText],
+    [styles.inputText, value, theme.placeholderText]
   );
 
   return (

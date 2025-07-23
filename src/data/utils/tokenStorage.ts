@@ -18,7 +18,7 @@ export const storeRefreshToken = async (refreshToken: string) => {
 
 export const storeAccessToken = async (
   accessToken: string,
-  expiresIn: number,
+  expiresIn: number
 ) => {
   try {
     const accessTokenData: AccessTokenData = {
@@ -27,7 +27,7 @@ export const storeAccessToken = async (
     };
     await SecureStore.setItemAsync(
       ACCESS_TOKEN_KEY,
-      JSON.stringify(accessTokenData),
+      JSON.stringify(accessTokenData)
     );
   } catch (error) {
     console.error('Failed to store access token', error);

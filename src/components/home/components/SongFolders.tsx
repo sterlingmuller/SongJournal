@@ -55,7 +55,7 @@ const SongFolders = (props: Props) => {
     isSortAscending,
     activeFilters,
     searchText,
-    isNumbered,
+    isNumbered
   );
 
   const openRowRef = useRef<SwipeableItemRef | null>(null);
@@ -68,7 +68,7 @@ const SongFolders = (props: Props) => {
 
   const onRowDidOpen = (
     rowKey: string,
-    rowMap: Map<string, React.RefObject<SwipeableItemRef>>,
+    rowMap: Map<string, React.RefObject<SwipeableItemRef>>
   ) => {
     const rowRef = rowMap.get(rowKey);
     if (rowRef?.current) {
@@ -83,9 +83,9 @@ const SongFolders = (props: Props) => {
   };
 
   const renderItem = ({ item }: ListRenderItemInfo<Song>) => (
-       <View style={styles.separator}>
-        <SongFolder song={item} setTitleToEdit={setTitleToEdit} />
-      </View>
+    <View style={styles.separator}>
+      <SongFolder song={item} setTitleToEdit={setTitleToEdit} />
+    </View>
   );
 
   return (

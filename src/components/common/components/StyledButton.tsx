@@ -26,20 +26,20 @@ const StyledButton = (props: Props) => {
   const styles = useSaveAndCancelButtonsStyle();
 
   return (
-      <TouchableOpacity
-        onPress={onPress}
-        disabled={disabled}
-        style={[
-          buttonsStyle,
-          styles.buttonContainer,
-          { backgroundColor: backgroundColor },
-          disabled && styles.disabledButton,
-        ]}
-      >
-        <StyledText style={[styles.buttonText, { color: textColor }]}>
-          {label}
-        </StyledText>
-      </TouchableOpacity>
+    <TouchableOpacity
+      onPress={onPress}
+      disabled={disabled}
+      style={[
+        buttonsStyle,
+        styles.buttonContainer,
+        { backgroundColor: backgroundColor },
+        disabled && styles.disabledButton,
+      ]}
+    >
+      <StyledText style={[styles.buttonText, { color: textColor }]}>
+        {label}
+      </StyledText>
+    </TouchableOpacity>
   );
 };
 export default StyledButton;

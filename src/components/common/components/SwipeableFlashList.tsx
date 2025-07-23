@@ -12,15 +12,15 @@ interface SwipeableFlashListProps<T> {
   data: T[];
   contentContainerStyle?: ViewStyle;
   renderItem: (
-    info: Partial<ListRenderItemInfo<T>>,
+    info: Partial<ListRenderItemInfo<T>>
   ) => React.ReactElement | null;
   renderHiddenItem: (
-    info: Partial<ListRenderItemInfo<T>>,
+    info: Partial<ListRenderItemInfo<T>>
   ) => React.ReactElement | null;
   keyExtractor: (item: T, index: number) => string;
   onRowDidOpen: (
     rowKey: string,
-    rowMap: Map<string, React.RefObject<SwipeableItemRef>>,
+    rowMap: Map<string, React.RefObject<SwipeableItemRef>>
   ) => void;
   footer?: React.ComponentType<any> | React.ReactElement | null;
 }
@@ -36,7 +36,7 @@ const SwipeableFlashList = <T,>({
 }: SwipeableFlashListProps<T>) => {
   const styles = useHomeSwipeListStyles();
   const [openRowMap] = useState<Map<string, React.RefObject<SwipeableItemRef>>>(
-    new Map(),
+    new Map()
   );
   const flashListRef = useRef(null);
 
@@ -64,7 +64,7 @@ const SwipeableFlashList = <T,>({
         </SwipeableItem>
       );
     },
-    [renderItem, renderHiddenItem, keyExtractor, onRowDidOpen, openRowMap],
+    [renderItem, renderHiddenItem, keyExtractor, onRowDidOpen, openRowMap]
   );
 
   return (

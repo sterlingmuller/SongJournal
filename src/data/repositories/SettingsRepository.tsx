@@ -8,7 +8,7 @@ export const fetchUserSettings = async (db: SQLiteDatabase) => {
   try {
     const settings: UserSettings = await db.getFirstAsync(
       'SELECT * FROM Settings WHERE id = ?',
-      [1],
+      [1]
     );
     return {
       defaultSortType: settings.defaultSortType,
@@ -21,10 +21,10 @@ export const fetchUserSettings = async (db: SQLiteDatabase) => {
       // theme: settings.theme,
       isAutoSyncEnabled: Boolean(settings.isAutoSyncEnabled),
       isUnstarredTakeConditionEnabled: Boolean(
-        settings.isUnstarredTakeConditionEnabled,
+        settings.isUnstarredTakeConditionEnabled
       ),
       isCompletedSongConditionEnabled: Boolean(
-        settings.isCompletedSongConditionEnabled,
+        settings.isCompletedSongConditionEnabled
       ),
     };
   } catch (err) {

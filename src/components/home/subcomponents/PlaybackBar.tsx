@@ -43,10 +43,14 @@ const PlaybackBar = ({ duration, fromSongTakes, isCover = false }: Props) => {
 
   return (
     <View style={fromSongTakes ? styles.takesContainer : styles.container}>
-      <TouchableWithoutFeedback onPressIn={(e) => e.stopPropagation()}>
+      <TouchableWithoutFeedback onPressIn={e => e.stopPropagation()}>
         <View
           style={
-            fromSongTakes ? styles.takesSliderContainer : isCover ? styles.coverSliderContainer : styles.sliderContainer
+            fromSongTakes
+              ? styles.takesSliderContainer
+              : isCover
+                ? styles.coverSliderContainer
+                : styles.sliderContainer
           }
         >
           <Slider
@@ -66,7 +70,7 @@ const PlaybackBar = ({ duration, fromSongTakes, isCover = false }: Props) => {
             }}
             sliderHeight={15}
             heartbeat
-            panHitSlop={calculateHitSlop({width: MIN_TOUCH_SIZE, height: 10})}
+            panHitSlop={calculateHitSlop({ width: MIN_TOUCH_SIZE, height: 10 })}
           />
         </View>
       </TouchableWithoutFeedback>

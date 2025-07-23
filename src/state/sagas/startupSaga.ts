@@ -34,7 +34,7 @@ function* fetchStartupDataSaga(action: PayloadAction<SQLiteDatabase>) {
     const takes: Takes = yield call(fetchTakes, action.payload);
     const settings: UserSettings = yield call(
       fetchUserSettings,
-      action.payload,
+      action.payload
     );
     const artists: Artists = yield call(fetchArtists, action.payload);
     const purchases: Purchases = yield call(fetchPurchases, action.payload);

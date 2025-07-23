@@ -50,7 +50,7 @@ Thank you!`;
   } catch {
     Alert.alert(
       'Error',
-      'An error occurred while trying to open the email client.',
+      'An error occurred while trying to open the email client.'
     );
   }
 };

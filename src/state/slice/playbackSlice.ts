@@ -22,7 +22,7 @@ const playbackSlice = createSlice({
   reducers: {
     startPlayback: (
       state: PlaybackState,
-      action: PayloadAction<PlaybackPayload>,
+      action: PayloadAction<PlaybackPayload>
     ) => {
       state.isPlaying = true;
       state.uri = action.payload.uri;
@@ -38,7 +38,7 @@ const playbackSlice = createSlice({
     stopPlayback: () => initialState,
     updatePlaybackDuration: (
       state: PlaybackState,
-      action: PayloadAction<number>,
+      action: PayloadAction<number>
     ) => {
       state.duration = action.payload;
     },

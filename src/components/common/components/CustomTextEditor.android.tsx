@@ -5,7 +5,11 @@ import {
   View,
 } from 'react-native';
 
-import { addShakeListener, startShakeDetection, stopShakeDetection } from '@modules/expo-shake';
+import {
+  addShakeListener,
+  startShakeDetection,
+  stopShakeDetection,
+} from '@modules/expo-shake';
 import EditorToolbar from './EditorToolbar';
 import ChordWheelModal from '@src/components/lyrics/components/ChordWheelModal';
 import { useEffect, useRef, useState } from 'react';
@@ -60,18 +64,18 @@ const CustomTextEditor = ({
     debouncedInput(localText);
   }, [localText, debouncedInput, history, historyIndex]);
 
-    useEffect(() => {
-      const subscription = addShakeListener(() => {
-        setLocalText(textRef.current);
-      });
+  useEffect(() => {
+    const subscription = addShakeListener(() => {
+      setLocalText(textRef.current);
+    });
 
-      startShakeDetection();
+    startShakeDetection();
 
-      return () => {
-        subscription.remove();
-        stopShakeDetection();
-      };
-    }, []);
+    return () => {
+      subscription.remove();
+      stopShakeDetection();
+    };
+  }, []);
 
   const handleUndo = () => {
     if (historyIndex > 0) {
@@ -90,7 +94,7 @@ const CustomTextEditor = ({
     const { text: newText, cursorPosition } = insertSectionAtCursor(
       localText,
       selection.start,
-      section,
+      section
     );
 
     setLocalText(newText);
@@ -138,7 +142,7 @@ const CustomTextEditor = ({
           value={localText}
           onChangeText={setLocalText}
           onSelectionChange={(
-            e: NativeSyntheticEvent<TextInputSelectionChangeEventData>,
+            e: NativeSyntheticEvent<TextInputSelectionChangeEventData>
           ) => {
             setSelection({
               start: e.nativeEvent.selection.start,

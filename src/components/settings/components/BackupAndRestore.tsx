@@ -46,22 +46,22 @@ const BackupAndRestore = () => {
           can restore your data from a backup file at any time.
         </StyledText>
         <View style={styles.backupButtons}>
-            <StyledButton
-              label={isExporting ? "Exporting..." : "Export Backup"}
-              onPress={onExportPress}
-              backgroundColor={theme.settingsEmphasis}
-              textColor={'white'}
-              buttonsStyle={{boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)'}}
-              disabled={isExporting || isImporting}
-            />
-            <StyledButton
-              label={isImporting ? "Importing..." : "Import Backup"}
-              onPress={onImportPress}
-              backgroundColor={theme.primary}
-              textColor={'white'}
-              buttonsStyle={{boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)'}}
-              disabled={isExporting || isImporting}
-            />
+          <StyledButton
+            label={isExporting ? 'Exporting...' : 'Export Backup'}
+            onPress={onExportPress}
+            backgroundColor={theme.settingsEmphasis}
+            textColor={'white'}
+            buttonsStyle={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)' }}
+            disabled={isExporting || isImporting}
+          />
+          <StyledButton
+            label={isImporting ? 'Importing...' : 'Import Backup'}
+            onPress={onImportPress}
+            backgroundColor={theme.primary}
+            textColor={'white'}
+            buttonsStyle={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)' }}
+            disabled={isExporting || isImporting}
+          />
         </View>
         {(isExporting || isImporting) && (
           <View style={{ marginTop: 10, alignItems: 'center' }}>

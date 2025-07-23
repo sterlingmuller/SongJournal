@@ -27,13 +27,13 @@ export const filterSongs = (songs: Songs, activeFilters: Filter[]) =>
 
 export const searchSongs = (songs: Songs, searchText: string): Songs =>
   songs.filter((song: Song) =>
-    song.title.toLowerCase().includes(searchText.toLowerCase()),
+    song.title.toLowerCase().includes(searchText.toLowerCase())
   );
 
 export const sortSongs = (
   songs: Songs,
   sortedCategory: SortBy,
-  isSortAscending: boolean,
+  isSortAscending: boolean
 ): Songs =>
   [...songs].sort((a: Song, b: Song) => {
     switch (sortedCategory) {

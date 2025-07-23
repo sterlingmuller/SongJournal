@@ -70,7 +70,7 @@ const DeleteModal = (props: Props) => {
       if (takeId === selectedTakeId) {
         const newSelectedTakeId = findReplacementStarredTakeId(
           takeId,
-          currentSongTakes,
+          currentSongTakes
         );
 
         const resultAction = await dispatch(
@@ -78,12 +78,12 @@ const DeleteModal = (props: Props) => {
             songId,
             takeId: newSelectedTakeId,
             db,
-          }),
+          })
         );
 
         if (updateSelectedTakeRequest.fulfilled.match(resultAction)) {
           dispatch(
-            updateSelectedTakeIdSuccess({ songId, takeId: newSelectedTakeId }),
+            updateSelectedTakeIdSuccess({ songId, takeId: newSelectedTakeId })
           );
         }
       }

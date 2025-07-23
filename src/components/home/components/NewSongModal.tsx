@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, TextInput, Pressable, Keyboard } from 'react-native';
-import { useNavigation, NavigationProp, useRoute } from '@react-navigation/native';
+import {
+  useNavigation,
+  NavigationProp,
+  useRoute,
+} from '@react-navigation/native';
 import Modal from 'react-native-modal';
 import { useSQLiteContext } from 'expo-sqlite';
 
@@ -67,18 +71,21 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
     setDoesTitleExist(titleAlreadyExists);
   }, [songTitle, songs]);
 
-  const disabled: boolean = !songTitle || doesTitleExist || (isCoversScreen && selectedArtistId === -1);
+  const disabled: boolean =
+    !songTitle || doesTitleExist || (isCoversScreen && selectedArtistId === -1);
 
   const onSavePress = () => {
     if (!doesTitleExist) {
       const sanitizedTitle = sanitizeInput(songTitle);
       const isOriginal = !isCoversScreen;
-      dispatch(createSongRequest({
-        db,
-        title: sanitizedTitle,
-        isOriginal,
-        artistId: isCoversScreen ? selectedArtistId : undefined
-      }));
+      dispatch(
+        createSongRequest({
+          db,
+          title: sanitizedTitle,
+          isOriginal,
+          artistId: isCoversScreen ? selectedArtistId : undefined,
+        })
+      );
 
       clearPlayback();
       navigate(Screen.SONG);
@@ -92,7 +99,7 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
         setSongTitle('');
         setSelectedArtistId(-1);
       }),
-    [navigate],
+    [navigate]
   );
 
   const handleTitleChange = (title: string) => {
@@ -108,7 +115,10 @@ const NewSongModal = ({ isNewSongOpen, setIsNewSongOpen }: Props) => {
       onBackdropPress={onExitPress}
       hideModalContentWhileAnimating={true}
     >
-      <Pressable style={[styles.container, { maxHeight: undefined }]} onPress={Keyboard.dismiss}>
+      <Pressable
+        style={[styles.container, { maxHeight: undefined }]}
+        onPress={Keyboard.dismiss}
+      >
         <StyledText style={styles.title}>Song Title</StyledText>
         <View>
           <View style={styles.textbox}>

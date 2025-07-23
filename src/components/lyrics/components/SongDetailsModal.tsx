@@ -80,7 +80,7 @@ const SongDetailsModal = (props: Props) => {
         }
         return acc;
       },
-      {} as Partial<SongInfo>,
+      {} as Partial<SongInfo>
     );
   }, [newInfo, originalInfo]);
 
@@ -88,7 +88,7 @@ const SongDetailsModal = (props: Props) => {
     setHasDetailChanges(
       Object.keys(changedInfo).length > 0 ||
         newCompletionStatus !== completionStatus ||
-        selectedArtistId !== currentSongArtistId,
+        selectedArtistId !== currentSongArtistId
     );
   }, [
     newInfo,
@@ -136,13 +136,13 @@ const SongDetailsModal = (props: Props) => {
           songId,
           db,
           completed: newCompletionStatus,
-        }),
+        })
       );
     }
 
     if (selectedArtistId !== currentSongArtistId) {
       dispatch(
-        updateSongArtistRequest({ songId, artistId: selectedArtistId, db }),
+        updateSongArtistRequest({ songId, artistId: selectedArtistId, db })
       );
     }
 
@@ -202,7 +202,7 @@ const SongDetailsModal = (props: Props) => {
                     handleInputChange={handleBpmChange}
                   />
                 );
-              },
+              }
             )}
           </View>
         </View>
@@ -211,11 +211,11 @@ const SongDetailsModal = (props: Props) => {
             *Bpm must be between 60 and 180
           </StyledText>
         )}
-        <View style={{paddingHorizontal: 25}}>
-        <AboutArtist
-          selectedArtistId={selectedArtistId}
-          setSelectedArtistId={setSelectedArtistId}
-        />
+        <View style={{ paddingHorizontal: 25 }}>
+          <AboutArtist
+            selectedArtistId={selectedArtistId}
+            setSelectedArtistId={setSelectedArtistId}
+          />
         </View>
         <CompletionStatus
           isCompleted={newCompletionStatus}

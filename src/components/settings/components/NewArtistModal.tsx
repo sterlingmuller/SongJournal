@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Platform, View, TextInput, KeyboardAvoidingView, Keyboard, Pressable } from 'react-native';
+import {
+  Platform,
+  View,
+  TextInput,
+  KeyboardAvoidingView,
+  Keyboard,
+  Pressable,
+} from 'react-native';
 import Modal from 'react-native-modal';
 import { useSQLiteContext } from 'expo-sqlite';
 

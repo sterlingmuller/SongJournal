@@ -10,7 +10,7 @@ export const useProcessSongs = (
   isSortAscending: boolean,
   activeFilters: Filter[],
   searchText: string,
-  isNumbered: boolean,
+  isNumbered: boolean
 ) => {
   const numberSongs = useNumberedSongs();
 

@@ -25,7 +25,7 @@ const CoverSongList = ({ setToDelete, setTitleToEdit, songs }: Props) => {
 
   const onRowDidOpen = (
     rowKey: string,
-    rowMap: Map<string, React.RefObject<SwipeableItemRef>>,
+    rowMap: Map<string, React.RefObject<SwipeableItemRef>>
   ) => {
     const rowRef = rowMap.get(rowKey);
     if (rowRef?.current) {
@@ -33,30 +33,34 @@ const CoverSongList = ({ setToDelete, setTitleToEdit, songs }: Props) => {
     }
   };
 
-    const renderItem = ({ item, index }: ListRenderItemInfo<Song>) => {
+  const renderItem = ({ item, index }: ListRenderItemInfo<Song>) => {
     const isLastItem = index === songs.length - 1;
     return (
       <View style={[!isLastItem && styles.separator, { marginHorizontal: 20 }]}>
-        <SongFolder song={item} setTitleToEdit={setTitleToEdit} isCover={true} />
+        <SongFolder
+          song={item}
+          setTitleToEdit={setTitleToEdit}
+          isCover={true}
+        />
       </View>
     );
   };
 
   return (
-      <SwipeableFlashList
-        data={songs}
-        contentContainerStyle={styles.songFlashContainer}
-        keyExtractor={(item: Song) => item.songId.toString()}
-        onRowDidOpen={onRowDidOpen}
-        renderItem={renderItem}
-        renderHiddenItem={({ item }: ListRenderItemInfo<Song>) => (
-          <DeleteRow
-            title={item.title}
-            id={item.songId}
-            setToDelete={setToDelete}
-          />
-        )}
-      />
+    <SwipeableFlashList
+      data={songs}
+      contentContainerStyle={styles.songFlashContainer}
+      keyExtractor={(item: Song) => item.songId.toString()}
+      onRowDidOpen={onRowDidOpen}
+      renderItem={renderItem}
+      renderHiddenItem={({ item }: ListRenderItemInfo<Song>) => (
+        <DeleteRow
+          title={item.title}
+          id={item.songId}
+          setToDelete={setToDelete}
+        />
+      )}
+    />
   );
 };
 

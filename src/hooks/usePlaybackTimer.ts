@@ -4,7 +4,7 @@ import { Audio } from 'expo-av';
 const usePlaybackTimer = (
   soundRef: React.RefObject<Audio.Sound | null>,
   isPlaying: boolean,
-  onUpdate?: (currentTime: number) => void,
+  onUpdate?: (currentTime: number) => void
 ): number | null => {
   const [time, setTime] = useState<number | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);

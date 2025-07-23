@@ -15,7 +15,7 @@ export const selectAudioPlayerInfo = createSelector(
   (isPlaying: boolean, uri: string) => ({
     isPlaying,
     uri,
-  }),
+  })
 );
 
 export const selectPlaybackDuration = (state: RootState) =>

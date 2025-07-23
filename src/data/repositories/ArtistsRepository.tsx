@@ -24,7 +24,7 @@ export const addArtist = async ({ name, db }: AddArtistDbPayload) => {
 
     const newArtist = await db.getFirstAsync(
       'SELECT * FROM Artists WHERE artistId = ?',
-      [newArtistId],
+      [newArtistId]
     );
 
     return newArtist;

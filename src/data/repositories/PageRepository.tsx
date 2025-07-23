@@ -13,7 +13,7 @@ export const fetchPageBySongId = async (payload: FetchPagePayload) => {
   try {
     const dbPage: DbPage = await db.getFirstAsync(
       'SELECT * FROM Page WHERE songId = ?',
-      [songId],
+      [songId]
     );
 
     const songInfo = {
@@ -38,7 +38,7 @@ export const fetchPageBySongId = async (payload: FetchPagePayload) => {
 export const fetchPages = async (db: SQLiteDatabase) => {
   try {
     const dbPages: DbPage[] = await db.getAllAsync(
-      'SELECT * FROM Page WHERE lyrics IS NOT NULL AND TRIM(lyrics) != ""',
+      'SELECT * FROM Page WHERE lyrics IS NOT NULL AND TRIM(lyrics) != ""'
     );
 
     const pages = Object.fromEntries(
@@ -53,7 +53,7 @@ export const fetchPages = async (db: SQLiteDatabase) => {
             about: dbPage.about,
           },
         },
-      ]),
+      ])
     );
 
     return pages;
@@ -74,7 +74,7 @@ export const updatePageInfo = async (payload: UpdatePageInfoPayload) => {
     await db.runAsync(
       `UPDATE Page SET ${clauses} WHERE songId = ?`,
       ...params,
-      songId,
+      songId
     );
   } catch (err) {
     console.error('Error updating page,', err);

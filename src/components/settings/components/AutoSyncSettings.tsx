@@ -29,7 +29,7 @@ const AutoSyncSettings = () => {
     performBackup();
   }, [performBackup]);
 
-  console.log('hrm')
+  console.log('hrm');
 
   return (
     <View>
@@ -48,7 +48,7 @@ const AutoSyncSettings = () => {
           isActive={isCompletedSongConditionEnabled}
           onToggle={() =>
             toggleSetting(
-              ToggleableSettings.IS_COMPLETED_SONG_CONDITION_ENABLED,
+              ToggleableSettings.IS_COMPLETED_SONG_CONDITION_ENABLED
             )
           }
         />
@@ -62,14 +62,19 @@ const AutoSyncSettings = () => {
         />
       </View>
       <StyledButton
-            label="One-Time Sync"
-            onPress={handleBackup}
-            backgroundColor={theme.settingsEmphasis}
-            textColor={'white'}
-            buttonsStyle={{width: '50%', alignSelf: 'center', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)', marginBottom: 10}}
-          />
+        label="One-Time Sync"
+        onPress={handleBackup}
+        backgroundColor={theme.settingsEmphasis}
+        textColor={'white'}
+        buttonsStyle={{
+          width: '50%',
+          alignSelf: 'center',
+          boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+          marginBottom: 10,
+        }}
+      />
       {displayTips && (
-        <StyledText style={[styles.tipText, {marginTop: 5}]}>
+        <StyledText style={[styles.tipText, { marginTop: 5 }]}>
           Tip: Enabling auto sync will upload the lyrics and Starred Take for
           each song, upon creation. You can customize sync filters above.
         </StyledText>

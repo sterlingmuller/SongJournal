@@ -10,11 +10,11 @@ export const selectSyncFilters = createSelector(
   (state: RootState) => state.settings.isCompletedSongConditionEnabled,
   (
     isUnstarredTakeConditionEnabled: boolean,
-    isCompletedSongConditionEnabled: boolean,
+    isCompletedSongConditionEnabled: boolean
   ) => ({
     isUnstarredTakeConditionEnabled,
     isCompletedSongConditionEnabled,
-  }),
+  })
 );
 
 export const selectIsAutoSyncEnabled = (state: RootState) =>
@@ -41,5 +41,5 @@ export const selectDefaultSort = createSelector(
   (sortType: SortBy, isAscending: boolean): Sort => ({
     sortType,
     isAscending,
-  }),
+  })
 );

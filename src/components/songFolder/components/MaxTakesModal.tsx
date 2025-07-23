@@ -49,8 +49,11 @@ const MaxTakesModal = ({
             label="Got it"
             onPress={onExitPress}
             backgroundColor={theme.settingsEmphasis}
-            textColor='white'
-            buttonsStyle={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)', marginBottom: 10 }}
+            textColor="white"
+            buttonsStyle={{
+              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+              marginBottom: 10,
+            }}
           />
         </View>
       </View>

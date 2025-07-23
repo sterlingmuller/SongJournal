@@ -30,10 +30,10 @@ const HomeScreen = () => {
 
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [sortedCategory, setSortedCategory] = useState<SortBy>(
-    defaultSort.sortType,
+    defaultSort.sortType
   );
   const [isSortAscending, setIsSortAscending] = useState<boolean>(
-    defaultSort.isAscending,
+    defaultSort.isAscending
   );
   const [activeFilters, setActiveFilters] = useState<Filter[]>([]);
   const [searchText, setSearchText] = useState(null);
@@ -69,15 +69,15 @@ const HomeScreen = () => {
     });
   }, [setOptions, isSortOpen, setIsSortOpen, searchText, setSearchText]);
 
-useEffect(() => {
-  const unsubscribe = addListener('blur', () => {
-    if (playbackUri) {
-      clearPlayback();
-    }
-  });
+  useEffect(() => {
+    const unsubscribe = addListener('blur', () => {
+      if (playbackUri) {
+        clearPlayback();
+      }
+    });
 
-  return unsubscribe;
-}, [addListener, playbackUri]);
+    return unsubscribe;
+  }, [addListener, playbackUri]);
 
   return (
     <View style={styles.container}>

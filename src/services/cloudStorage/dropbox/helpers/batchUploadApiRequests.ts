@@ -1,6 +1,6 @@
 export const startUploadSession = async (
   fileContent: Buffer,
-  accessToken: string,
+  accessToken: string
 ) => {
   const response = await fetch(
     'https://content.dropboxapi.com/2/files/upload_session/start',
@@ -12,7 +12,7 @@ export const startUploadSession = async (
         'Content-Type': 'application/octet-stream',
       },
       body: fileContent,
-    },
+    }
   );
 
   const data = await response.json();
@@ -23,7 +23,7 @@ export const appendToUploadSession = async (
   sessionId: string,
   fileContent: Buffer,
   accessToken: string,
-  offset: number,
+  offset: number
 ) => {
   await fetch(
     'https://content.dropboxapi.com/2/files/upload_session/append_v2',
@@ -38,7 +38,7 @@ export const appendToUploadSession = async (
         'Content-Type': 'application/octet-stream',
       },
       body: fileContent,
-    },
+    }
   );
 };
 
@@ -47,7 +47,7 @@ export const finishUploadSessionBatch = async (
     cursor: { session_id: string; offset: number };
     commit: { path: string; mode: string; autorename: boolean; mute: boolean };
   }[],
-  accessToken: string,
+  accessToken: string
 ) => {
   const response = await fetch(
     'https://api.dropboxapi.com/2/files/upload_session/finish_batch_v2',
@@ -58,7 +58,7 @@ export const finishUploadSessionBatch = async (
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ entries }),
-    },
+    }
   );
 
   if (!response.ok) {

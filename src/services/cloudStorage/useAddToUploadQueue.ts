@@ -15,7 +15,7 @@ const useAddToUploadQueue = () => {
 
       await AsyncStorage.setItem(UPLOAD_QUEUE_KEY, JSON.stringify(newQueue));
     },
-    [],
+    []
   );
 
   return { addToUploadQueue };

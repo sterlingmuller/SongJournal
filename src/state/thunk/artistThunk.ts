@@ -8,12 +8,12 @@ export const updateArtistRequest = createAsyncThunk(
   'artists/updateArtists',
   async (
     payload: UpdateArtistDbPayload,
-    { rejectWithValue }: { rejectWithValue: (value: RequestStatus) => void },
+    { rejectWithValue }: { rejectWithValue: (value: RequestStatus) => void }
   ) => {
     try {
       await updateArtist(payload);
     } catch {
       return rejectWithValue(RequestStatus.FAILURE);
     }
-  },
+  }
 );

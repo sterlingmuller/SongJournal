@@ -5,7 +5,7 @@ export const insertAtCursor = (
   selection: { start: number; end: number },
   prefix: string,
   suffix: string = '',
-  wrapCurrentWord: boolean = false,
+  wrapCurrentWord: boolean = false
 ): string => {
   const { start, end } = selection;
 
@@ -38,7 +38,7 @@ export const insertAtCursor = (
 export const insertSectionAtCursor = (
   text: string,
   start: number,
-  section: LyricsSection,
+  section: LyricsSection
 ): { text: string; cursorPosition: number } => {
   const lines = text.split('\n');
   let currentLineIndex = 0;
@@ -104,7 +104,7 @@ export const insertSectionAtCursor = (
 export const insertChord = (
   text: string,
   chord: string,
-  selection: { start: number; end: number },
+  selection: { start: number; end: number }
 ): string => {
   const { start } = selection;
   const lines = text.split('\n');
@@ -129,7 +129,7 @@ export const insertChord = (
     lines[currentLineIndex] = insertIntoChordLine(
       currentLine,
       chord,
-      positionInLine,
+      positionInLine
     );
 
     return lines.join('\n');
@@ -141,7 +141,7 @@ export const insertChord = (
     lines[currentLineIndex - 1] = updateChordLine(
       lines[currentLineIndex - 1],
       chord,
-      insertionPoint,
+      insertionPoint
     );
   } else {
     lines.splice(currentLineIndex, 0, createChordLine(chord, insertionPoint));
@@ -157,7 +157,7 @@ const hasLyrics = (line: string): boolean => {
 const insertIntoChordLine = (
   line: string,
   chord: string,
-  position: number,
+  position: number
 ): string => {
   const chordText = `{${chord}}`;
   const newLine = [...line];
@@ -173,7 +173,7 @@ const insertIntoChordLine = (
 const updateChordLine = (
   chordLine: string,
   newChord: string,
-  position: number,
+  position: number
 ): string => {
   const chordText = `{${newChord}}`;
 
@@ -212,7 +212,7 @@ const updateChordLine = (
   chordLineChars.splice(
     adjustedPosition,
     whitespaceToRemove,
-    ...chordText.split(''),
+    ...chordText.split('')
   );
 
   return chordLineChars.join('');
@@ -227,7 +227,7 @@ const createChordLine = (chord: string, position: number): string => {
 
 export const convertGerundToIn = (
   text: string,
-  cursorPosition: number,
+  cursorPosition: number
 ): { text: string; newCursorPosition: number } => {
   const wordStart = findWordStart(text, cursorPosition);
   const wordEnd = findWordEnd(text, cursorPosition);

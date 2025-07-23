@@ -25,17 +25,17 @@ const usePlaybackBarStyles = () => {
       marginLeft: Platform.OS === 'ios' ? 0 : 10,
     },
     sliderContainer: {
-      zIndex:1,
+      zIndex: 1,
       width: SCREEN_WIDTH * 0.5,
       marginRight: 10,
     },
     takesSliderContainer: {
-      zIndex:1,
+      zIndex: 1,
       width: SCREEN_WIDTH * 0.35,
       marginRight: 10,
     },
     coverSliderContainer: {
-      zIndex:1,
+      zIndex: 1,
       width: SCREEN_WIDTH * 0.4,
       marginRight: 10,
     },

@@ -113,10 +113,18 @@ const EditorToolbar = ({
           >
             <UndoIcon isDisabled={isUndoDisabled} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={onBold} style={styles.button} hitSlop={{ top: 5, bottom: 5, left: 0, right: 0 }}>
+          <TouchableOpacity
+            onPress={onBold}
+            style={styles.button}
+            hitSlop={{ top: 5, bottom: 5, left: 0, right: 0 }}
+          >
             <BoldIcon />
           </TouchableOpacity>
-          <TouchableOpacity onPress={onItalic} style={styles.button} hitSlop={{ top: 5, bottom: 5, left: 0, right: 0 }}>
+          <TouchableOpacity
+            onPress={onItalic}
+            style={styles.button}
+            hitSlop={{ top: 5, bottom: 5, left: 0, right: 0 }}
+          >
             <ItalicIcon />
           </TouchableOpacity>
         </View>

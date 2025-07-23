@@ -76,7 +76,7 @@ const CustomTextEditor = ({
     const { text: newText, cursorPosition } = insertSectionAtCursor(
       localText,
       selection.start,
-      section,
+      section
     );
 
     setLocalText(newText);
@@ -124,7 +124,7 @@ const CustomTextEditor = ({
           value={localText}
           onChangeText={setLocalText}
           onSelectionChange={(
-            e: NativeSyntheticEvent<TextInputSelectionChangeEventData>,
+            e: NativeSyntheticEvent<TextInputSelectionChangeEventData>
           ) => {
             setSelection({
               start: e.nativeEvent.selection.start,

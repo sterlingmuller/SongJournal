@@ -16,7 +16,7 @@ function* fetchPage(action: PayloadAction<FetchPagePayload>) {
   yield put(startLoading());
   try {
     const pageExists = yield select(
-      (state: RootState) => action.payload.songId in state.pages.items,
+      (state: RootState) => action.payload.songId in state.pages.items
     );
 
     if (!pageExists) {

@@ -5,7 +5,7 @@ export const useNumberedSongs = () => {
     const indexMap = new Map(
       [...songs]
         .sort((a: Song, b: Song) => a.songId - b.songId)
-        .map((song: Song, index: number) => [song.songId, index + 1]),
+        .map((song: Song, index: number) => [song.songId, index + 1])
     );
 
     return songs.map((song: Song) => ({

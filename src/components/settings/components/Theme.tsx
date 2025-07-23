@@ -15,7 +15,7 @@ const Theme = () => {
     ({ item }: { item: ColorTheme }) => (
       <ColorThemeOption key={item} label={item} />
     ),
-    [],
+    []
   );
 
   return (

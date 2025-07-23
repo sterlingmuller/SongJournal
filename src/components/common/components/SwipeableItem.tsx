@@ -50,7 +50,7 @@ const SwipeableItem = forwardRef<SwipeableItemRef, SwipeableItemProps>(
       () => ({
         closeRow,
       }),
-      [closeRow],
+      [closeRow]
     );
 
     const panGesture = Gesture.Pan()
@@ -105,7 +105,7 @@ const SwipeableItem = forwardRef<SwipeableItemRef, SwipeableItemProps>(
         </GestureDetector>
       </View>
     );
-  },
+  }
 );
 
 SwipeableItem.displayName = 'SwipeableItem';

@@ -7,12 +7,12 @@ export const updateSongTitleRequest = createAsyncThunk(
   'songs/updateSongTitle',
   async (
     payload: UpdateSongTitleSagaPayload,
-    { rejectWithValue }: { rejectWithValue: (value: RequestStatus) => void },
+    { rejectWithValue }: { rejectWithValue: (value: RequestStatus) => void }
   ) => {
     try {
       await updateSongTitle(payload);
     } catch {
       return rejectWithValue(RequestStatus.FAILURE);
     }
-  },
+  }
 );

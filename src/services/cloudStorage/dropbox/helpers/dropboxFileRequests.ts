@@ -21,7 +21,7 @@ export const getValidAccessToken = async () => {
 };
 
 export const uploadFilesInBatch = async (
-  files: { path: string; uri: string }[],
+  files: { path: string; uri: string }[]
 ) => {
   const entries = [];
   const accessToken = await getValidAccessToken();
@@ -53,7 +53,7 @@ export const uploadFilesInBatch = async (
 export const uploadFileToDropbox = async (
   path: string,
   contentBuffer: Buffer,
-  accessToken: string,
+  accessToken: string
 ) => {
   const response = await fetch(
     'https://content.dropboxapi.com/2/files/upload',
@@ -71,7 +71,7 @@ export const uploadFileToDropbox = async (
         'Content-Type': 'application/octet-stream',
       },
       body: contentBuffer,
-    },
+    }
   );
 
   const data = await response.json();
@@ -85,7 +85,7 @@ export const uploadFileToDropbox = async (
 
 export const deleteFileFromDropbox = async (
   path: string,
-  accessToken: string,
+  accessToken: string
 ) => {
   try {
     await fetch('https://api.dropboxapi.com/2/files/delete_v2', {
@@ -106,7 +106,7 @@ export const deleteFileFromDropbox = async (
 export const renameFileOnDropbox = async (
   currentPath: string,
   newPath: string,
-  accessToken: string,
+  accessToken: string
 ) => {
   try {
     await fetch('https://api.dropboxapi.com/2/files/move_v2', {

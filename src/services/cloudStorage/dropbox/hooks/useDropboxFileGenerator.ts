@@ -34,7 +34,7 @@ const useDropboxFileGenerator = () => {
       await FileSystem.deleteAsync(localZipPath, { idempotent: true });
     } else {
       console.error(
-        'Upload failed: No internet connection. Please check your network settings and try again.',
+        'Upload failed: No internet connection. Please check your network settings and try again.'
       );
     }
   };
@@ -43,7 +43,7 @@ const useDropboxFileGenerator = () => {
     songTitle: string,
     uri: string,
     cloudFileType: CloudFileType,
-    takeTitle?: string,
+    takeTitle?: string
   ) => {
     if (
       (isCompletedSongConditionEnabled && completed) ||
@@ -85,7 +85,7 @@ const useDropboxFileGenerator = () => {
 
   const generateSongRename = async (
     currentSongTitle: string,
-    newSongTitle: string,
+    newSongTitle: string
   ) => {
     if (isOnline) {
       const currentFolderPath = `/${currentSongTitle}`;
@@ -104,7 +104,7 @@ const useDropboxFileGenerator = () => {
   const generateTakeRename = async (
     currentTakeTitle: string,
     newTakeTitle: string,
-    songTitle: string,
+    songTitle: string
   ) => {
     if (isOnline) {
       const currentPath = `/${songTitle}/Takes/${currentTakeTitle}.m4a`;

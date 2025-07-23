@@ -19,7 +19,10 @@ const EditLyricsSheet = ({ newLyrics, setNewLyrics, headerHeight }: Props) => {
     setNewLyrics(normalizedLyrics);
   };
 
-  const keyboardOffset = Platform.OS === 'ios' ? headerHeight + (toolbarHeight * 0.5) : headerHeight - (toolbarHeight * 0.8);
+  const keyboardOffset =
+    Platform.OS === 'ios'
+      ? headerHeight + toolbarHeight * 0.5
+      : headerHeight - toolbarHeight * 0.8;
 
   return (
     <KeyboardAvoidingView

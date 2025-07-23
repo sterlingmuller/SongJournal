@@ -56,7 +56,7 @@ const useSortByModalStyles = () => {
       gap: 20,
       margin: 15,
       paddingHorizontal: 5,
-      paddingBottom: Platform.OS === 'ios' ? 30 : 10
+      paddingBottom: Platform.OS === 'ios' ? 30 : 10,
     },
 
     selectedCategory: {

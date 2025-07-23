@@ -42,7 +42,13 @@ const SettingsToggle = ({
         value={localActive}
         onValueChange={handleToggle}
         trackColor={{ false: theme.highlight, true: theme.toggleShadow }}
-        thumbColor={Platform.OS === 'ios' ? '#fff' : localActive ? theme.toggleOn : '#f4f3f4'}
+        thumbColor={
+          Platform.OS === 'ios'
+            ? '#fff'
+            : localActive
+              ? theme.toggleOn
+              : '#f4f3f4'
+        }
       />
     </View>
   );

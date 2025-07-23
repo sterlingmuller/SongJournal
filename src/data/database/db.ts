@@ -44,7 +44,7 @@ const createPurchasesTable = `CREATE TABLE IF NOT EXISTS Purchases (id INTEGER P
 export const migrateDbIfNeeded = async (db: SQLiteDatabase) => {
   const DATABASE_VERSION = 1;
   const result = await db.getFirstAsync<{ user_version: number }>(
-    'PRAGMA user_version',
+    'PRAGMA user_version'
   );
   let currentDbVersion = result.user_version;
 
@@ -59,7 +59,7 @@ export const migrateDbIfNeeded = async (db: SQLiteDatabase) => {
         createPageTable +
         createSettingsTable +
         createArtistsTable +
-        createPurchasesTable,
+        createPurchasesTable
     );
 
     currentDbVersion = 1;

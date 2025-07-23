@@ -6,8 +6,8 @@ import { compareArtistNames } from '@src/utils/artistSort';
 export const selectArtists = (state: RootState) => state.artists.items;
 
 export const selectArtistById = (artistId: number) =>
-  createSelector([selectArtists], (artists) =>
-    artists.find((artist) => artist.artistId === artistId),
+  createSelector([selectArtists], artists =>
+    artists.find(artist => artist.artistId === artistId)
   );
 
 export const selectArtistsWithCovers = createSelector(
@@ -19,7 +19,8 @@ export const selectArtistsWithCovers = createSelector(
       .filter(artist => coverArtistIds.has(artist.artistId))
       .map(artist => ({
         ...artist,
-        coverCount: coverSongs.filter(song => song.artistId === artist.artistId).length
+        coverCount: coverSongs.filter(song => song.artistId === artist.artistId)
+          .length,
       }))
       .sort((a, b) => compareArtistNames(a.name, b.name));
   }

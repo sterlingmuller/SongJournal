@@ -10,7 +10,7 @@ const currentSongSlice = createSlice({
   reducers: {
     setCurrentSongId: (
       state: CurrentSongIdSliceState,
-      action: PayloadAction<CurrentSongIdSliceState>,
+      action: PayloadAction<CurrentSongIdSliceState>
     ) => (state = action.payload),
   },
 });

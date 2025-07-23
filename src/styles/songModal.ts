@@ -62,12 +62,12 @@ const useSongModalStyle = () => {
     labelText: {
       fontSize: 16,
       color: theme.secondaryText,
-      fontWeight: '600'
+      fontWeight: '600',
     },
     inputText: {
       fontSize: 14,
       color: theme.secondaryText,
-      fontWeight: '600'
+      fontWeight: '600',
     },
   });
 

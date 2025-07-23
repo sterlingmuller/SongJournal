@@ -27,7 +27,7 @@ const FixedPlaybackWaveDisplay = () => {
 
   const fullWave = useMemo(
     () => [...(fullWaveRef.current || [])],
-    [fullWaveRef.current],
+    [fullWaveRef.current]
   );
 
   const { resampledWave, actualWaveWidth } = useMemo(() => {
@@ -42,7 +42,7 @@ const FixedPlaybackWaveDisplay = () => {
       const sampleIndex = Math.floor(i * ratio);
       const nextSampleIndex = Math.min(
         fullWave.length - 1,
-        Math.floor((i + 1) * ratio),
+        Math.floor((i + 1) * ratio)
       );
 
       let sum = 0;

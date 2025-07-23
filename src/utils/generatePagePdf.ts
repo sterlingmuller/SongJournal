@@ -9,7 +9,7 @@ import { Platform } from 'react-native';
 export const generatePagePdf = async (
   title: string,
   page: Page,
-  artist: string,
+  artist: string
 ) => {
   const { lyrics, info } = page;
 
@@ -59,9 +59,11 @@ export const generatePagePdf = async (
             padding: 0;
           }
         .container {
-          ${isIOS
-            ? ''
-            : 'display: flex; flex-direction: column; min-height: calc(100vh - 20px);'}
+          ${
+            isIOS
+              ? ''
+              : 'display: flex; flex-direction: column; min-height: calc(100vh - 20px);'
+          }
         }
           .header {
             background-color: #ffb07a;
@@ -87,14 +89,18 @@ export const generatePagePdf = async (
             font-size: 16px;
           }
         .content {
-          ${isIOS
-            ? 'padding: 0 30px 10px 50px; white-space: pre; position: relative;'
-            : 'flex-grow: 1; padding: 0 30px 10px 50px; white-space: pre; position: relative;'}
+          ${
+            isIOS
+              ? 'padding: 0 30px 10px 50px; white-space: pre; position: relative;'
+              : 'flex-grow: 1; padding: 0 30px 10px 50px; white-space: pre; position: relative;'
+          }
         }
         .footer {
-          ${isIOS
-            ? 'padding: 20px 50px; text-align: center; page-break-inside: avoid;'
-            : 'margin-top: auto; padding: 20px 50px; text-align: center;'}
+          ${
+            isIOS
+              ? 'padding: 20px 50px; text-align: center; page-break-inside: avoid;'
+              : 'margin-top: auto; padding: 20px 50px; text-align: center;'
+          }
         }
           hr {
             margin: 20px 0;

@@ -15,11 +15,11 @@ const purchasesSlice = createSlice({
   reducers: {
     updatePurchasesSuccess: (
       state: Purchases,
-      action: PayloadAction<Partial<Purchases>>,
+      action: PayloadAction<Partial<Purchases>>
     ) => (state = { ...state, ...action.payload }),
     fetchPurchasesSuccess: (
       state: Purchases,
-      action: PayloadAction<Purchases>,
+      action: PayloadAction<Purchases>
     ) => (state = action.payload),
   },
 });

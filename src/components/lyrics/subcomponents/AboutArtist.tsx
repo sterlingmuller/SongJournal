@@ -14,7 +14,11 @@ interface Props {
   textInputRef?: React.RefObject<TextInput>;
 }
 
-const AboutArtist = ({ selectedArtistId, setSelectedArtistId, textInputRef }: Props) => {
+const AboutArtist = ({
+  selectedArtistId,
+  setSelectedArtistId,
+  textInputRef,
+}: Props) => {
   const styles = useInfoModalStyle();
   const { getArtistName, artistItems } = useArtistName();
   const { theme } = useColorTheme();
@@ -23,7 +27,7 @@ const AboutArtist = ({ selectedArtistId, setSelectedArtistId, textInputRef }: Pr
   const [isNewArtistOpen, setIsNewArtistOpen] = useState(false);
 
   const [displayedArtistName, setDisplayedArtistName] = useState(
-    getArtistName(selectedArtistId),
+    getArtistName(selectedArtistId)
   );
 
   const handleInputChange = (value: number) => {
@@ -37,11 +41,13 @@ const AboutArtist = ({ selectedArtistId, setSelectedArtistId, textInputRef }: Pr
     setIsSettingsWheelOpen(false);
   };
 
-   const textStyle = useMemo(
-    () => [styles.inputText, !displayedArtistName && { color: theme.placeholderText }],
-    [styles.inputText, displayedArtistName, theme.placeholderText],
+  const textStyle = useMemo(
+    () => [
+      styles.inputText,
+      !displayedArtistName && { color: theme.placeholderText },
+    ],
+    [styles.inputText, displayedArtistName, theme.placeholderText]
   );
-
 
   return (
     <>
@@ -54,9 +60,7 @@ const AboutArtist = ({ selectedArtistId, setSelectedArtistId, textInputRef }: Pr
             }}
             style={styles.artistTextbox}
           >
-            <StyledText
-              style={textStyle}
-            >
+            <StyledText style={textStyle}>
               {displayedArtistName || '--'}
             </StyledText>
           </TouchableOpacity>
@@ -66,16 +70,18 @@ const AboutArtist = ({ selectedArtistId, setSelectedArtistId, textInputRef }: Pr
           <StyledText style={styles.artistEditText}>+ Add or Edit</StyledText>
         </TouchableOpacity>
       </View>
-      {isSettingsWheelOpen && <SettingsWheel
-        onExitPress={onExitPress}
-        handleInputChange={handleInputChange}
-        initialValue={selectedArtistId}
-        label={'Default Artist'}
-        items={artistItems}
-      />}
-      {isNewArtistOpen && <NewArtistModal
-        setIsNewArtistOpen={setIsNewArtistOpen}
-      />}
+      {isSettingsWheelOpen && (
+        <SettingsWheel
+          onExitPress={onExitPress}
+          handleInputChange={handleInputChange}
+          initialValue={selectedArtistId}
+          label={'Default Artist'}
+          items={artistItems}
+        />
+      )}
+      {isNewArtistOpen && (
+        <NewArtistModal setIsNewArtistOpen={setIsNewArtistOpen} />
+      )}
     </>
   );
 };

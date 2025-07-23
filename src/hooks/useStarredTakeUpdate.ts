@@ -30,30 +30,34 @@ const useStarredTakeUpdateAndUpload = () => {
     newStarredTakeId: number,
     songId: number,
     newUri: string,
-    newStarredTakeTitle: string,
+    newStarredTakeTitle: string
   ) => {
     const { title: songTitle } = song;
 
     try {
       const resultAction = await dispatch(
-        updateSelectedTakeRequest({ takeId: newStarredTakeId, songId, db }),
+        updateSelectedTakeRequest({ takeId: newStarredTakeId, songId, db })
       );
 
       if (updateSelectedTakeRequest.fulfilled.match(resultAction)) {
         dispatch(
-          updateSelectedTakeIdSuccess({ songId, takeId: newStarredTakeId }),
+          updateSelectedTakeIdSuccess({ songId, takeId: newStarredTakeId })
         );
 
         if (isAutoSyncEnabled) {
           generateAndUploadFile(songTitle, newUri, CloudFileType.STARRED_TAKE);
 
-          if (isUnstarredTakeConditionEnabled && currentTakeUri && currentTakeTitle) {
+          if (
+            isUnstarredTakeConditionEnabled &&
+            currentTakeUri &&
+            currentTakeTitle
+          ) {
             generateFileDeletion(songTitle, newStarredTakeTitle);
             generateAndUploadFile(
               songTitle,
               currentTakeUri,
               CloudFileType.TAKE,
-              currentTakeTitle,
+              currentTakeTitle
             );
           }
         }

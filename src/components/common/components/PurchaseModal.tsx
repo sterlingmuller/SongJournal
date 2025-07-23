@@ -37,13 +37,13 @@ const PurchaseModal = ({
       updatePurchasesRequest({
         db,
         updatedPurchases: { [purchaseToUpdate]: true },
-      }),
+      })
     );
 
     setConductorToPurchase(null);
   };
 
-  console.log('purchase')
+  console.log('purchase');
 
   return (
     <Modal

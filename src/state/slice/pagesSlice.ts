@@ -20,14 +20,14 @@ const pagesSlice = createSlice({
   reducers: {
     fetchPageSuccess: (
       state: PagesSliceState,
-      action: PayloadAction<FetchPageSuccessPayload>,
+      action: PayloadAction<FetchPageSuccessPayload>
     ) => {
       const { page, songId } = action.payload;
       state.items[songId] = page;
     },
     updateLyricsSuccess: (
       state: PagesSliceState,
-      action: PayloadAction<UpdateLyricsStatePayload>,
+      action: PayloadAction<UpdateLyricsStatePayload>
     ) => {
       const { songId, lyrics } = action.payload;
       if (state.items[songId]) {
@@ -36,7 +36,7 @@ const pagesSlice = createSlice({
     },
     updatePageInfoSuccess: (
       state: PagesSliceState,
-      action: PayloadAction<UpdatePageInfoStatePayload>,
+      action: PayloadAction<UpdatePageInfoStatePayload>
     ) => {
       const { songId, info } = action.payload;
       if (state.items[songId]) {

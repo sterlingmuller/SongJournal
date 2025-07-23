@@ -29,7 +29,7 @@ const ChordWheelModal = (props: Props) => {
 
   const [rootNote, setRootNote] = useState(initialValues.rootNote);
   const [chordExtension, setChordExtension] = useState(
-    initialValues.chordExtension,
+    initialValues.chordExtension
   );
 
   const onExitPress = () => {

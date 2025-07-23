@@ -13,26 +13,26 @@ export const updateLyricsRequest = createAsyncThunk(
   'pages/updateLyrics',
   async (
     payload: UpdateLyricsPayload,
-    { rejectWithValue }: { rejectWithValue: (value: RequestStatus) => void },
+    { rejectWithValue }: { rejectWithValue: (value: RequestStatus) => void }
   ) => {
     try {
       await updateLyrics(payload);
     } catch {
       return rejectWithValue(RequestStatus.FAILURE);
     }
-  },
+  }
 );
 
 export const updateInfoRequest = createAsyncThunk(
   'pages/updateInfo',
   async (
     payload: UpdatePageInfoPayload,
-    { rejectWithValue }: { rejectWithValue: (value: RequestStatus) => void },
+    { rejectWithValue }: { rejectWithValue: (value: RequestStatus) => void }
   ) => {
     try {
       await updatePageInfo(payload);
     } catch {
       return rejectWithValue(RequestStatus.FAILURE);
     }
-  },
+  }
 );

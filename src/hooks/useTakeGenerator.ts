@@ -24,7 +24,7 @@ const useTakeGenerator = () => {
   const generateTake = async (
     uri: string,
     takeTitle: string,
-    duration: number,
+    duration: number
   ) => {
     try {
       const resultAction = await dispatch(
@@ -35,7 +35,7 @@ const useTakeGenerator = () => {
           uri,
           duration,
           db,
-        }),
+        })
       );
 
       if (createTakeRequest.fulfilled.match(resultAction)) {
@@ -54,7 +54,7 @@ const useTakeGenerator = () => {
                 songTitle,
                 uri,
                 CloudFileType.TAKE,
-                takeTitle,
+                takeTitle
               );
             }
           }

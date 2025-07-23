@@ -34,9 +34,11 @@ const NotesModal = (props: Props) => {
 
     if (isNotesOpen) {
       setTimeout(() => {
-        if(!notes) {textInputRef?.current?.focus();}
+        if (!notes) {
+          textInputRef?.current?.focus();
+        }
       }, 200);
-  }
+    }
   }, [currentTake]);
 
   const onSavePress = () => {

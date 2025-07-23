@@ -38,7 +38,8 @@ import { selectPlaybackUri } from '@src/state/selectors/playbackSelector';
 const SongScreen = () => {
   const styles = useSongScreenStyles();
   const globalStyles = useGlobalStyles();
-  const {navigate, addListener} = useNavigation<NavigationProp<RootStackParamList>>();
+  const { navigate, addListener } =
+    useNavigation<NavigationProp<RootStackParamList>>();
   const totalTakes = useAppSelector(selectCurrentSongTotalTakes);
   const takes = useAppSelector(selectCurrentSongTakes);
   const playbackUri = useAppSelector(selectPlaybackUri);
@@ -89,15 +90,15 @@ const SongScreen = () => {
     setIsPermissionsNeededModalOpen,
   ]);
 
-useEffect(() => {
-  const unsubscribe = addListener('blur', () => {
-    if (playbackUri) {
-      clearPlayback();
-    }
-  });
+  useEffect(() => {
+    const unsubscribe = addListener('blur', () => {
+      if (playbackUri) {
+        clearPlayback();
+      }
+    });
 
-  return unsubscribe;
-}, [addListener, playbackUri]);
+    return unsubscribe;
+  }, [addListener, playbackUri]);
 
   return (
     <View style={globalStyles.container}>
@@ -118,7 +119,12 @@ useEffect(() => {
         toDelete={toDelete}
         setToDelete={setToDelete}
       />
-      <NotesModal setCurrentTake={setCurrentTake} currentTake={currentTake} setIsNotesOpen={setIsNotesOpen} isNotesOpen={isNotesOpen}/>
+      <NotesModal
+        setCurrentTake={setCurrentTake}
+        currentTake={currentTake}
+        setIsNotesOpen={setIsNotesOpen}
+        isNotesOpen={isNotesOpen}
+      />
       <PermissionsNeededModal
         isPermissionsNeededModalOpen={isPermissionsNeededModalOpen}
         setIsPermissionsNeededModalOpen={setIsPermissionsNeededModalOpen}

@@ -38,33 +38,33 @@ const SortByModal = (props: Props) => {
   const displayTips = useAppSelector(selectDisplayTips);
 
   return (
-      <Modal
-        isVisible={isSortOpen}
-        avoidKeyboard
-        onBackdropPress={onExitPress}
-        style={{ margin: 0 }}
-        hideModalContentWhileAnimating={true}
-      >
-        <View style={styles.container}>
-          <Text style={styles.title}>Sort by</Text>
-          <View style={styles.line} />
-          <SortByCategories
-            sortedCategory={sortedCategory}
-            setSortedCategory={setSortedCategory}
-            isSortAscending={isSortAscending}
-            setIsSortAscending={setIsSortAscending}
-          />
-          {displayTips && (
-            <StyledText style={styles.tipText}>{SORT_TIP}</StyledText>
-          )}
-          <Text style={styles.title}>Filter</Text>
-          <View style={styles.line} />
-          <FilterSection
-            activeFilters={activeFilters}
-            setActiveFilters={setActiveFilters}
-          />
-        </View>
-      </Modal>
+    <Modal
+      isVisible={isSortOpen}
+      avoidKeyboard
+      onBackdropPress={onExitPress}
+      style={{ margin: 0 }}
+      hideModalContentWhileAnimating={true}
+    >
+      <View style={styles.container}>
+        <Text style={styles.title}>Sort by</Text>
+        <View style={styles.line} />
+        <SortByCategories
+          sortedCategory={sortedCategory}
+          setSortedCategory={setSortedCategory}
+          isSortAscending={isSortAscending}
+          setIsSortAscending={setIsSortAscending}
+        />
+        {displayTips && (
+          <StyledText style={styles.tipText}>{SORT_TIP}</StyledText>
+        )}
+        <Text style={styles.title}>Filter</Text>
+        <View style={styles.line} />
+        <FilterSection
+          activeFilters={activeFilters}
+          setActiveFilters={setActiveFilters}
+        />
+      </View>
+    </Modal>
   );
 };
 

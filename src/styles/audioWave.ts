@@ -158,7 +158,7 @@ const useAudioWaveStyles = () => {
   const getDynamicStyles = (
     waveHeight: number,
     isOverlay: boolean = false,
-    isBottom: boolean = false,
+    isBottom: boolean = false
   ) => {
     const styleCase = (isOverlay ? 2 : 0) + (isBottom ? 1 : 0);
 

@@ -63,9 +63,9 @@ export const importBackup = async () => {
               style: 'destructive',
               onPress: () => resolve(true),
             },
-          ],
+          ]
         );
-      },
+      }
     );
 
     if (!userConfirmed) return false;
@@ -96,7 +96,7 @@ export const importBackup = async () => {
 
     try {
       const restoredAudioFiles = await FileSystem.readDirectoryAsync(
-        `${EXTRACT_DIR}Audio/`,
+        `${EXTRACT_DIR}Audio/`
       );
 
       for (let i = 0; i < restoredAudioFiles.length; i += BATCH_SIZE) {
@@ -111,7 +111,7 @@ export const importBackup = async () => {
 
     Alert.alert(
       'Restore Successful',
-      'Your data has been successfully restored.',
+      'Your data has been successfully restored.'
     );
 
     return true;
@@ -119,11 +119,10 @@ export const importBackup = async () => {
     console.error('Import failed:', error);
     Alert.alert(
       'Import Failed',
-      'The backup file appears to be invalid or corrupted. Please try again with a different backup.',
+      'The backup file appears to be invalid or corrupted. Please try again with a different backup.'
     );
     return false;
   } finally {
-
     await FileSystem.deleteAsync(EXTRACT_DIR, { idempotent: true });
   }
 };

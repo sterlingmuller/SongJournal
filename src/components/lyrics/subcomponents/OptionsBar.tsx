@@ -32,7 +32,7 @@ const OptionsBar = ({ selectedOption, setSelectedOption, page }: Props) => {
 
   const handleOptionPress = (optionName: LyricsOption) => {
     setSelectedOption(
-      optionName === selectedOption ? LyricsOption.NONE : optionName,
+      optionName === selectedOption ? LyricsOption.NONE : optionName
     );
 
     if (optionName === LyricsOption.SHARE) {
@@ -56,7 +56,7 @@ const OptionsBar = ({ selectedOption, setSelectedOption, page }: Props) => {
             ]}
             onPress={() => handleOptionPress(option.name)}
             disabled={isDisabled}
-            hitSlop={calculateHitSlop({width: 38, height: 20})}
+            hitSlop={calculateHitSlop({ width: 38, height: 20 })}
           >
             {<option.icon isDisabled={isDisabled} />}
           </TouchableOpacity>

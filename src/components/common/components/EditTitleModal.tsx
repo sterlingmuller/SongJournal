@@ -86,7 +86,7 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
         originalTakeTitle,
         sanitizedTitle,
         songId,
-        takeId,
+        takeId
       );
     } else {
       updateAndUploadSongRename(
@@ -94,17 +94,17 @@ const EditTitleModal = ({ titleToEdit, setTitleToEdit }: Props) => {
         sanitizedTitle,
         songId,
         artistId,
-        hasLyrics,
+        hasLyrics
       );
     }
 
     onExitPress();
   };
 
-useEffect(() => {
-  const unsubscribe = addListener('blur', () => onExitPress());
-  return () => unsubscribe();
-}, [navigate, onExitPress, addListener]);
+  useEffect(() => {
+    const unsubscribe = addListener('blur', () => onExitPress());
+    return () => unsubscribe();
+  }, [navigate, onExitPress, addListener]);
 
   const handleTitleChange = (title: string) => {
     if (title.length <= MAX_TITLE_LENGTH) {

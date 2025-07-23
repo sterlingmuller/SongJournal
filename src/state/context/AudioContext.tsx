@@ -76,7 +76,7 @@ const AudioProvider = ({ children }: Props) => {
         await unloadSound();
       }
     },
-    [clearPlayback],
+    [clearPlayback]
   );
 
   const loadSound = useCallback(
@@ -88,7 +88,7 @@ const AudioProvider = ({ children }: Props) => {
             shouldPlay: false,
             progressUpdateIntervalMillis: 100,
           },
-          handlePlaybackStatusUpdate,
+          handlePlaybackStatusUpdate
         );
         soundRef.current = sound;
 
@@ -101,7 +101,7 @@ const AudioProvider = ({ children }: Props) => {
         return 0;
       }
     },
-    [handlePlaybackStatusUpdate],
+    [handlePlaybackStatusUpdate]
   );
 
   const togglePlayback = useCallback(
@@ -137,7 +137,7 @@ const AudioProvider = ({ children }: Props) => {
         console.error('Error toggling playback:', error);
       }
     },
-    [uri, isPlaying, clearPlayback, loadSound, dispatch],
+    [uri, isPlaying, clearPlayback, loadSound, dispatch]
   );
 
   const seekTo = useCallback(async (position: number) => {
@@ -163,7 +163,7 @@ const AudioProvider = ({ children }: Props) => {
       didJustFinish,
       soundRef,
     }),
-    [togglePlayback, clearPlayback, seekTo, didJustFinish],
+    [togglePlayback, clearPlayback, seekTo, didJustFinish]
   );
 
   return (

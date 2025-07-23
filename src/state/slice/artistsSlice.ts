@@ -11,7 +11,9 @@ const initialState: ArtistsSliceState = {
 };
 
 const sortArtists = (artists: Artists): Artists => {
-  return [...artists].sort((a: Artist, b: Artist) => compareArtistNames(a.name, b.name));
+  return [...artists].sort((a: Artist, b: Artist) =>
+    compareArtistNames(a.name, b.name)
+  );
 };
 
 const artistSlice = createSlice({
@@ -20,19 +22,19 @@ const artistSlice = createSlice({
   reducers: {
     addArtistSuccess: (
       state: ArtistsSliceState,
-      action: PayloadAction<Artist>,
+      action: PayloadAction<Artist>
     ) => {
       state.items = sortArtists([...state.items, action.payload]);
     },
     fetchArtistsSuccess: (
       state: ArtistsSliceState,
-      action: PayloadAction<Artist[]>,
+      action: PayloadAction<Artist[]>
     ) => {
       state.items = sortArtists(action.payload);
     },
     updateArtistSuccess: (
       state: ArtistsSliceState,
-      action: PayloadAction<Artist>,
+      action: PayloadAction<Artist>
     ) => {
       const index = state.items.findIndex(
         (artist: Artist) => artist.artistId === action.payload.artistId
@@ -47,7 +49,7 @@ const artistSlice = createSlice({
     },
     removeArtistSuccess: (
       state: ArtistsSliceState,
-      action: PayloadAction<number>,
+      action: PayloadAction<number>
     ) => {
       const index = state.items.findIndex(
         (artist: Artist) => artist.artistId === action.payload

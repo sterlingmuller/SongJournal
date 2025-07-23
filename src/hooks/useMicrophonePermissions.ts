@@ -22,7 +22,7 @@ const useMicrophonePermissions = () => {
     } catch (error) {
       console.error(
         'Error checking or requesting microphone permission:',
-        error,
+        error
       );
       setPermissionStatus('denied');
     }
@@ -33,7 +33,7 @@ const useMicrophonePermissions = () => {
 
     const subscription = AppState.addEventListener(
       'change',
-      checkAndRequestPermission,
+      checkAndRequestPermission
     );
 
     return () => subscription.remove();

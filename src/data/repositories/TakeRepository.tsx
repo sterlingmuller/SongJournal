@@ -3,38 +3,38 @@ import { SQLiteDatabase } from 'expo-sqlite';
 import * as t from '@src/components/common/types';
 
 export const createTake = async (
-  takePayload: t.TakePayload,
+  takePayload: t.TakePayload
 ): Promise<t.Take> => {
   const { songId, title, date, uri, duration, db } = takePayload;
 
   try {
     const result = await db.runAsync(
       'INSERT INTO Takes (songId, title, date, uri, duration, notes) VALUES (?, ?, ?, ?, ?, ?)',
-      [songId, title, date, uri, duration, ''],
+      [songId, title, date, uri, duration, '']
     );
 
     const takeId = result.lastInsertRowId;
 
     const { totalTakes } = await db.getFirstAsync<{ totalTakes: number }>(
       'SELECT totalTakes FROM Songs WHERE songId = ?',
-      [songId],
+      [songId]
     );
 
     if (totalTakes === 0) {
       await db.runAsync(
         'UPDATE Songs SET selectedTakeId = ? WHERE songId = ?',
-        [takeId, songId],
+        [takeId, songId]
       );
     }
 
     await db.runAsync(
       'UPDATE Songs SET totalTakes = totalTakes + 1 WHERE songId = ?;',
-      [songId],
+      [songId]
     );
 
     const take: t.Take = db.getFirstSync(
       'SELECT * FROM Takes WHERE takeId = ?',
-      [takeId],
+      [takeId]
     );
 
     return take;
@@ -54,7 +54,7 @@ export const deleteTake = ({ db, takeId }: t.DeleteTakeDbPayload) => {
 
 export const fetchTakes = async (db: SQLiteDatabase): Promise<t.Takes> =>
   db.getAllSync(
-    'SELECT takeId, songId, title, date, notes, uri, duration FROM Takes',
+    'SELECT takeId, songId, title, date, notes, uri, duration FROM Takes'
   );
 
 export const updateTakeNotes = (payload: t.UpdateTakeNotesDbPayload) => {

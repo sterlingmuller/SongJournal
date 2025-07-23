@@ -42,7 +42,7 @@ const useAudioPlayer = () => {
         clearPlayback();
       }
     },
-    [clearPlayback],
+    [clearPlayback]
   );
 
   const loadSound = useCallback(
@@ -54,7 +54,7 @@ const useAudioPlayer = () => {
             shouldPlay: false,
             progressUpdateIntervalMillis: 100,
           },
-          handlePlaybackStatusUpdate,
+          handlePlaybackStatusUpdate
         );
         soundRef.current = sound;
 
@@ -67,7 +67,7 @@ const useAudioPlayer = () => {
         return 0;
       }
     },
-    [handlePlaybackStatusUpdate],
+    [handlePlaybackStatusUpdate]
   );
 
   const togglePlayback = useCallback(
@@ -103,7 +103,7 @@ const useAudioPlayer = () => {
         console.error('Error toggling playback:', error);
       }
     },
-    [uri, isPlaying, clearPlayback, loadSound, dispatch],
+    [uri, isPlaying, clearPlayback, loadSound, dispatch]
   );
 
   const seekTo = useCallback(async (position: number) => {

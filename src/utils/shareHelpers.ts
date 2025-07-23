@@ -16,7 +16,7 @@ export const deleteFiles = (uri: string, title?: string) => {
 export const shareZip = async (
   zipPath: string,
   formattedTitle?: string,
-  title?: string,
+  title?: string
 ) => {
   const fileUrl = Platform.OS === 'android' ? `file://${zipPath}` : zipPath;
   const normalizedTitle = title || 'Song Journal Backup';
@@ -44,13 +44,13 @@ export const shareZip = async (
       deleteFiles(zipPath, formattedTitle);
       Alert.alert(
         'Share Successful',
-        'Your backup has been created and shared.',
+        'Your backup has been created and shared.'
       );
     }
   } catch (error) {
     Alert.alert(
       'Share Failed',
-      `An error occurred while creating the backup: ${error}`,
+      `An error occurred while creating the backup: ${error}`
     );
   }
 };
@@ -84,7 +84,7 @@ export const shareAudio = async (path: string, title: string, date: string) => {
   } catch (error) {
     Alert.alert(
       'Share Failed',
-      `An error occurred while sharing your audio file: ${error}`,
+      `An error occurred while sharing your audio file: ${error}`
     );
   }
 };
@@ -118,7 +118,7 @@ export const sharePdf = async (path: string, title: string) => {
   } catch (error) {
     Alert.alert(
       'Share Failed',
-      `An error occurred while sharing your lyrics pdf: ${error}`,
+      `An error occurred while sharing your lyrics pdf: ${error}`
     );
   }
 };

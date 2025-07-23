@@ -31,11 +31,11 @@ const useRenameUpdateAndUpload = () => {
     newTitle: string,
     songId: number,
     artistId: number,
-    hasLyrics: boolean,
+    hasLyrics: boolean
   ) => {
     try {
       const resultAction = await dispatch(
-        updateSongTitleRequest({ db, title: newTitle, songId }),
+        updateSongTitleRequest({ db, title: newTitle, songId })
       );
 
       if (updateSongTitleRequest.fulfilled.match(resultAction)) {
@@ -64,16 +64,16 @@ const useRenameUpdateAndUpload = () => {
     originalTakeTitle: string,
     newTakeTitle: string,
     songId: number,
-    takeId: number,
+    takeId: number
   ) => {
     try {
       const resultAction = await dispatch(
-        updateTakeTitleRequest({ db, title: newTakeTitle, songId, takeId }),
+        updateTakeTitleRequest({ db, title: newTakeTitle, songId, takeId })
       );
 
       if (updateTakeTitleRequest.fulfilled.match(resultAction)) {
         dispatch(
-          updateTakeTitleSuccess({ songId, title: newTakeTitle, takeId }),
+          updateTakeTitleSuccess({ songId, title: newTakeTitle, takeId })
         );
 
         if (isAutoSyncEnabled && isUnstarredTakeConditionEnabled) {

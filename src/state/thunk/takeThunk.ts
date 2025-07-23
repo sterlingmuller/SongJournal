@@ -15,7 +15,7 @@ export const createTakeRequest = createAsyncThunk(
   'takes/createTake',
   async (
     payload: TakePayload,
-    { rejectWithValue }: { rejectWithValue: (value: RequestStatus) => void },
+    { rejectWithValue }: { rejectWithValue: (value: RequestStatus) => void }
   ) => {
     try {
       const take = await createTake(payload);
@@ -23,33 +23,33 @@ export const createTakeRequest = createAsyncThunk(
     } catch {
       return rejectWithValue(RequestStatus.FAILURE);
     }
-  },
+  }
 );
 
 export const updateSelectedTakeRequest = createAsyncThunk(
   'takes/updateSelectedTake',
   async (
     payload: UpdateSelectedTakeIdPayloadDb,
-    { rejectWithValue }: { rejectWithValue: (value: RequestStatus) => void },
+    { rejectWithValue }: { rejectWithValue: (value: RequestStatus) => void }
   ) => {
     try {
       await updateSelectedTakeId(payload);
     } catch {
       return rejectWithValue(RequestStatus.FAILURE);
     }
-  },
+  }
 );
 
 export const updateTakeTitleRequest = createAsyncThunk(
   'takes/updateTakeTitle',
   async (
     payload: UpdateTakeTitleSagaPayload,
-    { rejectWithValue }: { rejectWithValue: (value: RequestStatus) => void },
+    { rejectWithValue }: { rejectWithValue: (value: RequestStatus) => void }
   ) => {
     try {
       await updateTakeTitle(payload);
     } catch {
       return rejectWithValue(RequestStatus.FAILURE);
     }
-  },
+  }
 );

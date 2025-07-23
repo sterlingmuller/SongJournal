@@ -16,7 +16,7 @@ const RecordingWaveDisplayComponent = () => {
     (currentWave: number[]) => {
       runOnJS(setLocalWave)(currentWave);
     },
-    [displayWaveShared],
+    [displayWaveShared]
   );
 
   return (

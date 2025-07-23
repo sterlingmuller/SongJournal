@@ -75,7 +75,7 @@ const DropboxAuth = () => {
     {
       authorizationEndpoint: 'https://www.dropbox.com/oauth2/authorize',
       tokenEndpoint: 'https://api.dropboxapi.com/oauth2/token',
-    },
+    }
   );
 
   useEffect(() => {
@@ -83,14 +83,14 @@ const DropboxAuth = () => {
       const authCode = response.params.code;
       const isConnectionSuccessful = exchangeCodeForToken(
         authCode,
-        codeVerifier,
+        codeVerifier
       );
       if (isConnectionSuccessful) {
         dispatch(
           updateSettingsRequest({
             db,
             updatedSettings: { cloudConnection: CloudConnection.DROPBOX },
-          }),
+          })
         );
       }
     }
@@ -119,8 +119,8 @@ const DropboxAuth = () => {
         label="Connect to Dropbox"
         onPress={handlePress}
         backgroundColor={theme.settingsEmphasis}
-        textColor='white'
-        buttonsStyle={{boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)'}}
+        textColor="white"
+        buttonsStyle={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)' }}
       />
     </View>
   );

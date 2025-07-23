@@ -4,9 +4,12 @@
  * @returns hitSlop values to expand the touch area to 48dp.
  */
 
-import { MIN_TOUCH_SIZE } from "@src/components/common/constants";
+import { MIN_TOUCH_SIZE } from '@src/components/common/constants';
 
-export const calculateHitSlop = (visualSize: { width: number; height: number }) => {
+export const calculateHitSlop = (visualSize: {
+  width: number;
+  height: number;
+}) => {
   const horizontalPad = Math.max(0, (MIN_TOUCH_SIZE - visualSize.width) / 2);
   const verticalPad = Math.max(0, (MIN_TOUCH_SIZE - visualSize.height) / 2);
 

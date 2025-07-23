@@ -31,7 +31,7 @@ const useLyricsSheetGenerator = () => {
   const generatePdf = async (
     title: string,
     newPage: Page,
-    artistId: number,
+    artistId: number
   ) => {
     const artist = getArtistName(artistId);
     const pdfUri = await generatePagePdf(title, newPage, artist);
@@ -48,7 +48,7 @@ const useLyricsSheetGenerator = () => {
           songId,
           lyrics: newLyrics,
           db,
-        }),
+        })
       );
 
       if (updateLyricsRequest.fulfilled.match(resultAction)) {
@@ -72,7 +72,7 @@ const useLyricsSheetGenerator = () => {
 
   const updateInfo = async (
     newInfo: Partial<SongInfo>,
-    selectedArtistId: number,
+    selectedArtistId: number
   ) => {
     const { title, songId } = song;
 
@@ -83,7 +83,7 @@ const useLyricsSheetGenerator = () => {
             songId,
             info: newInfo,
             db,
-          }),
+          })
         );
 
         if (updateInfoRequest.fulfilled.match(resultAction)) {

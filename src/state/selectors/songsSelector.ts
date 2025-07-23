@@ -10,9 +10,8 @@ export const selectOriginalSongs = createSelector(
   (songs: Songs) => songs.filter((song: Song) => song.isOriginal)
 );
 
-export const selectCoverSongs = createSelector(
-  [selectSongs],
-  (songs: Songs) => songs.filter((song: Song) => !song.isOriginal)
+export const selectCoverSongs = createSelector([selectSongs], (songs: Songs) =>
+  songs.filter((song: Song) => !song.isOriginal)
 );
 
 export const selectCurrentSongId = (state: RootState) => state.currentSong;
@@ -21,48 +20,48 @@ export const selectCurrentSong = createSelector(
   [selectSongs, selectCurrentSongId],
   (songs: Songs, currentSongId: number) => {
     const currentSongIndex = songs.findIndex(
-      (song: Song) => song.songId === currentSongId,
+      (song: Song) => song.songId === currentSongId
     );
 
     return songs[currentSongIndex] || EMPTY_SONG;
-  },
+  }
 );
 
 export const selectCurrentSongTotalTakes = createSelector(
   [selectCurrentSong],
-  (song: Song) => song.totalTakes,
+  (song: Song) => song.totalTakes
 );
 
 export const selectCurrentSongTitle = createSelector(
   [selectCurrentSong],
-  (song: Song) => song.title,
+  (song: Song) => song.title
 );
 
 export const selectCurrentSongTakes = createSelector(
   [selectCurrentSong],
-  (song: Song) => song.takes,
+  (song: Song) => song.takes
 );
 
 export const selectCurrentSongSelectedTakeId = createSelector(
   [selectCurrentSong],
-  (song: Song) => song.selectedTakeId,
+  (song: Song) => song.selectedTakeId
 );
 
 export const selectCurrentSongCompletionStatus = createSelector(
   [selectCurrentSong],
-  (song: Song) => !!song.completed,
+  (song: Song) => !!song.completed
 );
 
 export const selectCurrentSongArtistId = createSelector(
   [selectCurrentSong],
-  (song: Song) => song.artistId,
+  (song: Song) => song.artistId
 );
 
 export const selectCurrentTakeUri = createSelector(
   [selectCurrentSongTakes, selectCurrentSongSelectedTakeId],
   (takes: Takes, selectedTakeId: number) => {
     const selectedTake: Take = takes.find(
-      (take: Take) => take.takeId === selectedTakeId,
+      (take: Take) => take.takeId === selectedTakeId
     );
 
     return selectedTake
@@ -71,5 +70,5 @@ export const selectCurrentTakeUri = createSelector(
           currentTakeTitle: selectedTake.title,
         }
       : null;
-  },
+  }
 );

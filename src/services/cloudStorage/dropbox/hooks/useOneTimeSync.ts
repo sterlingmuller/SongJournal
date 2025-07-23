@@ -55,7 +55,7 @@ const useOneTimeSync = () => {
 
       if (selectedTakeId > -1 && takes) {
         const selectedTake = takes.find(
-          (take: Take) => take.takeId === selectedTakeId,
+          (take: Take) => take.takeId === selectedTakeId
         );
 
         filesToUpload.push({

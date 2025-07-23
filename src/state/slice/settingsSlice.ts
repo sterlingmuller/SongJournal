@@ -25,17 +25,17 @@ const settingsSlice = createSlice({
   reducers: {
     updateSettingsSuccess: (
       state: UserSettings,
-      action: PayloadAction<Partial<UserSettings>>,
+      action: PayloadAction<Partial<UserSettings>>
     ) => (state = { ...state, ...action.payload }),
     updateCloudConnectionSuccess: (
       state: UserSettings,
-      action: PayloadAction<CloudConnection>,
+      action: PayloadAction<CloudConnection>
     ) => {
       state.cloudConnection = action.payload;
     },
     fetchSettingsSuccess: (
       state: UserSettings,
-      action: PayloadAction<UserSettings>,
+      action: PayloadAction<UserSettings>
     ) => (state = action.payload),
   },
 });

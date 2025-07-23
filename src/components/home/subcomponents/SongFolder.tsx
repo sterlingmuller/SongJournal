@@ -37,7 +37,7 @@ interface Props {
   }) => void;
 }
 
-const SongFolder = ({ song, setTitleToEdit, isCover = false}: Props) => {
+const SongFolder = ({ song, setTitleToEdit, isCover = false }: Props) => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   const styles = useSongFolderStyles();
   const dispatch = useAppDispatch();
@@ -59,7 +59,7 @@ const SongFolder = ({ song, setTitleToEdit, isCover = false}: Props) => {
 
   const selectedTake = useMemo(
     () => takes.find((take: Take) => take.takeId === selectedTakeId),
-    [takes, selectedTakeId],
+    [takes, selectedTakeId]
   );
 
   const durationText = useMemo(
@@ -67,7 +67,7 @@ const SongFolder = ({ song, setTitleToEdit, isCover = false}: Props) => {
       selectedTake?.uri
         ? formatDuration(selectedTake.duration)
         : 'No recordings exist for this song',
-    [selectedTake?.duration, selectedTake?.uri],
+    [selectedTake?.duration, selectedTake?.uri]
   );
 
   const handleShare = useCallback(() => {
@@ -86,7 +86,7 @@ const SongFolder = ({ song, setTitleToEdit, isCover = false}: Props) => {
         navigate(screen, { previousScreen: Screen.HOME });
       } else navigate(screen);
     },
-    [dispatch, songId, db, navigate],
+    [dispatch, songId, db, navigate]
   );
 
   const onTogglePlayback = useCallback(() => {
@@ -131,18 +131,22 @@ const SongFolder = ({ song, setTitleToEdit, isCover = false}: Props) => {
           style={styles.titleContainer}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
         >
-          <StyledText style={isCover ? styles.coverTitle : styles.title}>{renderTitle()}</StyledText>
+          <StyledText style={isCover ? styles.coverTitle : styles.title}>
+            {renderTitle()}
+          </StyledText>
         </TouchableOpacity>
         <View style={styles.subtextContainer}>
-          {<StyledText style={styles.trackSubtext}>
-          {formatDateFromISOString(song.creationDate)}
-          </StyledText>}
+          {
+            <StyledText style={styles.trackSubtext}>
+              {formatDateFromISOString(song.creationDate)}
+            </StyledText>
+          }
           <StyledText style={styles.trackSubtext}>{durationText}</StyledText>
         </View>
         <View style={styles.iconRow}>
           <TouchableOpacity
             onPress={() => handleOnPressNavigation(Screen.LYRICS)}
-            style={{ paddingBottom: 4, }}
+            style={{ paddingBottom: 4 }}
             hitSlop={{ top: 10, bottom: 15, left: 10, right: 10 }}
           >
             <PageIcon />
@@ -161,7 +165,13 @@ const SongFolder = ({ song, setTitleToEdit, isCover = false}: Props) => {
                 isCover={isCover}
               />
             ) : (
-              <View style={isCover ? styles.coverStaticPlaybackBar : styles.staticPlaybackBar} />
+              <View
+                style={
+                  isCover
+                    ? styles.coverStaticPlaybackBar
+                    : styles.staticPlaybackBar
+                }
+              />
             ))}
         </View>
       </View>
