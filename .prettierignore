@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+coverage/
+
+# Config files
+*.config.js
+*.config.ts
+
+# iOS/Android
+ios/
+android/
+
+# Generated files
+*.generated.*
+
+# Patches
+patches/

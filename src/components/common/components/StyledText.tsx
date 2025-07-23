@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleProp, Text, ViewStyle } from 'react-native';
+import { StyleProp, Text, TextStyle } from 'react-native';
 
 import useGlobalStyles from '@src/styles/global';
 
 interface Props {
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<TextStyle>;
   children: React.ReactNode;
 }
 

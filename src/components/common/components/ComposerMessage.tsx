@@ -28,7 +28,7 @@ const ComposerMessage = ({ messageIntent }: props) => {
 
   const getStartedHomeInstructions = (
     <StyledText style={styles.text}>
-      {`Looks like your journal is empty.\nTo get started, visit `}
+      {`Lookdfbdfbdfbdurnal is empty.\nTo get started, visit `}
       <StyledText style={styles.boldText}>Settings 4/4</StyledText> help
       importing a journal or press the{' '}
       <StyledText style={styles.boldText}>New Song</StyledText> button below.

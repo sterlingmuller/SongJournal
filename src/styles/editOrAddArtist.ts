@@ -3,7 +3,8 @@ import { useColorTheme } from '@src/state/context/ThemeContext';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 interface Styles {
-  container: ViewStyle;
+  scrollView: ViewStyle;
+  scrollContent: ViewStyle;
   modalContainer: ViewStyle;
   artistRow: ViewStyle;
   artistNameContainer: ViewStyle;
@@ -13,6 +14,7 @@ interface Styles {
   editButton: ViewStyle;
   newArtistInput: TextStyle;
   editArtistInput: TextStyle;
+  artistText: TextStyle;
   infoContainer: ViewStyle;
   iconsContainer: ViewStyle;
   buttons: ViewStyle;
@@ -26,12 +28,12 @@ const useEditOrAddArtistStyles = () => {
   const { theme } = useColorTheme();
 
   const editOrAddArtistStyles: Styles = StyleSheet.create({
-    container: {
-      alignItems: 'center',
+    scrollView: {
       backgroundColor: theme.secondaryBackground,
       borderRadius: 10,
       maxHeight: SCREEN_HEIGHT * 0.2,
     },
+    scrollContent: { paddingTop: 5, paddingBottom: 10, paddingHorizontal: 20 },
     modalContainer: {
       alignSelf: 'center',
       width: '80%',
@@ -53,7 +55,7 @@ const useEditOrAddArtistStyles = () => {
       alignItems: 'center',
       justifyContent: 'space-between',
     },
-    artistNameContainer: { width: '50%', },
+    artistNameContainer: { width: '50%' },
     textbox: {
       flexDirection: 'row',
       backgroundColor: theme.inputBackground,
@@ -94,12 +96,16 @@ const useEditOrAddArtistStyles = () => {
       color: theme.secondaryText,
     },
     editArtistInput: {
+      flex: 1,
       includeFontPadding: false,
-      paddingVertical: 2,
-      fontSize: 14,
+      paddingVertical: 5,
+      fontSize: 15,
       marginLeft: 6,
       fontWeight: 600,
       color: theme.secondaryText,
+    },
+    artistText: {
+      fontSize: 15,
     },
     infoContainer: {
       width: '80%',
@@ -111,9 +117,7 @@ const useEditOrAddArtistStyles = () => {
       alignItems: 'center',
       gap: 6,
     },
-
     buttons: { paddingBottom: '10%' },
-
     infoText: {
       textAlign: 'right',
       fontSize: 14,

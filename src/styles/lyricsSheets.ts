@@ -9,6 +9,7 @@ const useLyricSheetStyles = () => {
       fontSize: 16,
       color: theme.primaryText,
       fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
+      alignSelf: 'flex-start'
     },
     span: {
       fontSize: 16,

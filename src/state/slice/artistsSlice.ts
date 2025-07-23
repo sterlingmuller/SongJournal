@@ -22,8 +22,7 @@ const artistSlice = createSlice({
       state: ArtistsSliceState,
       action: PayloadAction<Artist>,
     ) => {
-      state.items.push(action.payload);
-      sortArtists(state.items);
+      state.items = sortArtists([...state.items, action.payload]);
     },
     fetchArtistsSuccess: (
       state: ArtistsSliceState,
@@ -41,10 +40,9 @@ const artistSlice = createSlice({
 
       if (index !== -1) {
         state.items[index] = action.payload;
-        sortArtists(state.items);
+        state.items = sortArtists(state.items);
       } else {
-        state.items.push(action.payload);
-        sortArtists(state.items);
+        state.items = sortArtists([...state.items, action.payload]);
       }
     },
     removeArtistSuccess: (

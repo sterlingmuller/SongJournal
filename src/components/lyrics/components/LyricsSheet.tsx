@@ -24,6 +24,7 @@ const LyricsSheet = ({ lyrics }: Props) => {
         <ScrollView
           style={styles.lyricsContainer}
           contentContainerStyle={styles.lyricsContent}
+          showsVerticalScrollIndicator={true}
         >
           <HTMLView value={htmlLyrics} stylesheet={lyricSheetStyles} />
         </ScrollView>

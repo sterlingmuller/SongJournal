@@ -49,7 +49,7 @@ const EditOrDeleteArtist = () => {
             name: newArtistName,
             artistId: editingArtistId,
             db,
-          }),
+          })
         );
 
         if (updateArtistRequest.fulfilled.match(resultAction)) {
@@ -57,7 +57,7 @@ const EditOrDeleteArtist = () => {
             updateArtistSuccess({
               artistId: editingArtistId,
               name: newArtistName,
-            }),
+            })
           );
           setEditingArtistId(null);
           setNewArtistName('');
@@ -79,7 +79,7 @@ const EditOrDeleteArtist = () => {
       [
         { text: 'Cancel', style: 'cancel' },
         { text: 'Delete', onPress: () => handleDelete(artistId) },
-      ],
+      ]
     );
   };
 
@@ -113,7 +113,7 @@ const EditOrDeleteArtist = () => {
                     />
                   </View>
                 ) : (
-                  <StyledText>{name}</StyledText>
+                  <StyledText style={{ fontSize: 15 }}>{name}</StyledText>
                 )}
               </View>
               <View style={styles.iconsContainer}>
@@ -124,7 +124,7 @@ const EditOrDeleteArtist = () => {
                       ? handleArtistEditClose()
                       : handleEditPress({ artistId, name })
                   }
-                  hitSlop={calculateHitSlop({width: 32, height: 28})}
+                  hitSlop={calculateHitSlop({ width: 32, height: 28 })}
                 >
                   {isEditingArtist ? (
                     <CloseIcon size={22} />
@@ -139,10 +139,10 @@ const EditOrDeleteArtist = () => {
                       ? handleSaveEdit(name)
                       : handleDeletePress(artistId)
                   }
-                  hitSlop={calculateHitSlop({width: 32, height: 28})}
+                  hitSlop={calculateHitSlop({ width: 32, height: 28 })}
                 >
                   {isEditingArtist ? (
-                    <CheckIcon size={24} isPrimaryText/>
+                    <CheckIcon size={24} isPrimaryText />
                   ) : (
                     <TrashIcon size={24} />
                   )}
@@ -157,11 +157,13 @@ const EditOrDeleteArtist = () => {
   return (
     <>
       {artists.length > 0 && (
-        <View style={styles.container}>
-          <ScrollView  showsVerticalScrollIndicator={false}>
-            {renderArtistList()}
-          </ScrollView>
-        </View>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.scrollView}
+          contentContainerStyle={styles.scrollContent}
+        >
+          {renderArtistList()}
+        </ScrollView>
       )}
     </>
   );
